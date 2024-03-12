@@ -1,6 +1,6 @@
 input: ./
 output: .retype
-url: https://github.com/cwoodruff/book-network-programming-csharp/
+url: https://cwoodruff.github.io/book-network-programming-csharp/
 branding:
   title: Beyond Boundaries - Networking Programming with CSharp 12 and dotnet 8
   label: v1
