@@ -1,4 +1,6 @@
-license.md
+---
+visibility: hidden
+---
 
 # License for the Book's Code
 

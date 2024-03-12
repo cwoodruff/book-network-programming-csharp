@@ -1,11 +1,10 @@
-chapter02.md
-
 ---
-label: Chapter 2
-layout: page
-
-order: 100
-
+order: 18
+icon: stack
+label: Chap 2 - Fundamentals of Networking Concepts
+meta:
+title: "Fundamentals of Networking Concepts"
+---
 # 2
 
 # Fundamentals of Networking Concepts
