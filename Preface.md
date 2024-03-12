@@ -1,6 +1,6 @@
 ---
 order: 20
-icon: stack
+icon: info
 ---
 # Preface
 

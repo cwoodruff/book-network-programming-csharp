@@ -1,6 +1,6 @@
 ---
 order: 22
-icon: stack
+icon: thumbsup
 ---
 # Acknowledgments
 

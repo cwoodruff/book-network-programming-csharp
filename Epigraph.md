@@ -1,6 +1,6 @@
 ---
 order: 23
-icon: stack
+icon: quote
 ---
 # Epigraph
 

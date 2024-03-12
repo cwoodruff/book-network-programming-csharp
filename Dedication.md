@@ -1,6 +1,6 @@
 ---
 order: 24
-icon: stack
+icon: heart-fill
 ---
 # Dedication
 
