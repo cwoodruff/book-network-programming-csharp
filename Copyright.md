@@ -1,6 +1,5 @@
 ---
-order: 25
-icon: stack
+visibility: hidden
 ---
 # Copyright
 
