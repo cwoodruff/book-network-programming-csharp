@@ -4,8 +4,8 @@ url: https://cwoodruff.github.io/book-network-programming-csharp/
 branding:
   title: Networking Programming with C/# 12 and /.NET 8
   label: v1
-  logo: images/gear-earth.png
-  logoDark: images/gear-earth-dark.png
+  logo: images/network200.png
+  logoDark: images/network200.png
 edit:
   repo: github.com/cwoodruff/book-network-programming-csharp
 links:
