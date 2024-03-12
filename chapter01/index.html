@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5P830S5Z3"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-D5P830S5Z3');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-root" content="/cwoodruff/book-network-programming-csharp">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763572335282">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 3.5.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Overview of Network Programming</title>
+    <meta name="title" content="Overview of Network Programming">
+    <meta name="description" content="As we embark on the journey through the intricate landscape of network programming within the realm of C#, let us pause to appreciate the robust...">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://github.com/cwoodruff/book-network-programming-csharp/chapter01/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/cwoodruff/book-network-programming-csharp/chapter01/">
+    <meta property="og:title" content="Overview of Network Programming">
+    <meta property="og:description" content="As we embark on the journey through the intricate landscape of network programming within the realm of C#, let us pause to appreciate the robust...">
+    <meta property="og:image" content="https://github.com/cwoodruff/book-network-programming-csharp/chapter01/images/chapter01-02.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://github.com/cwoodruff/book-network-programming-csharp/chapter01/">
+    <meta property="twitter:title" content="Overview of Network Programming">
+    <meta property="twitter:description" content="As we embark on the journey through the intricate landscape of network programming within the realm of C#, let us pause to appreciate the robust...">
+    <meta property="twitter:image" content="https://github.com/cwoodruff/book-network-programming-csharp/chapter01/images/chapter01-02.png">
+
+    <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+
+    <link href="../resources/css/retype.css?v=3.5.0.763572335282" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.763572335282" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.763572335282" data-turbo-eval="false" defer></script>
+</head>
+<body>
+    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
+        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    
+        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+            <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+                <!-- Mobile menu button skeleton -->
+                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="docs-sidebar-toggle"></div>
+        
+                <!-- Logo -->
+                <div class="flex items-center justify-between h-full py-2 md:w-75">
+                    <div class="flex items-center px-2 md:px-6">
+                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-xl">
+                            <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                                <img class="max-h-10 dark:hidden md:inline-block" src="../images/gear-earth.png">
+                                <img class="max-h-10 hidden dark:inline-block" src="../images/gear-earth-dark.png">
+                            </span>
+                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Beyond Boundaries - Networking Programming with CSharp 12 and dotnet 8</span>
+                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">v1</span>
+                    </div>
+        
+                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                </div>
+        
+                <div class="flex justify-between md:grow">
+                    <!-- Top Nav -->
+                    <nav class="hidden md:flex">
+                        <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                        <g fill="currentColor">
+                                            <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                        </g>
+                                    </svg>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                        <g fill="currentColor">
+                                            <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                        </g>
+                                    </svg>
+                                    <span>Issues</span>
+                                </a>
+                            </li>
+                            <li class="mr-6">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://twitter.com/cwoodruff/" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                        <g fill="currentColor">
+                                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-.139 9.237c.209 4.617-3.234 9.765-9.33 9.765-1.854 0-3.579-.543-5.032-1.475 1.742.205 3.48-.278 4.86-1.359-1.437-.027-2.649-.976-3.066-2.28.515.098 1.021.069 1.482-.056-1.579-.317-2.668-1.739-2.633-3.26.442.246.949.394 1.486.411-1.461-.977-1.875-2.907-1.016-4.383 1.619 1.986 4.038 3.293 6.766 3.43-.479-2.053 1.08-4.03 3.199-4.03.943 0 1.797.398 2.395 1.037.748-.147 1.451-.42 2.086-.796-.246.767-.766 1.41-1.443 1.816.664-.08 1.297-.256 1.885-.517-.439.656-.996 1.234-1.639 1.697z"/>
+                                        </g>
+                                    </svg>
+                                    <span>Twitter</span>
+                                </a>
+                            </li>
+        
+                        </ul>
+                    </nav>
+        
+                    <!-- Header Right Skeleton -->
+                    <div v-cloak class="flex justify-end grow skeleton">
+        
+                        <!-- Search input mock -->
+                        <div class="relative hidden w-40 lg:block lg:max-w-sm lg:ml-auto">
+                            <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                            </div>
+                            <input class="w-full h-10 placeholder-gray-400 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 dark:placeholder-dark-400" style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search">
+                        </div>
+        
+                        <!-- Mobile search button -->
+                        <div class="flex items-center justify-center w-10 h-10 lg:hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="20" height="20" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
+                        </div>
+        
+                        <!-- Dark mode switch placeholder -->
+                        <div class="w-10 h-10 lg:ml-2"></div>
+        
+                        <!-- History button -->
+                        <div class="flex items-center justify-center w-10 h-10" style="margin-right: -0.625rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 icon-base" width="22" height="22" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor" ><g ><path d="M12.01 6.01c-.55 0-1 .45-1 1V12a1 1 0 00.4.8l3 2.22a.985.985 0 001.39-.2.996.996 0 00-.21-1.4l-2.6-1.92V7.01c.02-.55-.43-1-.98-1z"></path><path d="M12.01 1.91c-5.33 0-9.69 4.16-10.05 9.4l-.29-.26a.997.997 0 10-1.34 1.48l1.97 1.79c.19.17.43.26.67.26s.48-.09.67-.26l1.97-1.79a.997.997 0 10-1.34-1.48l-.31.28c.34-4.14 3.82-7.41 8.05-7.41 4.46 0 8.08 3.63 8.08 8.09s-3.63 8.08-8.08 8.08c-2.18 0-4.22-.85-5.75-2.4a.996.996 0 10-1.42 1.4 10.02 10.02 0 007.17 2.99c5.56 0 10.08-4.52 10.08-10.08.01-5.56-4.52-10.09-10.08-10.09z"></path></g></g></svg>
+                        </div>
+                    </div>
+        
+                    <div v-cloak class="flex justify-end grow">
+                        <div id="docs-mobile-search-button"></div>
+                        <doc-search-desktop></doc-search-desktop>
+        
+                        <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                        <doc-history></doc-history>
+                    </div>
+                </div>
+            </div>
+        </header>
+    
+        <div class="container relative flex bg-white">
+            <!-- Sidebar Skeleton -->
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            
+                <!-- Render this div, if config.showSidebarFilter is `true` -->
+                <div class="flex items-center h-16 px-6">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter">
+                </div>
+            
+                <div class="pl-6 mt-1 mb-4">
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                </div>
+            
+                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sidebar component -->
+            <doc-sidebar v-cloak>
+                <template #sidebar-footer>
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+            
+                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                            <nav>
+                                <ul class="flex flex-wrap justify-center items-center">
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                                <g fill="currentColor">
+                                                    <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                                </g>
+                                            </svg>
+                                            <span>Home</span>
+                                        </a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                                <g fill="currentColor">
+                                                    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                                </g>
+                                            </svg>
+                                            <span>Issues</span>
+                                        </a>
+                                    </li>
+                                    <li class="mr-6">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://twitter.com/cwoodruff/" target="_blank">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                                <g fill="currentColor">
+                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-.139 9.237c.209 4.617-3.234 9.765-9.33 9.765-1.854 0-3.579-.543-5.032-1.475 1.742.205 3.48-.278 4.86-1.359-1.437-.027-2.649-.976-3.066-2.28.515.098 1.021.069 1.482-.056-1.579-.317-2.668-1.739-2.633-3.26.442.246.949.394 1.486.411-1.461-.977-1.875-2.907-1.016-4.383 1.619 1.986 4.038 3.293 6.766 3.43-.479-2.053 1.08-4.03 3.199-4.03.943 0 1.797.398 2.395 1.037.748-.147 1.451-.42 2.086-.796-.246.767-.766 1.41-1.443 1.816.664-.08 1.297-.256 1.885-.517-.439.656-.996 1.234-1.639 1.697z"/>
+                                                </g>
+                                            </svg>
+                                            <span>Twitter</span>
+                                        </a>
+                                    </li>
+            
+                                </ul>
+                            </nav>
+                        </div>
+            
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                            <span class="text-xs whitespace-nowrap">Powered by</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                        </a>
+                    </div>
+                </template>
+            </doc-sidebar>
+    
+            <div class="grow min-w-0 dark:bg-dark-850">
+                <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+                <div class="flex">
+                    <div class="min-w-0 p-4 grow md:px-16">
+                        <main class="relative pb-12 lg:pt-2">
+                            <div class="docs-markdown" id="docs-content">
+                                <!-- Rendered if sidebar right is enabled -->
+                                <div id="docs-sidebar-right-toggle"></div>
+                                <!-- Page content  -->
+<doc-anchor-target id="1" class="break-words">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1">#</doc-anchor-trigger>
+        <span>1</span>
+    </h1>
+</doc-anchor-target>
+<doc-anchor-target id="overview-of-network-programming">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-network-programming">#</doc-anchor-trigger>
+        <span>Overview of Network Programming</span>
+    </h1>
+</doc-anchor-target>
+<p>As we embark on the journey through the intricate landscape of network programming within the realm of C#, let us pause to appreciate the robust foundation and tools at our disposal. Network programming is the cornerstone of the interconnected world we navigate daily, from browsing web pages and sending emails to streaming multimedia and beyond. In this chapter, &quot;Overview of Network Programming,&quot; we aim to demystify the complexities and equip you with the fundamental knowledge and skills necessary to harness the full potential of network applications in C#.</p>
+<p>We introduce you to the core concepts of network programming, guiding you through the essential terminology and principles that form the bedrock of all networked systems. As we delve into the myriad of network protocols, you will gain insight into the conventions governing communication across disparate devices and applications, understanding how these invisible pathways facilitate seamless data exchange.</p>
+<p>Moving forward, we will explore the client-server architecture, a pervasive paradigm that underpins much of the internet and many intranet applications you will interact with as a network programmer. Here, you will learn how clients and servers communicate, the role each plays, and how to effectively implement their interactions.</p>
+<p>In the segment on socket programming basics, the abstractions fade to reveal the gears of network communication—sockets. You will learn how these endpoints for sending and receiving data operate and how they establish connections and facilitate communication over a network.</p>
+<p>As you progress through this chapter, remember the practical applications of each concept and how they come together to form the larger picture of network programming within the C# ecosystem. Let&#x27;s embark on this journey to unlock the powerful capabilities of networked applications, ready to connect systems and people across the globe.</p>
+<p>In this chapter, we are going to cover the following main topics:</p>
+<ul>
+<li>Introduction to network programming</li>
+<li>Network protocols and communication</li>
+<li>Client-server architecture</li>
+<li>Socket programming basics</li>
+<li>Network programming in C# and .NET</li>
+</ul>
+<doc-anchor-target id="technical-requirements">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#technical-requirements">#</doc-anchor-trigger>
+        <span>Technical requirements</span>
+    </h1>
+</doc-anchor-target>
+<p>A foundational understanding of C# and .NET is essential to grasp the concepts presented in this book thoroughly. Readers should be comfortable with C# syntax, object-oriented programming principles, and basic software development concepts. Familiarity with .NET libraries and its ecosystem will significantly enhance your learning experience.</p>
+<p>For hands-on experience and practical application, I&#x27;ve created a dedicated GitHub repository for this book. Each chapter features a collection of code samples and projects corresponding to the discussed concepts. You can find the repository at the book&#x27;s GitHub location: <a href="https://github.com/cwoodruff/network-programming-csharp-dotnet">https://github.com/cwoodruff/network-programming-csharp-dotnet</a>. Feel free to clone, fork, and explore the repository at your own pace.</p>
+<p>As you navigate through the chapters, refer to the repository to supplement your understanding and practice what you&#x27;ve learned.</p>
+<doc-anchor-target id="introduction-to-network-programming">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-network-programming">#</doc-anchor-trigger>
+        <span>Introduction to network programming</span>
+    </h1>
+</doc-anchor-target>
+<p>Network programming is pivotal in modern software development, enabling applications to communicate seamlessly over various networks. This section will delve into the core concepts and significance of network programming within the broader context of software engineering.</p>
+<doc-anchor-target id="definition-and-importance">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#definition-and-importance">#</doc-anchor-trigger>
+        <span>Definition and importance</span>
+    </h2>
+</doc-anchor-target>
+<p>Network programming involves designing and implementing software that allows different applications to communicate and exchange data over computer networks. This communication can occur over <strong>local area networks</strong> ( <strong>LANs</strong> ), <strong>wide area networks</strong> ( <strong>WANs</strong> ), the Internet, or any combination thereof. The significance of network programming lies in its ability to enable distributed computing, facilitating collaboration, data sharing, and remote access.</p>
+<p>Network programming forms the backbone of the digital world, powering a myriad of applications ranging from simple web browsing to complex cloud-based services. Network programming is critical in creating robust, efficient, and scalable software solutions as the world becomes increasingly interconnected.</p>
+<p>Network programming and network protocols are intimately connected in the world of computer networking. Network programming refers to the practice of developing software applications that can communicate and exchange data across computer networks. These applications rely on a set of rules and conventions known as network protocols. Network protocols define the standardized methods and formats for data transmission, ensuring that different devices and software can understand and interact with each other seamlessly. In essence, network programming leverages these network protocols to enable effective communication and collaboration between devices and systems over networks, making it a fundamental building block of modern networked applications.</p>
+<doc-anchor-target id="what-is-a-network-protocol">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#what-is-a-network-protocol">#</doc-anchor-trigger>
+        <span>What is a network protocol?</span>
+    </h2>
+</doc-anchor-target>
+<p>Network protocols are the rules and conventions governing communication between devices and applications over networks. Some fundamental protocols include <strong>Transmission Control Protocol/Internet Protocol</strong> ( <strong>TCP/IP</strong> ), <strong>User Datagram Protocol</strong> ( <strong>UDP</strong> ), <strong>Hypertext Transfer Protocol</strong> ( <strong>HTTP</strong> ), and <strong>File Transfer Protocol</strong> ( <strong>FTP</strong> ).</p>
+<p>TCP/IP provides reliable, ordered, and error-checked data transmission, making it suitable for applications that require data integrity, such as web browsing and email. On the other hand, UDP offers fast but unreliable data transmission, making it ideal for real-time communication scenarios like video conferencing and online gaming. HTTP facilitates communication between web clients and servers, enabling the transfer of web pages and resources. FTP specializes in file transfer, serving as the foundation for sharing files over networks.</p>
+<doc-anchor-target id="where-is-network-programming-used">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#where-is-network-programming-used">#</doc-anchor-trigger>
+        <span>Where is network programming used?</span>
+    </h2>
+</doc-anchor-target>
+<p>Network programming is ubiquitous, catering to a diverse range of use cases. One common scenario is client-server applications, where clients request services from servers over a network. Web services, another prevalent application, utilize network programming to facilitate communication between different software systems, enabling seamless integration and data sharing.</p>
+<p>Real-time communication applications, including instant messaging and voice/video calls, heavily rely on network programming to ensure swift data exchange. In <strong>Internet of Things</strong> ( <strong>IoT</strong> ), network programming enables smart devices to communicate, gather data, and make intelligent decisions. Cloud-based systems leverage network programming to provide scalable, on-demand services to users across the globe.</p>
+<doc-anchor-target id="key-concepts-to-understand">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#key-concepts-to-understand">#</doc-anchor-trigger>
+        <span>Key concepts to understand</span>
+    </h2>
+</doc-anchor-target>
+<p>A foundational understanding of key concepts is essential for successful network programming. Sockets, for instance, form the endpoints for sending and receiving data across a network. IP addressing and port numbers identify devices and services on a network, enabling precise communication. Packet transmission involves breaking data into smaller packets for efficient transmission and reassembling them at the destination. Data serialization ensures consistency during transmission, allowing different platforms and languages to exchange information seamlessly.</p>
+<doc-anchor-target id="empowering-network-programming-with-net-and-c">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#empowering-network-programming-with-net-and-c">#</doc-anchor-trigger>
+        <span>Empowering network programming with .NET and C#</span>
+    </h2>
+</doc-anchor-target>
+<p>C# and .NET provide a robust environment for network programming. C# offers a combination of simplicity and power, making it accessible for beginners and powerful enough for experienced developers. The extensive library ecosystem within .NET simplifies network-related operations, offering pre-built components for tasks like creating sockets, handling protocols, and managing data serialization.</p>
+<p>Understanding the significance of network programming, the fundamental network protocols, everyday use cases, key concepts, and language/platform support is crucial for developing effective and efficient network applications. Let&#x27;s start by understanding how developers leverage network protocols for their application communications.</p>
+<doc-anchor-target id="network-protocols-and-communication">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#network-protocols-and-communication">#</doc-anchor-trigger>
+        <span>Network protocols and communication</span>
+    </h1>
+</doc-anchor-target>
+<p>Understanding the intricacies of network protocols and communication is essential in network programming. This section will dive into the core concepts that enable devices to communicate effectively over networks.</p>
+<doc-anchor-target id="network-protocols-from-10000-feet">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#network-protocols-from-10000-feet">#</doc-anchor-trigger>
+        <span>Network protocols from 10,000 feet</span>
+    </h2>
+</doc-anchor-target>
+<p>In the vast and intricate world of computer networks, a fundamental principle underpins the harmonious communication between billions of devices: network protocols. Just as human communication requires understanding and abiding by specific linguistic and social rules, computer systems and networks rely on specific standards or &#x27;protocols&#x27; to exchange information successfully.</p>
+<doc-anchor-target id="what-are-network-protocols">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#what-are-network-protocols">#</doc-anchor-trigger>
+        <span>What are network protocols?</span>
+    </h3>
+</doc-anchor-target>
+<p>At their core, network protocols are standardized rules and procedures that determine how data is transmitted and received over the network. These rules ensure devices communicate efficiently, regardless of their make or model. Think of protocols as the grammar rules of a language; just as adhering to grammar ensures clarity and understanding between people, sticking to network protocols ensures smooth and error-free communication between devices.</p>
+<doc-anchor-target id="how-do-protocols-facilitate-communication">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#how-do-protocols-facilitate-communication">#</doc-anchor-trigger>
+        <span>How do protocols facilitate communication?</span>
+    </h3>
+</doc-anchor-target>
+<p>Imagine the simple act of accessing a webpage. This action involves multiple layers of communication, each governed by its own protocol:</p>
+<ul>
+<li><strong>Addressing</strong> : Your computer must know where to send the request. The IP provides an addressing system, assigning a unique IP address to each device on the network.</li>
+<li><strong>Data Transfer</strong> : The TCP breaks down your request into smaller data packets, ensures their correct and timely delivery, and assembles them back at the receiving end.</li>
+<li><strong>Application Interaction</strong> : The HTTP, or its secure variant HTTPS, defines how web servers and browsers communicate, ensuring your browser can fetch and display the webpage.</li>
+</ul>
+<p>Each of these protocols works at a different network layer, and each has its own rules to ensure data is handled correctly at that layer.</p>
+<doc-anchor-target id="why-are-there-so-many-protocols">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#why-are-there-so-many-protocols">#</doc-anchor-trigger>
+        <span>Why are there so many protocols?</span>
+    </h3>
+</doc-anchor-target>
+<p>Different communication scenarios require different sets of rules. For instance:</p>
+<ul>
+<li>File transfers, like FTP, need protocols that ensure complete and error-free data transfer.</li>
+<li>Streaming live video, where a minor data loss might be acceptable, but speed is crucial, might use the UDP.</li>
+<li>Sending emails employs the Simple Mail Transfer Protocol (SMTP), which sets rules for routing and delivering electronic mail.</li>
+</ul>
+<p>Thus, many protocols arise from the myriad of communication requirements in today&#x27;s digital age.</p>
+<doc-anchor-target id="the-importance-of-standardization">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-importance-of-standardization">#</doc-anchor-trigger>
+        <span>The importance of standardization</span>
+    </h3>
+</doc-anchor-target>
+<p>Without standardization, the digital world as we know it would be in chaos. Each manufacturer might have its own protocols, making inter-device communication a nightmare. Recognizing this early on, organizations like the <strong>Internet Engineering Task Force</strong> ( <strong>IETF</strong> ) and the <strong>Institute of Electrical and Electronics Engineers</strong> ( <strong>IEEE</strong> ) took the helm, providing standard definitions for many of the network protocols we use today.</p>
+<p>As the digital age continues to evolve, the significance of network protocols in ensuring seamless communication becomes ever more evident. Just as languages bridge the communication gap between people from different regions, network protocols bridge the gap between devices, ensuring they can <em>speak</em> to each other with clarity and purpose.</p>
+<doc-anchor-target id="tcpip-protocol-suite">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#tcpip-protocol-suite">#</doc-anchor-trigger>
+        <span>TCP/IP protocol suite</span>
+    </h2>
+</doc-anchor-target>
+<p>The foundation of the modern Internet, TCP/IP, is a set of communication protocols that dictate how data should travel across networks. These protocols help define how data packets should be shaped and delivered and how they should be addressed and routed from the sender to the destination. Delving into its history and architecture will provide insights into why it has remained a fundamental technology for global communications.</p>
+<doc-anchor-target id="tracking-the-origins-of-tcpip">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#tracking-the-origins-of-tcpip">#</doc-anchor-trigger>
+        <span>Tracking the origins of TCP/IP</span>
+    </h3>
+</doc-anchor-target>
+<p>In the late 1960s, the U.S. <strong>Department of Defense&#x27;s Advanced Research Projects Agency</strong> ( <strong>DARPA</strong> ) initiated a project to develop a revolutionary communication network called ARPANET to ensure communication continuity even during nuclear attacks. As the project progressed, the need for a reliable and scalable communication protocol became evident. This need led to the development of the first iteration of what we know today as TCP/IP.</p>
+<doc-anchor-target id="protocol-layers-of-tcpip">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#protocol-layers-of-tcpip">#</doc-anchor-trigger>
+        <span>Protocol layers of TCP/IP</span>
+    </h3>
+</doc-anchor-target>
+<p>TCP/IP operates on a layered architecture. This modular approach breaks down the communication process into specific tasks, and each layer has its responsibility.</p>
+<ul>
+<li><strong>Physical Layer</strong> : This layer is mainly concerned with host-to-host data exchange within the network, managing communication between two devices by defining both the transmission medium and how data, represented as bits, is transmitted. It deals with data in the form of bits. This layer mainly handles the host-to-host communication in the network. It defines the transmission medium and mode of communication between two devices.</li>
+<li><strong>Link Layer (or Network Interface Layer)</strong>: It deals with the physical connection and data link aspects, ensuring that data is sent and received over the physical medium, like Ethernet or Wi-Fi.</li>
+<li><strong>Internet (or IP) Layer</strong>: This layer handles addressing and routing. It ensures data packets are sent to the correct destination based on IP addresses.</li>
+<li><strong>Transport Layer</strong> : This is where TCP and UDP (User Datagram Protocol) reside. While TCP ensures reliable and ordered data delivery, UDP is for quick, connectionless communication.</li>
+<li><strong>Application Layer</strong> : Here, various application protocols like HTTP, FTP, and SMTP operate. This layer directly interacts with end-user applications and is responsible for data formatting, encryption, and other session management.</li>
+</ul>
+<p><figure class="content-center">
+    <img src="images/chapter01-02.png" alt="Chapter01-02">
+    <figcaption class="caption">Chapter01-02</figcaption>
+</figure>
+</p>
+<p><strong>Figure 1.1 - 1TCP/IP Protocol Layers</strong></p>
+<p>This layered architecture enables modular design, where each layer contributes specific functionalities, resulting in the robust and scalable network communication we rely on today. In the diagram illustrated above, showing the layered architecture of the TCP/IP protocol, each layer transitions seamlessly into the next, representing a hierarchy of functions essential for network communication. Starting at the application layer, protocols like HTTP and FTP interact with end-user applications, preparing data for communication. This data is then encapsulated into segments by the transport layer, where TCP or UDP manages the trustworthiness and flow of the data between hosts. Following this, the internet layer takes charge, wrapping the data with IP addresses through the Internet Protocol, ensuring it reaches the correct destination across the network. Finally, the link layer translates these IP packets into frames appropriate for the physical network medium, handling the data transmission over physical hardware such as Ethernet. Each layer serves a precise purpose, and together, they form the framework that allows data to be carried from one device to another across diverse and complex networks.</p>
+<doc-anchor-target id="tcp-and-ip-the-dynamic-duo">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#tcp-and-ip-the-dynamic-duo">#</doc-anchor-trigger>
+        <span>TCP and IP: The Dynamic Duo</span>
+    </h3>
+</doc-anchor-target>
+<p>TCP and IP are two distinct but intertwined protocols within the suite of TCP/IP. IP ensures that data packets are transported from the originating host to the intended recipient using IP addresses to navigate the delivery process. IP is responsible for delivering packets from the source host to the destination host based on the IP addresses. It does not guarantee delivery, nor does it ensure correct sequence or avoid duplicate delivery.</p>
+<p>On the other hand, TCP is all about reliability. It ensures data integrity and delivers data in the correct order. By establishing connections, sequencing data packets, and acknowledging received packets, TCP ensures that communication is reliable and error-free.</p>
+<doc-anchor-target id="significance-in-todays-world">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#significance-in-todays-world">#</doc-anchor-trigger>
+        <span>Significance in today&#x27;s world</span>
+    </h3>
+</doc-anchor-target>
+<p>Decades after its inception, TCP/IP remains at the heart of the Internet and intranet infrastructure. Its robustness, adaptability, and scalability have allowed it to accommodate global communications&#x27; ever-growing and ever-changing nature. From browsing web pages and streaming videos to conducting financial transactions and managing critical infrastructure, TCP/IP plays an integral role.</p>
+<p>As the world becomes more interconnected, understanding the intricacies of TCP/IP becomes even more paramount. It&#x27;s not just the backbone of the Internet but also embodies the principles of open communication, interoperability, and resilience.</p>
+<doc-anchor-target id="what-other-network-protocols-are-used-today">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#what-other-network-protocols-are-used-today">#</doc-anchor-trigger>
+        <span>What other network protocols are used today?</span>
+    </h2>
+</doc-anchor-target>
+<p>The vast digital ecosystem we navigate daily is facilitated by many rules and conventions, collectively known as protocols. Within the multilayered networking structure, the transport layer holds a pivotal role, ensuring effective and efficient data communication between devices. One of the standout stars of this layer is the UDP. But, just like an actor can&#x27;t perform a play alone, UDP is just one of the many transport protocols in the ensemble, each playing its unique part.</p>
+<doc-anchor-target id="understanding-udp">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#understanding-udp">#</doc-anchor-trigger>
+        <span>Understanding UDP</span>
+    </h3>
+</doc-anchor-target>
+<p>Its simplicity and speed define UDP. Unlike its counterpart, the TCP, which emphasizes reliability and order, UDP sends data packets without establishing a connection or ensuring they are received in order. Its <em>fire-and-forget</em> methodology is what makes it both efficient and sometimes unreliable. UDP can transmit data faster without the overhead of establishing connections or verifying data receipt.</p>
+<doc-anchor-target id="where-does-udp-shine">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#where-does-udp-shine">#</doc-anchor-trigger>
+        <span>Where does UDP shine?</span>
+    </h3>
+</doc-anchor-target>
+<p>Streaming services, online gaming, and <strong>Voice over Internet Protocol</strong> ( <strong>VoIP</strong> ) are arenas where UDP is most favored. In these scenarios, speed is of the essence. For instance, when watching a live stream, getting the data quickly is more important than every packet is received. A few missing frames in a video or milliseconds in a voice call won&#x27;t significantly disrupt the user experience, making UDP the protocol of choice.</p>
+<p>Here are a few other transport protocols:</p>
+<ul>
+<li><strong>Stream Control Transmission Protocol (SCTP)</strong>: Combining the best of TCP and UDP, SCTP can send multiple data streams at once, making it particularly effective for transporting multimedia data. It&#x27;s both reliable and preserves message boundaries, unlike TCP.</li>
+<li><strong>Datagram Congestion Control Protocol (DCCP)</strong>: This protocol aims to offer a middle ground between TCP and UDP. It&#x27;s designed for applications that need more than UDP&#x27;s best-effort service but less than TCP&#x27;s guaranteed delivery.</li>
+</ul>
+<p>Overall, streaming network protocols play a crucial role in enabling high-quality, real-time content delivery over the internet and contribute to the seamless user experiences we encounter in various online services and applications.</p>
+<doc-anchor-target id="why-do-we-need-multiple-transport-protocols">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#why-do-we-need-multiple-transport-protocols">#</doc-anchor-trigger>
+        <span>Why do we need multiple transport protocols?</span>
+    </h3>
+</doc-anchor-target>
+<p>Different digital interactions have varied requirements. While sending an email, it&#x27;s crucial that every bit of data gets to the recipient in order. But when playing an online game, timely data transfer is more important than perfect accuracy. By having a repertoire of transport protocols, the digital realm can cater to diverse communication needs, ensuring that users have the best possible experience.</p>
+<p>With its ensemble of protocols, the transport layer exemplifies the versatility and adaptability of digital communication systems. While UDP stands out with its simplicity and speed, it is just a part of the bigger picture, complemented by other protocols designed to cater to specific communication needs. As technology evolves and our digital interactions diversify, understanding these protocols becomes increasingly essential in harnessing the full potential of our interconnected world.</p>
+<doc-anchor-target id="application-layer-protocols">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#application-layer-protocols">#</doc-anchor-trigger>
+        <span>Application layer protocols</span>
+    </h2>
+</doc-anchor-target>
+<p>In the intricate realm of networking, the application layer stands as the interface between the user and the underlying network processes. Here, we find application layer protocols, the unsung heroes that govern software-based communications, ensuring that data is properly packaged, transmitted, and interpreted. While the layers beneath it handle aspects like routing, delivery, and error checking, the application layer focuses on user services and end-to-end communication.</p>
+<doc-anchor-target id="decoding-application-layer-protocols">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#decoding-application-layer-protocols">#</doc-anchor-trigger>
+        <span>Decoding application layer protocols</span>
+    </h3>
+</doc-anchor-target>
+<p>Application layer protocols define the rules and conventions for network services. These protocols aren&#x27;t necessarily about the application itself (like a web browser or email client) but rather the conventions they use to communicate over a network.</p>
+<p>The following list discusses some prominent protocols of the application layer:</p>
+<ul>
+<li><strong>HTTP/HTTPS</strong> : These rules govern web browsers and servers, making websites accessible. HTTP fetches web pages, while HTTPS does the same with added encryption for security.</li>
+<li><strong>FTP</strong> : As the name suggests, FTP is about transferring files between a client and a server, allowing for uploads and downloads.</li>
+<li><strong>SMTP</strong> : While SMTP is used for sending emails, <strong>Post Office Protocol</strong> ( <strong>POP</strong> ) and <strong>Internet Message Access Protocol</strong> ( <strong>IMAP</strong> ) are for receiving. They ensure your emails find their way to the right inboxes.</li>
+<li><strong>Domain Name System (DNS)</strong>: Ever wondered how website names (like <a href="https://www.example.com">www.example.com</a>) translate to IP addresses? That&#x27;s DNS in action, resolving domain names into IPs.</li>
+<li><strong>Dynamic Host Configuration Protocol (DHCP)</strong>: DHCP automatically assigns IP addresses to devices on a network, making network management more efficient.</li>
+</ul>
+<p>These protocols enable the creation, exchange, and interpretation of data between software applications running on different devices, facilitating seamless communication over networks. Their role in shaping how we access and interact with digital services and content across the internet is fundamental, making them a cornerstone of modern networked environments.</p>
+<doc-anchor-target id="why-are-application-layer-protocols-crucial">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#why-are-application-layer-protocols-crucial">#</doc-anchor-trigger>
+        <span>Why are application layer protocols crucial?</span>
+    </h3>
+</doc-anchor-target>
+<p>While the transport and internet layers (with protocols like TCP, UDP, and IP) ensure data reaches the right device, the application layer guarantees that the data is meaningful and usable to applications. For instance, while TCP ensures a file gets to your computer, FTP ensures the file is correctly fetched from a server.</p>
+<p>The application layer is also the realm where most encryption for security occurs. Protocols like HTTPS and secure versions of FTP ensure data confidentiality and integrity.</p>
+<doc-anchor-target id="communication-models">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#communication-models">#</doc-anchor-trigger>
+        <span>Communication models</span>
+    </h2>
+</doc-anchor-target>
+<p>Different communication models shape network programming. In the client-server model, clients request services from servers, creating a clear division of roles. Peer-to-peer models enable devices to communicate directly, which is suitable for applications like file sharing. Publish-subscribe models, prevalent in real-time communication, involve subscribers receiving publisher updates. Each model offers distinct advantages, allowing developers to choose the most fitting approach based on the application&#x27;s requirements.</p>
+<p>Understanding these fundamentals is vital for developing practical network applications. This knowledge forms the bedrock for further exploration in network programming, from the reliability of TCP/IP to the speed of UDP, from application-specific protocols to versatile communication models.</p>
+<doc-anchor-target id="client-server-architecture">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#client-server-architecture">#</doc-anchor-trigger>
+        <span>Client-server architecture</span>
+    </h1>
+</doc-anchor-target>
+<p>In the landscape of network programming, the client-server architecture plays a pivotal role, acting as the backbone for countless applications. This section delves into the intricacies of this architecture, illuminating its core components and mechanisms.</p>
+<doc-anchor-target id="definition-and-concept">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#definition-and-concept">#</doc-anchor-trigger>
+        <span>Definition and concept</span>
+    </h2>
+</doc-anchor-target>
+<p>Client-server architecture serves as the blueprint for communication between devices in network programming. It embodies a clear division of responsibilities: clients initiate requests, while servers respond with the requested resources or services. This separation streamlines application development by enabling modular design, enhancing security, and optimizing resource utilization. The architecture fosters collaboration between devices regardless of their geographical locations, underpinning the foundation of modern distributed computing.</p>
+<p><figure class="content-center">
+    <img src="images/chapter01-01.png" alt="Chapter01-01">
+    <figcaption class="caption">Chapter01-01</figcaption>
+</figure>
+</p>
+<p><strong>Figure 1.2 - Client-Server Model</strong></p>
+<p>This architecture (seen in <em>Figure 1.2</em>) enables efficient distribution of tasks, with servers handling resource-intensive processes and clients focusing on user interfaces and interactions. It forms the backbone of modern networked applications, allowing for scalable, centralized, and secure data processing and access in various domains, from web hosting to database management.</p>
+<doc-anchor-target id="client-role">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#client-role">#</doc-anchor-trigger>
+        <span>Client role</span>
+    </h2>
+</doc-anchor-target>
+<p>Clients, the initiators of communication, undertake vital tasks within this architecture. They establish connections with servers, sending well-formed requests encapsulating their needs. Clients are responsible for interpreting server responses, extracting the relevant information, and rendering it in a human-readable format. Whether a web browser requests a webpage or a mobile app fetches data from a remote database, the client&#x27;s role is pivotal in driving interactions.</p>
+<doc-anchor-target id="server-role">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#server-role">#</doc-anchor-trigger>
+        <span>Server role</span>
+    </h2>
+</doc-anchor-target>
+<p>Servers are the backbone of the client-server architecture, perpetually listening for incoming requests. Upon receiving a request, servers decipher its content, process the necessary operations, and formulate appropriate responses. These responses, tailored to meet client requests, are dispatched for further transmission. Servers can range from web servers handling HTTP requests to database servers retrieving data or executing operations on behalf of clients.</p>
+<doc-anchor-target id="the-connection-of-client-and-server-request-response-model">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-connection-of-client-and-server-request-response-model">#</doc-anchor-trigger>
+        <span>The connection of client and server: Request-response model</span>
+    </h2>
+</doc-anchor-target>
+<p>The request-response model epitomizes client-server interactions. Clients articulate their needs through well-structured requests containing specific instructions or data. Servers analyze these requests, execute the corresponding operations, and craft responses tailored to clients&#x27; needs. This model is foundational across various applications, from retrieving web pages to fetching real-time updates. It embodies the dynamic dance of communication, where clients and servers exchange information in a structured and efficient manner.</p>
+<doc-anchor-target id="scalability-and-load-balancing">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#scalability-and-load-balancing">#</doc-anchor-trigger>
+        <span>Scalability and load balancing</span>
+    </h2>
+</doc-anchor-target>
+<p>As applications grow in complexity and popularity, ensuring scalability becomes paramount. Scaling up involves accommodating a surge in concurrent clients. Load balancing, a technique leveraging multiple servers, evenly distributes incoming requests. This practice optimizes resource utilization and prevents individual servers from becoming overwhelmed. By seamlessly directing traffic among servers, load balancing guarantees responsiveness, reliability, and efficient handling of requests even under heavy loads.</p>
+<p>Client-server architecture navigates through the heart of network programming. It uncovers the symbiotic relationship between clients and servers, the foundation of applications spanning from web browsing to cloud computing. Understanding these architectural principles is vital for anyone delving into the realm of network programming. From crafting robust client interactions to ensuring the resilience of servers, this section lays the groundwork for building effective network applications.</p>
+<doc-anchor-target id="socket-programming-basics">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#socket-programming-basics">#</doc-anchor-trigger>
+        <span>Socket programming basics</span>
+    </h1>
+</doc-anchor-target>
+<p>The realm of network programming rests upon the sturdy shoulders of sockets, the linchpin of communication between devices. This section unveils the foundational principles of socket programming, encompassing their varied types, APIs, addressing nuances and lifecycle intricacies.</p>
+<p>Sockets, akin to digital portals, enable applications to establish pathways for communication over networks. Think of them as the virtual conduits connecting devices, where data flows to and from seamlessly. They serve as the bridge between local and remote applications, allowing data transmission in both directions. Whether sending a request for a web page or streaming multimedia content, sockets facilitate these exchanges, embodying the quintessential essence of network programming.</p>
+<p>Within the realm of sockets, two prominent types govern the scene:</p>
+<ul>
+<li><strong>TCP sockets</strong> prioritize reliability, ensuring data arrives intact and in the correct order.</li>
+<li><strong>UDP sockets</strong> favor swiftness, ideal for real-time communication scenarios where a minor loss of data packets is permissible.</li>
+</ul>
+<p>The choice between these socket types hinges on the application&#x27;s specific requirements, guiding developers towards the most suitable fit.</p>
+<doc-anchor-target id="socket-apis-and-libraries">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#socket-apis-and-libraries">#</doc-anchor-trigger>
+        <span>Socket APIs and libraries</span>
+    </h2>
+</doc-anchor-target>
+<p>To traverse the intricate labyrinth of socket programming, one requires a reliable guide - the socket APIs and libraries. For our journey through C# 12 and .NET 8, these APIs are the backbone of socket interactions. With them, developers can shape and control sockets, harnessing the power to create, bind, connect, send, and receive data with surgical precision. These APIs from .NET 8 encapsulate the intricate details, rendering socket programming accessible to those who wield them.</p>
+<p>Imagine sockets as destinations on a global map, each marked with an IP address and a port number. Socket addressing, a cardinal principle, enables devices to find one another amidst the digital sprawl. The IP address signifies the target&#x27;s digital location, while the port number determines the specific entrance point to connect. Together, they facilitate communication routes, ensuring that data reaches the intended recipient unerringly.</p>
+<p>Much like life itself, sockets have their own lifecycle. Birthed through creation, they establish connections to fulfill their purpose. They live their lives transmitting data, embodying the core of network communication. As time elapses, sockets, like their mortal counterparts, reach the end of their journey and must be closed. Managing this lifecycle efficiently is imperative to avoid resource wastage and potential errors, ensuring a smooth passage of data.</p>
+<p>In summation, the &quot;Socket Programming Basics&quot; section unfurls the rudiments of network programming. It unravels the enigma of sockets, offering a panoramic view of their roles, types, APIs, addresses, and life cycles. This understanding serves as the bedrock for the aspiring network programmer, laying the groundwork for subsequent chapters that delve deeper into the intricacies of network programming.</p>
+<doc-anchor-target id="network-programming-in-c-and-net">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#network-programming-in-c-and-net">#</doc-anchor-trigger>
+        <span>Network programming in C# and .NET</span>
+    </h1>
+</doc-anchor-target>
+<p>Within network programming, C# 12 and .NET 8 stand as pillars of development, offering a comprehensive toolkit for crafting robust and efficient network applications. The book&#x27;s primary purpose is to serve as a gateway to understanding how C# and .NET empower developers to harness the potential of network programming.</p>
+<doc-anchor-target id="what-will-we-use-to-code-in-this-book">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#what-will-we-use-to-code-in-this-book">#</doc-anchor-trigger>
+        <span>What will we use to code in this book?</span>
+    </h2>
+</doc-anchor-target>
+<p>C# 12, a modern and versatile programming language, is the cornerstone of network programming in the .NET 8 universe. Its concise syntax, object-oriented paradigm, and seamless integration with the .NET make it a natural choice for developing network applications. .NET is a powerhouse of libraries, classes, and tools designed to simplify network programming tasks. Together, C# and .NET form a harmonious pair, facilitating the creation of applications that communicate across networks with finesse.</p>
+<doc-anchor-target id="network-libraries-in-net-that-we-will-use">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#network-libraries-in-net-that-we-will-use">#</doc-anchor-trigger>
+        <span>Network libraries in .net that we will use</span>
+    </h2>
+</doc-anchor-target>
+<p>.NET houses an array of specialized libraries tailored to different network programming scenarios. The System.Net.Sockets library lays the foundation for low-level socket programming, enabling precise control over data transmission. For those seeking higher-level abstractions, the System.Net library offers a more user-friendly interface for network interactions. Further, the System.Net.Http library caters to the world of HTTP communication, which is vital for web-based applications. Each library equips developers with the tools to sculpt network-enabled applications easily.</p>
+<doc-anchor-target id="asynchronous-programming-with-asyncawait-in-c">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#asynchronous-programming-with-asyncawait-in-c">#</doc-anchor-trigger>
+        <span>Asynchronous programming with Async/Await in C#</span>
+    </h2>
+</doc-anchor-target>
+<p>In the realm of network programming, responsiveness is paramount. To this end, asynchronous programming steps into the limelight. The async/await keywords in C# revolutionize network programming by enabling developers to create non-blocking code that keeps applications responsive while waiting for data to arrive. C# and .NET seamlessly integrate asynchronous programming, providing built-in mechanisms to handle asynchronous operations efficiently.</p>
+<doc-anchor-target id="control-of-protocols-and-formats-using-c">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#control-of-protocols-and-formats-using-c">#</doc-anchor-trigger>
+        <span>Control of protocols and formats using C#</span>
+    </h2>
+</doc-anchor-target>
+<p>Network programming is a multilingual conversation, with different devices conversing in diverse protocols and data formats. C# and .NET are adept at understanding this myriad of languages. Whether it&#x27;s the reliable TCP/IP, the swift UDP, the universally used HTTP, or the human-readable JSON and XML, C# and .NET offer support for handling these protocols and formats seamlessly. This ability ensures network applications can communicate effectively with various devices and systems.</p>
+<doc-anchor-target id="what-frameworks-and-libraries-do-net-developers-use">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#what-frameworks-and-libraries-do-net-developers-use">#</doc-anchor-trigger>
+        <span>What frameworks and libraries do .NET developers use?</span>
+    </h2>
+</doc-anchor-target>
+<p>C# and .NET don&#x27;t just stop at the basics; they venture into specialized territories with frameworks and libraries catered to specific network programming needs. <strong>SignalR</strong>, a real-time communication framework, empowers developers to create applications sharing data instantly. <strong>gRPC</strong> facilitates efficient remote procedure calls, which is essential for distributed systems. <strong>MQTT</strong>, designed for the IoT, provides a seamless communication channel for IoT devices. These frameworks exemplify the extensibility of C# and .NET in catering to diverse network programming scenarios.</p>
+<p>By mastering the tools and libraries they offer, developers gain the capability to craft sophisticated network applications that leverage the power of modern programming. This knowledge paves the way for traversing the intricate pathways of network programming explored in subsequent chapters.</p>
+<doc-anchor-target id="summary">
+    <h1>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#summary">#</doc-anchor-trigger>
+        <span>Summary</span>
+    </h1>
+</doc-anchor-target>
+<p>Throughout this chapter, we&#x27;ve explored the significance of network programming in modern software development, critical network protocols, everyday use cases, and fundamental concepts such as sockets, IP addressing, and data serialization. These lessons are invaluable for anyone aiming to design, develop, and maintain networked applications, as they form the basis for efficient and secure communication in distributed systems.</p>
+<p>As we move forward to the next chapter, <em>Fundamentals of Networking Concepts</em>, we will delve deeper into the infrastructure that underlies network programming. This chapter will introduce key networking terminology, explore the intricacies of IP addressing and subnetting, and shed light on routing, network topologies, and network protocols. Understanding these networking fundamentals will provide a solid framework for mastering network programming and designing robust, efficient, and scalable networked applications.</p>
+
+                                
+                                <!-- Required only on API pages -->
+                                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+                            </div>
+                            <footer class="clear-both">
+                                <div class="flex flex-wrap items-center justify-between mt-14">
+                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter01/chapter01.md" target="_blank" rel="noopener">
+                                        <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        <span>Edit this page</span>
+                                    </a>
+                                </div>
+                            
+                                <nav class="flex mt-14">
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../preface/">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                            <span>
+                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block mt-1">Preface</span>
+                                            </span>
+                                        </a>
+                                    </div>
+                            
+                                    <div class="w-1/2">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter02/">
+                                            <span>
+                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block mt-1">Chap 2 - Fundamentals of Networking Concepts</span>
+                                            </span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                                        </a>
+                                    </div>
+                                </nav>
+                            </footer>
+                        </main>
+                
+                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between">
+                                <div>
+                                    <ul class="flex flex-wrap items-center text-sm">
+                                        <li>
+                                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="../copyright/">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                                    <g fill="currentColor">
+                                                        <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
+                                                    </g>
+                                                </svg>
+                                                <span>Copyright</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="../license/">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                                    <g fill="currentColor">
+                                                        <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
+                                                    </g>
+                                                </svg>
+                                                <span>License</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2024. All rights reserved.</p></div>
+                            </footer>
+                        </div>
+                    </div>
+                
+                    <!-- Rendered if sidebar right is enabled -->
+                    <!-- Sidebar right skeleton-->
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                        <div class="pl-5">
+                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                        </div>
+                    </div>
+                
+                    <!-- User should be able to hide sidebar right -->
+                    <doc-sidebar-right v-cloak></doc-sidebar-right>
+                </div>
+
+            </div>
+        </div>
+    
+        <doc-search-mobile></doc-search-mobile>
+        <doc-back-to-top></doc-back-to-top>
+    </div>
+
+
+    <div id="docs-overlay-target"></div>
+
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 1 - Overview of Network Programming", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+</body>
+</html>
