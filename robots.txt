@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://github.com/cwoodruff/book-network-programming-csharp/sitemap.xml.gz
+Sitemap: https://cwoodruff.github.io/book-network-programming-csharp/sitemap.xml.gz
