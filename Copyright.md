@@ -8,16 +8,22 @@ Copyright © 2024 by Christopher Woodruff
 
 All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording, or other electronic or mechanical methods, without the prior written permission of the publisher, except in the case of brief quotations embodied in critical reviews and certain other noncommercial uses permitted by copyright law.
 
-ISBN: [Insert ISBN] 
+[//]: # (ISBN: [Insert ISBN] )
 
-[Publisher Name] 
+[//]: # ()
+[//]: # ([Publisher Name] )
 
-[Publisher Address] 
+[//]: # ()
+[//]: # ([Publisher Address] )
 
-[City, State, Zip Code]
+[//]: # ()
+[//]: # ([City, State, Zip Code])
 
-www.publisherwebsite.com 
+[//]: # ()
+[//]: # (www.publisherwebsite.com )
 
-Printed in [Country] 
+[//]: # ()
+[//]: # (Printed in [Country] )
 
-[Optional: Additional legal notices or disclaimers]
+[//]: # ()
+[//]: # ([Optional: Additional legal notices or disclaimers])
