@@ -1,9 +1,9 @@
 ---
 order: 15
 icon: stack
-label: Chap 5
+label: Chap 5 - Multithreading in Network Applications
 meta:
-title: ""
+title: "Multithreading in Network Applications"
 visibility: hidden
 ---
 
