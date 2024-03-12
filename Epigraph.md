@@ -4,4 +4,8 @@ icon: stack
 ---
 # Epigraph
 
-This is a basic page, with only a title and some text content.
+
+> _The Internet is not just one thing, it's a collection of things - of 
+> numerous communications networks that all speak the same digital language._
+>
+> -- James H. Clark
