@@ -6,7 +6,7 @@
 
 Have questions or feedback about the book? My email is [cwoodruff@live.com](mailto:cwoodruff@live.com).
 
-For the source code for the workshop, visit the book's GitHub repo. [book-network-programming-csharp
+For the source code for the book, visit the book's GitHub repo. [book-network-programming-csharp
 ](https://github.com/cwoodruff/book-network-programming-csharp)
 
 | Chapter   | Title                                                           | Published |
