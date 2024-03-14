@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763734442261">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763765535318">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.763734442261" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.763765535318" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.763734442261" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.763765535318" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.763734442261" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.763734442261" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.763765535318" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.763765535318" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -281,17 +281,16 @@
 <li><strong>Flexibility and Scalability</strong> : With the proper implementation, socket-based applications can cater to a single user or scale to support thousands of concurrent connections. This scalability makes them ideal for various applications, from simple chat applications to complex multiplayer online games or large-scale data analytics platforms.</li>
 <li><strong>Real-time Interaction</strong> : Sockets empower real-time interactions. For instance, when you are video calling a friend, sockets work diligently in the background, transferring video and audio data packets back and forth, enabling that seamless experience.</li>
 <li><strong>Platform Independence</strong> : One of the beauties of socket programming, especially in a language like C#, is its platform independence. With the right abstraction, a socket-based application can communicate across diverse platforms and operating systems, breaking down digital barriers and promoting integration.</li>
-<li></li>
 <li><strong>Efficient Data Transfer</strong> : Sockets provide a direct pathway for data exchange, reducing the overhead associated with higher-level communication methods. This efficiency is paramount in applications where speed and responsiveness are crucial, like financial trading platforms or emergency response systems.</li>
 </ul>
-<p>In C#, .NET provides a comprehensive suite of classes and methods to work with sockets, making creating, managing, and utilizing sockets more accessible and efficient for developers. By harnessing the power of sockets, developers can craft network-aware applications optimized for the specific needs and challenges of today&#x27;s interconnected world.</p>
+<p>.NET provides a comprehensive suite of classes and methods to work with sockets, making creating, managing, and utilizing sockets more accessible and efficient for developers. By harnessing the power of sockets, developers can craft network-aware applications optimized for the specific needs and challenges of today&#x27;s interconnected world.</p>
 <doc-anchor-target id="socket-types">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#socket-types">#</doc-anchor-trigger>
         <span>Socket types</span>
     </h2>
 </doc-anchor-target>
-<p>When diving into the realm of socket programming, particularly in C#, it&#x27;s crucial to recognize the different types of sockets available. The type of socket selected dictates communication, influencing factors like reliability, order, and connection methodology. HereNext, we&#x27;ll delve into the primary socket types, their characteristics, and their relevance in network applications.:</p>
+<p>When diving into the world of socket programming, particularly in C#, it&#x27;s crucial to recognize the different types of sockets available. The type of socket selected dictates communication, influencing factors like reliability, order, and connection methodology. HereNext, we&#x27;ll delve into the primary socket types, their characteristics, and their relevance in network applications.:</p>
 <doc-anchor-target id="stream-sockets-tcp-sockets">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#stream-sockets-tcp-sockets">#</doc-anchor-trigger>
@@ -355,88 +354,6 @@
 </li>
 </ul>
 <p>In the C# environment, harnessing .NET, developers can access classes and methods tailored to each socket type. Familiarizing oneself with these distinctions enables developers to make informed decisions, optimizing their applications for specific communication needs and ensuring efficiency and effectiveness in data exchange.</p>
-<doc-anchor-target id="socket-programming-paradigm">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#socket-programming-paradigm">#</doc-anchor-trigger>
-        <span>Socket programming paradigm</span>
-    </h2>
-</doc-anchor-target>
-<p>Once we&#x27;ve grasped the various types of sockets, it&#x27;s essential to understand the overarching paradigm of socket programming, which outlines the steps and methodologies to design and manage network communications. In C#, .NET provides a comprehensive suite of tools and libraries to support this paradigm. Here&#x27;s a breakdown of the typical socket programming model:</p>
-<p><strong>Socket Creation</strong></p>
-<ul>
-<li><p><strong>Description</strong> : The initial step involves creating a socket using the desired protocol (TCP/UDP) and type.</p>
-</li>
-<li><p><strong>C# Implementation</strong> : The Socket class in the System.Net.Sockets namespace is typically used. One would instantiate a new socket by specifying the address family, type, and protocol.</p>
-</li>
-<li><p><strong>Binding (For Servers)</strong></p>
-</li>
-<li><p><strong>Description</strong> : Servers bind their sockets to a specific IP address and port number. This allows them to listen for incoming connection requests from clients.</p>
-</li>
-<li><p><strong>C# Implementation</strong> : The Bind method of the Socketclass is employed, using an instance of the IPEndPoint class to specify the address and port.</p>
-</li>
-</ul>
-<doc-anchor-target id="listening-for-servers">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#listening-for-servers">#</doc-anchor-trigger>
-        <span>Listening (for servers)</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li>Description: Once bound, servers listen for incoming connection requests.</li>
-<li>C# Implementation: The Listen method of the Socket class sets the socket to listen mode, with a specified backlog determining the number of allowed pending connections.</li>
-</ul>
-<doc-anchor-target id="connecting-for-clients">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#connecting-for-clients">#</doc-anchor-trigger>
-        <span>Connecting (for clients)</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li>Description: Clients initiate a connection request to communicate with a server.</li>
-<li>C# Implementation: The Connect method of the Socket class, using an IPEndPoint instance, establishes a connection to the server.</li>
-</ul>
-<doc-anchor-target id="accepting-connections-for-servers">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#accepting-connections-for-servers">#</doc-anchor-trigger>
-        <span>Accepting connections (for servers)</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li>Description: Servers accept incoming connection requests from clients.</li>
-<li>C# Implementation: The Accept method of the Socket class returns a new Socket instance for communication with the connecting client.</li>
-</ul>
-<doc-anchor-target id="data-transmission">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#data-transmission">#</doc-anchor-trigger>
-        <span>Data transmission</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li>Description: Data can be sent and received once a connection is established.</li>
-<li>C# Implementation: The Send and Receive methods of the Socket class facilitate data transmission and reception, respectively.</li>
-</ul>
-<doc-anchor-target id="socket-closure">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#socket-closure">#</doc-anchor-trigger>
-        <span>Socket closure</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li>Description: After communication is complete, closing the socket to free up resources is crucial.</li>
-<li>C# Implementation: The Close method of the Socket class gracefully shuts down the socket.</li>
-</ul>
-<doc-anchor-target id="error-handling-and-management">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#error-handling-and-management">#</doc-anchor-trigger>
-        <span>Error handling and management</span>
-    </h3>
-</doc-anchor-target>
-<ul>
-<li>Description: Effective socket programming requires robust error handling to manage potential issues like connection drops, timeouts, or data transmission errors.</li>
-<li>C# Implementation: Exception handling, typically with try-catch blocks, manages socket-related exceptions. Common exceptions include SocketException and TimeoutException.</li>
-</ul>
-<p>The socket programming paradigm in C# is both systematic and flexible. While the steps may seem linear, real-world applications often involve concurrent operations, asynchronous processes, and advanced features like non-blocking sockets, enhancing performance and user experience. Mastering this paradigm equips developers to craft efficient, responsive, and robust network applications tailored to the demands of modern computing.</p>
-<p>In the following sections, we will delve deeper into the intricacies of socket programming, exploring the nitty-gritty details of how sockets function, establish connections, and enable data exchange. By mastering these concepts, you will gain the power to create a wide array of networked applications, opening up a world of possibilities in computer networking. So, let&#x27;s begin our exploration into socket programming, where the language of networks is spoken through these essential communication conduits.</p>
 <doc-anchor-target id="overview-of-socket-programming">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-socket-programming">#</doc-anchor-trigger>
@@ -490,12 +407,16 @@
 <ol>
 <li><strong>Instantiatinge</strong> : The first step in creating a socket in C# involves instantiating an object of the Socket class. This class resides in the System.Net.Sockets namespace.</li>
 </ol>
-<p>Socket newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">Socket newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);</code></pre>
+</doc-codeblock></div>
 <p>In this example, the socket is created for an IPv4 address (AddressFamily.InterNetwork) as a stream socket (typically used with TCP), and) and specifies the TCP protocol.</p>
 <ol>
 <li><strong>Setting Socket Options</strong> : Once the socket is created, various options can be configured to tweak its behavior. This is done using the SetSocketOption method. For instance, one might set the socket to reuse the local address and port using:</li>
 </ol>
-<p>newSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">newSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);`</code></pre>
+</doc-codeblock></div>
 <doc-anchor-target id="configuring-the-socket">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#configuring-the-socket">#</doc-anchor-trigger>
@@ -505,17 +426,24 @@
 <ol>
 <li><strong>Binding the Socket (for servers)</strong>: For a server, the socket needs to be bound to a local IP and port so that it can listen for incoming connection requests. This is done using the Bind method.</li>
 </ol>
-<p>IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080);</p>
-<p>newSocket.Bind(localEndPoint);</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080);
+
+newSocket.Bind(localEndPoint);</code></pre>
+</doc-codeblock></div>
 <p>Here, the socket is set to listen on any available network interface (IPAddress.Any) at port 8080.</p>
 <ol>
 <li><strong>Non-blocking Mode</strong> : By default, sockets in .NET operate in blocking mode, meaning they will halt program execution until they complete their task (like receiving data). However, in scenarios requiring high responsiveness, the socket can be set to non-blocking mode:</li>
 </ol>
-<p>newSocket.Blocking = false;</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">newSocket.Blocking = false;</code></pre>
+</doc-codeblock></div>
 <ol>
 <li><strong>Timeouts</strong> : Timeouts can be configured to ensure that a socket operation doesn&#x27;t wait indefinitely. This is especially useful for operations like connecting or receiving data.</li>
 </ol>
-<p>newSocket.ReceiveTimeout = 5000; // Set a 5-second timeout for the receive operation</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">newSocket.ReceiveTimeout = 5000; // Set a 5-second timeout for the receive operation</code></pre>
+</doc-codeblock></div>
 <p>Creating and configuring a socket is akin to setting up a dedicated post office box in the digital realm. It&#x27;s where the magic begins, marking the starting point of the network communication journey. In C#, the robustness of .NET simplifies this process, providing developers with intuitive methods and classes that encapsulate the intricacies of sockets, enabling them to focus on crafting efficient and powerful network-driven applications.</p>
 <doc-anchor-target id="socket-addressing">
     <h2>
@@ -558,7 +486,9 @@ IPEndPoint endpoint = new IPEndPoint(ipAddress, port);</code></pre>
 <ol>
 <li><strong>Listening on Any IP</strong> : Often, especially for server applications, there&#x27;s a need to listen on all available network interfaces. The IPAddress.Any and IPAddress.IPv6Any properties cater to this for IPv4 and IPv6, respectively.</li>
 </ol>
-<p>IPEndPoint listenOnAll = new IPEndPoint(IPAddress.Any, 8080);</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">IPEndPoint listenOnAll = new IPEndPoint(IPAddress.Any, 8080);</code></pre>
+</doc-codeblock></div>
 <ol>
 <li><strong>Retrieving the Local Endpoint</strong> : After binding a socket, it might be useful to retrieve the local address and port the socket is using, particularly if a dynamic port was chosen. The LocalEndPoint property of the Socket class provides this information:</li>
 </ol>
@@ -616,7 +546,9 @@ mySocket.Blocking = true; // Explicitly setting the socket to blocking mode</cod
 <li><strong>Drawbacks</strong> : Requires more intricate programming patterns, like polling or using selectors.</li>
 <li><strong>C# Implementation</strong> :</li>
 </ul>
-<p>mySocket.Blocking = false; // Setting the socket to non-blocking mode</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">mySocket.Blocking = false; // Setting the socket to non-blocking mode</code></pre>
+</doc-codeblock></div>
 <doc-anchor-target id="asynchronous-mode">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#asynchronous-mode">#</doc-anchor-trigger>
@@ -728,7 +660,9 @@ mySocket.Connect(remoteEndPoint);</code></pre>
 <li><strong>Description</strong> : The server accepts an incoming client connection request, resulting in a new socket specifically for communication with that client.</li>
 <li><strong>C# Implementation</strong> :</li>
 </ul>
-<p><code v-pre>Socket clientSocket = mySocket.Accept();</code></p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">Socket clientSocket = mySocket.Accept();`</code></pre>
+</doc-codeblock></div>
 <doc-anchor-target id="sending-data">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#sending-data">#</doc-anchor-trigger>
@@ -742,16 +676,20 @@ mySocket.Connect(remoteEndPoint);</code></pre>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">byte[] data = Encoding.UTF8.GetBytes(&quot;Hello, World!&quot;);
 
-mySocket.Send(data);
-```csharp
-
-### Receiving data
-
-- **Description** : Read incoming data sent by the remote socket.
-- **C# Implementation** :
-
-```csharp
-byte[] buffer = new byte[1024];
+mySocket.Send(data);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="receiving-data">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#receiving-data">#</doc-anchor-trigger>
+        <span>Receiving data</span>
+    </h3>
+</doc-anchor-target>
+<ul>
+<li><strong>Description</strong> : Read incoming data sent by the remote socket.</li>
+<li><strong>C# Implementation</strong> :</li>
+</ul>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">byte[] buffer = new byte[1024];
 
 int bytesRead = mySocket.Receive(buffer);</code></pre>
 </doc-codeblock></div>
@@ -891,7 +829,9 @@ byte[] messageBytes = Encoding.UTF8.GetBytes(message);</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Once the data is ready in byte format, the Send method of the Socket class comes into play. This method takes the byte array and dispatches it over the network to the connected server:</p>
-<p>int bytesSent = clientSocket.Send(messageBytes);</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">int bytesSent = clientSocket.Send(messageBytes);</code></pre>
+</doc-codeblock></div>
 <p>The Send method returns an integer indicating the number of bytes successfully sent. It&#x27;s helpful to monitor this value, especially when sending large amounts of data, to ensure that all the intended data has been transmitted.</p>
 <doc-anchor-target id="handling-larger-data">
     <h3>
@@ -935,9 +875,9 @@ catch (SocketException e)
 <li><strong>Data Serialization</strong> : When sending complex data structures or objects, consider serialization methods that transform these entities into byte arrays suitable for transmission.</li>
 </ul>
 <p>Data transmission forms the essence of networked communication. Understanding the mechanics and best practices of sending data empowers developers to build robust and efficient client-server applications. In C# 12, the tools and methods provided within .NET make this task intuitive, but the onus remains on the developer to harness these tools effectively.</p>
-<doc-anchor-target id="receiving-data">
+<doc-anchor-target id="receiving-data-1">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#receiving-data">#</doc-anchor-trigger>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#receiving-data-1">#</doc-anchor-trigger>
         <span>Receiving data</span>
     </h2>
 </doc-anchor-target>
