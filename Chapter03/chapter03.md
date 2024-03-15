@@ -4,7 +4,6 @@ icon: stack
 label: Chap 3 - Introduction to Socket Programming
 meta:
 title: "Introduction to Socket Programming"
-visibility: hidden
 ---
 
 # 3
