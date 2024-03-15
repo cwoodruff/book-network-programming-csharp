@@ -148,7 +148,7 @@ A socket, in its essence, is a combination of an IP address and a port number. T
 
 ### Creating a socket in C#
 
-1. **Instantiatinge** : The first step in creating a socket in C# involves instantiating an object of the Socket class. This class resides in the System.Net.Sockets namespace.
+**Instantiating** : The first step in creating a socket in C# involves instantiating an object of the Socket class. This class resides in the System.Net.Sockets namespace.
 
 ```csharp
 Socket newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -156,34 +156,75 @@ Socket newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, Pro
 
 In this example, the socket is created for an IPv4 address (AddressFamily.InterNetwork) as a stream socket (typically used with TCP), and) and specifies the TCP protocol.
 
-1. **Setting Socket Options** : Once the socket is created, various options can be configured to tweak its behavior. This is done using the SetSocketOption method. For instance, one might set the socket to reuse the local address and port using:
+**Setting Socket Options** : Once the socket is created, various options can be configured to tweak its behavior. This is done using the SetSocketOption method. For instance, one might set the socket to reuse the local address and port using:
 
 ```csharp
-newSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);`
+// Create a socket
+Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Setting socket options
+
+// Set the send buffer size to 8 KB
+socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendBuffer, 8192);
+
+// Set the receive buffer size to 8 KB
+socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveBuffer, 8192);
+
+// Set the socket to linger for 10 seconds after Socket.Close is called
+LingerOption lingerOption = new LingerOption(true, 10);
+socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Linger, lingerOption);
+
+// Enable keep-alive packets
+socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+
 ```
 
 ### Configuring the socket
 
-1. **Binding the Socket (for servers)**: For a server, the socket needs to be bound to a local IP and port so that it can listen for incoming connection requests. This is done using the Bind method.
+**Binding the Socket (for servers)**: For a server, the socket needs to be bound to a local IP and port so that it can listen for incoming connection requests. This is done using the Bind method.
 
 ```csharp
-IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080);
+// Create a socket
+Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-newSocket.Bind(localEndPoint);
+// Set up a local endpoint
+IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080); // Listen on port 8080 on all network interfaces
+
+// Bind the socket to the local endpoint
+serverSocket.Bind(localEndPoint);
 ```
 Here, the socket is set to listen on any available network interface (IPAddress.Any) at port 8080.
 
-1. **Non-blocking Mode** : By default, sockets in .NET operate in blocking mode, meaning they will halt program execution until they complete their task (like receiving data). However, in scenarios requiring high responsiveness, the socket can be set to non-blocking mode:
+**Timeouts** : Timeouts can be configured to ensure that a socket operation doesn't wait indefinitely. This is especially useful for operations like connecting or receiving data.
+```C#
+// Example data object to serialize and send
+var dataObject = new
+{
+    Name = "Chris Doe",
+    Age = 30,
+    Email = "chrisdoe@example.com"
+};
 
-```csharp
-newSocket.Blocking = false;
+// Serialize the object to a JSON string
+string jsonString = JsonSerializer.Serialize(dataObject);
+
+// Convert the JSON string to a byte array
+byte[] byteData = Encoding.UTF8.GetBytes(jsonString);
+
+// Server's IP address and port
+string serverIP = "127.0.0.1"; // Replace with server's IP address
+int port = 11000; // Replace with server's port
+
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Connect to the remote endpoint
+clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIP), port));
+
+// Send the serialized data to the server
+int bytesSent = clientSocket.Send(byteData);
 ```
 
-1. **Timeouts** : Timeouts can be configured to ensure that a socket operation doesn't wait indefinitely. This is especially useful for operations like connecting or receiving data.
-
-```csharp
-newSocket.ReceiveTimeout = 5000; // Set a 5-second timeout for the receive operation
-```
 Creating and configuring a socket is akin to setting up a dedicated post office box in the digital realm. It's where the magic begins, marking the starting point of the network communication journey. In C#, the robustness of .NET simplifies this process, providing developers with intuitive methods and classes that encapsulate the intricacies of sockets, enabling them to focus on crafting efficient and powerful network-driven applications.
 
 ## Socket addressing
@@ -195,37 +236,8 @@ Much like how homes have unique addresses to receive mail, devices, and applicat
 ### Fundamentals of socket addressing
 
 A socket address serves asis a unique identifier that pinpoints where data should be sent or received. This address is a combination of:
-
-1. **IP Address** : Represents the identity of a machine on a network. It could be an IPv4 address (e.g., 192.168.1.10) or an IPv6 address (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334).
-
-1. **Port Number** : A 16-bit number that identifies a specific process or application on the machine. It ensures that data reaches the correct recipient, especially when multiple processes might be communicating simultaneously.
-
-### Socket addressing in C#
-
-1. **Constructing an Endpoint** : In C#, the IPEndPoint class, which is part of the System.Net namespace, represents a socket address. Creating an instance of this class requires both an IP address and a port number:
-
-```csharp
-IPAddress ipAddress = IPAddress.Parse("192.168.1.10");
-
-int port = 8080;
-
-IPEndPoint endpoint = new IPEndPoint(ipAddress, port);
-```
-
-Here, a socket address is constructed using the IP address 192.168.1.10 and port number 8080.
-
-1. **Listening on Any IP** : Often, especially for server applications, there's a need to listen on all available network interfaces. The IPAddress.Any and IPAddress.IPv6Any properties cater to this for IPv4 and IPv6, respectively.
-```csharp
-IPEndPoint listenOnAll = new IPEndPoint(IPAddress.Any, 8080);
-```
-
-1. **Retrieving the Local Endpoint** : After binding a socket, it might be useful to retrieve the local address and port the socket is using, particularly if a dynamic port was chosen. The LocalEndPoint property of the Socket class provides this information:
-
-```csharp
-Socket mySocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-IPEndPoint localEndpoint = (IPEndPoint)mySocket.LocalEndPoint;
-```
+- **IP Address** : Represents the identity of a machine on a network. It could be an IPv4 address (e.g., 192.168.1.10) or an IPv6 address (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334).
+- **Port Number** : A 16-bit number that identifies a specific process or application on the machine. It ensures that data reaches the correct recipient, especially when multiple processes might be communicating simultaneously.
 
 ### Special port numbers
 
@@ -249,9 +261,17 @@ While the foundational principles of socket programming are built upon addressin
 - **C# Implementation** :
 
 ```csharp
-Socket mySocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+// Create a socket
+Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-mySocket.Blocking = true; // Explicitly setting the socket to blocking mode
+// Set up a local endpoint
+IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080); // Listen on port 8080 on all network interfaces
+
+// Bind the socket to the local endpoint
+serverSocket.Bind(localEndPoint);
+
+// Place the socket in a non-blocking mode
+serverSocket.Blocking = true;
 ```
 
 ### Non-blocking mode
@@ -262,7 +282,17 @@ mySocket.Blocking = true; // Explicitly setting the socket to blocking mode
 - **C# Implementation** :
 
 ```csharp
-mySocket.Blocking = false; // Setting the socket to non-blocking mode
+// Create a socket
+Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Set up a local endpoint
+IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080); // Listen on port 8080 on all network interfaces
+
+// Bind the socket to the local endpoint
+serverSocket.Bind(localEndPoint);
+
+// Place the socket in a non-blocking mode
+serverSocket.Blocking = false;
 ```
 ### Asynchronous mode
 
@@ -292,99 +322,33 @@ private static void ReceiveCallback(IAsyncResult ar)
 - **Drawbacks** : Like blocking mode, it can make applications unresponsive during lengthy tasks.
 - **C# Implementation** : Methods like Send and Receive are used for synchronous data transmission.
 
-Choosing the right communication mode is pivotal, as it influences application performance, responsiveness, and development complexity. While some modes might be better suited for rapid data exchanges, others are more apt for data-intensive tasks or scenarios requiring precise sequencing. In C#, the vast arsenal of .NET provides developers with the flexibility to choose and implement their desired socket communication mode, ensuring that applications remain robust, efficient, and in sync with their intended purpose.
-
-## Socket operations
-
-The ability of applications to communicate over networks through socket programming is a marvel of modern software development. However, the smooth flow of data, the establishment of connections, and the management of these links are all made possible by a series of fundamental socket operations. Each operation is a step in the dance of network communication. In this subsection, we'll demystify these core operations, emphasizing their significance, sequence, and realization within C# 12 and the evolving .NET framework.
-
-### Creating a socket
-
-- **Description** : The first step to any socket-related endeavor is to instantiate a socket object.
-- **C# Implementation** :
-
 ```csharp
-Socket mySocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-```
+// Create a TCP/IP socket
+Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-### Binding a socket (primarily for servers)
-
-- **Description** : Binding assigns a specific local IP address and port number to the socket, enabling it to listen for incoming connections.
-- **C# Implementation** :
-
-```csharp
+// Set up the local endpoint for the socket
 IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080);
 
-mySocket.Bind(localEndPoint);
+// Bind the socket to the local endpoint and listen for incoming connections
+listener.Bind(localEndPoint);
+listener.Listen(10); // Set the backlog queue length (how many pending connections can be queued)
+
+// Start listening for connections in a synchronous manner
+while (true)
+{
+    // Program is suspended while waiting for an incoming connection
+    Socket handler = listener.Accept();
+
+    // At this point, you can exchange data with the remote device using the handler socket
+    // For example, use handler.Send() and handler.Receive()
+
+    // Close the handler socket when done communicating with the client
+    handler.Shutdown(SocketShutdown.Both);
+    handler.Close();
+}
 ```
 
-### Listening for connections (servers)
-
-- **Description** : After binding, the server socket needs to start listening for incoming client connection requests.
-- **C# Implementation** :
-
-```csharp
-mySocket.Listen(10); // The parameter specifies the maximum number of queued connections.
-```
-
-### Establishing a connection (clients)
-
-- **Description** : Clients use this operation to initiate a connection to a server.
-- **C# Implementation** :
-
-```csharp
-IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.10"), 8080);
-
-mySocket.Connect(remoteEndPoint);
-```
-
-### Accepting a connection (servers)
-
-- **Description** : The server accepts an incoming client connection request, resulting in a new socket specifically for communication with that client.
-- **C# Implementation** :
-
-```csharp
-Socket clientSocket = mySocket.Accept();`
-```
-### Sending data
-
-- **Description** : Transmit data to the connected remote socket.
-- **C# Implementation** :
-
-```csharp
-byte[] data = Encoding.UTF8.GetBytes("Hello, World!");
-
-mySocket.Send(data);
-```
-
-### Receiving data
-
-- **Description** : Read incoming data sent by the remote socket.
-- **C# Implementation** :
-
-```csharp
-byte[] buffer = new byte[1024];
-
-int bytesRead = mySocket.Receive(buffer);
-```
-
-### Closing a socket
-
-- **Description** : Terminate the socket connection gracefully.
-- **C# Implementation** :
-
-```csharp
-mySocket.Shutdown(SocketShutdown.Both);
-
-mySocket.Close();
-```
-
-As of the latest iterations of C# and .NET, developers are provided with even more streamlined tools and mechanisms to simplify socket operations including:
-
-- **Span and memory** : With the introduction of Span\<T\> and Memory\<T\> in recent .NET versions, socket operations, especially data transmission and reception, have become more memory-efficient and faster.
-- **Task-based aAsynchronous oOperations** : Modern versions of .NET offer task-based asynchronous methods, like SendAsync and ReceiveAsync, which integrate seamlessly with the async/await paradigm of C#, ensuring non-blocking, responsive applications.
-
-Socket operations form the backbone of network communication. Each operation represents a phase in the lifecycle of a socket, from its birth to its eventual closure. In C# 12, coupled with the advancements in .NET, developers are empowered with an enriched set of tools and methods, ensuring that crafting intricate, efficient, and responsive network applications becomes a more intuitive and streamlined endeavor. In the upcoming chapters, we will delve deeper into the intricacies of socket programming, exploring the nuts and bolts of how these essential components function together. Mastering these fundamentals will unlock the power to create a vast array of networked applications, from simple chat programs to complex distributed systems. So, let's embark on this journey into the world of socket programming, where the language of networks comes to life through these remarkable conduits of communication.
+Choosing the right communication mode is pivotal, as it influences application performance, responsiveness, and development complexity. While some modes might be better suited for rapid data exchanges, others are more apt for data-intensive tasks or scenarios requiring precise sequencing. In C#, the vast arsenal of .NET provides developers with the flexibility to choose and implement their desired socket communication mode, ensuring that applications remain robust, efficient, and in sync with their intended purpose.
 
 # Client-side socket programming
 
@@ -418,15 +382,18 @@ Socket creation and connection are foundational steps in the journey of client-s
 
 In C#, using .NET, the Socket class found in the System.Net.Sockets namespace is the primary tool for creating and managing sockets. A new socket instance can be created by providing three key pieces of information:
 
-1. **Address fFamily** : This defines the addressing scheme for the socket. The most common is AddressFamily.InterNetwork, which denotes IPv4.
-2. **Socket tType** : Specifies the communication mechanism—for example, SocketType.Stream represents a reliable, two-way, connection-based byte stream.
-3. **Protocol tType** : Indicates the protocol being used. ProtocolType.Tcp is commonly used with SocketType.Stream.
+- **Address Family** : This defines the addressing scheme for the socket. The most common is AddressFamily.InterNetwork, which denotes IPv4.
+- **Socket Type** : Specifies the communication mechanism—for example, SocketType.Stream represents a reliable, two-way, connection-based byte stream.
+- **Protocol Type** : Indicates the protocol being used. ProtocolType.Tcp is commonly used with SocketType.Stream.
 
 Here's a simple C# code snippet to instantiate a new socket:
 
 ```csharp
-using System.Net.Sockets;
+// Set server's IP address and port number
+IPAddress ipAddress = IPAddress.Parse("127.0.0.1"); // Server IP address (use the appropriate IP address)
+int port = 11000; // Server port
 
+// Create a TCP/IP socket.
 Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 ```
 
@@ -439,27 +406,57 @@ To represent this information, C# provides the IPEndPoint class. An IPEndPoint i
 Here's a C# code snippet showcasing how to connect to a server:
 
 ```csharp
-using System.Net;
+// Server's IP address and port
+string serverIP = "127.0.0.1"; 
+int port = 11000;
 
-// Define the server's IP address and port number
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.10"), 8080);
+// Convert string IP to IPAddress object and create server endpoint
+IPAddress ipAddress = IPAddress.Parse(serverIP);
+IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
-// Connect to the server
-
-clientSocket.Connect(serverEndPoint);
+// Connect to the remote endpoint
+clientSocket.Connect(remoteEP);
 ```
 
 In real-world scenarios, there's always a possibility that the server might be unavailable, or there might be network issues. Therefore, it's good practice to wrap the connection logic inside a try-catch block to handle potential exceptions:
 
 ```csharp
+// Server's IP address and port
+string serverIP = "127.0.0.1";
+int port = 11000;
+
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
 try
 {
-	clientSocket.Connect(serverEndPoint);`
+    // Convert string IP to IPAddress object and create server endpoint
+    IPAddress ipAddress = IPAddress.Parse(serverIP);
+    IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
+
+    // Connect to the remote endpoint
+    clientSocket.Connect(remoteEP);
+
+    // Insert code to send and receive data
+
+    // Shutdown and close socket when done
+    clientSocket.Shutdown(SocketShutdown.Both);
+    clientSocket.Close();
 }
-	catch (SocketException e)
+catch (ArgumentNullException ane)
 {
-	Console.WriteLine($"An error occurred while trying to connect: {e.Message}");
+    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+}
+catch (SocketException se)
+{
+    Console.WriteLine("SocketException : {0}", se.ToString());
+}
+catch (Exception e)
+{
+    Console.WriteLine("Unexpected exception : {0}", e.ToString());
 }
 ```
 
@@ -480,18 +477,49 @@ At its core, sockets deal with raw bytes. Whether you're sending a simple text m
 Consider a basic example where a client wishes to send a _string_ message to the server. In C#, the Encoding class offers methods to convert a string into its byte representation:
 
 ```csharp
-using System.Text;
+// Server's IP address and port
+string serverIP = "127.0.0.1";
+int port = 11000;
 
-string message = "Hello, Server!";
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+// Convert string IP to IPAddress object and create server endpoint
+IPAddress ipAddress = IPAddress.Parse(serverIP);
+IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
+
+// Connect to the remote endpoint
+clientSocket.Connect(remoteEP);
+
+// Encode the data string into a byte array and send it
+string dataToSend = "Hello, server!"; // The data you want to send
+byte[] byteData = Encoding.ASCII.GetBytes(dataToSend);
 ```
 
 ### Transmitting data using the socket
 
 Once the data is ready in byte format, the Send method of the Socket class comes into play. This method takes the byte array and dispatches it over the network to the connected server:
 ```csharp
-int bytesSent = clientSocket.Send(messageBytes);
+// Server's IP address and port
+string serverIP = "127.0.0.1";
+int port = 11000;
+
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Convert string IP to IPAddress object and create server endpoint
+IPAddress ipAddress = IPAddress.Parse(serverIP);
+IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
+
+// Connect to the remote endpoint
+clientSocket.Connect(remoteEP);
+
+// Encode the data string into a byte array and send it
+string dataToSend = "Hello, server!"; // The data you want to send
+byte[] byteData = Encoding.ASCII.GetBytes(dataToSend);
+
+// Send the data through the socket
+int bytesSent = clientSocket.Send(byteData);
 ```
 The Send method returns an integer indicating the number of bytes successfully sent. It's helpful to monitor this value, especially when sending large amounts of data, to ensure that all the intended data has been transmitted.
 
@@ -500,18 +528,31 @@ The Send method returns an integer indicating the number of bytes successfully s
 For instances when the data size exceeds the buffer size, or when working with large datasets, sending data in chunks becomes essential. Here's a simple loop-based approach to handle such scenarios:
 
 ```csharp
-int totalBytesSent = 0;
-int bytesLeft = messageBytes.Length;
-int sendBufferSize = clientSocket.SendBufferSize;
+// Server's IP address and port
+string serverIP = "127.0.0.1";
+int port = 11000;
 
-while (totalBytesSent \< messageBytes.Length)
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Connect to the remote endpoint
+clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIP), port));
+
+// Large data to send
+string path = "path_to_large_file"; // Path to the large file you want to send
+byte[] dataToSend = File.ReadAllBytes(path);
+
+// Send data in chunks of 1024 bytes
+int bytesSent = 0;
+int bytesLeft = dataToSend.Length;
+const int CHUNK_SIZE = 1024;
+
+while (bytesLeft > 0)
 {
-  int bytesToSend = Math.Min(bytesLeft, sendBufferSize);
-  int sent = clientSocket.Send(messageBytes, totalBytesSent, bytesToSend, SocketFlags.None);
-
-  totalBytesSent += sent;
-
-  bytesLeft -= sent;
+    int curChunkSize = Math.Min(CHUNK_SIZE, bytesLeft);
+    int sent = clientSocket.Send(dataToSend, bytesSent, curChunkSize, SocketFlags.None);
+    bytesSent += sent;
+    bytesLeft -= sent;
 }
 ```
 
@@ -534,7 +575,34 @@ catch (SocketException e)
 
 - **Acknowledgments** : Often, after sending data, it's beneficial for the server to send back an acknowledgment. This ensures that the data reached reaches its destination and was is processed as intended.
 - **Data Serialization** : When sending complex data structures or objects, consider serialization methods that transform these entities into byte arrays suitable for transmission.
+```C#
+// Example data object to serialize and send
+var dataObject = new
+{
+    Name = "Chris Doe",
+    Age = 30,
+    Email = "chrisdoe@example.com"
+};
 
+// Serialize the object to a JSON string
+string jsonString = JsonSerializer.Serialize(dataObject);
+
+// Convert the JSON string to a byte array
+byte[] byteData = Encoding.UTF8.GetBytes(jsonString);
+
+// Server's IP address and port
+string serverIP = "127.0.0.1"; // Replace with server's IP address
+int port = 11000; // Replace with server's port
+
+// Create a TCP/IP socket
+Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Connect to the remote endpoint
+clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIP), port));
+
+// Send the serialized data to the server
+int bytesSent = clientSocket.Send(byteData);
+```
 Data transmission forms the essence of networked communication. Understanding the mechanics and best practices of sending data empowers developers to build robust and efficient client-server applications. In C# 12, the tools and methods provided within .NET make this task intuitive, but the onus remains on the developer to harness these tools effectively.
 
 ## Receiving data
@@ -592,9 +660,9 @@ Having explored the intricacies of client-side socket programming, we are now we
 
 The following are some best practices to ensure data is fully received:
 
-1. **Delimiters or Length Prefixes** : One common approach is for the server to send a specific delimiter indicating the end of a message or prefix the message with its length. This helps the client understand when it has received the complete data.
+**Delimiters or Length Prefixes** : One common approach is for the server to send a specific delimiter indicating the end of a message or prefix the message with its length. This helps the client understand when it has received the complete data.
 
-1. **Error Handling** : Network operations can be unpredictable. As with sending data, wrapping the Receive method in a try-catch block is crucial to handle potential issues:
+**Error Handling** : Network operations can be unpredictable. As with sending data, wrapping the Receive method in a try-catch block is crucial to handle potential issues:
 
 ```csharp
 try
@@ -607,7 +675,64 @@ catch (SocketException e)
 }
 ```
 
-1. **Data Deserialization** : If the server is sending complex data structures, the client may need to deserialize the received byte array back into the original object or structure.
+**Data Deserialization** : If the server is sending complex data structures, the client may need to deserialize the received byte array back into the original object or structure.
+```C#
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
+
+class Program
+{
+    static void Main()
+    {
+        // Server's IP address and port
+        string serverIP = "127.0.0.1"; // Replace with server's IP address
+        int port = 11000; // Replace with server's port
+
+        // Create a TCP/IP socket
+        Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        try
+        {
+            // Connect to the remote endpoint
+            clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIP), port));
+
+            // Buffer for incoming data
+            byte[] bytes = new byte[1024];
+            StringBuilder builder = new StringBuilder();
+
+            // Receive the response from the server
+            int bytesRec = clientSocket.Receive(bytes);
+            builder.Append(Encoding.UTF8.GetString(bytes, 0, bytesRec));
+
+            // Deserialize JSON data into an object
+            var dataObject = JsonSerializer.Deserialize<MyDataObject>(builder.ToString());
+
+            // Output received data (modify according to the actual structure of MyDataObject)
+            Console.WriteLine("Received data: Name = {0}, Age = {1}, Email = {2}",
+                dataObject.Name, dataObject.Age, dataObject.Email);
+
+            // Shutdown and close socket when done
+            clientSocket.Shutdown(SocketShutdown.Both);
+            clientSocket.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Unexpected exception : {0}", e.ToString());
+        }
+    }
+}
+
+// Define a class that matches the structure of the received JSON data
+public class MyDataObject
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string Email { get; set; }
+}
+```
 
 Receiving data accurately and efficiently is paramount in client-side socket programming. In C#, .NET provides a suite of tools that, when combined with best practices, ensures data integrity and seamless communication. A good understanding of these methods and techniques is foundational for developers aiming to build reliable and responsive networked applications.
 
@@ -695,6 +820,26 @@ In this snippet, if the Receive method doesn't get any data within 5 seconds, it
 
 Error handling and ensuring a graceful shutdown are not just auxiliary aspects of socket programming—they are integral to the development of stable and user-friendly applications. C# 12, paired with .NET, offers developers a powerful and expressive toolset to navigate the intricacies of networked communication. Properly harnessing these tools, combined with a good understanding of potential pitfalls, paves the way for efficient, resilient, and professional-grade applications. ///
 
+### Retrieving the Local Endpoint
+
+After binding a socket, it might be useful to retrieve the local address and port the socket is using, particularly if a dynamic port was chosen.
+
+```csharp
+// Create a socket
+Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Bind the socket to a local endpoint
+IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080);
+socket.Bind(localEndPoint);
+
+// Retrieve the local endpoint from the socket
+IPEndPoint localEP = (IPEndPoint)socket.LocalEndPoint;
+
+// Retrieve the local address and port
+IPAddress localAddress = localEP.Address;
+int localPort = localEP.Port;
+```
+
 # Server-side socket programming
 
 Server-side socket programming stands asis the counterpoint to its client-side counterpart in the grand scheme of networked communication. In the vast realm of interconnected applications, while clients act as the seekers of services or data, servers play the pivotal role of providers. Whether it's serving a webpage, handling email traffic, or transmitting files, behind each of these taskstask is a server diligently listening for incoming connections and fulfilling requests.
@@ -717,15 +862,14 @@ In the subsequent subsections, we will delve deeper into the intricacies of serv
 The foundation of server-side socket programming is the creation of a server socket. This entity acts as a welcoming gate, persistently listening for incoming client connection requests. Crafting this gate efficiently and effectively is crucial to ensure seamless communication, minimize delays, and pave the way for subsequent operations.
 
 In C# 12 and .NET 8, the process of creating a server socket can be segmented into a few essential steps, which we will see next.:
+```C#
+// Set the local endpoint for the socket. For this example, use the local machine.
+IPAddress ipAddress = IPAddress.Any; // Listen on all network interfaces
+int port = 11000;
+IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-### Instantiate the socket
-
-Before listening for connections, you need a Socket object. This object is typically created with the AddressFamily, SocketType, and ProtocolType parameters, which define the networking protocol, the socket's nature, and the communication protocol, respectively..
-
-```csharp
-using System.Net.Sockets;
-
-Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+// Create a TCP/IP socket.
+Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 ```
 
 Here, the server socket is designed to use the IPv4 addressing scheme (InterNetwork), a stream-based communication (Stream), and the TCP protocol (Tcp).
@@ -735,11 +879,16 @@ Here, the server socket is designed to use the IPv4 addressing scheme (InterNetw
 Binding associates the socket with a particular endpoint, which comprises an IP address and a port number. The IPEndPoint class from the System.Net namespace helps define this endpoint.
 
 ```csharp
-using System.Net;
+// Set the local endpoint for the socket. For this example, use the local machine.
+IPAddress ipAddress = IPAddress.Any; // Listen on all network interfaces
+int port = 11000;
+IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080); // Listen on port 8080 on all available network interfaces
+// Create a TCP/IP socket.
+Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-serverSocket.Bind(localEndPoint);
+// Bind the socket to the local endpoint and listen for incoming connections.
+listener.Bind(localEndPoint);
 ```
 
 IPAddress.Any signifies that the server will listen on all network interfaces of the machine. If you want to listen on a specific IP, replace IPAddress.Any with the desired IP address.
@@ -749,7 +898,17 @@ IPAddress.Any signifies that the server will listen on all network interfaces of
 After binding, the server socket enters listening mode, awaiting incoming connection requests. The Listen method does this, and it accepts a parameter defining the maximum number of pending connection requests in the queue.
 
 ```csharp
-serverSocket.Listen(10); // Can queue up to 10 clients
+// Set the local endpoint for the socket. For this example, use the local machine.
+IPAddress ipAddress = IPAddress.Any; // Listen on all network interfaces
+int port = 11000;
+IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+
+// Create a TCP/IP socket.
+Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Bind the socket to the local endpoint and listen for incoming connections.
+listener.Bind(localEndPoint);
+listener.Listen(10); // The parameter specifies the length of the pending connections queue.
 ```
 
 ### Accepting connections
@@ -757,20 +916,28 @@ serverSocket.Listen(10); // Can queue up to 10 clients
 Upon detecting an incoming connection, the server can accept it using the Accept method. This method is blocking; it waits until a client connects.
 
 ```csharp
-Socket clientSocket = serverSocket.Accept();
+// Set the local endpoint for the socket. For this example, use the local machine.
+IPAddress ipAddress = IPAddress.Any; // Listen on all network interfaces
+int port = 11000;
+IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-Console.WriteLine("Client connected!");
+// Create a TCP/IP socket.
+Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+// Bind the socket to the local endpoint and listen for incoming connections.
+listener.Bind(localEndPoint);
+listener.Listen(10); // The parameter specifies the length of the pending connections queue.
+
+// Start listening for connections
+while (true)
+{
+    Socket handler = listener.Accept();
+}
 ```
 
 When a client connection is accepted, the Accept method returns a new Socket object. This new socket is used to manage communication with the connected client.
 
 Creating a server socket efficiently is vital, as it's the cornerstone of the server's operations. The provided code segments guide you through setting up a primary server socket in C# 12 and .NET 8. Once established, this foundation allows for diverse operations, from data exchanges to intricate concurrency management, fostering a dynamic and responsive server environment.
-
-## Accepting client connections
-
-Accepting client connections is one of the principal tasks of a server-side socket. Once the server socket is set up and listening, it stands ready to accept incoming clients who wish to establish a connection. Accepting these connections judiciously and managing them effectively is the bedrock of a server's responsiveness and service quality.
-
-In C#, accepting client connections involves understanding and handling the following aspects:
 
 ### Blocking nature of Accept
 
@@ -784,93 +951,298 @@ Console.WriteLine("Client connected from clientSocket.RemoteEndPoint.ToString())
 
 This new socket (clientSocket in the example) serves as the communication channel between the server and the specific client.
 
-### Handling multiple connections
+### Handling multiple connections using threading
 
 In a real-world scenario, a server typically serves multiple clients simultaneously. One approach to achieve this is by leveraging threading. With each new connection, a new thread can be spawned to handle the client's requests, allowing the main server thread to continue listening for other incoming connections:
 
 ```csharp
-using System.Threading;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
-while (true) // Server loop
+class Program
 {
-  Socket clientSocket = serverSocket.Accept();
-  Thread clientThread = new Thread(() =\> HandleClient(clientSocket));
+    static void Main()
+    {
+        // Set up the local endpoint for the socket
+        IPAddress ipAddress = IPAddress.Any; // Listen on all network interfaces
+        int port = 11000; // Set your listening port
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-  clientThread.Start();
-}
+        // Create a TCP/IP socket
+        Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-void HandleClient(Socket client)
-{
-  // Handle client operations here
-  Console.WriteLine("Client connected from " + client.RemoteEndPoint.ToString());
+        try
+        {
+            // Bind the socket to the local endpoint and listen for incoming connections
+            listener.Bind(localEndPoint);
+            listener.Listen(10);
+
+            Console.WriteLine("Server is listening on port {0}...", port);
+
+            while (true)
+            {
+                Socket clientSocket = listener.Accept();
+
+                // Create a new thread for each connection and continue listening
+                Thread clientThread = new Thread(() => HandleClient(clientSocket));
+                clientThread.Start();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+    }
+
+    private static void HandleClient(Socket clientSocket)
+    {
+        // This method handles the client connection
+        string? data = null;
+        byte[] bytes = new byte[1024];
+
+        try
+        {
+            while (true)
+            {
+                int numByte = clientSocket.Receive(bytes);
+                data += Encoding.ASCII.GetString(bytes, 0, numByte);
+                if (data.IndexOf("<EOF>", StringComparison.Ordinal) > -1)
+                {
+                    break;
+                }
+            }
+
+            Console.WriteLine("Text received from client: {0}", data);
+
+            // Send a response to the client
+            byte[] message = Encoding.ASCII.GetBytes("Data received successfully.");
+            clientSocket.Send(message);
+
+            // Shutdown and close the client socket
+            clientSocket.Shutdown(SocketShutdown.Both);
+            clientSocket.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+    }
 }
 ```
 
 In the above preceding code, the server continuously listens for incoming connections. When a connection is accepted, a new thread is initiated to manage that specific client's interactions, ensuring that the primary server thread remains free to accept other connections.
 
-### Graceful connection closure
+### Handling multiple connections using asynchronous socket operations and threading
 
-During the lifecycle of a server-client interaction, there might arise a need to close the connectiona need to close the connection might arise, either due to completed operations or detected anomalies. Closing the connection gracefully ensures data integrity and resource deallocation.
-
-```csharp
-clientSocket.Shutdown(SocketShutdown.Both);
-
-clientSocket.Close();
-```
-
-The Shutdown method is used to stop communication in both directions (sending and receiving). Subsequently, the Close method releases the socket and associated resources.
-
-### Enhancing through asynchrony
-
-In the modern .NET framework, asynchronous socket operations are promoted to ensure non-blocking operations and a more scalable server design. Using methods like BeginAccept and EndAccept, server developers can cater to client connections without stalling the main execution thread:.
+Handling multiple connections on the server side in C# typically involves using asynchronous socket operations and potentially threading concepts.
 
 ```csharp
-serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), serverSocket);
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
-private static void AcceptCallback(IAsyncResult ar)
+class Program
 {
-  Socket listener = (Socket)ar.AsyncState;
-  Socket handler = listener.EndAccept(ar);
+    public static void Main()
+    {
+        // Set the local endpoint for the socket.
+        IPAddress ipAddress = IPAddress.Any;
+        int port = 11000;
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-  Console.WriteLine("Client connected from " + handler.RemoteEndPoint.ToString());
+        // Create a TCP/IP socket.
+        Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-  // Continue the server loop for accepting clients
-  listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
+        try
+        {
+            listener.Bind(localEndPoint);
+            listener.Listen(100); // Adjust the pending connections queue as needed
+
+            while (true)
+            {
+                // Start an asynchronous socket to listen for connections.
+                listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
+                // Wait until a connection is made before continuing.
+                Thread.Sleep(100); // Prevents the while loop from consuming all CPU resources, adjust as needed
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+    }
+
+    public static void AcceptCallback(IAsyncResult ar)
+    {
+        // Get the socket that handles the client request.
+        Socket? listener = (Socket)ar.AsyncState!;
+        Socket? handler = listener?.EndAccept(ar);
+
+        // Create the state object.
+        StateObject state = new StateObject();
+        state.WorkSocket = handler;
+        handler?.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+    }
+
+    public static void ReadCallback(IAsyncResult ar)
+    {
+        String content;
+
+        // Retrieve the state object and the handler socket
+        // from the asynchronous state object.
+        StateObject? state = (StateObject)ar.AsyncState!;
+        Socket? handler = state.WorkSocket;
+
+        // Read data from the client socket. 
+        int bytesRead = handler!.EndReceive(ar);
+
+        if (bytesRead > 0)
+        {
+            // There might be more data, so store the data received so far.
+            state.Sb.Append(Encoding.ASCII.GetString(state.Buffer, 0, bytesRead));
+
+            // Check for end-of-file tag. If it is not there, read more data.
+            content = state.Sb.ToString();
+            if (content.IndexOf("<EOF>", StringComparison.Ordinal) > -1)
+            {
+                // All the data has been read from the client. Display it on the console.
+                Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content);
+                // Echo the data back to the client.
+                Send(handler, content);
+            }
+            else
+            {
+                // Not all data received. Get more.
+                handler.BeginReceive(state.Buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
+            }
+        }
+    }
+
+    private static void Send(Socket? handler, String data)
+    {
+        // Convert the string data to byte data using ASCII encoding.
+        byte[] byteData = Encoding.ASCII.GetBytes(data);
+
+        // Begin sending the data to the remote device.
+        handler?.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
+    }
+
+    private static void SendCallback(IAsyncResult ar)
+    {
+        try
+        {
+            // Retrieve the socket from the state object.
+            Socket? handler = (Socket)ar.AsyncState!;
+
+            // Complete sending the data to the remote device.
+            int bytesSent = handler.EndSend(ar);
+            Console.WriteLine("Sent {0} bytes to client.", bytesSent);
+
+            handler.Shutdown(SocketShutdown.Both);
+            handler.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+    }
+}
+
+// State object for reading client data asynchronously
+class StateObject
+{
+    // Size of receive buffer.
+    public const int BufferSize = 1024;
+    // Receive buffer.
+    public readonly byte[] Buffer = new byte[BufferSize];
+    // Received data string.
+    public readonly StringBuilder Sb = new StringBuilder();  
+    // Client socket.
+    public Socket? WorkSocket = null;
 }
 ```
-
-This approach provides a more scalable and responsive server design by harnessing the power of asynchrony.
-
-Accepting client connections effectively is crucial in server-side socket programming. The strategies and code examples provided elucidate how C# 12 and .NET 8 offer tools and techniques to cater to multiple clients, handle connections responsibly, and establish a foundation for subsequent server operations, ensuring an optimized and dynamic server environment.
-
-## Handling multiple clients
-
-Handling multiple clients concurrently is one of the chief challenges faced in server-side socket programming. A server, especially in applications like chat servers or multiplayer game servers, must cater to numerous clients without letting the service quality deteriorate for any single client. This demands a robust architecture that can manage simultaneous connections, distribute server resources optimally, and guarantee data integrity.
-
-In the realm of C# 12 and .NET 8, handling multiple clients involves embracing several techniques and approaches:
+In this example, the server listens for connections and handles each one in a separate asynchronous operation. This allows the server to manage multiple connections simultaneously without blocking the main thread. Note that for real-world applications, error handling, logging, and security features should be added. This code is just a basic framework to get you started with asynchronous socket programming in C#.
 
 ### Threads for individual clients
 
 A straightforward approach is to spawn a new thread for each connecting client. The System.Threading namespace facilitates this:
 
 ```csharp
-using System.Threading;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
-while (true) // Endless server loop
+class Program
 {
-  Socket clientSocket = serverSocket.Accept();
+    static void Main()
+    {
+        IPAddress localAddress = IPAddress.Any;
+        int port = 11000;
+        TcpListener server = new TcpListener(localAddress, port);
 
-  Thread clientThread = new Thread(() =\> HandleClientCommunication(clientSocket));
+        try
+        {
+            server.Start();
+            Console.WriteLine("Server started. Listening to TCP clients on port " + port);
 
-  clientThread.Start();
-}
+            while (true)
+            {
+                Console.WriteLine("Waiting for client...");
+                TcpClient client = server.AcceptTcpClient(); // Accept the client
+                Console.WriteLine("Client connected. Spawning thread.");
 
-void HandleClientCommunication(Socket client)
-{
-  // Interact with the client
+                // Spawn a new thread for each client
+                Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClient));
+                clientThread.Start(client);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception: " + e.ToString());
+        }
+        finally
+        {
+            server.Stop();
+        }
+    }
 
-  // ...
-  client.Close();
+    static void HandleClient(object obj)
+    {
+        TcpClient client = (TcpClient)obj;
+        NetworkStream stream = client.GetStream();
+
+        byte[] bytes = new byte[1024];
+        int bytesRead;
+
+        try
+        {
+            while ((bytesRead = stream.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                // Translate data bytes to a ASCII string and print
+                string data = Encoding.ASCII.GetString(bytes, 0, bytesRead);
+                Console.WriteLine("Received: {0}", data);
+
+                // Process the data sent by the client
+                data = data.ToUpper();
+
+                byte[] msg = Encoding.ASCII.GetBytes(data);
+
+                // Send back a response
+                stream.Write(msg, 0, msg.Length);
+                Console.WriteLine("Sent: {0}", data);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception: " + e.ToString());
+        }
+        finally
+        {
+            // Shutdown and end connection
+            client.Close();
+        }
+    }
 }
 ```
 
@@ -881,61 +1253,161 @@ While this approach is simple and effective for a small number of clients, as th
 Leveraging the Task class offers a more lightweight concurrency model compared to traditional threads. The Task.Run method can be used to offload client handling to the thread pool:
 
 ```csharp
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
-while (true)
+class Program
 {
-  Socket clientSocket = serverSocket.Accept();
+    static void Main()
+    {
+        // Set the local endpoint for the socket.
+        IPAddress ipAddress = IPAddress.Any; // Listen on all network interfaces
+        int port = 11000; // Set the listening port
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-  Task.Run(() =\> HandleClientCommunication(clientSocket));
+        // Create a TCP/IP socket.
+        Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        try
+        {
+            // Bind the socket to the local endpoint and listen for incoming connections.
+            listener.Bind(localEndPoint);
+            listener.Listen(10);
+
+            Console.WriteLine("Waiting for connections...");
+
+            while (true)
+            {
+                // Accept a connection. The task will complete when a connection is made.
+                Socket client = listener.Accept();
+                // Using a Task to handle the client connection allows the server to remain responsive to other incoming connections.
+                Task.Run(() => HandleClient(client));
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+    }
+
+    private static void HandleClient(Socket client)
+    {
+        try
+        {
+            Console.WriteLine("Handling client on separate task");
+
+            // Buffer for incoming data
+            byte[] bytes = new byte[1024];
+            StringBuilder sb = new StringBuilder();
+
+            // Receive the data from the client.
+            int numByte = client.Receive(bytes);
+            sb.Append(Encoding.ASCII.GetString(bytes, 0, numByte));
+            string data = sb.ToString();
+            Console.WriteLine($"Text received from client: {data}");
+
+            // Echo the data back to the client.
+            byte[] message = Encoding.ASCII.GetBytes(data);
+            client.Send(message);
+
+            // Shutdown and close the client socket
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Exception: {e.Message}");
+        }
+    }
 }
 ```
 
 This model benefits from the .NET thread pool, reusing threads when possible, and generally providing better scalability than a one-thread-per-client approach.
-
-### Asynchronous socket operations
-
-.NET promotes asynchronous programming, especially for I/O-bound operations like socket communications. Asynchronous methods, like BeginAccept and EndAccept, allow the server to handle multiple clients without blocking the main thread:
-
-```csharp
-serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), serverSocket);
-
-private static void AcceptCallback(IAsyncResult ar)
-{
-  Socket listener = (Socket)ar.AsyncState;
-  Socket handler = listener.EndAccept(ar);
-
-  // Handle the client`
-  HandleClientCommunication(handler);
-
-  // Continue listening for more clients
-  listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
-}
-```
-
-By decoupling the client acceptance from the main server loop, this model enables a server to remain responsive, regardless of the client load.
 
 ### Concurrent collections for client management
 
 When handling multiple clients, maintaining a list of connected clients can be beneficial. The System.Collections.Concurrent namespace provides thread-safe collections:
 
 ```csharp
-using System.Collections.Concurrent;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 
-ConcurrentDictionary\<int, Socket\> connectedClients = new ConcurrentDictionary\<int, Socket\>();
-
-void HandleClientCommunication(Socket client)
+class Program
 {
-  int clientId = client.GetHashCode();
+    private static readonly List<Socket> ClientSockets = new List<Socket>();
+    private static readonly object LockObject = new object();
 
-  connectedClients.TryAdd(clientId, client);
+    static void Main()
+    {
+        // Set the local endpoint for the socket.
+        IPAddress ipAddress = IPAddress.Any;
+        int port = 11000;
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-  // Interact with the client
+        // Create a TCP/IP socket.
+        Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-  // ...
+        try
+        {
+            serverSocket.Bind(localEndPoint);
+            serverSocket.Listen(10);
 
-  connectedClients.TryRemove(clientId, out \_);
-  client.Close();
+            Console.WriteLine("Server started. Listening to TCP clients at 0.0.0.0:" + port);
+
+            while (true)
+            {
+                Socket clientSocket = serverSocket.Accept(); // Accept a new client
+                lock (LockObject) // Ensure thread safety when adding to the list
+                {
+                    ClientSockets.Add(clientSocket);
+                }
+                Thread clientThread = new Thread(HandleClient);
+                clientThread.Start(clientSocket); // Handle client in new thread
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        finally
+        {
+            serverSocket.Close();
+        }
+    }
+
+    private static void HandleClient(object socket)
+    {
+        Socket clientSocket = (Socket)socket;
+
+        try
+        {
+            while (true)
+            {
+                byte[] buffer = new byte[1024];
+                int received = clientSocket.Receive(buffer);
+                if (received == 0) break; // Client closed connection
+                string text = Encoding.ASCII.GetString(buffer, 0, received);
+                Console.WriteLine("Client says: " + text);
+
+                // Here you can broadcast the received message to all connected clients
+            }
+        }
+        catch (SocketException)
+        {
+            // Handle socket related exception
+        }
+        finally
+        {
+            // Remove the socket from the list and close it when done
+            lock (LockObject)
+            {
+                ClientSockets.Remove(clientSocket);
+            }
+            clientSocket.Close();
+        }
+    }
 }
 ```
 
@@ -998,18 +1470,6 @@ string receivedMessage = Encoding.UTF8.GetString(messageBuffer);
 
 In the above example, each message is preceded by a 4-byte integer representing the message's length. This way, the receiver knows exactly how many bytes to read for the actual message after reading the length.
 
-### Asynchronous data exchange
-
-Considering the nature of network operations and the need for responsive servers, asynchronous patterns are often preferred:
-
-```csharp
-await clientSocket.SendAsync(new ArraySegment\<byte\>(messageBytes), SocketFlags.None);
-
-byte[] buffer = new byte[1024];
-
-int bytesRead = await clientSocket.ReceiveAsync(new ArraySegment\<byte\>(buffer), SocketFlags.None);
-```
-
 The asynchronous methods, such as SendAsync and ReceiveAsync, provide non-blocking ways to send and receive data, ensuring the server remains responsive.
 
 Effective data exchange is pivotal to server-client communication. With C# 12 and .NET 8, developers can utilize powerful synchronous and asynchronous mechanisms for robust and efficient communication. By ensuring data integrity, managing message lengths, and leveraging async patterns, developers can foster swift, reliable exchanges that form the backbone of many modern applications.
@@ -1046,12 +1506,11 @@ A concurrent dictionary is ideal for storing session-related data because it off
 ```csharp
 using System.Collections.Concurrent;
 
-ConcurrentDictionary\<string, object\> sessionData = new ConcurrentDictionary\<string, object\>();
+ConcurrentDictionary<string, object> sessionData = new ConcurrentDictionary<string, object>();
 ```
 
 For each client, you can store and retrieve session-specific data:
 
-`
 ```csharp
 sessionData.TryAdd(sessionId, new ClientSessionData());
 
@@ -1065,26 +1524,121 @@ Where ClientSessionData might be a custom class storing details like login time,
 Inactive clients can consume valuable server resources. Implementing a session timeout can help free up these resources. A Timer can be used to check for inactivity:
 
 ```csharp
-using System.Timers;
+using System.Net;
+using System.Net.Sockets;
+using System.Collections.Concurrent;
 
-Timer sessionCheck = new Timer(60000); // Check every 60 seconds
-sessionCheck.Elapsed += CheckInactiveSessions;
-sessionCheck.Start();
-
-void CheckInactiveSessions(object sender, ElapsedEventArgs e)
+class Program
 {
-  // If client's last activity was more than X minutes ago, remove them
-  foreach (var key in sessionData.Keys)
-  {
-    ClientSessionData data = (ClientSessionData)sessionData[key];
-    if (DateTime.Now - data.LastActivity \> TimeSpan.FromMinutes(5))
+    private static readonly ConcurrentDictionary<Socket, DateTime> ClientLastActivity = new ConcurrentDictionary<Socket, DateTime>();
+    private static readonly object LockObject = new object();
+    private static readonly TimeSpan Timeout = TimeSpan.FromMinutes(5); // 5 minutes timeout for demo
+
+    static void Main()
     {
-      sessionData.TryRemove(key, out \_);
-      Console.WriteLine($"Session {key} has been terminated due to inactivity.");
+        IPAddress ipAddress = IPAddress.Any;
+        int port = 11000;
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+
+        Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        try
+        {
+            serverSocket.Bind(localEndPoint);
+            serverSocket.Listen(10);
+
+            Console.WriteLine("Server started. Listening for TCP clients at 0.0.0.0:" + port);
+
+            // Timeout check thread
+            Thread timeoutThread = new Thread(CheckClientTimeouts);
+            timeoutThread.Start();
+
+            while (true)
+            {
+                Socket clientSocket = serverSocket.Accept();
+                lock (LockObject)
+                {
+                    ClientLastActivity[clientSocket] = DateTime.Now;
+                }
+                Thread clientThread = new Thread(HandleClient);
+                clientThread.Start(clientSocket);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        finally
+        {
+            serverSocket.Close();
+        }
     }
-  }
+
+    private static void HandleClient(object client)
+    {
+        Socket clientSocket = (Socket)client;
+        try
+        {
+            while (true)
+            {
+                byte[] buffer = new byte[1024];
+                int received = clientSocket.Receive(buffer);
+                if (received == 0) break; // Client closed connection
+
+                lock (LockObject)
+                {
+                    // Update last activity time
+                    ClientLastActivity[clientSocket] = DateTime.Now;
+                }
+
+                // Process received data...
+            }
+        }
+        catch (SocketException)
+        {
+            // Handle socket exceptions...
+        }
+        finally
+        {
+            // Clean up resources
+            lock (LockObject)
+            {
+                ClientLastActivity.Remove(clientSocket);
+            }
+            clientSocket.Close();
+        }
+    }
+
+    private static void CheckClientTimeouts()
+    {
+        while (true)
+        {
+            List<Socket> clientsToRemove = new List<Socket>();
+
+            lock (LockObject)
+            {
+                foreach (var pair in ClientLastActivity)
+                {
+                    if (DateTime.Now - pair.Value > Timeout)
+                    {
+                        // Client has timed out
+                        clientsToRemove.Add(pair.Key);
+                        pair.Key.Close(); // Close socket connection
+                    }
+                }
+
+                foreach (var client in clientsToRemove)
+                {
+                    ClientLastActivity.Remove(client);
+                }
+            }
+
+            Thread.Sleep(60000); // Check every minute
+        }
+    }
 }
 ```
+In this example, the clientLastActivity dictionary keeps track of the last activity time for each connected client. HandleClient updates this time every time a message is received. CheckClientTimeouts is a separate thread that periodically checks for clients that should be timed out based on their last activity time and closes these connections. Note that for real-world applications, you should also handle potential exceptions and add proper synchronization when accessing shared resources across threads.
 
 ### Graceful session termination
 
@@ -1112,19 +1666,92 @@ void TerminateSession(string sessionId)
 In some scenarios, session data may need to be preserved across server restarts. This persistence can be achieved by serializing the session data to a file or a database and reloading it upon server startup.
 
 ```csharp
-using System.IO;
-using System.Text.Json;
+using System.Net;
+using System.Net.Sockets;
+using System.Collections.Concurrent;
 
-File.WriteAllText("sessions.json", JsonSerializer.Serialize(sessionData));
-
-// And to reload:
-
-if (File.Exists("sessions.json"))
+class Program
 {
-  string jsonData = File.ReadAllText("sessions.json");
-  sessionData = JsonSerializer.Deserialize\<ConcurrentDictionary\<string, object\>\>(jsonData);
+    private const string SessionFilePath = "sessions.txt";
+    private static readonly ConcurrentDictionary<string, DateTime> ActiveSessions = new ConcurrentDictionary<string, DateTime>();
+
+    static void Main()
+    {
+        LoadSessions();
+
+        IPAddress ipAddress = IPAddress.Any;
+        int port = 11000;
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
+
+        Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        try
+        {
+            serverSocket.Bind(localEndPoint);
+            serverSocket.Listen(10);
+
+            Console.WriteLine("Server started. Listening for TCP clients at 0.0.0.0:" + port);
+
+            while (true)
+            {
+                Socket clientSocket = serverSocket.Accept();
+                string clientKey = clientSocket.RemoteEndPoint.ToString(); // Unique session key (IP:Port)
+
+                UpdateSession(clientKey);
+
+                // Handle client in new thread or task...
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        finally
+        {
+            SaveSessions();
+            serverSocket.Close();
+        }
+    }
+
+    private static void LoadSessions()
+    {
+        if (File.Exists(SessionFilePath))
+        {
+            string[] lines = File.ReadAllLines(SessionFilePath);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                if (parts.Length == 2 && DateTime.TryParse(parts[1], out DateTime lastActive))
+                {
+                    ActiveSessions[parts[0]] = lastActive;
+                }
+            }
+        }
+    }
+
+    private static void SaveSessions()
+    {
+        using (StreamWriter file = new StreamWriter(SessionFilePath))
+        {
+            foreach (var session in ActiveSessions)
+            {
+                file.WriteLine($"{session.Key},{session.Value}");
+            }
+        }
+    }
+
+    private static void UpdateSession(string clientKey)
+    {
+        ActiveSessions[clientKey] = DateTime.Now;
+        // Optionally save sessions to file every time it's updated for fault tolerance
+        SaveSessions();
+    }
 }
 ```
+
+In this code, LoadSessions is called at the start of the program to load existing session data from a file. Each session is identified by a unique key, which can be the client's remote endpoint string. UpdateSession updates the last active time for a session in the activeSessions dictionary and then calls SaveSessions to write the updated sessions back to the file. This ensures that session data is preserved across server restarts. SaveSessions writes all session information to the file, which is called both when updating individual sessions and when the server is closing.
+
+Keep in mind this is a basic example for illustration. In a real-world application, you should handle exceptions, encrypt sensitive session information, and consider the performance impact of frequent file I/O operations. Also, for high-scale applications, consider using a database or distributed cache for session storage and retrieval.
 
 Managing client sessions is pivotal in maintaining interactive, efficient, and secure server-client communication. C# 12 and .NET 8 provide a rich toolkit, from concurrent collections to timers and serialization, to aid developers in implementing effective session management. By diligently tracking, maintaining, and operating on client sessions, servers can deliver a seamless and efficient experience for usersuser experience.
 
@@ -1164,32 +1791,8 @@ int bytesRead = clientSocket.Receive(buffer);
 }
 catch (SocketException ex)
 {
-Console.WriteLine($"Client disconnected unexpectedly: {ex.Message}");
-clientSocket.Close();
-}
-```
-
-### Dealing with timeouts
-
-If you're using a socket with a set timeout (using the ReceiveTimeout or SendTimeout properties), the socket will throw a SocketException when the operation exceeds the allotted time:
-
-clientSocket.ReceiveTimeout = 5000; // Set a 5-second timeout
-
-```csharp
-try
-{
-	clientSocket.Receive(buffer);
-}
-catch (SocketException ex)
-{
-	if (ex.SocketErrorCode == SocketError.TimedOut)
-  {
-  	Console.WriteLine("Socket operation timed out.");
-  }
-  else
-  {
-  	Console.WriteLine($"Socket error: {ex.Message}");
-  }
+    Console.WriteLine($"Client disconnected unexpectedly: {ex.Message}");
+    clientSocket.Close();
 }
 ```
 
