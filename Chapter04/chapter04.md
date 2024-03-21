@@ -147,7 +147,7 @@ In this exhilarating async universe, your program can now send off the Calculate
 
 ### The await keyword
 
-Dive into the fantastic world of the await modifier in C# 10 and .NET 6, where your code dances through tasks with the grace of a ballet star, skipping over the boring waits and making efficiency look effortless. Imagine await as the magical word that pauses your favorite TV show (a task) while you run to grab a snack, ensuring you don't miss a single moment. It tells your program, "Hey, chill for a sec, I've got some stuff to handle, but don't worry, you won't even notice I'm gone!"
+Dive into the fantastic world of the await modifier in C# and .NET, where your code dances through tasks with the grace of a ballet star, skipping over the boring waits and making efficiency look effortless. Imagine await as the magical word that pauses your favorite TV show (a task) while you run to grab a snack, ensuring you don't miss a single moment. It tells your program, "Hey, chill for a sec, I've got some stuff to handle, but don't worry, you won't even notice I'm gone!"
 
 Before the era of await, here's how our code drama unfolded:
 
