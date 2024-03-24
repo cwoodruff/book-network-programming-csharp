@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764557046067">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764561608808">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,11 +35,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.764557046067" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.764561608808" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.764557046067" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.764561608808" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.764557046067" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.764561608808" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -248,11 +248,36 @@
 <li>Learning Parallel Processing and Performance Optimization in Network Applications</li>
 <li>Acquiring Recommended Practices for Multithreading in Network Applications</li>
 </ul>
+<p>After learning everything in the chapter, roll up your sleeves and dive into our action-packed case study: building a multithreaded server! It&#x27;s like constructing your digital fortress, where every line of code you write is a brick in the wall defending against the relentless waves of network requests. Let&#x27;s turn chaos into harmony and make your server the superhero it&#x27;s meant to be!</p>
 <doc-anchor-target id="introduction-to-multithreading-in-network-applications">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-multithreading-in-network-applications">#</doc-anchor-trigger>
         <span>Introduction to Multithreading in Network Applications</span>
     </h2>
+</doc-anchor-target>
+<doc-anchor-target id="defining-multithreading-in-network-context">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#defining-multithreading-in-network-context">#</doc-anchor-trigger>
+        <span>Defining Multithreading in Network Context</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="the-need-for-multithreading-in-modern-network-applications">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-need-for-multithreading-in-modern-network-applications">#</doc-anchor-trigger>
+        <span>The Need for Multithreading in Modern Network Applications</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="basic-concepts-of-multithreading">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#basic-concepts-of-multithreading">#</doc-anchor-trigger>
+        <span>Basic Concepts of Multithreading</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="advantages-and-challenges-of-multithreading">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#advantages-and-challenges-of-multithreading">#</doc-anchor-trigger>
+        <span>Advantages and Challenges of Multithreading</span>
+    </h3>
 </doc-anchor-target>
 <doc-anchor-target id="handling-concurrent-network-connections-with-multithreading">
     <h2>
@@ -260,16 +285,106 @@
         <span>Handling Concurrent Network Connections with Multithreading</span>
     </h2>
 </doc-anchor-target>
+<doc-anchor-target id="understanding-concurrent-connections">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#understanding-concurrent-connections">#</doc-anchor-trigger>
+        <span>Understanding Concurrent Connections</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="multithreading-to-manage-concurrent-connections">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#multithreading-to-manage-concurrent-connections">#</doc-anchor-trigger>
+        <span>Multithreading to Manage Concurrent Connections</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="synchronization-and-safety">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#synchronization-and-safety">#</doc-anchor-trigger>
+        <span>Synchronization and Safety</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="testing-and-debugging-techniques">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#testing-and-debugging-techniques">#</doc-anchor-trigger>
+        <span>Testing and Debugging Techniques</span>
+    </h3>
+</doc-anchor-target>
 <doc-anchor-target id="parallel-processing-and-performance-optimization-in-network-applications">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#parallel-processing-and-performance-optimization-in-network-applications">#</doc-anchor-trigger>
         <span>Parallel Processing and Performance Optimization in Network Applications</span>
     </h2>
 </doc-anchor-target>
+<doc-anchor-target id="introduction-to-parallel-processing-in-network-applications">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-parallel-processing-in-network-applications">#</doc-anchor-trigger>
+        <span>Introduction to Parallel Processing in Network Applications</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="identifying-opportunities-for-parallelism">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#identifying-opportunities-for-parallelism">#</doc-anchor-trigger>
+        <span>Identifying Opportunities for Parallelism</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="implementing-parallelism-in-c">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-parallelism-in-c">#</doc-anchor-trigger>
+        <span>Implementing Parallelism in C#</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="performance-optimization-techniques">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-optimization-techniques">#</doc-anchor-trigger>
+        <span>Performance Optimization Techniques</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="monitoring-and-tuning-parallel-applications">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#monitoring-and-tuning-parallel-applications">#</doc-anchor-trigger>
+        <span>Monitoring and Tuning Parallel Applications</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="best-practices-and-common-pitfalls">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#best-practices-and-common-pitfalls">#</doc-anchor-trigger>
+        <span>Best Practices and Common Pitfalls</span>
+    </h3>
+</doc-anchor-target>
 <doc-anchor-target id="recommended-practices-for-multithreading-in-network-applications">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#recommended-practices-for-multithreading-in-network-applications">#</doc-anchor-trigger>
         <span>Recommended Practices for Multithreading in Network Applications</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="design-principles-for-multithreaded-networking">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#design-principles-for-multithreaded-networking">#</doc-anchor-trigger>
+        <span>Design Principles for Multithreaded Networking</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="effective-thread-management">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#effective-thread-management">#</doc-anchor-trigger>
+        <span>Effective Thread Management</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="error-handling-and-exception-management">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#error-handling-and-exception-management">#</doc-anchor-trigger>
+        <span>Error Handling and Exception Management</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="performance-optimization-strategies">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#performance-optimization-strategies">#</doc-anchor-trigger>
+        <span>Performance Optimization Strategies</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="case-study-building-a-multithreaded-server">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#case-study-building-a-multithreaded-server">#</doc-anchor-trigger>
+        <span>Case Study: Building a Multithreaded Server</span>
     </h2>
 </doc-anchor-target>
 
