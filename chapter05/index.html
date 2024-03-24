@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764557027422">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764557046067">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -15,6 +15,7 @@
     <!-- Primary Meta Tags -->
     <title>Multithreading in Network Applications</title>
     <meta name="title" content="Multithreading in Network Applications">
+    <meta name="description" content="Hey there, fellow coder! Ready to dive into the exhilarating world of multithreading and parallelization with .">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter05/">
@@ -23,20 +24,22 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter05/">
     <meta property="og:title" content="Multithreading in Network Applications">
+    <meta property="og:description" content="Hey there, fellow coder! Ready to dive into the exhilarating world of multithreading and parallelization with .">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter05/">
     <meta property="twitter:title" content="Multithreading in Network Applications">
+    <meta property="twitter:description" content="Hey there, fellow coder! Ready to dive into the exhilarating world of multithreading and parallelization with .">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.764557027422" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.764557046067" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.764557027422" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.764557046067" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.764557027422" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.764557046067" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -229,11 +232,45 @@
         <span>5</span>
     </h1>
 </doc-anchor-target>
-<doc-anchor-target id="chapter-title">
+<doc-anchor-target id="multithreading-in-network-applications">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#chapter-title">#</doc-anchor-trigger>
-        <span>[Chapter Title]</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#multithreading-in-network-applications">#</doc-anchor-trigger>
+        <span>Multithreading in Network Applications</span>
     </h1>
+</doc-anchor-target>
+<p>Hey there, fellow coder! Ready to dive into the exhilarating world of multithreading and parallelization with .NET 8 and C# 12? Imagine you&#x27;re at a bustling street food market - that&#x27;s your application. Now, imagine if you could clone yourself to try different foods simultaneously, instead of waiting in one line at a time. That&#x27;s multithreading and parallelization for you – doing multiple tasks at once, making your programs faster and way cooler.</p>
+<p>Now, let’s chat about multithreading. Think of it as having several chefs (threads) in a kitchen (your program) working together on different dishes (tasks). It&#x27;s all about efficiency and getting that dinner service out on time, but without bumping into each other or mixing up orders. We&#x27;re going to learn how to manage these chefs so they can cook up a storm without turning the kitchen into a scene from a slapstick comedy.</p>
+<p>And then there’s parallelization – this is like having an army of robots at your command, each one programmed to do a specific job in perfect harmony. It’s all about breaking down a big task (like preparing a massive banquet) into smaller, bite-sized pieces, so each robot can work on a piece simultaneously. This way, we can serve up our feast (or, in our case, run our program) way faster than if we had one robot doing all the work alone. Buckle up, because we&#x27;re about to make your code run like it&#x27;s got rocket boots!</p>
+<p>In this chapter, we&#x27;ll explore the following key areas:</p>
+<ul>
+<li>Introducing Multithreading in Network Applications</li>
+<li>How to Handle Concurrent Network Connections with Multithreading</li>
+<li>Learning Parallel Processing and Performance Optimization in Network Applications</li>
+<li>Acquiring Recommended Practices for Multithreading in Network Applications</li>
+</ul>
+<doc-anchor-target id="introduction-to-multithreading-in-network-applications">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-multithreading-in-network-applications">#</doc-anchor-trigger>
+        <span>Introduction to Multithreading in Network Applications</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="handling-concurrent-network-connections-with-multithreading">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-concurrent-network-connections-with-multithreading">#</doc-anchor-trigger>
+        <span>Handling Concurrent Network Connections with Multithreading</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="parallel-processing-and-performance-optimization-in-network-applications">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#parallel-processing-and-performance-optimization-in-network-applications">#</doc-anchor-trigger>
+        <span>Parallel Processing and Performance Optimization in Network Applications</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="recommended-practices-for-multithreading-in-network-applications">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#recommended-practices-for-multithreading-in-network-applications">#</doc-anchor-trigger>
+        <span>Recommended Practices for Multithreading in Network Applications</span>
+    </h2>
 </doc-anchor-target>
 
                                 
