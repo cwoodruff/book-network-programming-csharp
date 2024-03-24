@@ -45,7 +45,7 @@ Imagine a bustling city where, instead of traffic jams halting the flow, cars (l
 
 But wait, there's more! Asynchronous programming isn't just about keeping the user interface snappy; it's also a master of resource efficiency and scalability. By liberating threads from the doldrums of idle waiting, it repurposes them for new tasks, turning potential downtime into productive uptime. This is a game-changer for server-side applications, where the power to juggle multiple requests without breaking a sweat can catapult a service from ho-hum to heroic. Ultimately, asynchronous programming is more than just a feature; it's the backbone of modern, efficient, and satisfying network applications.
 
-## Challenges of asynchronous programming
+### Challenges of asynchronous programming
 
 Asynchronous programming is a thrilling rollercoaster ride in the world of C# and .NET 8! This adventure promises to supercharge your applications with unmatched responsiveness and scalability. But hold onto your hats—along with the rush of speed and efficiency comes a set of challenges that could turn your coding journey into a wild ride.
 
@@ -73,11 +73,11 @@ Diving into C# network projects and getting the hang of the synchronization cont
 
 Here’s the twist: leaning too much on the synchronization context, particularly in the bustling backstage of server-side applications like ASP.NET, might cramp your app’s style, leading to awkward performance, slow dances and scalability wallflowers. Here’s a pro tip: when your code’s not busy with UI touch-ups or threading VIPs, consider going incognito with ConfigureAwait(false). It’s like telling your code, “Psst, meet me directly at the after-party, skip the synchronization context formalities.” This nifty move can streamline your performance and keep those deadlock party poopers off the guest list. So, getting the synchronization context vibe just right can make your asynchronous C# network shindig more efficient and the talk of the town in scalability and maintenance circles! We will learn more about ConfigureAwait later in the chapter.
 
-# Understanding async/await and asynchronous operations
+## Understanding async/await and asynchronous operations
 
 Let's chat (and code) about how the incredible duo of async/await has totally changed the game for .NET developers. Gone are the days of wrestling with clunky, error-riddled ways of doing things asynchronously. Now, it's all about cruising down the smooth highway of code with a fresh and friendly approach. Just slap the async label on a method to signal it's got some asynchronous magic up its sleeve, and it'll hand you back a Task or Task<T> like a secret handshake. Then, sprinkle some await magic when calling these methods, and watch your current method take a chill pill, pausing gracefully without throwing a tantrum and freezing up your thread.
 
-## Async/await fundamentals
+### Async/await fundamentals
 
 In the fabulous world of C# 12, async and await are the dynamic duo of asynchronous programming. They're here to help you clean up your act, making your code neater and a breeze to read, especially when you've got all those wait-worthy operations like network calls or file I/O without putting your executing thread to sleep.
 
@@ -85,7 +85,7 @@ When you slap async onto a method, you give it a special badge that says, "Yep, 
 
 This power couple, async and await, is all about making your life easier when dealing with asynchronous shenanigans. They help keep your code organized and humming along nicely, boosting performance and keeping users happy. How cool is that?
 
-### The async modifier
+#### The async modifier
 
 Imagine the async keyword in C# as a friendly magician in your coding toolbox. When you're stuck in the slow-motion world of synchronous code, where every task waits in line like shoppers before a store opens, async waves its magic wand to keep things moving smoothly. Instead of standing around waiting for one task to finish before starting another, async helps your code do multiple things at once, like a skilled chef juggling different dishes. Now, let's see the magic in action!
 
@@ -97,7 +97,7 @@ using System.Threading;
 
 public class BeforeAsync
 {
-    public int CalculateSum()
+    private int CalculateSum()
     {
         Thread.Sleep(5000); // Pretending to crunch some serious numbers for 5 seconds.
         return 42; // The universe's answer to everything, obviously.
@@ -120,12 +120,9 @@ Here, your program is like a patient in a doctor's waiting room, just sitting an
 With async (welcome to the magic show!):
 
 ```C#
-using System;
-using System.Threading.Tasks;
-
 public class AfterAsync
 {
-    public async Task<int> CalculateSumAsync()
+    private async Task<int> CalculateSumAsync()
     {
         await Task.Delay(5000); // Simulates crunching numbers asynchronously.
         return 42; // Still the answer to everything, but faster!
@@ -145,7 +142,7 @@ await afterAsync.ShowSumAsync(); // Whoosh! Off to multitask-land!
 
 In this exhilarating async universe, your program can now send off the CalculateSumAsync method on its merry way and get on with other tasks instead of sitting idly by. When the method is done, it'll nudge your program, saying, "Hey, I’ve got your answer!" This is efficiency at its finest, turning your code from a snooze fest into a productivity powerhouse. Welcome to the future, where your code doesn't just run; it sprints.
 
-### The await keyword
+#### The await keyword
 
 Dive into the fantastic world of the await modifier in C# and .NET, where your code dances through tasks with the grace of a ballet star, skipping over the boring waits and making efficiency look effortless. Imagine await as the magical word that pauses your favorite TV show (a task) while you run to grab a snack, ensuring you don't miss a single moment. It tells your program, "Hey, chill for a sec, I've got some stuff to handle, but don't worry, you won't even notice I'm gone!"
 
@@ -154,7 +151,7 @@ Before the era of await, here's how our code drama unfolded:
 ```C#
 public class NoAwaitLand
 {
-    public string MakeTea()
+    private string MakeTea()
     {
         Thread.Sleep(3000); // Simulating the time it takes to make tea.
         return "Tea is ready!";
@@ -179,7 +176,7 @@ Now, let's sprinkle some await magic into the mix:
 ```C#
 public class AwaitLand
 {
-    public async Task<string> MakeTeaAsync()
+    private async Task<string> MakeTeaAsync()
     {
         await Task.Delay(3000); // Like putting the kettle on and walking away.
         return "Tea is ready, and you didn't miss a thing!";
@@ -199,7 +196,7 @@ await awaitLand.EnjoyTeaAsync(); // Look at you, multitasking like a pro!
 
 With the power of await, your code now makes tea while still keeping up with every twist and turn of your TV show. No more missed moments, no more waiting around—just pure, uninterrupted productivity. The await modifier turns your tasks into background ninjas, completing their missions without pulling you away from what matters. Welcome to the future, where your code keeps up with your life's pace, making every second count!
 
-# Strategies for writing asynchronous code
+## Strategies for writing asynchronous code
 
 Diving into the world of asynchronous code in C# can be like unlocking a new level in a video game – exciting but initially tricky. Writing asynchronous code is all about doing multiple things at once without getting in your way. Imagine you're in a kitchen making breakfast: toast toasting, coffee brewing, and eggs frying. In the coding world, instead of waiting for each task to finish before starting the next, you get them all going simultaneously. That's the magic of async programming – it keeps your app's kitchen running smoothly, so you're not just staring at the toaster!
 
@@ -210,7 +207,7 @@ But, just like in cooking, there's an art to juggling all those tasks without bu
 
 Think of it as having suitable recipes and kitchen tools at your disposal. By mastering these strategies, you can whip up a fast, responsive application that handles operations like a well-oiled machine, all while keeping the user experience as smooth as a perfectly brewed cup of coffee. Let's dive in and turn up the heat (but only a little) on writing awesome asynchronous code!
 
-## Know When to Use async/await
+### Know When to Use async/await
 
 So when do we as software developers break out the async and await superheroes in our C# networking software. Picture this: your application is like a bustling coffee shop. Your customers are your app's users, and the coffee orders are your network requests. Now, in a traditional, synchronous world, each barista (let's call them threads) can only handle one order at a time. If someone orders a fancy, time-consuming latte, everyone else waits. Not fun, right?
 
@@ -225,13 +222,13 @@ However, it's not always rainbows and butterflies. Remember, using async and awa
 
 So, think of async and await as your special tools for keeping the coffee shop running smoothly, ensuring every customer (user) leaves happy and maybe even a little impressed by the service. Use them wisely, and your networking software will handle operations like a dream without leaving your users hanging.
 
-## Async method design
+### Async method design
 
 Let's look at designing async methods in C#. Think of async methods as your own personal team of background assistants in the world of C#. They're like those helpful elves from fairy tales, doing the heavy lifting in the background while you keep the front of the shop (your main application) running smoothly and keeping the customers (users) happy. Async methods allow your app to handle tasks like accessing the web, working with files, or any other time-consuming operations without freezing up your user interface or making your application feel stuck in the mud.
 
 Designing these methods is like planning a well-organized workspace. You want everything to be efficient and in the right place. In C# land, this means knowing when to use the async keyword, applying await to pause things gracefully, and figuring out the return types (usually Task or Task<T>) that fit your needs. But it's not just about slapping async and await everywhere like they're going out of style. It's about crafting your methods to improve the responsiveness of your applications while keeping your code clean and understandable. It's like setting up your kitchen for a big dinner party – everything needs to be ready to go so you can handle whatever the evening throws at you without breaking a sweat.
 
-### Async all the way down
+#### Async all the way down
 
 Imagine you're building a network of pipes in a super futuristic city. In this city, water (data) must flow smoothly and without interruption to keep everyone happy. In this analogy, async and await are your high-tech tools for ensuring that water flows efficiently without any hiccups or blockages.
 
@@ -245,7 +242,7 @@ And here's a pro tip: Only mix synchronous and asynchronous code with a good rea
 
 In conclusion, when building networking software in C#, going "async all the way down" means committing to a strategy that maximizes efficiency and responsiveness from the initial user request to the final outcome. Like in our futuristic city, ensuring a consistent and uninterrupted flow keeps everything running smoothly, making for a happier, more productive environment.
 
-### Avoid async Void
+#### Avoid async Void
 
 Dive into the intriguing quirk of the async world: the notorious async void methods in C#. Think of async void as that one friend who says they'll help with your big party (your app), then disappears when the first guests arrive (runtime). Sure, they meant well when they offered to help, but their vanishing act leaves you scrambling to cover all the bases yourself.
 
@@ -255,25 +252,22 @@ Instead, it would be best to stick to async Task for your asynchronous methods. 
 
 So, steer clear of async void unless you're dealing with event handlers. Embrace async Task instead. It's like choosing a dependable, all-terrain vehicle over a flashy, unreliable sports car for a cross-country road trip. Sure, the sports car looks cool, but you want the reliability and safety of the SUV to ensure you reach your destination smoothly without unexpected breakdowns. Keep your async journey safe, predictable, and under control with async Task, and leave async void for those rare, specific scenarios where necessary.
 
-## Task handling
+### Task handling
 
 Tasks in C# are where Async programming gets cool and modern, like switching from snail mail to instant messaging. When you use Async programming, you tell your C# application, "Hey, why don't you run this time-consuming task over there and just ping me when done?" This way, your app stays calm when handling big tasks like downloading files or querying a database. Instead, it stays responsive, keeping users happy because they can continue doing things without interruption.
 
 We will look at Tasks, the MVPs of Async programming in C#. A Task is a promise for some work that will be completed in the future. Think of it as ordering your coffee at a busy café. You get a number (the Task), and while you wait for your number to be called, you're free to scroll through your phone or chat with a friend. You can enjoy the results once your coffee (or Task) is ready. Tasks with async and await keywords in C# make writing asynchronous code as smooth as your favorite latte. It's all about keeping things moving efficiently without the dreaded app freezes or slowdowns. Welcome to the async lifestyle – your code (and users) will thank you!
 
-### Return tasks from asynchronous methods
+#### Return tasks from asynchronous methods
 
 Next, we will get a coding example for the dazzling world of asynchronous programming in C#, where Tasks, async, and await form the superhero team that saves the day from the clutches of sluggish applications! Imagine your code as a bustling city. In the old days, without Tasks, it was like having only one road from point A to B, causing traffic jams whenever something big happened (like fetching data from the web). Everyone had to wait in line, tapping their fingers impatiently.
 
 Here's what the code looks like in that one-lane world, a synchronous slog:
 
 ```C#
-using System;
-using System.Threading;
-
 public class DigitalKitchen
 {
-    public string BakeCake()
+    private string BakeCake()
     {
         Console.WriteLine("Cake baking started.");
         Thread.Sleep(4000); // Simulating baking time.
@@ -281,7 +275,7 @@ public class DigitalKitchen
         return "Chocolate Cake";
     }
 
-    public string PrepareSalad()
+    private string PrepareSalad()
     {
         Console.WriteLine("Salad preparation started.");
         Thread.Sleep(2000); // Simulating chopping and mixing time.
@@ -289,7 +283,7 @@ public class DigitalKitchen
         return "Greek Salad";
     }
 
-    public string BrewCoffee()
+    private string BrewCoffee()
     {
         Console.WriteLine("Coffee brewing started.");
         Thread.Sleep(3000); // Simulating brewing time.
@@ -316,12 +310,9 @@ kitchen.PrepareDinner();
 But with async, await, and Tasks, we introduce highways, flyovers, and express lanes into our city! Your code can now handle multiple things at once, like a pro multitasker:
 
 ```C#
-using System;
-using System.Threading.Tasks;
-
 public class DigitalKitchen
 {
-    public async Task<string> BakeCakeAsync()
+    private async Task<string> BakeCakeAsync()
     {
         Console.WriteLine("Cake baking started.");
         await Task.Delay(4000); // Simulating baking time.
@@ -329,7 +320,7 @@ public class DigitalKitchen
         return "Chocolate Cake";
     }
 
-    public async Task<string> PrepareSaladAsync()
+    private async Task<string> PrepareSaladAsync()
     {
         Console.WriteLine("Salad preparation started.");
         await Task.Delay(2000); // Simulating chopping and mixing time.
@@ -337,7 +328,7 @@ public class DigitalKitchen
         return "Greek Salad";
     }
 
-    public async Task<string> BrewCoffeeAsync()
+    private async Task<string> BrewCoffeeAsync()
     {
         Console.WriteLine("Coffee brewing started.");
         await Task.Delay(3000); // Simulating brewing time.
@@ -366,7 +357,7 @@ await kitchen.PrepareDinnerAsync();
 
 Our DigitalKitchen doesn't pause at each method call in this async symphony. Instead, it fires all three – baking a cake, preparing a salad, and brewing coffee – in a non-blocking fashion. Only when all three tasks are sent off to work their magic does it wait for all of them to finish. This approach showcases the power of asynchronous programming in C#,  where our digital chef multitasks efficiently, ensuring a delightful dinner is ready in record time without the waits dragging down the kitchen's performance.
 
-### Avoid premature await
+#### Avoid premature await
 
 Let us look at more high-flying adventures in Asyncville, where our C# superhero coders combat the sneaky villain known as Premature Await! This dastardly foe can trick heroes into halting their heroic deeds too soon, bogging down the bustling city with unnecessary waiting.
 
@@ -375,13 +366,21 @@ In the world without this awareness, our heroes might fall into the trap like so
 ```C#
 public async Task<int> BattleVillainsAsync()
 {
-    var result = await Task.Delay(3000); // Oh no, our hero waits alone, doing nothing...
-    return 42; // They triumph, but the city feels the sluggish pace.
+    await Task.Delay(2000); // Our hero jumps into action immediately!
+    return 5; // Number of villains vanquished
 }
-public async Task<int> PatrolCityAsync()
+
+public async Task<int> SaveCiviliansAsync()
 {
-    int crimesStopped = await BattleVillainsAsync(); // Forced to wait, the city’s pulse slows.
-    return crimesStopped;
+    await Task.Delay(2000); // Diving in to save the day without a second thought!
+    return 10; // Number of civilians saved
+}
+
+public async Task HeroicDeeds()
+{
+    int villainsVanquished = await BattleVillainsAsync(); // Await the battle's end...
+    int civiliansSaved = await SaveCiviliansAsync(); // ...then await the rescue!
+    Console.WriteLine($"Villains vanquished: {villainsVanquished}, Civilians saved: {civiliansSaved}");
 }
 ```
 
@@ -392,23 +391,31 @@ But fear not, for our heroes learn and adapt:
 ```C#
 public async Task<int> BattleVillainsAsync()
 {
-    var delayTask = Task.Delay(3000); // Our hero sends out a drone to track the villain...
-    int secretIntel = 42; // Meanwhile, they uncover secret intel!
-    await delayTask; // They confront the villain at the perfect moment!
-    return secretIntel;
+    await Task.Delay(2000); // Battling villains in an epic showdown
+    return 5; // Villains vanquished
 }
-public async Task<int> PatrolCityAsync()
+
+public async Task<int> SaveCiviliansAsync()
 {
-    Task<int> crimeFightingTask = BattleVillainsAsync(); // Send out the hero...
-    // Meanwhile, the city life goes on, vibrant and uninterrupted!
-    int crimesStopped = await crimeFightingTask; // The hero reports back just in time.
-    return crimesStopped;
+    await Task.Delay(2000); // Heroically saving civilians
+    return 10; // Civilians saved
+}
+
+public async Task HeroicDeedsDoneRight()
+{
+    var battleTask = BattleVillainsAsync(); // Start the battle, but don't wait yet!
+    var saveTask = SaveCiviliansAsync(); // Start rescues, too—no time to lose!
+
+    // Now, await both tasks, efficiently managing our hero's time:
+    int villainsVanquished = await battleTask;
+    int civiliansSaved = await saveTask;
+    Console.WriteLine($"Villains vanquished: {villainsVanquished}, Civilians saved: {civiliansSaved}");
 }
 ```
 
 In this upgraded scenario, our superhero deftly manages their tasks. They set off a drone (initiate the Task) and continue gathering valuable intel or helping citizens while the drone does its reconnaissance. Only when all pieces are in place do they finally await, springing into action at the optimal moment. No time is wasted; the city thrives under their vigilant watch.
 
-## Error handling
+### Error handling
 
 In the world of Async programming, things move smoothly like a well-oiled machine, even when you're handling a bunch of tasks at once. Imagine sending your robots to do chores while you chill out; that's async for you! But, as with all great powers, there's a catch – handling the unexpected. Yep, I'm talking about errors. Like tripping over that sneaky rug, your async tasks can stumble over issues, and you must be ready to catch them gracefully.
 
@@ -416,7 +423,7 @@ In the async world of C#, error handling isn't just about slapping on a try-catc
 
 But remember, with great power comes great responsibility. Handling errors in async programming means staying vigilant about where and how you await tasks and not letting any exceptions slip through the cracks unnoticed. It's all about keeping your code's async flow smooth, responsive, and, most importantly, resilient to the bumps along the way. So, gear up, prepare your error-handling strategies, and make your async C# code fast, efficient, tough, and dependable!
 
-### Exception handling in async code
+#### Exception handling in async code
 
 Let's dive back into the quirky world of async programming in C# with a twist – handling those sneaky errors! Think of your async methods like a team of superheroes. Each has its task, flying around the city (your program) keeping peace and order. But sometimes, they encounter supervillains (errors) that try to throw a wrench in their well-laid plans.
 
@@ -518,13 +525,13 @@ In this tale, our hero gets a heads-up to cancel the picnic plans due to stormy 
 
 By understanding and handling these exceptions, programmers can ensure their async C# adventures end in triumph, not tragedy. So, gear up bravely with knowledge and code to the async wilderness!
 
-## Efficient use of resources
+### Efficient use of resources
 
 Imagine being able to cook dinner, do laundry, and water the plants simultaneously without breaking a sweat. That's what async programming can do for your applications. It lets your code perform multiple tasks simultaneously, like sending emails, fetching data, or saving files, without making the entire application sit and wait for each task to finish. This magic trick keeps your app responsive and snappy, making users wonder if you've employed some digital wizardry!
 
 But here's the kicker: while juggling all these tasks, we must be mindful not to waste resources. It's like having all your appliances running efficiently without blowing a fuse. By using async programming smartly, you can avoid clogging up your application's arteries with unnecessary work. It's all about sending off those tasks to do their thing in the background while your main application hums along, unaffected. This way, you can serve more users, handle more data, and create a smoother experience without needing a supercomputer. Ready to dive in? Let's turn that efficiency dial up to eleven and get your C# applications performing like a well-oiled, multitasking machine!
 
-### ConfigureAwait(false)
+#### ConfigureAwait(false)
 
 Alright, superheroes of the coding world, gather around! It's time to master a secret move in async programming in C#: `ConfigureAwait(false)`. Think of this as your gadget for zipping through tasks without getting tangled in busy city traffic (a.k.a. the main thread).
 
@@ -556,7 +563,7 @@ public async Task SaveTheWorldAsync()
 
 Using `ConfigureAwait(false)`, our superhero can continue their noble deeds without having to swing back to Main Street, keeping the city's traffic flowing smoothly and saving the day more efficiently. Just remember, great power requires great responsibility: only use this power when you're sure you don't need to return to the main thread, like updating the UI or accessing thread-bound resources. Now, go forth and code with agility and efficiency, my C# crusaders!
 
-## Concurrency and synchronization
+### Concurrency and synchronization
 
 The team of superheroes: each has its own set of skills and tasks, but they must work together to save the city from chaos. This is your application, managing multiple operations simultaneously without tripping over its own cape. Async programming lets your heroes (methods) battle different villains (tasks) at the same time, without waiting for one to finish before starting another, keeping the city (user experience) safe and peaceful.
 
@@ -564,7 +571,7 @@ But with great power comes great responsibility. This is where Concurrency and S
 
 And then, there's synchronization - the secret sauce to ensuring our superheroes work well together and combine their powers effectively. It's all about timing and coordination, making sure that shared resources are accessed in an orderly manner, avoiding the perils of data corruption or unexpected behavior. Imagine our heroes using walkie-talkies to coordinate their moves, ensuring they're not colliding or causing havoc unintentionally. In C#, this could mean using locks, semaphores, or other synchronization techniques to keep data safe and operations running smoothly. So, let's dive into this thrilling world, where managing async operations and concurrency is the key to keeping our digital city thriving under the vigilant watch of our code superheroes!
 
-### Managing concurrency
+#### Managing concurrency
 
 Let’s zoom back into the bustling city of Asyncville, where our superhero team, The Async Avengers, is facing its trickiest challenge yet: concurrency and synchronization!
 
@@ -601,7 +608,7 @@ In this improved narrative, our Async Avengers use a magical lock (a synchroniza
 
 This, my fellow developers, is the power and beauty of mastering concurrency and synchronization in the world of C# async programming. By ensuring our code superheroes work together seamlessly, we prevent chaos and ensure that the digital realm remains a place of harmony and efficiency.
 
-# Summary
+## Summary
 
 Alright, let's wrap up our epic saga in the bustling metropolis of Asyncville. Here, C# heroes flex their asynchronous muscles, especially when navigating the complex web of network programming.
 
