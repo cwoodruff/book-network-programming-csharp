@@ -3,9 +3,9 @@ order: 13
 icon: stack
 label: Chap 7
 meta:
-title: ""
+title: "Efficient Data Serialization Techniques"
 visibility: hidden
 ---
 # 7
 
-# [Chapter Title]
+# Efficient Data Serialization Techniques

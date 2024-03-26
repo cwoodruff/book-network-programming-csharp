@@ -3,9 +3,9 @@ order: 1
 icon: stack
 label: Chap 19
 meta:
-title: ""
+title: "Testing and Debugging Network Applications"
 visibility: hidden
 ---
 # 19
 
-# [Chapter Title]
+# Testing and Debugging Network Applications

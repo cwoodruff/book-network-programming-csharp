@@ -3,9 +3,9 @@ order: 6
 icon: stack
 label: Chap 14
 meta:
-title: ""
+title: "Working with MQTT for IoT applications"
 visibility: hidden
 ---
 # 14
 
-# [Chapter Title]
+# Working with MQTT for IoT applications

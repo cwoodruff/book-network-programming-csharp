@@ -3,9 +3,9 @@ order: 12
 icon: stack
 label: Chap 8
 meta:
-title: ""
+title: "Network Performance Optimization"
 visibility: hidden
 ---
 # 8
 
-# [Chapter Title]
+# Network Performance Optimization

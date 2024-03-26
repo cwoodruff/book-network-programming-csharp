@@ -3,9 +3,9 @@ order: 8
 icon: stack
 label: Chap 12
 meta:
-title: ""
+title: "Implementing HTTP Communication"
 visibility: hidden
 ---
 # 12
 
-# [Chapter Title]
+# Implementing HTTP Communication

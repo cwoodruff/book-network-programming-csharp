@@ -3,9 +3,9 @@ order: 2
 icon: stack
 label: Chap 18
 meta:
-title: ""
+title: "Preventing Common Security Threats"
 visibility: hidden
 ---
 # 18
 
-# [Chapter Title]
+# Preventing Common Security Threats

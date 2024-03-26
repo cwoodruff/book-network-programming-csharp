@@ -3,9 +3,9 @@ order: 3
 icon: stack
 label: Chap 17
 meta:
-title: ""
+title: "Implementing Message Queuing"
 visibility: hidden
 ---
 # 17
 
-# [Chapter Title]
+# Implementing Message Queuing
