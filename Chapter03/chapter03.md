@@ -35,10 +35,10 @@ The significance of socket programming in today's digital landscape cannot be ov
 
 - **Web Services**: When you browse the web, socket programming is at work behind the scenes, establishing connections to web servers, fetching web pages, and delivering content to your browser.
 - **Email**: Email clients use sockets to connect to email servers, sending and receiving messages seamlessly across the Internet.
-- **File Transfer**: Protocols like **FTP (File Transfer Protocol** ( **FTP** ) utilize sockets for transferring files between devices.
+- **File Transfer**: Protocols like **FTP (File Transfer Protocol** (**FTP**) utilize sockets for transferring files between devices.
 - **Real-Time Communication**: Sockets power real-time chat applications, video conferencing platforms, and online gaming, allowing instantaneous data exchange.
 - **Cloud Computing**: In the cloud, socket programming enables virtual servers to communicate, forming the backbone of cloud-based services.
-- **IoT (Internet of Things (IoT )**: IoT devices rely on sockets for transmitting data to central servers or other devices, enabling smart homes, connected cars, and more.
+- **IoT (Internet of Things)**: IoT devices rely on sockets for transmitting data to central servers or other devices, enabling smart homes, connected cars, and more.
 
 Understanding the importance of socket programming, especially in a versatile language like C#, not only provides developers with the capability to create dynamic networking applications but also offers foundational knowledge of how data is transported across the digital landscape. This forms a crucial layer of the larger information technology ecosystem, bridging gaps between local and remote systems and ensuring that our connected world remains connected.
 
@@ -47,7 +47,7 @@ Understanding the importance of socket programming, especially in a versatile la
 To truly grasp the essence of socket programming, one must first understand the pivotal role sockets play in network communication orchestration. At its core, a socket serves as an endpoint in a communication channel, acting as a gateway through which data can be sent and received between two entities in a network. Imagine sockets as digital ports where messages (data) are docked, dispatched, or received, facilitating a two-way dialogue between software applications. When working with socket development in C#, we must understand each aspect described below in the following list that allows the client and server to communicate:
 
 - **Bridging Communication**: Much like how a telephone allows two people to converse by establishing a connection between them, sockets allow two machines or applications to communicate by connecting a network. This connection can be within a local network (like two computers in the same house) or over the vast expanse of the internet.
-- **Protocol Agnostic**: Sockets are versatile. They can operate over various communication protocols, the most common being **Transmission Control Protocol** ( **TCP** ) and **User Datagram Protocol** ( **UDP** ). Sockets can handle both, whether you're aiming for a reliable, connection-oriented communication (TCP) or a connectionless, faster transfer (UDP).
+- **Protocol Agnostic**: Sockets are versatile. They can operate over various communication protocols, the most common being **Transmission Control Protocol** (**TCP**) and **User Datagram Protocol** (**UDP**). Sockets can handle both, whether you're aiming for a reliable, connection-oriented communication (TCP) or a connectionless, faster transfer (UDP).
 - **Flexibility and Scalability**: With the proper implementation, socket-based applications can cater to a single user or scale to support thousands of concurrent connections. This scalability makes them ideal for various applications, from simple chat applications to complex multiplayer online games or large-scale data analytics platforms.
 - **Real-time Interaction**: Sockets empower real-time interactions. For instance, when you are video calling a friend, sockets work diligently in the background, transferring video and audio data packets back and forth, enabling that seamless experience.
 - **Platform Independence**: One of the beauties of socket programming, especially in a language like C#, is its platform independence. With the right abstraction, a socket-based application can communicate across diverse platforms and operating systems, breaking down digital barriers and promoting integration.
@@ -371,7 +371,7 @@ In the realm of socket programming, this model is particularly prominent. Here's
 
 The interaction between a client and a server typically follows a request-response pattern. The client sends a request to the server; the server processes the request and returns the appropriate response. This cyclical interaction is facilitated through sockets. In the context of C# 12 and .NET, socket programming enables developers to create server and client applications that communicate over the network using standard protocols like TCP and UDP.
 
-In the world of distributed computing, the client-server model isn't the only paradigm. Alternatives like **peer-to-peer** ( **P2P** ) networks have their own merits. However, the client-server model's simplicity, combined with its scalability and manageability, has ensured its continued prominence in the digital age. As we delve further into client-side socket programming in C# 12, it's essential to grasp this foundational model, as it provides the context for many of the operations, challenges, and solutions we'll explore.
+In the world of distributed computing, the client-server model isn't the only paradigm. Alternatives like **peer-to-peer** (**P2P**) networks have their own merits. However, the client-server model's simplicity, combined with its scalability and manageability, has ensured its continued prominence in the digital age. As we delve further into client-side socket programming in C# 12, it's essential to grasp this foundational model, as it provides the context for many of the operations, challenges, and solutions we'll explore.
 
 ## Socket creation and connection
 
