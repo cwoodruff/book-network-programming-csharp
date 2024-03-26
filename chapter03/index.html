@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764610580216">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.764766980098">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.764610580216" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.764766980098" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.764610580216" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.764766980098" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.764610580216" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.764610580216" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.764766980098" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.764766980098" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -262,10 +262,10 @@
 <ul>
 <li><strong>Web Services</strong>: When you browse the web, socket programming is at work behind the scenes, establishing connections to web servers, fetching web pages, and delivering content to your browser.</li>
 <li><strong>Email</strong>: Email clients use sockets to connect to email servers, sending and receiving messages seamlessly across the Internet.</li>
-<li><strong>File Transfer</strong>: Protocols like <strong>FTP (File Transfer Protocol</strong> ( <strong>FTP</strong> ) utilize sockets for transferring files between devices.</li>
+<li><strong>File Transfer</strong>: Protocols like <strong>FTP (File Transfer Protocol</strong> (<strong>FTP</strong>) utilize sockets for transferring files between devices.</li>
 <li><strong>Real-Time Communication</strong>: Sockets power real-time chat applications, video conferencing platforms, and online gaming, allowing instantaneous data exchange.</li>
 <li><strong>Cloud Computing</strong>: In the cloud, socket programming enables virtual servers to communicate, forming the backbone of cloud-based services.</li>
-<li><strong>IoT (Internet of Things (IoT )</strong>: IoT devices rely on sockets for transmitting data to central servers or other devices, enabling smart homes, connected cars, and more.</li>
+<li><strong>IoT (Internet of Things)</strong>: IoT devices rely on sockets for transmitting data to central servers or other devices, enabling smart homes, connected cars, and more.</li>
 </ul>
 <p>Understanding the importance of socket programming, especially in a versatile language like C#, not only provides developers with the capability to create dynamic networking applications but also offers foundational knowledge of how data is transported across the digital landscape. This forms a crucial layer of the larger information technology ecosystem, bridging gaps between local and remote systems and ensuring that our connected world remains connected.</p>
 <doc-anchor-target id="role-of-sockets">
@@ -277,7 +277,7 @@
 <p>To truly grasp the essence of socket programming, one must first understand the pivotal role sockets play in network communication orchestration. At its core, a socket serves as an endpoint in a communication channel, acting as a gateway through which data can be sent and received between two entities in a network. Imagine sockets as digital ports where messages (data) are docked, dispatched, or received, facilitating a two-way dialogue between software applications. When working with socket development in C#, we must understand each aspect described below in the following list that allows the client and server to communicate:</p>
 <ul>
 <li><strong>Bridging Communication</strong>: Much like how a telephone allows two people to converse by establishing a connection between them, sockets allow two machines or applications to communicate by connecting a network. This connection can be within a local network (like two computers in the same house) or over the vast expanse of the internet.</li>
-<li><strong>Protocol Agnostic</strong>: Sockets are versatile. They can operate over various communication protocols, the most common being <strong>Transmission Control Protocol</strong> ( <strong>TCP</strong> ) and <strong>User Datagram Protocol</strong> ( <strong>UDP</strong> ). Sockets can handle both, whether you&#x27;re aiming for a reliable, connection-oriented communication (TCP) or a connectionless, faster transfer (UDP).</li>
+<li><strong>Protocol Agnostic</strong>: Sockets are versatile. They can operate over various communication protocols, the most common being <strong>Transmission Control Protocol</strong> (<strong>TCP</strong>) and <strong>User Datagram Protocol</strong> (<strong>UDP</strong>). Sockets can handle both, whether you&#x27;re aiming for a reliable, connection-oriented communication (TCP) or a connectionless, faster transfer (UDP).</li>
 <li><strong>Flexibility and Scalability</strong>: With the proper implementation, socket-based applications can cater to a single user or scale to support thousands of concurrent connections. This scalability makes them ideal for various applications, from simple chat applications to complex multiplayer online games or large-scale data analytics platforms.</li>
 <li><strong>Real-time Interaction</strong>: Sockets empower real-time interactions. For instance, when you are video calling a friend, sockets work diligently in the background, transferring video and audio data packets back and forth, enabling that seamless experience.</li>
 <li><strong>Platform Independence</strong>: One of the beauties of socket programming, especially in a language like C#, is its platform independence. With the right abstraction, a socket-based application can communicate across diverse platforms and operating systems, breaking down digital barriers and promoting integration.</li>
@@ -651,7 +651,7 @@ while (true)
 <p><strong>Servers</strong> are powerful machines or software applications that listen for incoming requests from clients. Their primary role is to provide services, whether it&#x27;s serving a web page, streaming a video, or managing online multiplayer games. A server can cater to multiple clients simultaneously, handling each client&#x27;s request in a streamlined and efficient manner. Due to this multiplicity of tasks, servers are typically designed to be robust, scalable, and highly available, ensuring that services are uninterrupted even under heavy load.</p>
 <p><strong>Clients</strong>, on the other hand, are the initiators in this relationship. They can be anything from a web browser on a laptop, a mobile app on a smartphone, or a custom software application on a workstation. Clients reach out to servers to access specific services or resources. Once a client initiates a request, it waits for the server to process the request and send back the relevant data or response. The client then processes this response, which could involve rendering a webpage, playing a video, or updating game states.</p>
 <p>The interaction between a client and a server typically follows a request-response pattern. The client sends a request to the server; the server processes the request and returns the appropriate response. This cyclical interaction is facilitated through sockets. In the context of C# 12 and .NET, socket programming enables developers to create server and client applications that communicate over the network using standard protocols like TCP and UDP.</p>
-<p>In the world of distributed computing, the client-server model isn&#x27;t the only paradigm. Alternatives like <strong>peer-to-peer</strong> ( <strong>P2P</strong> ) networks have their own merits. However, the client-server model&#x27;s simplicity, combined with its scalability and manageability, has ensured its continued prominence in the digital age. As we delve further into client-side socket programming in C# 12, it&#x27;s essential to grasp this foundational model, as it provides the context for many of the operations, challenges, and solutions we&#x27;ll explore.</p>
+<p>In the world of distributed computing, the client-server model isn&#x27;t the only paradigm. Alternatives like <strong>peer-to-peer</strong> (<strong>P2P</strong>) networks have their own merits. However, the client-server model&#x27;s simplicity, combined with its scalability and manageability, has ensured its continued prominence in the digital age. As we delve further into client-side socket programming in C# 12, it&#x27;s essential to grasp this foundational model, as it provides the context for many of the operations, challenges, and solutions we&#x27;ll explore.</p>
 <doc-anchor-target id="socket-creation-and-connection">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#socket-creation-and-connection">#</doc-anchor-trigger>
