@@ -1,6 +1,6 @@
 ---
 order: 0
-icon: stack
+icon: sparkle-fill
 label: Updates-Corrections
 meta:
 title: "Updates and Corrections"

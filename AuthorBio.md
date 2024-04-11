@@ -1,6 +1,6 @@
 ---
 order: -1
-icon: stack
+icon: id-badge
 label: Author Bio
 meta:
 title: "Author Bio"
