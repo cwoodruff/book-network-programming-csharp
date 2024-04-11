@@ -574,6 +574,7 @@ catch (SocketException e)
 
 - **Acknowledgments**: Often, after sending data, it's beneficial for the server to send back an acknowledgment. This ensures that the data reached reaches its destination and was is processed as intended.
 - **Data Serialization**: When sending complex data structures or objects, consider serialization methods that transform these entities into byte arrays suitable for transmission.
+
 ```C#
 // Example data object to serialize and send
 var dataObject = new
@@ -659,27 +660,27 @@ public class LengthPrefixedMessageReader
     public async Task<string> ReadMessageAsync()
     {
         // Assume the length prefix is always 4 bytes (int32)
-        byte[] lengthPrefix = new byte[4];
-        int bytesRead = await ReadExactAsync(_stream, lengthPrefix, 0, lengthPrefix.Length);
+        var lengthPrefix = new byte[4];
+        var bytesRead = await ReadExactAsync(_stream, lengthPrefix, 0, lengthPrefix.Length);
         if (bytesRead < lengthPrefix.Length) throw new Exception("Failed to read the length prefix.");
 
-        int messageLength = BitConverter.ToInt32(lengthPrefix, 0);
-        byte[] messageBytes = new byte[messageLength];
+        var messageLength = BitConverter.ToInt32(lengthPrefix, 0);
+        var messageBytes = new byte[messageLength];
         bytesRead = await ReadExactAsync(_stream, messageBytes, 0, messageLength);
         if (bytesRead < messageLength) throw new Exception("Failed to read the complete message.");
 
         // Decode potentially incomplete UTF-8 bytes
-        char[] chars = new char[_utf8Decoder.GetCharCount(messageBytes, 0, bytesRead)];
-        int charCount = _utf8Decoder.GetChars(messageBytes, 0, bytesRead, chars, 0);
+        var chars = new char[_utf8Decoder.GetCharCount(messageBytes, 0, bytesRead)];
+        var charCount = _utf8Decoder.GetChars(messageBytes, 0, bytesRead, chars, 0);
         return new string(chars, 0, charCount);
     }
 
     private async Task<int> ReadExactAsync(Stream stream, byte[] buffer, int offset, int count)
     {
-        int totalBytesRead = 0;
+        var totalBytesRead = 0;
         while (totalBytesRead < count)
         {
-            int bytesRead = await stream.ReadAsync(buffer, offset + totalBytesRead, count - totalBytesRead);
+            var bytesRead = await stream.ReadAsync(buffer, offset + totalBytesRead, count - totalBytesRead);
             if (bytesRead == 0)
             {
                 // End of stream
