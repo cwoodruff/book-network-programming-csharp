@@ -634,47 +634,75 @@ Console.WriteLine($"Message from server: {receivedMessage}");
 
 ### Handling data of unknown length
 
-When the client isn't aware of the size of the incoming data, a loop can be employed to keep receiving data until the server finishes sending. Here's an approach to handle such scenarios:
+Handling UTF-8 decoding from a potentially incomplete buffer, especially when dealing with length-prefixed data, involves careful planning around the data you read and ensuring that multi-byte characters are not split across read operations. Here's a strategy that addresses both concerns and also explores data deserialization:
 
-```csharp
-byte[] buffer = new byte[1024];
-int totalBytesReceived = 0;
-StringBuilder messageBuilder = new StringBuilder();
+**Decoding UTF-8 with Potentially Incomplete Buffers**
 
-while (true)
+Since multi-byte UTF-8 sequences can be split across buffer boundaries, you need a way to store incomplete sequences and attempt decoding once more data is available. This requires maintaining a state between reads, which can be achieved using the System.Text.Decoder class, as mentioned earlier. It's crucial to handle the edge case where the buffer ends in the middle of a multi-byte character.
+
+**Handling Length-Prefixed Data**
+
+When dealing with length-prefixed messages, the length header must be read completely to know how many bytes need to be read for the complete message. This often means reading from the stream in a loop until all parts of the length prefix have been received. Once you have the length, you continue reading until you've received the entire message as indicated by the length prefix. This might mean accumulating data across multiple reads.
+
+```C#
+public class LengthPrefixedMessageReader
 {
-  int bytesReceived = clientSocket.Receive(buffer);
+    private readonly Stream _stream;
+    private readonly Decoder _utf8Decoder;
 
-  if (bytesReceived == 0) break; // Server closed the connection
+    public LengthPrefixedMessageReader(Stream stream)
+    {
+        _stream = stream;
+        _utf8Decoder = Encoding.UTF8.GetDecoder();
+    }
 
-  totalBytesReceived += bytesReceived;
+    public async Task<string> ReadMessageAsync()
+    {
+        // Assume the length prefix is always 4 bytes (int32)
+        byte[] lengthPrefix = new byte[4];
+        int bytesRead = await ReadExactAsync(_stream, lengthPrefix, 0, lengthPrefix.Length);
+        if (bytesRead < lengthPrefix.Length) throw new Exception("Failed to read the length prefix.");
 
-  messageBuilder.Append(Encoding.UTF8.GetString(buffer, 0, bytesReceived));
+        int messageLength = BitConverter.ToInt32(lengthPrefix, 0);
+        byte[] messageBytes = new byte[messageLength];
+        bytesRead = await ReadExactAsync(_stream, messageBytes, 0, messageLength);
+        if (bytesRead < messageLength) throw new Exception("Failed to read the complete message.");
+
+        // Decode potentially incomplete UTF-8 bytes
+        char[] chars = new char[_utf8Decoder.GetCharCount(messageBytes, 0, bytesRead)];
+        int charCount = _utf8Decoder.GetChars(messageBytes, 0, bytesRead, chars, 0);
+        return new string(chars, 0, charCount);
+    }
+
+    private async Task<int> ReadExactAsync(Stream stream, byte[] buffer, int offset, int count)
+    {
+        int totalBytesRead = 0;
+        while (totalBytesRead < count)
+        {
+            int bytesRead = await stream.ReadAsync(buffer, offset + totalBytesRead, count - totalBytesRead);
+            if (bytesRead == 0)
+            {
+                // End of stream
+                break;
+            }
+            totalBytesRead += bytesRead;
+        }
+        return totalBytesRead;
+    }
 }
-
-string fullMessage = messageBuilder.ToString();
 ```
 
-Having explored the intricacies of client-side socket programming, we are now well-versed in initiating connections, sending requests, and handling responses. This understanding is crucial as we transition to server-side socket programming, where we will shift our focus from initiating to accepting connections, managing multiple clients, and maintaining robust communication channels. The server side completes the communication loop, empowering us to architect full-fledged network applications with C#. Ensuring complete data reception
+In this implementation, we have examples of the following:
 
-The following are some best practices to ensure data is fully received:
+* **Length Prefix Handling**: The message length is prefixed as a 4-byte integer. It's read entirely before attempting to read the message itself.
+* **Message Reading**: The message is read entirely based on the length prefix. This step ensures that you're working with complete data, even if multiple reads are necessary to get all the bytes.
+* **UTF-8 Decoding**: The Decoder instance is used to handle UTF-8 decoding. While this example assumes that the entire message is received before decoding, the Decoder's stateful nature allows it to handle partial sequences across calls if you decode as you read instead.
 
-**Delimiters or Length Prefixes**: One common approach is for the server to send a specific delimiter indicating the end of a message or prefix the message with its length. This helps the client understand when it has received the complete data.
+This strategy effectively addresses the challenges of reading length-prefixed data and decoding UTF-8 from streams, especially in scenarios where data boundaries do not align with message or character boundaries.
 
-**Error Handling**: Network operations can be unpredictable. As with sending data, wrapping the Receive method in a try-catch block is crucial to handle potential issues:
+**Data Deserialization**
 
-```csharp
-try
-{
-	clientSocket.Receive(buffer);
-}
-catch (SocketException e)
-{
-	Console.WriteLine($"An error occurred while receiving data: {e.Message}");
-}
-```
-
-**Data Deserialization**: If the server is sending complex data structures, the client may need to deserialize the received byte array back into the original object or structure.
+If the server is sending complex data structures, the client may need to deserialize the received byte array back into the original object or structure.
 ```C#
 using System;
 using System.Net;
