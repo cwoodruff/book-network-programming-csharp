@@ -11,9 +11,9 @@ visibility: hidden
 
 # Asynchronous Programming with Async/Await
 
-Welcome to a crucial chapter in your journey through Network Programming using C#, where we delve into Asynchronous programming using `async` and `await` keywords. As you have been threading your way through the intricacies of network programming, you've learned how to create robust connections, transmit data, and handle various network protocols. Now, we have reached a point where efficiency and responsiveness become paramount. In this chapter, we will explore the power and elegance of C#'s asynchronous programming paradigms that enhance performance and maintain the responsiveness of applications, even when faced with the most demanding network operations.
+Welcome to a crucial chapter in your journey through Network Programming using C#, where we delve into Asynchronous programming using the `async` and `await` keywords. As you have been threading your way through the intricacies of network programming, you've learned how to create robust connections, transmit data, and handle various network protocols. Now, we have reached a point where efficiency and responsiveness become paramount. In this chapter, we will explore the power and elegance of C#'s asynchronous programming paradigms that enhance performance and maintain the responsiveness of applications, even when faced with the most demanding network operations.
 
-By their nature, network applications deal with inherently time-consuming and unpredictable operations. The data may travel across continents, and the time it takes to send a request and receive a response can be significant. This is where asynchronous programming shines. With the `async` and `await` keywords introduced in C# 5.0, we're equipped to write both efficiently and easily read, resembling the straightforwardness of synchronous code while executing non-blocking.
+By their nature, network applications deal with inherently time-consuming and unpredictable operations. The data may travel across continents, and the time it takes to send a request and receive a response can be significant, which in turn may mean your application is spending precious CPU cycles doing nothing but waiting for data to be moved around over the network. This is where asynchronous programming shines. With the `async` and `await` keywords introduced in C# 5.0, we're equipped to write both efficiently and easily read, resembling the straightforwardness of synchronous code while executing non-blocking.
 
 Imagine a scenario where your application must fetch large amounts of data from a remote server or wait for a file to download over a slow connection. Blocking the user interface or consuming thread resources unnecessarily while these operations complete would lead to a subpar user experience and inefficient resource utilization. Through practical examples, we will demonstrate how asynchronous methods allow your application to remain responsive to user interactions by freeing up threads to handle other tasks while waiting for the network operations to complete.
 
@@ -24,18 +24,18 @@ In this chapter, we are going to cover the following main topics:
 - Introduction to Asynchronous Programming
 - Understanding Async/Await and Asynchronous Operations
 - Strategies for Writing Asynchronous Code
-
+    
 ## Introducing asynchronous programming
 
 Understanding asynchronous programming is paramount in the context of .NET and C# network programming. Asynchronous programming allows a program to handle multiple tasks simultaneously, which is particularly beneficial in network operations where I/O-bound work, such as web requests, file reading, or database operations, can lead to significant idle time. In traditional synchronous execution, a thread would block or wait for the operation to complete before moving on to the next task, leading to inefficient use of resources and a sluggish user experience. Asynchronous programming, on the other hand, enables the execution thread to perform other tasks while waiting for the network operation to complete, thus making better use of system resources and improving application responsiveness.
 
-In C#, asynchronous programming is primarily achieved using the async and await keywords, which are elegantly integrated into the language and runtime environment. When a method is marked with the async keyword, it contains asynchronous operations and returns a Task or Task<T>. The await keyword is then used to call these asynchronous methods, allowing the current method to pause its execution until the awaited task completes without blocking the thread. Compared to older asynchronous programming patterns, this model simplifies error handling, exception propagation, and synchronization context management. As a result, developers can write more readable and maintainable code, which is crucial for complex network programming tasks in .NET environments.
+In C#, asynchronous programming is primarily achieved using the async and await keywords, which are elegantly integrated into the language and runtime environment. When a method is marked with the `async` keyword, it contains asynchronous operations and returns a `Task` or `Task<T>`. The `await` keyword is then used to call these asynchronous methods, allowing the current method to pause its execution until the awaited task completes without blocking the thread. Compared to older asynchronous programming patterns, this model simplifies error handling, exception propagation, and synchronization context management. As a result, developers can write more readable and maintainable code, which is crucial for complex network programming tasks in .NET environments.
 
 ### Historical context
 
-Asynchronous programming has evolved significantly since its inception. Initially, C# and the .NET provided essential support for asynchronous operations through mechanisms such as the IAsyncResult pattern and the BeginInvoke and EndInvoke methods. These early approaches were practical but often led to complex and hard-to-read code, especially when dealing with nested or multiple asynchronous operations. The code was cluttered with callbacks and manual thread management, making it cumbersome to write and maintain.
+Asynchronous programming has evolved significantly since its inception. Initially, C# and the .NET provided essential support for asynchronous operations through mechanisms such as the `IAsyncResult` pattern and the `BeginInvoke` and `EndInvoke` methods. These early approaches were practical but often led to complex and hard-to-read code, especially when dealing with nested or multiple asynchronous operations. The code was cluttered with callbacks and manual thread management, making it cumbersome to write and maintain.
 
-With the release of C# 5.0 and .NET Framework 4.5, the landscape of asynchronous programming underwent a substantial transformation by introducing the async and await keywords. This new model significantly simplified the writing and understanding of asynchronous code, allowing developers to write asynchronous operations in a manner that closely resembles synchronous code, thereby reducing the complexity and improving readability. This approach abstracted much of the boilerplate code associated with earlier patterns and allowed the compiler to handle the intricacies of thread management and callback handling. Since then, asynchronous programming has become an integral part of C#, continually enhanced with new features and improvements in subsequent versions of the language and the .NET, making it an essential tool for modern software development, particularly in areas requiring extensive I/O operations like network programming.
+With the release of C# 5.0 and .NET Framework 4.5, the landscape of asynchronous programming underwent a substantial transformation by introducing the `async` and `await` keywords. This new model significantly simplified the writing and understanding of asynchronous code, allowing developers to write asynchronous operations in a manner that closely resembles synchronous code, thereby reducing the complexity and improving readability. This approach abstracted much of the boilerplate code associated with earlier patterns and allowed the compiler to handle the intricacies of thread management and callback handling. Since then, asynchronous programming has become an integral part of C#, continually enhanced with new features and improvements in subsequent versions of the language and the .NET, making it an essential tool for modern software development, particularly in areas requiring extensive I/O operations like network programming.
 
 ### The role of asynchronous programming in network applications
 
@@ -62,9 +62,8 @@ One of the most common pitfalls is misusing async and await, particularly misund
 Another significant issue is exception handling in asynchronous code. If not correctly awaited or handled, exceptions thrown in asynchronous tasks are not always caught in the traditional try-catch blocks, leading to unobserved exceptions that can cause unexpected behavior or application crashes. Developers must ensure that all asynchronous operations are properly awaited and any exceptions are caught and handled appropriately to maintain application stability.
 
 Resource management presents another challenge in asynchronous network programming. Asynchronous operations can lead to more concurrent operations, increasing the load on system resources such as network connections or memory. If not carefully managed, this can result in resource leaks, where resources are not properly released, or resource contention, where too many operations compete for limited resources. Both can degrade application performance and lead to failures.
-Additionally, developers may need help maintaining code clarity and readability when using asynchronous programming, especially when dealing with nested asynchronous calls or complex control flow. This can make the code harder to understand, debug, and maintain, especially for those new to asynchronous programming or working on a large, complex codebase.
 
-Lastly, testing and debugging asynchronous code can be more challenging than synchronous code. Traditional debugging tools and techniques may not always provide a clear picture of the execution flow of asynchronous operations, making diagnosing and fixing issues difficult. Developers must employ specialized tools and approaches to effectively test and debug asynchronous code to ensure its correctness and reliability.
+Additionally, developers may need help maintaining code clarity and readability when using asynchronous programming, especially when dealing with nested asynchronous calls or complex control flow. This can make the code harder to understand, debug, and maintain, especially for those new to asynchronous programming or working on a large, complex codebase.
 
 ### Understanding the synchronization context
 
@@ -76,15 +75,15 @@ However, over-reliance on the synchronization context, especially in server-side
 
 Understanding asynchronous operations and the async/await pattern is essential for developing modern, efficient, scalable C# and .NET applications. Asynchronous programming has become increasingly important, especially in network programming, where operations such as web requests, file I/O, and database transactions can significantly impact performance and responsiveness. The async and await keywords in C# facilitate asynchronous programming by allowing developers to write code that is both efficient and easy to read and closely resembles traditional synchronous code structures.
 
-The introduction of async/await has revolutionized how developers handle asynchronous tasks, moving away from the cumbersome and error-prone patterns of the past to a more streamlined and intuitive approach. By marking a method with the async keyword, developers define a method that performs asynchronous operations and returns a Task or Task<T>. The await keyword is then used to call these asynchronous methods, enabling the current method to pause its execution until the awaited task completes without blocking the thread. This model enhances the responsiveness of applications, particularly in UI environments and network solutions, by preventing the UI from freezing and improving the overall user experience. Understanding and applying these concepts and .NET is crucial for developers aiming to leverage the full power of modern programming techniques in their applications.
+The introduction of async/await has revolutionized how developers handle asynchronous tasks, moving away from the cumbersome and error-prone patterns of the past to a more streamlined and intuitive approach. By marking a method with the `async` keyword, developers define a method that performs asynchronous operations and returns a `Task`, `Task<T>` or `ValueTask<T>`. The `await` keyword is then used to call these asynchronous methods, enabling the current method to pause its execution until the awaited task completes without blocking the thread. This model enhances the responsiveness of applications, particularly in UI environments and network solutions, by preventing the UI from freezing and improving the overall user experience. Understanding and applying these concepts and .NET is crucial for developers aiming to leverage the full power of modern programming techniques in their applications.
 
 ### Async/await fundamentals
 
-In C#, the `async` and `await` keywords form the cornerstone of asynchronous programming, enabling developers to write cleaner, more readable code for asynchronous operations. The async keyword defines a method as asynchronous, indicating that the method contains operations that may involve waiting, such as network calls or file I/O, without blocking the executing thread. When marked async, a method returns a Task or Task<T>, representing ongoing work. The await keyword, used within async methods, pauses the execution of the method until the awaited Task completes, allowing other operations to run concurrently without locking the main thread. This combination simplifies coding for asynchronous tasks, making it easier to manage and maintain while improving application performance and responsiveness.
+In C#, the `async` and `await` keywords form the cornerstone of asynchronous programming, enabling developers to write cleaner, more readable code for asynchronous operations. The `async` keyword defines a method as asynchronous, indicating that the method contains operations that may involve waiting, such as network calls or file I/O, without blocking the executing thread. When marked async, a method returns a `Task`, `Task<T>` or `ValueTask<T>`, representing ongoing work. The `await` keyword, used within async methods, pauses the execution of the method until the awaited Task completes, allowing other operations to run concurrently without locking the main thread. This combination simplifies coding for asynchronous tasks, making it easier to manage and maintain while improving application performance and responsiveness.
 
 #### The async modifier
 
-The `async` method modifier in C# indicates that a method, lambda expression, or anonymous method is asynchronous. Methods marked with async often contain one or more await expressions or statements, indicating points at which the method can yield control back to its caller until the awaited asynchronous operation completes. The presence of async modifies the method's return type, enabling it to return Task, Task<T>, or ValueTask<T>, which represent ongoing work that might not yet be complete. This approach is essential for non-blocking application development, particularly in UI applications or services where responsiveness and scalability are crucial.
+The `async` method modifier in C# indicates that a method, lambda expression, or anonymous method is asynchronous. Methods marked with async often contain one or more await expressions or statements, indicating points at which the method can yield control back to its caller until the awaited asynchronous operation completes. The presence of async modifies the method's return type, enabling it to return `Task`, `Task<T>`, or `ValueTask<T>`, which represent ongoing work that might not yet be complete. This approach is essential for non-blocking application development, particularly in UI applications or services where responsiveness and scalability are crucial.
 
 Without async (Synchronous Code):
 
@@ -97,7 +96,7 @@ public List<string> GetCustomerNames()
 }
 ```
 
-In this synchronous example, calling GetCustomerNames() blocks the calling thread until the method completes, which simulates a time-consuming database operation. This blocking can lead to a poor user experience in UI applications or reduced scalability in services due to thread pool exhaustion.
+In this synchronous example, calling `GetCustomerNames()` blocks the calling thread until the method completes, which simulates a time-consuming database operation. This blocking can lead to a poor user experience in UI applications or reduced scalability in services due to thread pool exhaustion.
 
 With async and await (Asynchronous Code):
 
@@ -110,11 +109,11 @@ public async Task<List<string>> GetCustomerNamesAsync()
 }
 ```
 
-In the asynchronous version, GetCustomerNamesAsync is marked with async, indicating it contains asynchronous operations, namely Task.Delay(5000) awaited by await. This setup allows the method to yield control back to the caller during the await on Task.Delay, enabling other operations to run concurrently on the calling thread. Once the delay completes, execution resumes, and the method eventually returns a Task<List<string>>. This pattern maintains application responsiveness and service scalability by avoiding blocking calls and efficiently utilizing threads.
+In the asynchronous version, `GetCustomerNamesAsync()` method is marked with async, indicating it contains asynchronous operations, namely `Task.Delay(5000)` awaited by `await`. This setup allows the method to yield control back to the caller during the await on `Task.Delay`, enabling other operations to run concurrently on the calling thread. Once the delay completes, execution resumes, and the method eventually returns a `Task<List<string>>`. This pattern maintains application responsiveness and service scalability by avoiding blocking calls and efficiently utilizing threads.
 
 #### The await keyword
 
-The await keyword in C# is a pivotal feature of asynchronous programming, used in conjunction with the async modifier. It allows the current method to pause its execution until the awaited asynchronous task is complete without blocking the calling thread. Control returns to the caller during this wait, enabling other operations to run concurrently. This mechanism is crucial for developing responsive applications, especially when dealing with IO-bound tasks like reading files, database operations, or making web requests. The beauty of await lies in its ability to write asynchronous code as straightforward and readable as its synchronous counterpart.
+The `await` keyword in C# is a pivotal feature of asynchronous programming, used in conjunction with the async modifier. It allows the current method to pause its execution until the awaited asynchronous task is complete without blocking the calling thread. Control returns to the caller during this wait, enabling other operations to run concurrently. This mechanism is crucial for developing responsive applications, especially when dealing with IO-bound tasks like reading files, database operations, or making web requests. The beauty of await lies in its ability to write asynchronous code as straightforward and readable as its synchronous counterpart.
 
 Here's a simple example demonstrating the difference between synchronous and asynchronous execution in C#.
 
@@ -130,7 +129,7 @@ public string ReadFileContent()
 }
 ```
 
-In the synchronous version, the call to ReadToEnd() blocks the calling thread until the entire file content is read. This can lead to application unresponsiveness, especially with large files or slow IO operations.
+In the synchronous version, the call to `ReadToEnd()` blocks the calling thread until the entire file content is read. This can lead to application unresponsiveness, especially with large files or slow IO operations.
 
 With await (Asynchronous Code):
 
@@ -144,13 +143,13 @@ public async Task<string> ReadFileContentAsync()
 }
 ```
 
-In the asynchronous version, the method is marked with async, and await is used with ReadToEndAsync(). This tells the compiler to pause the execution of ReadFileContentAsync until ReadToEndAsync completes without blocking the calling thread. During this wait, control is returned to the calling method, allowing other operations to proceed concurrently. Once the awaited task completes, execution resumes after the await line. This approach significantly improves applications' responsiveness by freeing up the calling thread to handle other tasks while waiting for IO operations to complete.
+In the asynchronous version, the method is marked with async, and await is used with `ReadToEndAsync()`. This tells the compiler to pause the execution of `ReadFileContentAsync` until `ReadToEndAsync` completes without blocking the calling thread. During this wait, control is returned to the calling method, allowing other operations to proceed concurrently. Once the awaited task completes, execution resumes after the await line. This approach significantly improves applications' responsiveness by freeing up the calling thread to handle other tasks while waiting for IO operations to complete.
 
 ## Strategies for writing asynchronous code
 
 Writing asynchronous code is essential in modern software development, especially when building scalable, responsive applications and services. The asynchronous programming model in languages like C# allows developers to perform non-blocking operations, such as web requests, file IO, and database transactions, thereby improving user interface responsiveness and the scalability of backend services. However, effectively harnessing this model requires thoughtful strategies to manage the inherent complexities of asynchronous code, such as potential deadlocks, maintaining code clarity, and handling exceptions.
 
-One key strategy is to embrace the async and await keywords in C#, which simplifies asynchronous programming by allowing developers to write code that appears synchronous but executes asynchronously. This approach helps avoid common pitfalls like blocking calls that can lead to application freezes or inefficient resource use. Furthermore, adopting an "async all the way down" approach ensures that asynchronous calls do not mix with synchronous blocking calls, which can cause deadlocks and reduce scalability. Additionally, developers should structure their code to handle exceptions gracefully and avoid unobserved exceptions in asynchronous operations. Developers can create efficient, scalable, and responsive applications by combining these strategies with best practices like minimizing thread usage and leveraging asynchronous libraries and frameworks.
+One key strategy is to embrace the `async` and `await` keywords in C#, which simplifies asynchronous programming by allowing developers to write code that appears synchronous but executes asynchronously. This approach helps avoid common pitfalls like blocking calls that can lead to application freezes or inefficient resource use. Furthermore, adopting an "async all the way down" approach ensures that asynchronous calls do not mix with synchronous blocking calls, which can cause deadlocks and reduce scalability. Additionally, developers should structure their code to handle exceptions gracefully and avoid unobserved exceptions in asynchronous operations. Developers can create efficient, scalable, and responsive applications by combining these strategies with best practices like minimizing thread usage and leveraging asynchronous libraries and frameworks.
 
 ### Know When to Use async/await
 
@@ -160,6 +159,7 @@ But when exactly should you look to use async/await? Here are a few pointers:
 * **Long-running network calls**: Async and await should be your go-to whenever you're making API calls, downloading files, or performing any network operation that takes more than a blink of an eye. They prevent your app from freezing up while waiting for the network to respond.
 * **UI responsiveness**: Async programming is crucial if your application has a user interface and you need to maintain its responsiveness while performing network operations. It ensures that your app can still handle user interactions, like button clicks or scrolling, even when it's busy fetching data from the web.
 * **Scalability**: When writing server-side code, such as for a web service, using async and await can improve scalability. It lets your server handle more requests simultaneously by not tying up threads waiting for I/O operations to complete.
+* **Other I/O operations**: When reading or writing files to disk or waiting for a long running database query, function or stored procedure, using async and await can help with performance also and allow the user to have a better experience using your app.
 
 Choosing when to apply async/await in networking software hinges on preventing blocking operations that can tie up system resources and degrade user experience or system throughput. For server-side applications, such as those built with ASP.NET, adopting async/await can significantly increase scalability by freeing up threads to serve more incoming requests while waiting for responses from external services or databases. On the client side, such as in desktop or mobile applications, using async/await ensures the UI remains responsive, providing feedback to the user that operations are in progress rather than the application appearing frozen. It's crucial, however, to apply async/await judiciously, reserving its use for truly asynchronous operations to avoid unnecessary overhead and complexity in application code. This strategic application ensures that the benefits of asynchronous programming—such as improved responsiveness and scalability—are fully realized without introducing undue complexity or performance penalties.
 
@@ -167,21 +167,21 @@ Choosing when to apply async/await in networking software hinges on preventing b
 
 Async method design in C# is a powerful feature for improving the scalability and responsiveness of applications, particularly important in scenarios involving IO-bound operations, such as web requests, file access, and database transactions. By using the async and await keywords, developers can write asynchronous code that is almost as straightforward to read and write as synchronous code. This design pattern allows a method to run asynchronously without blocking the thread on which it is executed, making it especially useful for creating smooth user interfaces and efficient server-side applications.
 
-The cornerstone of async method design is understanding when and how to apply it effectively. This involves marking a method with the async modifier, which enables the use of the await keyword within it to await asynchronous operations instead of blocking them. Such methods typically return a Task or Task<T> to represent the ongoing operation. Developers must grasp the flow of control in asynchronous methods, ensuring they avoid common pitfalls like deadlocks, excessive resource consumption, and the complexity of error handling in asynchronous code paths. Mastering async method design leads to responsive and efficient applications, leveraging the underlying asynchronous programming model to its full potential.
+The cornerstone of async method design is understanding when and how to apply it effectively. This involves marking a method with the async modifier, which enables the use of the await keyword within it to await asynchronous operations instead of blocking them. Such methods typically return a `Task`, `Task<T>` or `ValueTask<T>` to represent the ongoing operation. Developers must grasp the flow of control in asynchronous methods, ensuring they avoid common pitfalls like deadlocks, excessive resource consumption, and the complexity of error handling in asynchronous code paths. Mastering async method design leads to responsive and efficient applications, leveraging the underlying asynchronous programming model to its full potential.
 
 #### Async all the way down
 
 In developing networking software with C#, employing async and await comprehensively, from the user interface down to the lowest network operations, is crucial for enhancing application responsiveness and performance. These keywords are instrumental in executing IO-bound operations, such as HTTP requests, file transfers, or database queries, asynchronously to prevent blocking the main thread. This approach allows your application to perform other tasks while waiting for network responses, avoiding application freezes and server bottlenecks.
 
-Adopting an "async all the way down" strategy means consistently applying asynchronous programming principles throughout your codebase whenever you initiate an asynchronous operation. This consistency is critical in avoiding common issues like deadlocks, which can arise from mixing synchronous and asynchronous code. It's essential, however, to apply async and await judiciously. Not all methods benefit from asynchrony, especially those that are not IO-bound or where the overhead of asynchrony might outweigh its benefits. Furthermore, integrating asynchronous code requires a solid understanding of its patterns and potential pitfalls, such as the risk of deadlocks when improperly mixing sync and async code and the performance overhead associated with task management and context switching. In summary, using async and await throughout your networking code can significantly improve your application's efficiency and user experience, provided it's applied thoughtfully and where it's most effective.
+Adopting an "async all the way down" strategy means consistently applying asynchronous programming principles throughout your codebase whenever you initiate an asynchronous operation. This consistency is critical in avoiding common issues like deadlocks, which can arise from mixing synchronous and asynchronous code. It's essential, however, to apply `async` and `await` judiciously. Not all methods benefit from asynchrony, especially those that are not IO-bound or where the overhead of asynchrony might outweigh its benefits. Furthermore, integrating asynchronous code requires a solid understanding of its patterns and potential pitfalls, such as the risk of deadlocks when improperly mixing sync and async code and the performance overhead associated with task management and context switching. In summary, using async and await throughout your networking code can significantly improve your application's efficiency and user experience, provided it's applied thoughtfully and where it's most effective.
 
 #### Avoid async Void
 
-A common best practice in C# asynchronous programming is to avoid async void methods, except in specific scenarios such as event handlers. The primary reason for this guidance is the exception handling behavior of async void methods, which can lead to unhandled exceptions that crash the application. Unlike async Task methods, where exceptions are captured and can be observed and handled by the caller, exceptions thrown in async void methods are propagated to the synchronization context and are not easily caught. This behavior makes debugging and error handling significantly more challenging, as the application might terminate unexpectedly without clearly indicating the source error.
+A common best practice in C# asynchronous programming is to avoid `async void` methods, except in specific scenarios such as event handlers. The primary reason for this guidance is the exception handling behavior of `async void` methods, which can lead to unhandled exceptions that crash the application. Unlike `async Task` methods, where exceptions are captured and can be observed and handled by the caller, exceptions thrown in async void methods are propagated to the synchronization context and are not easily caught. This behavior makes debugging and error handling significantly more challenging, as the application might terminate unexpectedly without clearly indicating the source error.
 
-Moreover, async void methods hinder composability and testability in asynchronous code. Since they do not return a Task, callers cannot await them, making it difficult to know when the operation has completed and to handle exceptions properly. This limitation is particularly problematic in unit testing, where the ability to await and observe the completion of asynchronous operations is crucial for verifying behavior and ensuring test reliability. For these reasons, it's recommended to use async Task or async Task<T> as the return type for asynchronous methods whenever possible, reserving async void strictly for event handlers and similar scenarios where it's specifically required.
+Moreover, `async void` methods hinder composability and testability in asynchronous code. Since they do not return a `Task`, callers cannot await them, making it difficult to know when the operation has completed and to handle exceptions properly. This limitation is particularly problematic in unit testing, where the ability to await and observe the completion of asynchronous operations is crucial for verifying behavior and ensuring test reliability. For these reasons, it's recommended to use `async Task` or `async Task<T>` as the return type for asynchronous methods whenever possible, reserving async void strictly for event handlers and similar scenarios where it's specifically required.
 
-Here is a code example demonstrating why using async void can lead to issues, especially with exception handling, and how converting such a method to an async Task can improve your application's error management and control flow.
+Here is a code example demonstrating why using `async void` can lead to issues, especially with exception handling, and how converting such a method to an async Task can improve your application's error management and control flow.
 
 Using async void:
 
@@ -206,7 +206,7 @@ public async void PerformAsyncOperation()
 PerformAsyncOperation();
 ```
 
-In this async void example, if an exception is thrown within the PerformAsyncOperation method and not caught within the same method, it will propagate to the synchronization context and may crash the application. The caller also has no easy way to know when the operation has completed or to handle exceptions thrown by the operation.
+In this `async void` example, if an exception is thrown within the `PerformAsyncOperation` method and not caught within the same method, it will propagate to the synchronization context and may crash the application. The caller also has no easy way to know when the operation has completed or to handle exceptions thrown by the operation.
 
 Using async Task:
 
@@ -229,19 +229,19 @@ catch (Exception ex)
 }
 ```
 
-By using async Task instead of async void, the method now returns a task that the caller can await. This change allows exceptions to be propagated back to the caller, where they can be caught and handled appropriately. It also provides a clear completion point for the asynchronous operation, improving the control flow and making the code safer and more maintainable.
+By using `async Task` instead of `async void`, the method now returns a task that the caller can await. This change allows exceptions to be propagated back to the caller, where they can be caught and handled appropriately. It also provides a clear completion point for the asynchronous operation, improving the control flow and making the code safer and more maintainable.
 
 ### Task handling
 
-Using Tasks for asynchronous programming is a powerful paradigm that enables developers to write non-blocking code, improving the responsiveness and scalability of applications. By leveraging the Task and Task<T> classes, along with the async and await keywords, this approach allows long-running operations such as file I/O, network requests, and other IO-bound or CPU-bound operations to run in the background, freeing the main thread to continue processing other tasks. This is particularly beneficial in user interface applications to prevent freezing and in server-side applications to handle multiple concurrent requests efficiently.
+Using `Tasks` for asynchronous programming is a powerful paradigm that enables developers to write non-blocking code, improving the responsiveness and scalability of applications. By leveraging the Task and Task<T> classes, along with the async and await keywords, this approach allows long-running operations such as file I/O, network requests, and other IO-bound or CPU-bound operations to run in the background, freeing the main thread to continue processing other tasks. This is particularly beneficial in user interface applications to prevent freezing and in server-side applications to handle multiple concurrent requests efficiently.
 
-The Task class represents an asynchronous operation that can return a value (Task<T>) or no value (Task). When a method is marked with the async modifier, it signifies that the method contains asynchronous operations and may use the await keyword to pause its execution until the awaited Task completes. This model simplifies error handling, improves application throughput, and enhances user experiences by making asynchronous programming more accessible and manageable. Adopting Tasks and async/await transforms how developers architect applications, promoting a more responsive, scalable, and maintainable codebase.
+The `Task` class represents an asynchronous operation that can return a value (`Task<T>`) or no value (`Task`). When a method is marked with the async modifier, it signifies that the method contains asynchronous operations and may use the `await` keyword to pause its execution until the awaited `Task` completes. This model simplifies error handling, improves application throughput, and enhances user experiences by making asynchronous programming more accessible and manageable. Adopting Tasks and async/await transforms how developers architect applications, promoting a more responsive, scalable, and maintainable codebase.
 
 #### Return tasks from asynchronous methods
 
-In C#, when methods call other asynchronous methods and return a Task or Task<T>, it's crucial to handle these tasks properly to maintain efficiency and responsiveness in your application. Asynchronous methods, marked with the async keyword, typically use await to pause their execution until the awaited task completes. This approach enables the calling thread to be used for other work rather than blocking until the task finishes, which is particularly beneficial in I/O-bound operations or UI applications where responsiveness is vital.
+In C#, when methods call other asynchronous methods and return a `Task`, `Task<T>` or `ValueTask<T>`, it's crucial to handle these tasks properly to maintain efficiency and responsiveness in your application. Asynchronous methods, marked with the `async` keyword, typically use await to pause their execution until the awaited task completes. This approach enables the calling thread to be used for other work rather than blocking until the task finishes, which is particularly beneficial in I/O-bound operations or UI applications where responsiveness is vital.
 
-Let's look at examples to illustrate the difference between handling methods that return a Task improperly and the recommended approach using await.
+Let's look at examples to illustrate the difference between handling methods that return a `Task` improperly and the recommended approach using await.
 
 Without Accepting a Task (Improper Handling)
 
@@ -288,7 +288,7 @@ var kitchen = new DigitalKitchen();
 kitchen.PrepareDinner();
 ```
 
-The previous code example does not utilize asynchronous programming (Task or Task<T>) to manage the preparation tasks. As a result, the PrepareDinner method is less efficient than it could be, because it does not allow for the concurrent preparation of the dinner items. In a real-world scenario, these tasks could potentially be performed in parallel (e.g., baking a cake while also brewing coffee), which would reduce the overall preparation time.
+The previous code example does not utilize asynchronous programming (`Task` or` Task<T>`) to manage the preparation tasks. As a result, the `PrepareDinner` method is less efficient than it could be, because it does not allow for the concurrent preparation of the dinner items. In a real-world scenario, these tasks could potentially be performed in parallel (e.g., baking a cake while also brewing coffee), which would reduce the overall preparation time.
 
 With Tasks (Efficient Handling)
 
@@ -338,7 +338,7 @@ var kitchen = new DigitalKitchen();
 await kitchen.PrepareDinnerAsync();
 ```
 
-In this asynchronous version, the PrepareDinnerAsync method initiates all preparation tasks simultaneously and then awaits completion using Task.WhenAll. This method efficiently overlaps the preparation times, reducing the total preparation time to the duration of the most prolonged task, rather than the sum of all task durations. This example showcases the potential efficiency gains from applying asynchronous programming techniques.
+In this asynchronous version, the `PrepareDinnerAsync` method initiates all preparation tasks simultaneously and then awaits completion using `Task.WhenAll`. This method efficiently overlaps the preparation times, reducing the total preparation time to the duration of the most prolonged task, rather than the sum of all task durations. This example showcases the potential efficiency gains from applying asynchronous programming techniques.
 
 #### Avoid premature await
 
@@ -371,7 +371,7 @@ public class DataService
 }
 ```
 
-In the above code, ProcessDataSequentiallyAsync waits for each web request to complete before initiating the next one, which is not efficient, especially when the calls are independent of each other.
+In the above code, `ProcessDataSequentiallyAsync` waits for each web request to complete before initiating the next one, which is not efficient, especially when the calls are independent of each other.
 
 Avoiding Premature `await`
 
@@ -402,13 +402,19 @@ public class DataService
 }
 ```
 
-In this optimized version, ProcessDataInParallelAsync initiates all web requests concurrently by storing the tasks in variables without immediately awaiting them. Only after all tasks have been started does it await their completion using Task.WhenAll. This approach significantly reduces the total execution time, as the network requests are made in parallel, showcasing the advantage of avoiding premature await.
+In this optimized version, `ProcessDataInParallelAsync` initiates all web requests concurrently by storing the tasks in variables without immediately awaiting them. Only after all tasks have been started does it await their completion using `Task.WhenAll`. This approach significantly reduces the total execution time, as the network requests are made in parallel, showcasing the advantage of avoiding premature await.
+
+### Avoiding premature aync
+
+Premature async refers to the unnecessary or excessive use of asynchronous programming where it does not provide benefits and might even degrade performance. For example, marking a method as `async` solely to use the `await` keyword on a method that internally performs a quick, in-memory operation or wraps synchronous code without actual I/O operations can lead to overhead without any real concurrency benefit. This increases the code's complexity and can also introduce overhead associated with context switching and increased memory usage due to state machine generation in the background.
+
+Asynchronous methods in .NET create a state machine behind the scenes when you use the async and await keywords. While this is excellent for actual asynchronous I/O operations (like network calls, file I/O, or database queries), applying async/await to methods that execute quickly or are computationally bound (rather than I/O bound) can negatively impact performance. The overhead of setting up and tearing down the state machine and the potential for more frequent garbage collection can make an async method slower than its synchronous counterpart. Additionally, misuse of asynchronous programming can lead to more complex codebases that are harder to maintain and debug, especially regarding error handling and understanding control flow.
 
 ### Error handling
 
 Asynchronous programming with async and await provides a powerful paradigm for writing non-blocking, responsive applications, especially useful in I/O-bound operations such as web requests, file operations, and database queries. However, with the shift from synchronous to asynchronous code, error handling undergoes a transformation that requires careful consideration. In asynchronous programming, exceptions are captured and stored within the task returned by an async method. This means the traditional try-catch blocks used for synchronous methods must be thoughtfully applied to async methods to catch and handle exceptions effectively.
 
-When an exception is thrown within an async method, it is encapsulated within the returned Task object. If the task is awaited, the exception is rethrown when the await expression is evaluated. This allows developers to use try-catch blocks around await statements to catch exceptions from async methods, similar to how they would with synchronous code. However, suppose a Task is not awaited, or the result of an async operation is accessed without awaiting it. In that case, exceptions can go unobserved, resulting in unhandled exceptions that can crash the application or lead to unexpected behavior.
+When an exception is thrown within an async method, it is encapsulated within the returned `Task` object. If the task is awaited, the exception is rethrown when the await expression is evaluated. This allows developers to use try-catch blocks around await statements to catch exceptions from async methods, similar to how they would with synchronous code. However, suppose a Task is not awaited, or the result of an async operation is accessed without awaiting it. In that case, exceptions can go unobserved, resulting in unhandled exceptions that can crash the application or lead to unexpected behavior.
 
 To ensure robust error handling in async programming, developers must ensure that all tasks are adequately awaited and encapsulated within try-catch blocks as necessary. To handle multiple tasks running in parallel, use Task.WhenAll can aggregate multiple exceptions into a single AggregateException, which can then be caught and handled. Additionally, leveraging task continuation options like Task.ContinueWith can provide more granular control over exception handling and task orchestration. Careful management of task exceptions is crucial in maintaining the reliability and stability of asynchronous C# applications, making error handling an essential skill in the async programming toolkit.
 
@@ -466,11 +472,11 @@ var example = new Example();
 await example.CallAsyncMethodAndHandleException(); // Exception is handled properly
 ```
 
-In the second example, the try-catch block effectively catches and handles the exception thrown by the ThrowExceptionAsync method, showcasing the correct way to manage exceptions in asynchronous C# programming. This approach ensures that exceptions do not go unhandled, thereby improving the application's reliability and user experience.
+In the second example, the try-catch block effectively catches and handles the exception thrown by the `ThrowExceptionAsync` method, showcasing the correct way to manage exceptions in asynchronous C# programming. This approach ensures that exceptions do not go unhandled, thereby improving the application's reliability and user experience.
 
 In the vibrant landscape of asynchronous programming, programmers can encounter several specialized types of exceptions beyond the usual suspects of runtime exceptions. These unique challenges require their strategies and capes to conquer.
 
-First off, we will examine the `TaskCanceledException` exception. Handling TaskCanceledException is crucial in asynchronous programming, especially when working with tasks that can be canceled, such as long-running operations or network requests. The TaskCanceledException is thrown when a task is canceled, typically through the use of a CancellationToken. Proper handling of this exception allows your application to respond gracefully to cancellation requests, improving responsiveness and user experience. Below is an example demonstrating how to handle TaskCanceledException in an asynchronous method.
+First off, we will examine the `TaskCanceledException` exception. Handling TaskCanceledException is crucial in asynchronous programming, especially when working with tasks that can be canceled, such as long-running operations or network requests. The `TaskCanceledException` is thrown when a task is canceled, typically through the use of a `CancellationToken`. Proper handling of this exception allows your application to respond gracefully to cancellation requests, improving responsiveness and user experience. Below is an example demonstrating how to handle `TaskCanceledException` in an asynchronous method.
 
 ```C#
 public class Example
@@ -510,9 +516,9 @@ public class Program
 
 ```
 
-In the previous code, LongRunningOperationAsync is designed to perform a task that lasts for 5 seconds. However, we introduce a CancellationToken and cancel the operation after 1 second. When the task is canceled, Task.Delay throws a TaskCanceledException, which we catch and handle by printing a message to the console. This demonstrates how to gracefully handle task cancellation in an asynchronous C# application, allowing for proper cleanup and user feedback when operations are interrupted.
+In the previous code, `LongRunningOperationAsync` is designed to perform a task that lasts for 5 seconds. However, we introduce a `CancellationToken` and cancel the operation after 1 second. When the task is canceled, `Task.Delay` throws a `TaskCanceledException`, which we catch and handle by printing a message to the console. This demonstrates how to gracefully handle task cancellation in an asynchronous C# application, allowing for proper cleanup and user feedback when operations are interrupted.
 
-The `AggregateException` is used to represent multiple exceptions that may occur during the execution of tasks that are run concurrently. This exception type is particularly common when using Task.WhenAll to await multiple tasks simultaneously. Handling AggregateException correctly is essential for robust error management in applications that perform parallel operations.
+The `AggregateException` is used to represent multiple exceptions that may occur during the execution of tasks that are run concurrently. This exception type is particularly common when using `Task.WhenAll` to await multiple tasks simultaneously. Handling `AggregateException` correctly is essential for robust error management in applications that perform parallel operations.
 
 ```C#
 public class Example
@@ -579,11 +585,11 @@ In the context of C# asynchronous programming, adopting patterns that facilitate
 
 #### ConfigureAwait(false)
 
-In C# asynchronous programming, ConfigureAwait(false) is crucial in enhancing performance and avoiding deadlocks, especially in library code or applications not directly interacting with UI elements. When you await an async operation, by default, the continuation (the code that follows the await) attempts to resume on the original context (e.g., the UI thread in a desktop application). This behavior ensures that the UI remains responsive and that UI elements can be safely updated after asynchronous operations. However, this can lead to deadlocks if the original context is blocked while waiting for the async operation to complete. Furthermore, in non-UI scenarios like server-side code, forcing continuations to marshal back to the original context can unnecessarily hurt performance. ConfigureAwait(false) instructs the awaiter not to capture and marshal the continuation back to the original context, thereby improving efficiency and reducing the risk of deadlocks in specific scenarios.
+In C# asynchronous programming, `ConfigureAwait(false)` is crucial in enhancing performance and avoiding deadlocks, especially in library code or applications not directly interacting with UI elements. When you await an async operation, by default, the continuation (the code that follows the await) attempts to resume on the original context (e.g., the UI thread in a desktop application). This behavior ensures that the UI remains responsive and that UI elements can be safely updated after asynchronous operations. However, this can lead to deadlocks if the original context is blocked while waiting for the async operation to complete. Furthermore, in non-UI scenarios like server-side code, forcing continuations to marshal back to the original context can unnecessarily hurt performance. `ConfigureAwait(false)` instructs the awaiter not to capture and marshal the continuation back to the original context, thereby improving efficiency and reducing the risk of deadlocks in specific scenarios.
 
-In library code, where you don't know whether the consumer will call your async methods in a UI context, ConfigureAwait (false) is recommended. This better practice can lead to more performant and deadlock-free code. However, it's important to note that when using ConfigureAwait(false), you must ensure that any code following the await does not interact with UI elements or assume execution on the original context. This distinction helps prevent runtime errors and ensures the application behaves as expected across different execution environments.
+In library code, where you don't know whether the consumer will call your async methods in a UI context, `ConfigureAwait(false)` is recommended. This better practice can lead to more performant and deadlock-free code. However, it's important to note that when using `ConfigureAwait(false)`, you must ensure that any code following the await does not interact with UI elements or assume execution on the original context. This distinction helps prevent runtime errors and ensures the application behaves as expected across different execution environments.
 
-Without `ConfigureAwait(false`)
+Without `ConfigureAwait(false)`
 
 ```C#
 public async Task<string> GetDataAsync()
@@ -613,7 +619,7 @@ public async Task<string> GetDataAsync()
 }
 ```
 
-In the second example, ConfigureAwait(false) is used to prevent the awaiter from attempting to resume the continuation on the original synchronization context. This approach is beneficial in library code and any situation where the continuation code does not need to run on the original context, improving performance and reducing deadlock risks
+In the second example, `ConfigureAwait(false)` is used to prevent the awaiter from attempting to resume the continuation on the original synchronization context. This approach is beneficial in library code and any situation where the continuation code does not need to run on the original context, improving performance and reducing deadlock risks
 
 ### Concurrency and synchronization
 
@@ -676,10 +682,20 @@ private async Task PerformOperationAsync(string operationName)
 
 In the managed concurrency example, `Task.WhenAll` is used to await the completion of all asynchronous operations before moving on. This approach not only ensures that all operations have finished before proceeding but also allows these operations to run in parallel, demonstrating a balance between concurrency and coordination for optimal application performance.
 
+### Key practices for effective async and await code
+
+1. **Use async for I/O-bound, not CPU-bound work**: Apply `async` and `await` when the method involves I/O operations. Consider using other forms of concurrency and parallelism for CPU-bound tasks such as Task.Run to offload heavy computations to a background thread.
+2. **Avoid async void**: Always aim to return a `Task` or `Task<T>` from async methods. This practice enables exceptions to be properly returned to callers and makes your methods composable with other async tasks, empowering you in your coding practices.
+3. **Minimize thread blocking**: Ensure your async methods do not block threads by calling `.Result` or `.Wait()` on tasks. Instead, propagate async all the way through the call stack by converting calling methods to async and using await, thereby ensuring efficient code execution.
+4. **Strategically apply ConfigureAwait(false)**: When you're sure that the continuation of an async method does not need to resume on the original synchronization context, you can use `ConfigureAwait(false)`. This can reduce the overhead of resuming the original context, which is instrumental in an application's library code or non-UI components.
+5. **Profile and measure**: Always profile asynchronous code as you would synchronous code. Use profiling tools to measure whether async adds any real value in scenarios where you've applied it, adjusting your approach based on the findings.
+
+By adhering to these best practices, developers can avoid premature implementation of asynchronous code and ensure that ASP.NET Core applications are efficient, maintainable, and scalable. Proper usage of async and await helps manage resources effectively, keeping applications responsive under load without unnecessary performance costs.
+
 ## Summary
 
 Let's conclude our discussion of the complexities of asynchronous programming in C#. In this environment, developers employ asynchronous techniques, particularly in network programming, to efficiently handle operations without compromising application responsiveness.
 
-In this context, various components, ranging from handling HTTP requests to managing file streams, are instrumental in overcoming the challenges posed by network latency and the potential for blocking user interfaces. Utilizing the async and await keywords, these operations are executed without interrupting the main application flow, thereby ensuring a seamless user experience despite the underlying complexities.
+In this context, various components, ranging from handling HTTP requests to managing file streams, are instrumental in overcoming the challenges posed by network latency and the potential for blocking user interfaces. Utilizing the `async` and `await` keywords, these operations are executed without interrupting the main application flow, thereby ensuring a seamless user experience despite the underlying complexities.
 
-Throughout their journey in asynchronous programming, developers encounter numerous challenges, including the judicious use of ConfigureAwait(false) for resource optimization, applying concurrency control strategies, and implementing robust error handling to safeguard against unforeseen exceptions. The use of cancellation tokens plays a crucial role in providing a mechanism to abort operations gracefully, preventing resource leakage and ensuring clean operation termination. These strategies underscore the developers' ability to manage background tasks effectively, facilitating uninterrupted data exchange and maintaining the stability of the digital ecosystem.
+Throughout their journey in asynchronous programming, developers encounter numerous challenges, including the judicious use of `ConfigureAwait(false)` for resource optimization, applying concurrency control strategies, and implementing robust error handling to safeguard against unforeseen exceptions. The use of cancellation tokens plays a crucial role in providing a mechanism to abort operations gracefully, preventing resource leakage and ensuring clean operation termination. These strategies underscore the developers' ability to manage background tasks effectively, facilitating uninterrupted data exchange and maintaining the stability of the digital ecosystem.
