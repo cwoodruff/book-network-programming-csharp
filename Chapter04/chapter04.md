@@ -4,7 +4,6 @@ icon: stack
 label: Chap 4 - Asynchronous Programming with Async/Await
 meta:
 title: "Asynchronous Programming with Async/Await"
-visibility: hidden
 ---
 
 # 4
