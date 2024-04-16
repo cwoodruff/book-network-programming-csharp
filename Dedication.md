@@ -4,11 +4,7 @@ icon: heart-fill
 ---
 # Dedication
 
-> To Tracy, Spencer, Nolan, and Mallory,
->
->Though the pages of this book are filled with the complexities of technology, its heartbeat is powered by the unwavering support and love you provide. Tracy, your strength and patience light the darkest of my days and inspire every word written. Spencer, Nolan, and Mallory, your curiosity and enthusiasm remind me daily of the boundless horizons of knowledge and the joy in the journey of discovery.
->
->Tracy are my compass in the vast sea of innovation, guiding me with your wisdom, encouraging me with your excitement, and steadying me with your love. This book, though technical in its nature, is imbued with the essence of the support and inspiration you provide. You are not mentioned within its chapters, but your influence is interwoven in every line and concept.
+>To Tracy, my steadfast partner and the light of my life, whose support and love make everything possible. And to our children, Spencer, Nolan, and Mallory, who inspire me every day with their curiosity, joy, and boundless energy. While technical, this book is imbued with the motivation and strength you give me. May you always know how deeply you influence my world and the work I create.
 >
 >Thank you for being my anchor and my sail, making this journey not only possible but immensely rewarding.
 >
