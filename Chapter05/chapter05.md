@@ -154,40 +154,7 @@ public class Example
 
 However, the benefits of multithreading come with challenges. The primary issues include managing the complexity of concurrent execution and ensuring data consistency. Concurrency can lead to race conditions, where multiple threads modify shared data in a way that leads to unpredictable or erroneous behavior. Additionally, tasks such as debugging and testing become more complex due to the non-deterministic nature of thread execution.
 
-To overcome these challenges, synchronization techniques play a pivotal role. They control the execution order of threads, providing a sense of control and ensuring data integrity. For example, using locks to safeguard data access can prevent race conditions, as demonstrated below:
-
-```C#
-public class Counter
-{
-    private int count = 0;
-    private object lockObject = new object();
-
-    public void Increment()
-    {
-        lock (lockObject)
-        {
-            count++;
-            Console.WriteLine($"Count is now {count}");
-        }
-    }
-}
-
-public class Example
-{
-    public static void Main()
-    {
-        Counter counter = new Counter();
-        Thread[] threads = new Thread[10];
-        for (int i = 0; i < threads.Length; i++)
-        {
-            threads[i] = new Thread(counter.Increment);
-            threads[i].Start();
-        }
-    }
-}
-```
-
-In this code, the `lock` ensures that only one thread can enter the critical section at a time, thereby maintaining the integrity of the `count` property.
+To overcome these challenges, synchronization techniques play a pivotal role. They control the execution order of threads, providing a sense of control and ensuring data integrity. Using the `lock` statement ensures that only one thread can enter the critical section at a time, thereby maintaining the integrity of the `count` property.
 
 Another significant challenge in multithreading is dealing with deadlocks, which occur when two or more threads are each waiting for the other to release the resources they need to continue execution. This results in a situation where neither thread can proceed, effectively freezing the application. Deadlocks are a classic problem in concurrent programming and can occur without necessarily involving the explicit use of locks (like lock keyword) for synchronization.
 
@@ -441,39 +408,61 @@ In multithreaded network applications, ensuring that data is accessed thread-saf
 One of the most straightforward synchronization techniques in C# is the `lock` keyword, which ensures that a block of code is not executed by more than one thread at a time. The `lock` keyword encloses a statement block in a synchronization lock, thus preventing other threads from entering the block until the current thread releases the lock. Here is an example of using the `lock` mechanism to synchronize access to a shared resource:
 
 ```C#
-public class Account
+public class ThreadSafeLogger
 {
-    private decimal balance = 0;
     private readonly object lockObject = new object();
+    private readonly string logFilePath;
 
-    public void Deposit(decimal amount)
+    public ThreadSafeLogger(string filePath)
     {
-        lock (lockObject)
-        {
-            balance += amount;
-            Console.WriteLine($"Balance updated to {balance}");
-        }
+        logFilePath = filePath;
+        // Ensure the log file exists
+        File.WriteAllText(logFilePath, $"Log started at {DateTime.UtcNow}\n");
     }
 
-    public void Withdraw(decimal amount)
+    public void Log(string message)
     {
         lock (lockObject)
         {
-            if (balance >= amount)
-            {
-                balance -= amount;
-                Console.WriteLine($"Amount withdrawn: {amount}, New Balance: {balance}");
-            }
-            else
-            {
-                Console.WriteLine("Not enough balance.");
-            }
+            // Append text to the log file in a thread-safe manner
+            File.AppendAllText(logFilePath, $"{DateTime.UtcNow}: {message}\n");
         }
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        ThreadSafeLogger logger = new ThreadSafeLogger("log.txt");
+
+        // Simulate multiple threads logging simultaneously
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i < threads.Length; i++)
+        {
+            threads[i] = new Thread(() =>
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    logger.Log($"Thread {Thread.CurrentThread.ManagedThreadId} logging message {j}");
+                    Thread.Sleep(100);  // Simulate work
+                }
+            });
+            threads[i].Start();
+        }
+
+        // Wait for all threads to complete logging
+        foreach (Thread thread in threads)
+        {
+            thread.Join();
+        }
+
+        Console.WriteLine("All threads have completed logging.");
     }
 }
 ```
 
-In the example above, both deposit and withdrawal operations are synchronized using the same lock object (`lockObject`). This ensures that these operations on the `balance` property are atomic and cannot interfere with each other, thus maintaining data consistency.
+This example shows a practical application of the `lock` keyword: ensuring data consistency when multiple threads write to a shared file resource. This makes it a useful pattern for tasks like logging in multithreaded applications.
 
 For more complex scenarios, other synchronization constructs such as `Mutex`, `Semaphore`, and `ReaderWriterLockSlim` might be more appropriate. `ReaderWriterLockSlim` is particularly useful when you have a resource that is read frequently but updated less often. It allows multiple threads to read the data in parallel but ensures exclusive access for writing. Here's how you can use `ReaderWriterLockSlim`:
 
