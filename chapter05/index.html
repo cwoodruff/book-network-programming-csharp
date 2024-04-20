@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766944575024">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766946937544">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766944575024" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766946937544" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766944575024" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766946937544" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766944575024" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766944575024" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766946937544" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766946937544" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -768,7 +768,7 @@ public class Program
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, <code v-pre>ThreadSafeLogger</code> ensures that log entries are written without interference from multiple threads, keeping the log output readable and consistent.</p>
-<p>For more in-depth testing, tools like Visual Studio’s Concurrency Visualizer or Parallel Stack in JetBrains Rider can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with <code v-pre>Task</code> and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.</p>
+<p>For more in-depth testing, tools like <strong>Visual Studio’s Concurrency Visualizer</strong> or <strong>Parallel Stack in JetBrains Rider</strong> can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with <code v-pre>Task</code> and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.</p>
 <p>Unit testing frameworks like NUnit or xUnit can be used to test multithreaded code, but they require careful planning to cover concurrency issues. One approach is to simulate multithreading scenarios where shared resources are accessed concurrently to ensure the code behaves as expected. Here’s a simple example using xUnit and the Task class to test a thread-safe counter class:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">public class ThreadSafeCounter
@@ -1052,7 +1052,7 @@ public class ConcurrentAccess
 </doc-codeblock></div>
 <p>In this example, <code v-pre>Parallel.For</code> is used to perform many operations concurrently, each adding an entry to the ConcurrentDictionary. This collection ensures all additions are thread-safe and efficient without requiring explicit locks.</p>
 <p>Optimizing network communication itself is also vital. Techniques such as reducing the frequency of network calls, compressing data for transmission, and using efficient serialization methods can significantly enhance network performance. For instance, choosing a faster serialization framework like Protocol Buffers over JSON or XML in high throughput scenarios can decrease latency and bandwidth usage.</p>
-<p>Finally, profiling and monitoring tools such as Visual Studio Diagnostic Tools can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.</p>
+<p>Finally, profiling and monitoring tools such as Visual Studio Diagnostic Tools or JetBrains&#x27; Monitor Tool Window can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.</p>
 <p>By implementing these performance optimization techniques, developers can ensure that their network applications are not only functional but also robust and efficient, capable of efficiently handling real-world loads.</p>
 <doc-anchor-target id="monitoring-and-tuning-parallel-applications">
     <h3>
@@ -1085,9 +1085,9 @@ public class PerformanceMonitoring
 }</code></pre>
 </doc-codeblock></div>
 <p>This code creates performance counters for CPU usage and available memory and retrieves their values. These metrics are crucial for tuning applications, especially to diagnose performance bottlenecks that can impact parallel processing.</p>
-<p>For more detailed analysis, tools like Visual Studio&#x27;s Diagnostic Tools and the Monitor tab in JetBrains Rider can be used. These tools offer features such as CPU Usage, Memory Usage, and Threads and Tasks windows that allow developers to see in real-time how well the application is performing and how resources are being used. This is particularly valuable for tuning parallel applications where threads and tasks are extensively used.</p>
+<p>For more detailed analysis, tools like <strong>Visual Studio&#x27;s Diagnostic Tools</strong> and the <strong>Monitor Tool Window in JetBrains Rider</strong> can be used. These tools offer features such as CPU Usage, Memory Usage, and Threads and Tasks windows that allow developers to see in real-time how well the application is performing and how resources are being used. This is particularly valuable for tuning parallel applications where threads and tasks are extensively used.</p>
 <p>Another powerful tool for tuning .NET applications is the .NET Profiler API. It allows developers to track their applications&#x27; performance at a granular level, identify slow methods, and understand the call tree, which can help pinpoint inefficient code paths.</p>
-<p>Beyond internal tools, third-party solutions like JetBrains dotTrace, dotMemory and Redgate ANTS Performance Profiler provide advanced profiling capabilities. These tools offer intuitive interfaces and detailed reports that help identify performance hotspots and optimize them. They can trace execution time across threads and manage profiling sessions to compare before and after performance metrics, which is invaluable for effective tuning.</p>
+<p>Beyond internal tools, third-party solutions like <strong>JetBrains dotTrace, dotMemory</strong> and <strong>Redgate ANTS Performance Profiler</strong> provide advanced profiling capabilities. These tools offer intuitive interfaces and detailed reports that help identify performance hotspots and optimize them. They can trace execution time across threads and manage profiling sessions to compare before and after performance metrics, which is invaluable for effective tuning.</p>
 <p>Monitoring and tuning parallel applications require a systematic approach. Developers gather data, analyze it to identify issues, and then iteratively make changes and measure improvements. By leveraging the built-in capabilities of C# and .NET, along with sophisticated external tools, developers can ensure their parallel applications are optimized for maximum performance.</p>
 <doc-anchor-target id="case-study-building-a-multithreaded-server">
     <h2>
