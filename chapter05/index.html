@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766946937544">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766948357627">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766946937544" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766948357627" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766946937544" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766948357627" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766946937544" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766946937544" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766948357627" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766948357627" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -375,38 +375,7 @@ public class Example
 }</code></pre>
 </doc-codeblock></div>
 <p>However, the benefits of multithreading come with challenges. The primary issues include managing the complexity of concurrent execution and ensuring data consistency. Concurrency can lead to race conditions, where multiple threads modify shared data in a way that leads to unpredictable or erroneous behavior. Additionally, tasks such as debugging and testing become more complex due to the non-deterministic nature of thread execution.</p>
-<p>To overcome these challenges, synchronization techniques play a pivotal role. They control the execution order of threads, providing a sense of control and ensuring data integrity. For example, using locks to safeguard data access can prevent race conditions, as demonstrated below:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public class Counter
-{
-    private int count = 0;
-    private object lockObject = new object();
-
-    public void Increment()
-    {
-        lock (lockObject)
-        {
-            count++;
-            Console.WriteLine($&quot;Count is now {count}&quot;);
-        }
-    }
-}
-
-public class Example
-{
-    public static void Main()
-    {
-        Counter counter = new Counter();
-        Thread[] threads = new Thread[10];
-        for (int i = 0; i &lt; threads.Length; i++)
-        {
-            threads[i] = new Thread(counter.Increment);
-            threads[i].Start();
-        }
-    }
-}</code></pre>
-</doc-codeblock></div>
-<p>In this code, the <code v-pre>lock</code> ensures that only one thread can enter the critical section at a time, thereby maintaining the integrity of the <code v-pre>count</code> property.</p>
+<p>To overcome these challenges, synchronization techniques play a pivotal role. They control the execution order of threads, providing a sense of control and ensuring data integrity. Using the <code v-pre>lock</code> statement ensures that only one thread can enter the critical section at a time, thereby maintaining the integrity of the <code v-pre>count</code> property.</p>
 <p>Another significant challenge in multithreading is dealing with deadlocks, which occur when two or more threads are each waiting for the other to release the resources they need to continue execution. This results in a situation where neither thread can proceed, effectively freezing the application. Deadlocks are a classic problem in concurrent programming and can occur without necessarily involving the explicit use of locks (like lock keyword) for synchronization.</p>
 <p>A typical scenario for deadlocks in C# involves using multiple mutexes (or similar synchronization primitives). Here&#x27;s an illustrative example of how a deadlock can occur without directly using the <code v-pre>lock</code> keyword but using <code v-pre>Mutex</code>, which serves a similar purpose but with more control and across application domains:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -648,38 +617,60 @@ public class Program
 <p>In multithreaded network applications, ensuring that data is accessed thread-safe is crucial to prevent data corruption and maintain application stability. Synchronization and safety are fundamental in managing the shared state between threads, particularly when multiple threads modify the same data. C# and the .NET framework provide various mechanisms to help developers synchronize access to shared resources and ensure thread safety.</p>
 <p>One of the most straightforward synchronization techniques in C# is the <code v-pre>lock</code> keyword, which ensures that a block of code is not executed by more than one thread at a time. The <code v-pre>lock</code> keyword encloses a statement block in a synchronization lock, thus preventing other threads from entering the block until the current thread releases the lock. Here is an example of using the <code v-pre>lock</code> mechanism to synchronize access to a shared resource:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public class Account
+<pre class="language-csharp"><code v-pre class="language-csharp">public class ThreadSafeLogger
 {
-    private decimal balance = 0;
     private readonly object lockObject = new object();
+    private readonly string logFilePath;
 
-    public void Deposit(decimal amount)
+    public ThreadSafeLogger(string filePath)
     {
-        lock (lockObject)
-        {
-            balance += amount;
-            Console.WriteLine($&quot;Balance updated to {balance}&quot;);
-        }
+        logFilePath = filePath;
+        // Ensure the log file exists
+        File.WriteAllText(logFilePath, $&quot;Log started at {DateTime.UtcNow}\n&quot;);
     }
 
-    public void Withdraw(decimal amount)
+    public void Log(string message)
     {
         lock (lockObject)
         {
-            if (balance &gt;= amount)
-            {
-                balance -= amount;
-                Console.WriteLine($&quot;Amount withdrawn: {amount}, New Balance: {balance}&quot;);
-            }
-            else
-            {
-                Console.WriteLine(&quot;Not enough balance.&quot;);
-            }
+            // Append text to the log file in a thread-safe manner
+            File.AppendAllText(logFilePath, $&quot;{DateTime.UtcNow}: {message}\n&quot;);
         }
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        ThreadSafeLogger logger = new ThreadSafeLogger(&quot;log.txt&quot;);
+
+        // Simulate multiple threads logging simultaneously
+        Thread[] threads = new Thread[5];
+        for (int i = 0; i &lt; threads.Length; i++)
+        {
+            threads[i] = new Thread(() =&gt;
+            {
+                for (int j = 0; j &lt; 10; j++)
+                {
+                    logger.Log($&quot;Thread {Thread.CurrentThread.ManagedThreadId} logging message {j}&quot;);
+                    Thread.Sleep(100);  // Simulate work
+                }
+            });
+            threads[i].Start();
+        }
+
+        // Wait for all threads to complete logging
+        foreach (Thread thread in threads)
+        {
+            thread.Join();
+        }
+
+        Console.WriteLine(&quot;All threads have completed logging.&quot;);
     }
 }</code></pre>
 </doc-codeblock></div>
-<p>In the example above, both deposit and withdrawal operations are synchronized using the same lock object (<code v-pre>lockObject</code>). This ensures that these operations on the <code v-pre>balance</code> property are atomic and cannot interfere with each other, thus maintaining data consistency.</p>
+<p>This example shows a practical application of the <code v-pre>lock</code> keyword: ensuring data consistency when multiple threads write to a shared file resource. This makes it a useful pattern for tasks like logging in multithreaded applications.</p>
 <p>For more complex scenarios, other synchronization constructs such as <code v-pre>Mutex</code>, <code v-pre>Semaphore</code>, and <code v-pre>ReaderWriterLockSlim</code> might be more appropriate. <code v-pre>ReaderWriterLockSlim</code> is particularly useful when you have a resource that is read frequently but updated less often. It allows multiple threads to read the data in parallel but ensures exclusive access for writing. Here&#x27;s how you can use <code v-pre>ReaderWriterLockSlim</code>:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">public class DataCache
