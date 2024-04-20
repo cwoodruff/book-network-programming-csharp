@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766948357627">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.766955115630">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.766948357627" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.766955115630" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766948357627" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.766955115630" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766948357627" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766948357627" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.766955115630" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.766955115630" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -240,7 +240,7 @@
     </h1>
 </doc-anchor-target>
 <p>Welcome to the advanced concepts of multithreading and parallelization within the .NET 8 and C# 12 frameworks. This chapter will explore how multithreading allows your application to perform multiple tasks concurrently, enhancing performance and efficiency.</p>
-<p>Multithreading can be visualized as multiple workers (threads) in an operational environment (your program) executing various tasks simultaneously. This approach improves throughput and optimizes resource utilization. We will guide you through effective strategies for managing these threads to ensure they operate smoothly without resource conflicts or performance bottlenecks.</p>
+<p>Multithreading can be visualized as multiple workers (threads) in an operational environment (your program) executing various tasks simultaneously. This approach improves throughput and optimizes resource utilization. The chapter will guide you through effective strategies for managing these threads to ensure they operate smoothly without resource conflicts or performance bottlenecks.</p>
 <p>On the other hand, parallelization involves decomposing a large task into smaller, manageable units that can be processed simultaneously, significantly speeding up execution. This technique is critical in optimizing computational tasks and improving application efficiency.</p>
 <p>This chapter will cover four main areas:</p>
 <ul>
@@ -266,8 +266,8 @@
     </h3>
 </doc-anchor-target>
 <p>Multithreading, in the context of network programming, refers to an application&#x27;s ability to execute multiple threads concurrently within a single process. This is particularly crucial in network applications where the need to handle multiple simultaneous client requests efficiently can significantly impact performance and responsiveness. Each thread operates as a separate execution path, allowing the application to perform numerous tasks simultaneously, such as listening for incoming connections, processing client data, and maintaining active connections.</p>
-<p>In network programming, multithreading optimizes the utilization of CPU resources, ensuring that the server can handle multiple operations at once without waiting for one task to complete before starting another. For example, a web server uses multithreading to handle requests from multiple web browsers simultaneously. Without multithreading, each client request would need to be processed sequentially, leading to delays and a suboptimal user experience.</p>
-<p>C# provides robust support for multithreading through its .NET framework, offering various synchronization primitives such as locks, mutexes, and semaphores to help manage access to shared resources across threads. This ensures that while multiple threads may access the same data, they do so without causing data corruption or other concurrency issues. Moreover, C#&#x27;s Task Parallel Library (TPL) and language features such as async and await further simplifying the development of asynchronous and multithreaded applications, making it easier to write clear and maintainable code.</p>
+<p>In network programming, multithreading optimizes the utilization of CPU resources, ensuring the server can handle multiple operations at once without waiting for one task to complete before starting another. For example, a web server uses multithreading to handle requests from multiple web browsers simultaneously. Without multithreading, each client request would need to be processed sequentially, leading to delays and a suboptimal user experience.</p>
+<p>C# provides robust support for multithreading through its .NET framework, offering various synchronization primitives such as locks, mutexes, and semaphores to help manage access to shared resources across threads. This ensures that while multiple threads may access the same data, they do so without causing data corruption or other concurrency issues. Moreover, C#&#x27;s Task Parallel Library (TPL) and language features such as async and await further simplify the development of asynchronous and multithreaded applications, making it easier to write clear and maintainable code.</p>
 <p>Understanding how to implement and manage multithreading in network applications effectively allows developers to build scalable, high-performance network services. This section sets the foundation for further exploration into specific multithreading techniques and their practical applications in network programming, ensuring developers can meet the demands of complex, data-intensive network operations.</p>
 <doc-anchor-target id="the-need-for-multithreading-in-modern-network-applications">
     <h3>
@@ -276,7 +276,7 @@
     </h3>
 </doc-anchor-target>
 <p>The necessity for multithreading in modern network applications stems from the demands for greater efficiency and responsiveness in handling multiple client requests. As network applications have become more data-intensive and connected, the ability to process several tasks simultaneously has become crucial. Multithreading allows a server to manage various operations in parallel, from processing client data to managing database connections, optimizing resource use and reducing response times.</p>
-<p>For example, consider a high-traffic web server that must handle thousands of simultaneous connections. Without multithreading, each request would be processed sequentially, which could lead to significant delays and a poor user experience. With multithreading, the server can allocate separate threads for handling individual client requests, effectively distributing the workload across multiple CPU cores. This speeds up processing time and ensures that the application remains responsive, even under heavy load.</p>
+<p>For example, consider a high-traffic web server that must handle thousands of simultaneous connections. Without multithreading, each request would be processed sequentially, which could lead to significant delays and a poor user experience. With multithreading, the server can allocate separate threads for handling individual client requests, effectively distributing the workload across multiple CPU cores. This speeds up processing time and ensures the application remains responsive, even under heavy load.</p>
 <p>Furthermore, multithreading facilitates a more scalable architecture in network applications. As the number of users and the volume of data increase, applications can scale to meet these demands by dynamically creating and managing threads as needed. This scalability is crucial for applications that anticipate varying levels of user engagement and require the flexibility to adjust to these changes efficiently.</p>
 <doc-anchor-target id="basic-concepts-of-multithreading">
     <h3>
@@ -284,7 +284,7 @@
         <span>Basic Concepts of Multithreading</span>
     </h3>
 </doc-anchor-target>
-<p>Understanding the basic concepts of multithreading is essential for any developer working with network applications in C#. At its core, multithreading involves the creation, execution, and management of multiple threads within a single application process. Each thread can perform tasks independently while sharing the application&#x27;s memory and resources, which can lead to efficient CPU utilization and faster response times in network applications.</p>
+<p>Understanding the basic concepts of multithreading is essential for any developer working with network applications in C#. At its core, multithreading involves the creation, execution, and management of multiple threads within a single application process. Each thread can perform tasks independently while sharing the application&#x27;s memory and resources, leading to efficient CPU utilization and faster response times in network applications.</p>
 <p>C# provides a straightforward way to create threads using the <code v-pre>System.Threading.Thread</code> class. Here&#x27;s a simple example of how to create and start a thread that executes a method named <code v-pre>DoWork</code>:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System;
@@ -427,7 +427,7 @@ public class Example
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, each thread tries to lock two mutexes. Thread 1 locks <code v-pre>mutex1</code> and then tries to lock <code v-pre>mutex2</code>, while Thread 2 locks <code v-pre>mutex2</code> and then tries to lock <code v-pre>mutex1</code>. If both threads lock their first mutex before attempting to acquire the other, neither can proceed, resulting in a deadlock.</p>
-<p>To avoid deadlocks, ensure that all threads acquire locks consistently. Use timeout options like <code v-pre>WaitOne(timeout)</code> where threads can back off and retry if they can&#x27;t acquire all required resources within a specific timeframe. Managing thread execution order, carefully designing the locking strategy, or using higher-level concurrency mechanisms like the <strong>Task Parallel Library (TPL)</strong> that abstract away direct mutex management can help mitigate such risks.</p>
+<p>To avoid deadlocks, ensure that all threads acquire locks consistently. Use timeout options like <code v-pre>WaitOne(timeout)</code>, where threads can back off and retry if they can&#x27;t acquire all required resources within a specific timeframe. Managing thread execution order, carefully designing the locking strategy, or using higher-level concurrency mechanisms like the <strong>Task Parallel Library (TPL)</strong> that abstract away direct mutex management can help mitigate such risks.</p>
 <p>Understanding these advantages and challenges is essential for developers implementing robust and efficient multithreaded applications in C#. Proper thread management and careful handling of synchronization can help harness multithreading&#x27;s full potential, turning the inherent complexities into manageable parts of the application design.</p>
 <doc-anchor-target id="handling-concurrent-network-connections-with-multithreading">
     <h2>
@@ -436,8 +436,8 @@ public class Example
     </h2>
 </doc-anchor-target>
 <p>Efficiently managing concurrent network connections is a crucial aspect of modern network application development, especially in server environments where multiple clients interact with the server simultaneously. The use of multithreading is instrumental in this process, enabling servers to maintain responsiveness and handle each client request promptly.</p>
-<p>In C#, multithreading for handling network connections typically involves creating a separate thread for each incoming client request. This approach ensures that the server can continue listening for new requests while processing ongoing ones. For instance, a typical network server might continuously use a main thread to listen on a socket. When a client connection is detected, the server spawns a new thread to handle the communication, freeing the main thread to accept additional incoming connections.</p>
-<p>However, the thread-per-connection model, while effective for low volumes of simultaneous connections, can prove inefficient when dealing with a high volume. This is because each thread consumes system resources. A more efficient alternative is to use a thread pool. The .NET Framework offers a managed thread pool through the <code v-pre>System.Threading.ThreadPool</code> class, which effectively manages a pool of worker threads. By limiting the number of active threads at any given time, a thread pool reduces overhead and enhances scalability.</p>
+<p>In C#, multithreading for handling network connections typically involves creating a separate thread for each incoming client request. This approach ensures the server can continue listening for new requests while processing ongoing ones. For instance, a typical network server might continuously use a main thread to listen on a socket. When a client connection is detected, the server spawns a new thread to handle the communication, freeing the main thread to accept additional incoming connections.</p>
+<p>However, while effective for low volumes of simultaneous connections, the thread-per-connection model can prove inefficient when dealing with a high volume. This is because each thread consumes system resources. A more efficient alternative is to use a thread pool. The .NET Framework offers a managed thread pool through the <code v-pre>System.Threading.ThreadPool</code> class, which effectively manages a pool of worker threads. By limiting the number of active threads at any given time, a thread pool reduces overhead and enhances scalability.</p>
 <p>Here&#x27;s a simple example of using a thread pool to handle network requests in C#:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Net;
@@ -494,7 +494,7 @@ public class Example
     </h3>
 </doc-anchor-target>
 <p>Understanding concurrent connections is pivotal for developers building network applications that must efficiently handle multiple client requests simultaneously. In network programming, concurrency refers to an application&#x27;s ability to manage multiple network connections simultaneously, ensuring that each connection is processed without causing delays or performance bottlenecks for others.</p>
-<p>In C#, concurrent connections are typically handled through asynchronous programming models or multithreading techniques. Asynchronous programming allows a network server to initiate a potentially time-consuming operation, such as waiting for data from a client, and immediately return to listening for other requests. This model is facilitated by the async and await keywords in C#, which enable writing clear and performant asynchronous code.</p>
+<p>In C#, concurrent connections are typically handled through asynchronous programming models or multithreading techniques. Asynchronous programming allows a network server to initiate a potentially time-consuming operation, such as waiting for data from a client, and immediately return to listening for other requests. This model is facilitated by the <code v-pre>async</code> and <code v-pre>await</code> keywords in C#, which enable writing clear and performant asynchronous code.</p>
 <p>Here is an example of handling concurrent network connections using asynchronous methods in C#:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Net;
@@ -555,7 +555,7 @@ public static class Program
     </h3>
 </doc-anchor-target>
 <p>Managing concurrent network connections effectively is crucial in developing scalable and responsive network applications. In C#, multithreading is a common strategy to achieve this, where a separate thread handles each incoming connection. This approach allows the server to process multiple connections simultaneously, improving throughput and response times.</p>
-<p>One practical way to implement multithreading in network applications is using the <code v-pre>System.Threading.Thread</code> class will spawn a new thread for each connection. This ensures that the server can continue to accept new connections while existing connections are being processed independently. Here is a straightforward example demonstrating this approach:</p>
+<p>One practical way to implement multithreading in network applications is using the <code v-pre>System.Threading.Thread</code> class will spawn a new thread for each connection. This ensures the server can continue to accept new connections while existing connections are being processed independently. Here is a straightforward example demonstrating this approach:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Net;
 using System.Net.Sockets;
