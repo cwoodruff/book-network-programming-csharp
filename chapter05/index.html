@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767291918649">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767291936688">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -15,7 +15,7 @@
     <!-- Primary Meta Tags -->
     <title>Multithreading in Network Applications</title>
     <meta name="title" content="Multithreading in Network Applications">
-    <meta name="description" content="Welcome to the advanced concepts of multithreading and parallelization within the .NET 8 and C# 12 frameworks.">
+    <meta name="description" content="C# 12. This chapter will explore how multithreading allows your application to perform multiple tasks in parallel, enhancing performance and...">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter05/">
@@ -24,23 +24,23 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter05/">
     <meta property="og:title" content="Multithreading in Network Applications">
-    <meta property="og:description" content="Welcome to the advanced concepts of multithreading and parallelization within the .NET 8 and C# 12 frameworks.">
+    <meta property="og:description" content="C# 12. This chapter will explore how multithreading allows your application to perform multiple tasks in parallel, enhancing performance and...">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter05/">
     <meta property="twitter:title" content="Multithreading in Network Applications">
-    <meta property="twitter:description" content="Welcome to the advanced concepts of multithreading and parallelization within the .NET 8 and C# 12 frameworks.">
+    <meta property="twitter:description" content="C# 12. This chapter will explore how multithreading allows your application to perform multiple tasks in parallel, enhancing performance and...">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.767291918649" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.767291936688" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767291918649" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767291936688" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767291918649" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.767291918649" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767291936688" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.767291936688" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -239,10 +239,10 @@
         <span>Multithreading in Network Applications</span>
     </h1>
 </doc-anchor-target>
-<p>Welcome to the advanced concepts of multithreading and parallelization within the .NET 8 and C# 12 frameworks. This chapter will explore how multithreading allows your application to perform multiple tasks concurrently, enhancing performance and efficiency.</p>
-<p>Multithreading can be visualized as multiple workers (threads) in an operational environment (your program) executing various tasks simultaneously. This approach improves throughput and optimizes resource utilization. The chapter will guide you through effective strategies for managing these threads to ensure they operate smoothly without resource conflicts or performance bottlenecks.</p>
-<p>On the other hand, parallelization involves decomposing a large task into smaller, manageable units that can be processed simultaneously, significantly speeding up execution. This technique is critical in optimizing computational tasks and improving application efficiency.</p>
-<p>This chapter will cover four main areas:</p>
+<p>C# 12. This chapter will explore how multithreading allows your application to perform multiple tasks in parallel, enhancing performance and efficiency.</p>
+<p>Multithreading can be visualized as multiple workers (threads) in an operational environment (your program) executing various tasks simultaneously. This approach improves throughput. I will guide you through effective strategies for managing these threads to ensure they operate smoothly without resource conflicts or performance bottlenecks.</p>
+<p>Parallelization, or parallel computing, refers to the technique of dividing a problem into tasks that can be solved concurrently and then combining the results of the tasks to get the final result. It mainly focuses on performance optimization by dividing a task into parts that can be executed simultaneously and utilizing multiple processors or cores to perform computations faster. We can look at parallelization as one strategy that implements multithreading.</p>
+<p>The chapter will cover four main areas:</p>
 <ul>
 <li>Introducing Multithreading in Network Applications</li>
 <li>How to Handle Concurrent Network Connections with Multithreading</li>
@@ -346,7 +346,7 @@ public class Example
         <span>Advantages and Challenges of Multithreading</span>
     </h3>
 </doc-anchor-target>
-<p>Multithreading in C# offers significant advantages in network applications, primarily through improved performance and responsiveness. By allowing multiple threads to execute concurrently, applications can handle more tasks simultaneously, such as processing multiple user requests or performing background tasks without blocking user interaction. This concurrent execution is particularly beneficial when tasks involve waiting for external resources like network responses or database transactions, as it prevents a single slow operation from halting the entire application.</p>
+<p>By allowing multiple threads to execute concurrently, applications can handle more tasks simultaneously, such as processing multiple user requests or performing background tasks without blocking user interaction. This concurrent execution is particularly beneficial when tasks involve waiting for external resources like network responses or database transactions, as it prevents a single slow operation from halting the entire application.</p>
 <p>For instance, consider a network service that needs to handle multiple client requests. Each request could potentially involve time-consuming operations such as database access or file I/O. By handling each request in a separate thread, the server can continue to accept and process new requests without waiting for the current ones to complete. Here’s a simple example illustrating this concept:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">public class NetworkService
@@ -547,7 +547,7 @@ public static class Program
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, <code v-pre>AcceptTcpClientAsync</code> is used to wait for client connections asynchronously. <code v-pre>HandleClientAsync</code> is called to process the client request in a separate asynchronous task when a client connects. This allows the main listening loop to immediately return to waiting for additional client connections, effectively handling multiple concurrent connections without blocking.</p>
-<p>Efficiently handling concurrent connections is a complex task that requires a solid understanding of asynchronous operations and multithreading. However, by leveraging The robust support for asynchronous programming built into C #, developers can create network servers that are not only capable of managing high volumes of traffic but also maintain optimal performance, a crucial advantage in today&#x27;s demanding network environments.</p>
+<p>Efficiently handling concurrent connections is a complex task that requires a solid understanding of asynchronous operations and multithreading. However, by leveraging the robust support for asynchronous programming built into C #, developers can create network servers that are not only capable of managing high volumes of traffic but also maintain optimal performance, a crucial advantage in today&#x27;s demanding network environments.</p>
 <doc-anchor-target id="multithreading-to-manage-concurrent-connections">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#multithreading-to-manage-concurrent-connections">#</doc-anchor-trigger>

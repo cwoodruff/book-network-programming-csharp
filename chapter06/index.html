@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767291918649">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767291936688">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -15,6 +15,7 @@
     <!-- Primary Meta Tags -->
     <title>Robust Error Handling and Fault Tolerance Strategies</title>
     <meta name="title" content="Robust Error Handling and Fault Tolerance Strategies">
+    <meta name="description" content="System Exceptions: Cover exceptions thrown by the CLR (Common Language Runtime) that are generally indicative of a bug or unforeseen error in the...">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter06/">
@@ -23,20 +24,22 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter06/">
     <meta property="og:title" content="Robust Error Handling and Fault Tolerance Strategies">
+    <meta property="og:description" content="System Exceptions: Cover exceptions thrown by the CLR (Common Language Runtime) that are generally indicative of a bug or unforeseen error in the...">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter06/">
     <meta property="twitter:title" content="Robust Error Handling and Fault Tolerance Strategies">
+    <meta property="twitter:description" content="System Exceptions: Cover exceptions thrown by the CLR (Common Language Runtime) that are generally indicative of a bug or unforeseen error in the...">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.767291918649" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.767291936688" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767291918649" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767291936688" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767291918649" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767291936688" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -234,6 +237,165 @@
         <doc-anchor-trigger class="header-anchor-trigger" to="#robust-error-handling-and-fault-tolerance-strategies">#</doc-anchor-trigger>
         <span>Robust Error Handling and Fault Tolerance Strategies</span>
     </h1>
+</doc-anchor-target>
+<doc-anchor-target id="understanding-error-handling-in-net">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#understanding-error-handling-in-net">#</doc-anchor-trigger>
+        <span>Understanding Error Handling in .NET</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="introduction-to-error-handling-in-net">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-error-handling-in-net">#</doc-anchor-trigger>
+        <span>Introduction to Error Handling in .NET</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="exception-hierarchy-in-net">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#exception-hierarchy-in-net">#</doc-anchor-trigger>
+        <span>Exception Hierarchy in .NET</span>
+    </h3>
+</doc-anchor-target>
+<p>System Exceptions: Cover exceptions thrown by the CLR (Common Language Runtime) that are generally indicative of a bug or unforeseen error in the application, like NullReferenceException, IndexOutOfRangeException, etc.
+Application Exceptions: Discuss exceptions that should be thrown by user code to represent errors that can be anticipated and handled gracefully, such as InvalidOperationException when a method call is invalid for the object&#x27;s current state.
+Network-Specific Exceptions: Highlight exceptions specific to network operations, like System.Net.Sockets.SocketException and System.IO.IOException, explaining the scenarios in which they might be thrown (e.g., network timeouts, connection failures).</p>
+<doc-anchor-target id="common-network-related-exceptions">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#common-network-related-exceptions">#</doc-anchor-trigger>
+        <span>Common Network-Related Exceptions</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="implementing-try-catch-finally-and-using-blocks">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-try-catch-finally-and-using-blocks">#</doc-anchor-trigger>
+        <span>Implementing Try, Catch, Finally, and Using Blocks</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="overview-of-try-catch-finally-syntax">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-try-catch-finally-syntax">#</doc-anchor-trigger>
+        <span>Overview of Try-Catch-Finally Syntax</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="using-try-catch-blocks-in-network-operations">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-try-catch-blocks-in-network-operations">#</doc-anchor-trigger>
+        <span>Using Try-Catch Blocks in Network Operations</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="effective-exception-filtering">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#effective-exception-filtering">#</doc-anchor-trigger>
+        <span>Effective Exception Filtering</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="utilizing-the-finally-block">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#utilizing-the-finally-block">#</doc-anchor-trigger>
+        <span>Utilizing the Finally Block</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="resource-management-with-using-statements">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#resource-management-with-using-statements">#</doc-anchor-trigger>
+        <span>Resource Management with Using Statements</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="nested-try-catch-blocks">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#nested-try-catch-blocks">#</doc-anchor-trigger>
+        <span>Nested Try-Catch Blocks</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="advanced-exception-handling-techniques">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#advanced-exception-handling-techniques">#</doc-anchor-trigger>
+        <span>Advanced Exception Handling Techniques</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="handling-exceptions-in-multithreaded-environments">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-exceptions-in-multithreaded-environments">#</doc-anchor-trigger>
+        <span>Handling Exceptions in Multithreaded Environments</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="using-custom-exception-classes">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-custom-exception-classes">#</doc-anchor-trigger>
+        <span>Using Custom Exception Classes</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="exception-dispatching-and-global-handlers">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#exception-dispatching-and-global-handlers">#</doc-anchor-trigger>
+        <span>Exception Dispatching and Global Handlers</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="logging-and-diagnosing-exceptions">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#logging-and-diagnosing-exceptions">#</doc-anchor-trigger>
+        <span>Logging and Diagnosing Exceptions</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="exception-handling-best-practices-and-common-pitfalls">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#exception-handling-best-practices-and-common-pitfalls">#</doc-anchor-trigger>
+        <span>Exception Handling Best Practices and Common Pitfalls</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="designing-for-fault-tolerance">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#designing-for-fault-tolerance">#</doc-anchor-trigger>
+        <span>Designing for Fault Tolerance</span>
+    </h2>
+</doc-anchor-target>
+<doc-anchor-target id="introduction-to-fault-tolerance">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-fault-tolerance">#</doc-anchor-trigger>
+        <span>Introduction to Fault Tolerance</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="implementing-retry-mechanisms">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-retry-mechanisms">#</doc-anchor-trigger>
+        <span>Implementing Retry Mechanisms</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="circuit-breaker-pattern">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#circuit-breaker-pattern">#</doc-anchor-trigger>
+        <span>Circuit Breaker Pattern</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="fallback-methods">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#fallback-methods">#</doc-anchor-trigger>
+        <span>Fallback Methods</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="timeout-management">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#timeout-management">#</doc-anchor-trigger>
+        <span>Timeout Management</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="load-balancing-and-failover-techniques">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#load-balancing-and-failover-techniques">#</doc-anchor-trigger>
+        <span>Load Balancing and Failover Techniques</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="monitoring-and-health-checks">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#monitoring-and-health-checks">#</doc-anchor-trigger>
+        <span>Monitoring and Health Checks</span>
+    </h3>
+</doc-anchor-target>
+<doc-anchor-target id="summary">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#summary">#</doc-anchor-trigger>
+        <span>Summary</span>
+    </h2>
 </doc-anchor-target>
 
                                 
