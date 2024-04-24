@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767293731298">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767293869666">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.767293731298" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.767293869666" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767293731298" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767293869666" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767293731298" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.767293731298" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767293869666" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.767293869666" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -308,7 +308,8 @@ public class Example
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, the <code v-pre>DoWork</code> method simulates a task. The <code v-pre>Main</code> method creates a thread that runs <code v-pre>DoWork</code>. When <code v-pre>newThread.Start()</code> is called, the thread begins its execution separately from the main program flow, allowing the main thread to continue its tasks or manage other threads.</p>
-<p>Concurrency is another critical concept in multithreading. It allows multiple threads to run in parallel, optimizing the use of CPU resources, especially on multi-core processors. However, concurrency introduces challenges such as race conditions and deadlocks, which occur when multiple threads attempt to access shared resources without proper synchronization.</p>
+<p>Parallelization is another critical concept that uses multithreading in its implementation. It allows multiple threads to run in parallel, optimizing the use of CPU resources, especially on multi-core processors. However, it can introduce challenges such as race conditions and deadlocks, which occur when multiple threads attempt to access shared resources without proper synchronization.</p>
+<p>Chapter 4 discussed concurrency with the async and await C# keywords. In one of the code examples, we examined how a kitchen functions. In that demo regarding concurrency, you can push the button to make a cup of coffee, and while the machine runs, handle payment with the customer. You can&#x27;t, however, grind beans yourself simultaneously while handling payment; you&#x27;d need parallelization for that - another employee who can do manual bean grinding while you take care of payment. This is an example of how synchronization and parallelization in network development must be carefully thought out. We will discuss this in detail later in the chapter.</p>
 <p>To manage access to shared resources, C# provides synchronization primitives such as <code v-pre>lock</code>. Here is an example that uses a lock to prevent concurrent access to a shared resource by multiple threads:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">public class Account
@@ -760,6 +761,16 @@ public class Program
 </doc-codeblock></div>
 <p>In this example, <code v-pre>ThreadSafeLogger</code> ensures that log entries are written without interference from multiple threads, keeping the log output readable and consistent.</p>
 <p>For more in-depth testing, tools like <strong>Visual Studio’s Concurrency Visualizer</strong> or <strong>Parallel Stack in JetBrains Rider</strong> can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with <code v-pre>Task</code> and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.</p>
+<p><figure class="content-center">
+    <img src="images2fconcurrencyvisualizer.png" alt="ConcurrencyVisualizer.png">
+    <figcaption class="caption">ConcurrencyVisualizer.png</figcaption>
+</figure>
+<em><small>Visual Studio’s Concurrency Visualizer</small></em></p>
+<p><figure class="content-center">
+    <img src="images2fparallelstack.png" alt="ParallelStack.png">
+    <figcaption class="caption">ParallelStack.png</figcaption>
+</figure>
+<em><small>JetBrains Rider&#x27;s Parallel Stack</small></em></p>
 <p>Unit testing frameworks like NUnit or xUnit can be used to test multithreaded code, but they require careful planning to cover concurrency issues. One approach is to simulate multithreading scenarios where shared resources are accessed concurrently to ensure the code behaves as expected. Here’s a simple example using xUnit and the Task class to test a thread-safe counter class:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">public class ThreadSafeCounter
@@ -1043,7 +1054,11 @@ public class ConcurrentAccess
 </doc-codeblock></div>
 <p>In this example, <code v-pre>Parallel.For</code> is used to perform many operations concurrently, each adding an entry to the ConcurrentDictionary. This collection ensures all additions are thread-safe and efficient without requiring explicit locks.</p>
 <p>Optimizing network communication itself is also vital. Techniques such as reducing the frequency of network calls, compressing data for transmission, and using efficient serialization methods can significantly enhance network performance. For instance, choosing a faster serialization framework like Protocol Buffers over JSON or XML in high throughput scenarios can decrease latency and bandwidth usage.</p>
-<p>Finally, profiling and monitoring tools such as Visual Studio Diagnostic Tools or JetBrains&#x27; Monitor Tool Window can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.</p>
+<p>Finally, profiling and monitoring tools such as <strong>Visual Studio Diagnostic Tools</strong> or <strong>JetBrains&#x27; Monitor Tool Window</strong> can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.</p>
+<p><img src="images2fdiagnostictools.png" alt="DiagnosticTools.png" /><br />
+<em><small>Visual Studio Diagnostic Tool</small></em></p>
+<p><img src="images2fmonitoringtoolwindow.png" alt="MonitoringToolWindow.png" /><br />
+<em><small>JetBrains&#x27; Monitor Tool Window</small></em></p>
 <p>By implementing these performance optimization techniques, developers can ensure that their network applications are not only functional but also robust and efficient, capable of efficiently handling real-world loads.</p>
 <doc-anchor-target id="monitoring-and-tuning-parallel-applications">
     <h3>
