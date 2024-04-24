@@ -82,7 +82,10 @@ public class Example
 
 In this example, the `DoWork` method simulates a task. The `Main` method creates a thread that runs `DoWork`. When `newThread.Start()` is called, the thread begins its execution separately from the main program flow, allowing the main thread to continue its tasks or manage other threads.
 
-Concurrency is another critical concept in multithreading. It allows multiple threads to run in parallel, optimizing the use of CPU resources, especially on multi-core processors. However, concurrency introduces challenges such as race conditions and deadlocks, which occur when multiple threads attempt to access shared resources without proper synchronization.
+Parallelization is another critical concept that uses multithreading in its implementation. It allows multiple threads to run in parallel, optimizing the use of CPU resources, especially on multi-core processors. However, it can introduce challenges such as race conditions and deadlocks, which occur when multiple threads attempt to access shared resources without proper synchronization.
+
+Chapter 4 discussed concurrency with the async and await C# keywords. In one of the code examples, we examined how a kitchen functions. In that demo regarding concurrency, you can push the button to make a cup of coffee, and while the machine runs, handle payment with the customer. You can't, however, grind beans yourself simultaneously while handling payment; you'd need parallelization for that - another employee who can do manual bean grinding while you take care of payment. This is an example of how synchronization and parallelization in network development must be carefully thought out. We will discuss this in detail later in the chapter.
+
 
 To manage access to shared resources, C# provides synchronization primitives such as `lock`. Here is an example that uses a lock to prevent concurrent access to a shared resource by multiple threads:
 
@@ -558,6 +561,12 @@ In this example, `ThreadSafeLogger` ensures that log entries are written without
 
 For more in-depth testing, tools like **Visual Studio’s Concurrency Visualizer** or **Parallel Stack in JetBrains Rider** can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with `Task` and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.
 
+![ConcurrencyVisualizer.png](Images%2FConcurrencyVisualizer.png)
+*<small>Visual Studio’s Concurrency Visualizer</small>*
+
+![ParallelStack.png](Images%2FParallelStack.png)
+*<small>JetBrains Rider's Parallel Stack</small>*
+
 Unit testing frameworks like NUnit or xUnit can be used to test multithreaded code, but they require careful planning to cover concurrency issues. One approach is to simulate multithreading scenarios where shared resources are accessed concurrently to ensure the code behaves as expected. Here’s a simple example using xUnit and the Task class to test a thread-safe counter class:
 
 ```C#
@@ -864,7 +873,13 @@ In this example, `Parallel.For` is used to perform many operations concurrently,
 
 Optimizing network communication itself is also vital. Techniques such as reducing the frequency of network calls, compressing data for transmission, and using efficient serialization methods can significantly enhance network performance. For instance, choosing a faster serialization framework like Protocol Buffers over JSON or XML in high throughput scenarios can decrease latency and bandwidth usage.
 
-Finally, profiling and monitoring tools such as Visual Studio Diagnostic Tools or JetBrains' Monitor Tool Window can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.
+Finally, profiling and monitoring tools such as **Visual Studio Diagnostic Tools** or **JetBrains' Monitor Tool Window** can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.
+
+![DiagnosticTools.png](Images%2FDiagnosticTools.png)\
+*<small>Visual Studio Diagnostic Tool</small>*
+
+![MonitoringToolWindow.png](Images%2FMonitoringToolWindow.png)\
+*<small>JetBrains' Monitor Tool Window</small>*
 
 By implementing these performance optimization techniques, developers can ensure that their network applications are not only functional but also robust and efficient, capable of efficiently handling real-world loads.
 
