@@ -560,7 +560,7 @@ In this example, `ThreadSafeLogger` ensures that log entries are written without
 
 For more in-depth testing, tools like **Visual Studio’s Concurrency Visualizer** or **Parallel Stack in JetBrains Rider** can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with `Task` and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.
 
-![ConcurrencyVisualizer.png](Images%2FConcurrencyVisualizer.png)
+![ConcurrencyVisualizer.png](./Images/ConcurrencyVisualizer.png)
 *<small>Visual Studio’s Concurrency Visualizer</small>*
 
 ![ParallelStack.png](Images%2FParallelStack.png)
