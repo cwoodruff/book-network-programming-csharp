@@ -7,6 +7,8 @@ title: "Overview of Network Programming"
 ---
 # 1
 
+![](./Images/Chap01-OverviewNetworkProg.png)
+
 # Overview of Network Programming
 
 As we embark on the journey through the intricate landscape of network programming within the realm of C#, let us pause to appreciate the robust foundation and tools at our disposal. Network programming is the cornerstone of the interconnected world we navigate daily, from browsing web pages and sending emails to streaming multimedia and beyond. In this chapter, "Overview of Network Programming," we aim to demystify the complexities and equip you with the fundamental knowledge and skills necessary to harness the full potential of network applications in C#.

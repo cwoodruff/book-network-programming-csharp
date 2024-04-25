@@ -6,6 +6,8 @@ meta:
 title: "Asynchronous Programming with Async/Await"
 ---
 
+![](./Images/Chap04-AsyncProgramming.png)
+
 # 4
 
 # Asynchronous Programming with Async/Await

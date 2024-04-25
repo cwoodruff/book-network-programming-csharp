@@ -7,6 +7,8 @@ title: "Fundamentals of Networking Concepts"
 ---
 # 2
 
+![](./Images/Chap02-FoundationNetworkConcepts.png)
+
 # Fundamentals of Networking Concepts
 
 In the ever-connected digital world, where devices seamlessly communicate across distances and oceans, networking concepts reign supreme. They form the invisible threads that weave our global village together, enabling information flow, collaboration, and innovation. Welcome to the realm of networking, where understanding the core concepts is a gateway to harnessing the full potential of the digital age.
