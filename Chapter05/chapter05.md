@@ -4,7 +4,6 @@ icon: stack
 label: Chap 5 - Multithreading in Network Applications
 meta:
 title: "Multithreading in Network Applications"
-visibility: hidden
 ---
 
 # 5
@@ -933,17 +932,16 @@ Throughout this exploration, we will also address common challenges such as thre
 ```C#
 using System.Collections.Concurrent;
 using System.Net;
-using System.Net.Security;
 using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-public class SecureMultithreadedServer(string ipAddress, int port, string certificatePath, string certificatePassword)
+namespace Server;
+
+public class SecureMultithreadedServer(string ipAddress, int port)
 {
     private TcpListener listener;
     private volatile bool isRunning;
     private readonly IPAddress ipAddress = IPAddress.Parse(ipAddress);
-    private readonly X509Certificate2 serverCertificate = new X509Certificate2(certificatePath, certificatePassword);
     private readonly ConcurrentDictionary<int, TcpClient> clients = new ConcurrentDictionary<int, TcpClient>();
     private static readonly object _lock = new object();
 
@@ -970,21 +968,15 @@ public class SecureMultithreadedServer(string ipAddress, int port, string certif
     {
         try
         {
-            using (var sslStream = new SslStream(client.GetStream(), false))
+            using var networkStream = client.GetStream();
+            using var reader = new StreamReader(networkStream, Encoding.UTF8);
+            using var writer = new StreamWriter(networkStream, Encoding.UTF8);
+            string? message = null;
+            while (!string.IsNullOrEmpty(message = reader.ReadLine()))
             {
-                sslStream.AuthenticateAsServer(serverCertificate, clientCertificateRequired: false, checkCertificateRevocation: true);
-
-                using (var reader = new StreamReader(sslStream, Encoding.UTF8))
-                using (var writer = new StreamWriter(sslStream, Encoding.UTF8))
-                {
-                    string? message = null;
-                    while (!string.IsNullOrEmpty(message = reader.ReadLine()))
-                    {
-                        Console.WriteLine($"Received from {clientId}: {message}");
-                        writer.WriteLine($"Echo {clientId}: {message}");
-                        writer.Flush();
-                    }
-                }
+                Console.WriteLine($"Received from {clientId}: {message}");
+                writer.WriteLine($"Echo {clientId}: {message}");
+                writer.Flush();
             }
         }
         catch (Exception ex)
@@ -1012,7 +1004,7 @@ public class SecureMultithreadedServer(string ipAddress, int port, string certif
 
     public static void Main(string[] args)
     {
-        var server = new SecureMultithreadedServer("127.0.0.1", 13000, "path_to_certificate.pfx", "certificate_password");
+        var server = new SecureMultithreadedServer("127.0.0.1", 13000);
         server.Start();
     }
 }
