@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767356435204">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.767356591345">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.767356435204" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.767356591345" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767356435204" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.767356591345" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767356435204" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.767356435204" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.767356591345" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.767356591345" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -764,15 +764,15 @@ public class Program
 <p>In this example, <code v-pre>ThreadSafeLogger</code> ensures that log entries are written without interference from multiple threads, keeping the log output readable and consistent.</p>
 <p>For more in-depth testing, tools like <strong>Visual Studio’s Concurrency Visualizer</strong> or <strong>Parallel Stack in JetBrains Rider</strong> can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with <code v-pre>Task</code> and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.</p>
 <p><figure class="content-center">
-    <img src="images/concurrencyvisualizer.png" alt="ConcurrencyVisualizer.png">
-    <figcaption class="caption">ConcurrencyVisualizer.png</figcaption>
+    <img src="images/concurrencyvisualizer.png" alt="Visual Studio’s Concurrency Visualizer">
+    <figcaption class="caption">Visual Studio’s Concurrency Visualizer</figcaption>
 </figure>
-<em><small>Visual Studio’s Concurrency Visualizer</small></em></p>
+</p>
 <p><figure class="content-center">
-    <img src="images/parallelstack.png" alt="ParallelStack.png">
-    <figcaption class="caption">ParallelStack.png</figcaption>
+    <img src="images/parallelstack.png" alt="JetBrains Rider's Parallel Stack">
+    <figcaption class="caption">JetBrains Rider&#x27;s Parallel Stack</figcaption>
 </figure>
-<em><small>JetBrains Rider&#x27;s Parallel Stack</small></em></p>
+</p>
 <p>Unit testing frameworks like NUnit or xUnit can be used to test multithreaded code, but they require careful planning to cover concurrency issues. One approach is to simulate multithreading scenarios where shared resources are accessed concurrently to ensure the code behaves as expected. Here’s a simple example using xUnit and the Task class to test a thread-safe counter class:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">public class ThreadSafeCounter
@@ -1057,10 +1057,8 @@ public class ConcurrentAccess
 <p>In this example, <code v-pre>Parallel.For</code> is used to perform many operations concurrently, each adding an entry to the ConcurrentDictionary. This collection ensures all additions are thread-safe and efficient without requiring explicit locks.</p>
 <p>Optimizing network communication itself is also vital. Techniques such as reducing the frequency of network calls, compressing data for transmission, and using efficient serialization methods can significantly enhance network performance. For instance, choosing a faster serialization framework like Protocol Buffers over JSON or XML in high throughput scenarios can decrease latency and bandwidth usage.</p>
 <p>Finally, profiling and monitoring tools such as <strong>Visual Studio Diagnostic Tools</strong> or <strong>JetBrains&#x27; Monitor Tool Window</strong> can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.</p>
-<p><img src="images/diagnostictools.png" alt="DiagnosticTools.png" /><br />
-<em><small>Visual Studio Diagnostic Tool</small></em></p>
-<p><img src="images/monitoringtoolwindow.png" alt="MonitoringToolWindow.png" /><br />
-<em><small>JetBrains&#x27; Monitor Tool Window</small></em></p>
+<p><img src="images/diagnostictools.png" alt="Visual Studio Diagnostic Tool" />\</p>
+<p><img src="images/monitoringtoolwindow.png" alt="JetBrains' Monitor Tool Window" />\</p>
 <p>By implementing these performance optimization techniques, developers can ensure that their network applications are not only functional but also robust and efficient, capable of efficiently handling real-world loads.</p>
 <doc-anchor-target id="monitoring-and-tuning-parallel-applications">
     <h3>
