@@ -563,7 +563,7 @@ For more in-depth testing, tools like **Visual Studio’s Concurrency Visualizer
 ![ConcurrencyVisualizer.png](./Images/ConcurrencyVisualizer.png)
 *<small>Visual Studio’s Concurrency Visualizer</small>*
 
-![ParallelStack.png](Images%2FParallelStack.png)
+![ParallelStack.png](./Images/ParallelStack.png)
 *<small>JetBrains Rider's Parallel Stack</small>*
 
 Unit testing frameworks like NUnit or xUnit can be used to test multithreaded code, but they require careful planning to cover concurrency issues. One approach is to simulate multithreading scenarios where shared resources are accessed concurrently to ensure the code behaves as expected. Here’s a simple example using xUnit and the Task class to test a thread-safe counter class:
@@ -874,10 +874,10 @@ Optimizing network communication itself is also vital. Techniques such as reduci
 
 Finally, profiling and monitoring tools such as **Visual Studio Diagnostic Tools** or **JetBrains' Monitor Tool Window** can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.
 
-![DiagnosticTools.png](Images%2FDiagnosticTools.png)\
+![DiagnosticTools.png](./Images/DiagnosticTools.png)\
 *<small>Visual Studio Diagnostic Tool</small>*
 
-![MonitoringToolWindow.png](Images%2FMonitoringToolWindow.png)\
+![MonitoringToolWindow.png](./Images/MonitoringToolWindow.png)\
 *<small>JetBrains' Monitor Tool Window</small>*
 
 By implementing these performance optimization techniques, developers can ensure that their network applications are not only functional but also robust and efficient, capable of efficiently handling real-world loads.
