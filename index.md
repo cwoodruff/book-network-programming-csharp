@@ -13,7 +13,7 @@ For the source code for the book, visit the book's GitHub repo. [book-network-pr
 | 2         | [Fundamentals of Networking Concepts](./Chapter02/chapter02.md)       | ✔️        |
 | 3         | [Introduction to Socket Programming](./Chapter03/chapter03.md)        | ✔️        |
 | 4         | [Asynchronous Programming with Async/Await](./Chapter04/chapter04.md) | ✔️        |
-| 5         | Multithreading in Network Applications                                |           |
+| 5         | [Multithreading in Network Applications](./Chapter05/chapter05.md)    | ✔️        |
 | 6         | Robust Error Handling and Fault Tolerance Strategies                  |           |
 | 7         | Efficient Data Serialization Techniques                               |           |
 | 8         | Network Performance Optimization                                      |           |
