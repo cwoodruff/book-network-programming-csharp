@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.768011554122">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.768011632646">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.768011554122" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.768011632646" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.768011554122" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.768011632646" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.768011554122" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.768011554122" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.768011632646" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.768011632646" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -261,10 +261,10 @@
 <p>The cornerstone of exception handling in C# is the try-catch-finally statement. A try block encapsulates code that might throw an exception, while catch blocks handle exceptions if one or more are thrown. The finally block, which is optional, executes code after the try and catch blocks, regardless of whether an exception was thrown or not, making it ideal for cleaning up resources, such as closing network streams or database connections.</p>
 <p>Here is a simple example of using try-catch-finally in a network operation:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">try
+<pre class="language-csharp"><code v-pre class="language-csharp">// Attempt to connect to a server
+var client = new System.Net.Sockets.TcpClient(&quot;servername&quot;, 80);
+try
 {
-    // Attempt to connect to a server
-    var client = new System.Net.Sockets.TcpClient(&quot;servername&quot;, 80);
     // Send some data
     var data = System.Text.Encoding.ASCII.GetBytes(&quot;Hello server!&quot;);
     client.GetStream().Write(data, 0, data.Length);
@@ -297,7 +297,9 @@ finally
 <p>When dealing with multiple types of exceptions, you can use multiple catch blocks to specify handlers for different exceptions. This approach is beneficial when the handling logic for each exception type is distinct. For example, you should handle a SocketException differently from an IOException, as each implies different underlying issues and recovery strategies.</p>
 <p>Here&#x27;s an example of how you might structure your code to catch and handle these exceptions differently:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">try
+<pre class="language-csharp"><code v-pre class="language-csharp">using System.Net.Sockets;
+
+try
 {
     // Code that might throw multiple types of exceptions
     PerformNetworkOperation();
@@ -380,32 +382,31 @@ catch (Exception ex)
 </ul>
 <p>Here&#x27;s an example of handling these network-specific exceptions in a robust network client application:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">try
+<pre class="language-csharp"><code v-pre class="language-csharp">public class Program
 {
-    using (var client = new System.Net.WebClient())
+    public static async Task Main(string[] args)
     {
-        string response = client.DownloadString(&quot;http://example.com/data&quot;);
-        Console.WriteLine(response);
+        try
+        {
+            using var client = new HttpClient();
+            string response = await client.GetStringAsync(&quot;http://example.com/data&quot;);
+            Console.WriteLine(response);
+        }
+        catch (HttpRequestException ex) // Catches exceptions related to HTTP requests
+        {
+            Console.WriteLine(ex.InnerException is System.Net.Sockets.SocketException
+                ? &quot;Connection failed. Check your network connection.&quot;
+                : $&quot;Web error occurred: {ex.Message}&quot;);
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine($&quot;An I/O error occurred: {ex.Message}&quot;);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($&quot;An unexpected error occurred: {ex.Message}&quot;);
+        }
     }
-}
-catch (System.Net.WebException ex)
-{
-    if (ex.Status == System.Net.WebExceptionStatus.ConnectFailure)
-    {
-        Console.WriteLine(&quot;Connection failed. Check your network connection.&quot;);
-    }
-    else
-    {
-        Console.WriteLine($&quot;Web error occurred: {ex.Message}&quot;);
-    }
-}
-catch (System.IO.IOException ex)
-{
-    Console.WriteLine($&quot;An I/O error occurred: {ex.Message}&quot;);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($&quot;An unexpected error occurred: {ex.Message}&quot;);
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, different types of exceptions are caught and explicitly handled according to their nature. This approach provides more accurate error messages and potentially different recovery actions based on the type of error encountered during the network operation.</p>
@@ -433,13 +434,16 @@ catch (Exception ex)
 {
     // Code that might throw an exception
     Console.WriteLine(&quot;Connecting to server...&quot;);
-    var client = new System.Net.WebClient();
-    client.OpenRead(&quot;http://example.com&quot;);
+    using var client = new HttpClient();
+    // Asynchronously read the response
+    var response = await client.GetAsync(&quot;http://example.com&quot;);
+    response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP response status is an error code.
+    Console.WriteLine(&quot;Connected and response received successfully.&quot;);
 }
-catch (System.Net.WebException ex)
+catch (HttpRequestException ex)
 {
-    // Handle specific network errors
-    Console.WriteLine($&quot;Network error: {ex.Message}&quot;);
+    // Handle HttpRequestException, which handles most HTTP related errors
+    Console.WriteLine($&quot;HTTP error: {ex.Message}&quot;);
 }
 catch (Exception ex)
 {
@@ -469,14 +473,12 @@ catch (Exception ex)
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">try
 {
-    using (var client = new HttpClient())
-    {
-        Console.WriteLine(&quot;Sending request...&quot;);
-        var response = await client.GetAsync(&quot;http://example.com/api/data&quot;);
-        response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP status code is not a success code
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(&quot;Response received successfully.&quot;);
-    }
+    using var client = new HttpClient();
+    Console.WriteLine(&quot;Sending request...&quot;);
+    var response = await client.GetAsync(&quot;http://example.com/api/data&quot;);
+    response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP status code is not a success code
+    string responseBody = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(&quot;Response received successfully.&quot;);
 }
 catch (HttpRequestException e)
 {
@@ -503,14 +505,14 @@ catch (Exception e)
 <p>Typically, a <code v-pre>finally</code> block is used to release or clean up resources that were allocated in the <code v-pre>try</code> block. Since this block runs under all circumstances, it is an ideal place to include cleanup code. The <code v-pre>finally</code> block executes after the <code v-pre>try</code> block exits normally, after a <code v-pre>catch</code> block handles an exception, and even if an exception is thrown within a catch block and not subsequently handled.</p>
 <p>Here’s an example demonstrating the use of a <code v-pre>finally</code> block in a network operation:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">System.Net.Sockets.TcpClient client = null;
+<pre class="language-csharp"><code v-pre class="language-csharp">TcpClient? client = null;
 try
 {
-    client = new System.Net.Sockets.TcpClient(&quot;example.com&quot;, 80);
+    client = new TcpClient(&quot;example.com&quot;, 80);
     // Perform data transmission
     Console.WriteLine(&quot;Connection established.&quot;);
 }
-catch (System.Net.Sockets.SocketException ex)
+catch (SocketException ex)
 {
     Console.WriteLine(&quot;Socket error: &quot; + ex.Message);
 }
@@ -531,17 +533,15 @@ finally
 <p>Resource management is a critical aspect of any software development project, especially when dealing with network resources that need to be released properly after use. In .NET, the <code v-pre>using</code> statement is a crucial feature in C# that simplifies resource management by automatically disposing of objects once they are no longer needed. This statement is particularly useful for objects that implement the <code v-pre>IDisposable</code> interface, such as streams, clients, and response objects used in network operations. It ensures that the <code v-pre>Dispose</code> method is called on an object when the code block within the <code v-pre>using</code> statement is exited, whether normally or due to an exception.</p>
 <p>Here&#x27;s a practical example of how to use the <code v-pre>using</code> statement in a network operation involving downloading data using <code v-pre>WebClient</code>, which is a typical class used in network programming.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using (var client = new System.Net.WebClient())
+<pre class="language-csharp"><code v-pre class="language-csharp">using var client = new System.Net.WebClient();
+try
 {
-    try
-    {
-        string data = client.DownloadString(&quot;http://example.com&quot;);
-        Console.WriteLine(&quot;Data received: &quot; + data);
-    }
-    catch (WebException ex)
-    {
-        Console.WriteLine($&quot;An error occurred: {ex.Message}&quot;);
-    }
+    string data = client.DownloadString(&quot;http://example.com&quot;);
+    Console.WriteLine(&quot;Data received: &quot; + data);
+}
+catch (WebException ex)
+{
+    Console.WriteLine($&quot;An error occurred: {ex.Message}&quot;);
 }
 // The WebClient is automatically disposed here, even if an exception occurs</code></pre>
 </doc-codeblock></div>
@@ -559,21 +559,19 @@ finally
 <pre class="language-csharp"><code v-pre class="language-csharp">try
 {
     // Outer try block for connecting to the server
-    using (var client = new TcpClient(&quot;example.com&quot;, 80))
+    using var client = new TcpClient(&quot;example.com&quot;, 80);
+    Console.WriteLine(&quot;Connected to server.&quot;);
+    try
     {
-        Console.WriteLine(&quot;Connected to server.&quot;);
-        try
-        {
-            // Inner try block for sending data
-            NetworkStream stream = client.GetStream();
-            byte[] data = Encoding.ASCII.GetBytes(&quot;Hello, server!&quot;);
-            stream.Write(data, 0, data.Length);
-            Console.WriteLine(&quot;Data sent.&quot;);
-        }
-        catch (IOException ex)
-        {
-            Console.WriteLine($&quot;An I/O error occurred while sending data: {ex.Message}&quot;);
-        }
+        // Inner try block for sending data
+        NetworkStream stream = client.GetStream();
+        byte[] data = Encoding.ASCII.GetBytes(&quot;Hello, server!&quot;);
+        stream.Write(data, 0, data.Length);
+        Console.WriteLine(&quot;Data sent.&quot;);
+    }
+    catch (IOException ex)
+    {
+        Console.WriteLine($&quot;An I/O error occurred while sending data: {ex.Message}&quot;);
     }
 }
 catch (SocketException ex)
@@ -593,11 +591,7 @@ catch (SocketException ex)
 <p>One advanced technique is the use of custom exception classes. Custom exceptions can be designed to convey more specific information about errors within a particular domain, such as network operations. By creating exceptions that carry additional data (like error codes, fault details, or troubleshooting steps), developers can provide more context to the error handlers and make debugging easier.</p>
 <p>Here is an example of defining and using a custom exception in a network-related context:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public class NetworkTimeoutException : Exception
-{
-    public NetworkTimeoutException(string message, Exception inner)
-        : base(message, inner) { }
-}
+<pre class="language-csharp"><code v-pre class="language-csharp">public class NetworkTimeoutException(string message, Exception inner) : Exception(message, inner);
 
 try
 {
@@ -611,7 +605,7 @@ catch (NetworkTimeoutException ex)
 </doc-codeblock></div>
 <p>Another advanced technique involves the use of the <code v-pre>ExceptionDispatchInfo</code> class to capture an exception and then rethrow it while preserving the original stack trace. This can be particularly useful in scenarios where an exception needs to be captured in one part of the application and rethrown in another without losing the original exception details.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">ExceptionDispatchInfo capturedException = null;
+<pre class="language-csharp"><code v-pre class="language-csharp">ExceptionDispatchInfo? capturedException = null;
 
 try
 {
@@ -634,8 +628,8 @@ if (capturedException != null)
 <pre class="language-csharp"><code v-pre class="language-csharp">try
 {
     Task.WaitAll(
-        Task.Run(() =&gt; { throw new InvalidOperationException(&quot;Failed operation.&quot;); }),
-        Task.Run(() =&gt; { throw new AccessViolationException(&quot;Memory error.&quot;); })
+        Task.Run(() =&gt; throw new InvalidOperationException(&quot;Failed operation.&quot;)),
+        Task.Run(() =&gt; throw new AccessViolationException(&quot;Memory error.&quot;))
     );
 }
 catch (AggregateException agEx)
@@ -659,8 +653,8 @@ catch (AggregateException agEx)
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">try
 {
-    Task task1 = Task.Run(() =&gt; { throw new InvalidOperationException(&quot;Invalid operation!&quot;); });
-    Task task2 = Task.Run(() =&gt; { throw new NullReferenceException(&quot;Object reference not set!&quot;); });
+    Task task1 = Task.Run(() =&gt; throw new InvalidOperationException(&quot;Invalid operation!&quot;));
+    Task task2 = Task.Run(() =&gt; throw new NullReferenceException(&quot;Object reference not set!&quot;));
     Task.WaitAll(task1, task2);
 }
 catch (AggregateException ae)
@@ -674,25 +668,19 @@ catch (AggregateException ae)
 <p>In this code, <code v-pre>Task.WaitAll</code> is used to wait for all tasks to complete. If any tasks throw exceptions, <code v-pre>WaitAll</code> will throw an <code v-pre>AggregateException</code> containing all the exceptions from the tasks. The <code v-pre>catch</code> block handles the <code v-pre>AggregateException</code> and iterates through the <code v-pre>InnerExceptions</code> collection to process each exception individually.</p>
 <p>Another critical aspect is ensuring that any exceptions not directly related to a task (such as those thrown in asynchronous callbacks or event handlers) are also captured and handled appropriately. In such cases, you should implement additional exception-handling logic to catch and log errors in those contexts or use try-catch blocks within each asynchronous method.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">void PerformNetworkOperation()
+<pre class="language-csharp"><code v-pre class="language-csharp">async Task PerformNetworkOperationAsync()
 {
-    var client = new WebClient();
-    client.DownloadStringCompleted += (sender, e) =&gt;
+    using var client = new HttpClient();
+    try
     {
-        try
-        {
-            if (e.Error != null)
-            {
-                throw e.Error;
-            }
-            Console.WriteLine(&quot;Download completed: &quot; + e.Result);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(&quot;Exception caught in event handler: &quot; + ex.Message);
-        }
-    };
-    client.DownloadStringAsync(new Uri(&quot;http://example.com&quot;));
+        // Asynchronously get the response as a string
+        string result = await client.GetStringAsync(&quot;http://example.com&quot;);
+        Console.WriteLine(&quot;Download completed: &quot; + result);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(&quot;Exception caught during network operation: &quot; + ex.Message);
+    }
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, exceptions that occur during an asynchronous network operation are handled within the event handler. This is essential because the DownloadStringCompleted event executes on a different thread from the UI and main program execution threads.</p>
@@ -799,7 +787,6 @@ catch (NetworkTimeoutException ex)
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
-    .WriteTo.Console()
     .WriteTo.File(&quot;logs/myapp.txt&quot;, rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
