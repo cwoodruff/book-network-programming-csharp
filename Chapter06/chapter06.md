@@ -34,10 +34,10 @@ The cornerstone of exception handling in C# is the try-catch-finally statement. 
 Here is a simple example of using try-catch-finally in a network operation:
 
 ```C#
+// Attempt to connect to a server
+var client = new System.Net.Sockets.TcpClient("servername", 80);
 try
 {
-    // Attempt to connect to a server
-    var client = new System.Net.Sockets.TcpClient("servername", 80);
     // Send some data
     var data = System.Text.Encoding.ASCII.GetBytes("Hello server!");
     client.GetStream().Write(data, 0, data.Length);
@@ -68,6 +68,8 @@ When dealing with multiple types of exceptions, you can use multiple catch block
 Here's an example of how you might structure your code to catch and handle these exceptions differently:
 
 ```C#
+using System.Net.Sockets;
+
 try
 {
     // Code that might throw multiple types of exceptions
@@ -140,32 +142,31 @@ For network programming, handling exceptions specific to network operations is v
 Here's an example of handling these network-specific exceptions in a robust network client application:
 
 ```C#
-try
+public class Program
 {
-    using (var client = new System.Net.WebClient())
+    public static async Task Main(string[] args)
     {
-        string response = client.DownloadString("http://example.com/data");
-        Console.WriteLine(response);
+        try
+        {
+            using var client = new HttpClient();
+            string response = await client.GetStringAsync("http://example.com/data");
+            Console.WriteLine(response);
+        }
+        catch (HttpRequestException ex) // Catches exceptions related to HTTP requests
+        {
+            Console.WriteLine(ex.InnerException is System.Net.Sockets.SocketException
+                ? "Connection failed. Check your network connection."
+                : $"Web error occurred: {ex.Message}");
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine($"An I/O error occurred: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+        }
     }
-}
-catch (System.Net.WebException ex)
-{
-    if (ex.Status == System.Net.WebExceptionStatus.ConnectFailure)
-    {
-        Console.WriteLine("Connection failed. Check your network connection.");
-    }
-    else
-    {
-        Console.WriteLine($"Web error occurred: {ex.Message}");
-    }
-}
-catch (System.IO.IOException ex)
-{
-    Console.WriteLine($"An I/O error occurred: {ex.Message}");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
 }
 ```
 
@@ -194,13 +195,16 @@ try
 {
     // Code that might throw an exception
     Console.WriteLine("Connecting to server...");
-    var client = new System.Net.WebClient();
-    client.OpenRead("http://example.com");
+    using var client = new HttpClient();
+    // Asynchronously read the response
+    var response = await client.GetAsync("http://example.com");
+    response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP response status is an error code.
+    Console.WriteLine("Connected and response received successfully.");
 }
-catch (System.Net.WebException ex)
+catch (HttpRequestException ex)
 {
-    // Handle specific network errors
-    Console.WriteLine($"Network error: {ex.Message}");
+    // Handle HttpRequestException, which handles most HTTP related errors
+    Console.WriteLine($"HTTP error: {ex.Message}");
 }
 catch (Exception ex)
 {
@@ -233,14 +237,12 @@ Here's an example of using `try-catch` blocks effectively in a network operation
 ```C#
 try
 {
-    using (var client = new HttpClient())
-    {
-        Console.WriteLine("Sending request...");
-        var response = await client.GetAsync("http://example.com/api/data");
-        response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP status code is not a success code
-        string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine("Response received successfully.");
-    }
+    using var client = new HttpClient();
+    Console.WriteLine("Sending request...");
+    var response = await client.GetAsync("http://example.com/api/data");
+    response.EnsureSuccessStatusCode(); // Throws an exception if the HTTP status code is not a success code
+    string responseBody = await response.Content.ReadAsStringAsync();
+    Console.WriteLine("Response received successfully.");
 }
 catch (HttpRequestException e)
 {
@@ -269,14 +271,14 @@ Typically, a `finally` block is used to release or clean up resources that were 
 Here’s an example demonstrating the use of a `finally` block in a network operation:
 
 ```C#
-System.Net.Sockets.TcpClient client = null;
+TcpClient? client = null;
 try
 {
-    client = new System.Net.Sockets.TcpClient("example.com", 80);
+    client = new TcpClient("example.com", 80);
     // Perform data transmission
     Console.WriteLine("Connection established.");
 }
-catch (System.Net.Sockets.SocketException ex)
+catch (SocketException ex)
 {
     Console.WriteLine("Socket error: " + ex.Message);
 }
@@ -297,17 +299,15 @@ Resource management is a critical aspect of any software development project, es
 Here's a practical example of how to use the `using` statement in a network operation involving downloading data using `WebClient`, which is a typical class used in network programming.
 
 ```C#
-using (var client = new System.Net.WebClient())
+using var client = new System.Net.WebClient();
+try
 {
-    try
-    {
-        string data = client.DownloadString("http://example.com");
-        Console.WriteLine("Data received: " + data);
-    }
-    catch (WebException ex)
-    {
-        Console.WriteLine($"An error occurred: {ex.Message}");
-    }
+    string data = client.DownloadString("http://example.com");
+    Console.WriteLine("Data received: " + data);
+}
+catch (WebException ex)
+{
+    Console.WriteLine($"An error occurred: {ex.Message}");
 }
 // The WebClient is automatically disposed here, even if an exception occurs
 ```
@@ -326,21 +326,19 @@ Consider the following example, where a network operation involves connecting to
 try
 {
     // Outer try block for connecting to the server
-    using (var client = new TcpClient("example.com", 80))
+    using var client = new TcpClient("example.com", 80);
+    Console.WriteLine("Connected to server.");
+    try
     {
-        Console.WriteLine("Connected to server.");
-        try
-        {
-            // Inner try block for sending data
-            NetworkStream stream = client.GetStream();
-            byte[] data = Encoding.ASCII.GetBytes("Hello, server!");
-            stream.Write(data, 0, data.Length);
-            Console.WriteLine("Data sent.");
-        }
-        catch (IOException ex)
-        {
-            Console.WriteLine($"An I/O error occurred while sending data: {ex.Message}");
-        }
+        // Inner try block for sending data
+        NetworkStream stream = client.GetStream();
+        byte[] data = Encoding.ASCII.GetBytes("Hello, server!");
+        stream.Write(data, 0, data.Length);
+        Console.WriteLine("Data sent.");
+    }
+    catch (IOException ex)
+    {
+        Console.WriteLine($"An I/O error occurred while sending data: {ex.Message}");
     }
 }
 catch (SocketException ex)
@@ -362,11 +360,7 @@ One advanced technique is the use of custom exception classes. Custom exceptions
 Here is an example of defining and using a custom exception in a network-related context:
 
 ```C#
-public class NetworkTimeoutException : Exception
-{
-    public NetworkTimeoutException(string message, Exception inner)
-        : base(message, inner) { }
-}
+public class NetworkTimeoutException(string message, Exception inner) : Exception(message, inner);
 
 try
 {
@@ -382,7 +376,7 @@ catch (NetworkTimeoutException ex)
 Another advanced technique involves the use of the `ExceptionDispatchInfo` class to capture an exception and then rethrow it while preserving the original stack trace. This can be particularly useful in scenarios where an exception needs to be captured in one part of the application and rethrown in another without losing the original exception details.
 
 ```C#
-ExceptionDispatchInfo capturedException = null;
+ExceptionDispatchInfo? capturedException = null;
 
 try
 {
@@ -407,8 +401,8 @@ The `AggregateException` class is particularly useful in tasks and parallel oper
 try
 {
     Task.WaitAll(
-        Task.Run(() => { throw new InvalidOperationException("Failed operation."); }),
-        Task.Run(() => { throw new AccessViolationException("Memory error."); })
+        Task.Run(() => throw new InvalidOperationException("Failed operation.")),
+        Task.Run(() => throw new AccessViolationException("Memory error."))
     );
 }
 catch (AggregateException agEx)
@@ -433,8 +427,8 @@ Here’s an example of how to handle exceptions in tasks using TPL:
 ```C#
 try
 {
-    Task task1 = Task.Run(() => { throw new InvalidOperationException("Invalid operation!"); });
-    Task task2 = Task.Run(() => { throw new NullReferenceException("Object reference not set!"); });
+    Task task1 = Task.Run(() => throw new InvalidOperationException("Invalid operation!"));
+    Task task2 = Task.Run(() => throw new NullReferenceException("Object reference not set!"));
     Task.WaitAll(task1, task2);
 }
 catch (AggregateException ae)
@@ -451,25 +445,19 @@ In this code, `Task.WaitAll` is used to wait for all tasks to complete. If any t
 Another critical aspect is ensuring that any exceptions not directly related to a task (such as those thrown in asynchronous callbacks or event handlers) are also captured and handled appropriately. In such cases, you should implement additional exception-handling logic to catch and log errors in those contexts or use try-catch blocks within each asynchronous method.
 
 ```C#
-void PerformNetworkOperation()
+async Task PerformNetworkOperationAsync()
 {
-    var client = new WebClient();
-    client.DownloadStringCompleted += (sender, e) =>
+    using var client = new HttpClient();
+    try
     {
-        try
-        {
-            if (e.Error != null)
-            {
-                throw e.Error;
-            }
-            Console.WriteLine("Download completed: " + e.Result);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Exception caught in event handler: " + ex.Message);
-        }
-    };
-    client.DownloadStringAsync(new Uri("http://example.com"));
+        // Asynchronously get the response as a string
+        string result = await client.GetStringAsync("http://example.com");
+        Console.WriteLine("Download completed: " + result);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Exception caught during network operation: " + ex.Message);
+    }
 }
 ```
 
@@ -558,7 +546,6 @@ using Serilog;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
-    .WriteTo.Console()
     .WriteTo.File("logs/myapp.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
