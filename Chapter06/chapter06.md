@@ -9,6 +9,8 @@ visibility: hidden
 
 # 6
 
+![](./Images/Chap06-ErrorHandling.png)
+
 # Robust Error Handling and Fault Tolerance Strategies
 
 In the fast-paced world of network programming, ensuring your applications are functional, resilient, and reliable is non-negotiable. That's where robust error handling and fault tolerance strategies come into play, especially with the powerful features offered by .NET 8 and C# 12. This chapter dives deep into the sophisticated techniques that keep your network services running smoothly, even when faced with the unexpected. We'll build on the foundations laid in previous chapters, enhancing your toolkit with advanced practices that guarantee recovery and graceful degradation in the face of failures.
@@ -626,68 +628,42 @@ Understanding these concepts is crucial for developers working in .NET, as it se
 
 ### A Look at the Polly Project
 
-# TO DO - Rewrite everything for Polly v8
-
 Polly is a resilience and transient fault-handling library designed for .NET applications that helps developers add fault tolerance to their systems by providing a variety of policies to handle exceptions and transient errors. It is especially powerful in network programming, where issues like temporary network failures, timeouts, and response delays are common. Polly allows applications to react to these problems by retrying operations, breaking the circuit, or falling back to a predefined alternative method, thus maintaining stability and service availability.
 
 At its core, Polly provides several types of resilience strategies, each designed to handle failures in a different way. The most commonly used resilience strategy include Retry, Circuit Breaker, Timeout, Bulkhead Isolation, and Fallback. Each policy can be configured with custom settings to tailor the error handling to the specific needs of your application.
 
-The Retry policy is straightforward: it allows an application to retry a failed operation a specified number of times. This is particularly useful for handling transient faults that may correct themselves quickly, such as a brief loss of network connectivity. Polly’s retry policy can be configured for immediate retries or with a delay, and even to increase the delay between retries progressively.
+#### Installing Polly
 
-Here's a simple example of a retry policy using Polly:
+Installing the Polly library in your .NET projects enhances your application's resilience by incorporating advanced fault-handling patterns such as retries, circuit breakers, etc. Version 8 of Polly can be installed in various development environments, including Visual Studio, via the command-line interface (CLI) and JetBrains Rider. Here's how you can install Polly in each of these environments:
 
-```C#
-using Polly;
-using System;
+##### Installing Polly in Visual Studio
 
-var retryPolicy = Policy
-    .Handle<Exception>()
-    .Retry(3, onRetry: (exception, retryCount) =>
-    {
-        Console.WriteLine($"Retry {retryCount} of {exception.GetType().Name}");
-    });
+1. **Open Your Project in Visual Studio**: Start by opening your solution or project in Visual Studio.
+2. **Manage NuGet Packages**: Right-click on the project in the Solution Explorer and select "Manage NuGet Packages."
+3. **Search for Polly**: Go to the "Browse" tab in the NuGet Package Manager and type "Polly.Core" into the search box.
+4. **Install the Package**: Find the Polly package in the list (ensure it's the official package by checking the author or company is "App vNext"), select it, and press "Install." Visual Studio will handle the rest, including adding the necessary references to your project.
 
-retryPolicy.Execute(() =>
-{
-    // Code that might throw an exception
-    PerformNetworkOperation();
-});
+##### Installing Polly using the .NET CLI
+
+If you prefer using a command-line interface, or if you are working in an environment where Visual Studio is not available, you can use the .NET CLI to install Polly:
+
+```Bash
+dotnet add package Polly.Core --version 8.3.1
 ```
 
-When integrating Polly into a .NET application, you can explicitly use policies as shown in the examples above, or you can integrate them through dependency injection, which is particularly useful in larger applications or those using frameworks such as ASP.NET Core. This approach allows policies to be registered and configured centrally and injected where needed, promoting cleaner code and reuse across services.
+Note: The version of Polly.Core will likely have increased from the writing of this chapter.
 
-```C#
-// In Startup.cs or wherever services are configured
-services.AddPolicyRegistry();
-services.AddSingleton<IAsyncPolicy>(provider => 
-{
-    return Policy.Handle<Exception>().RetryAsync(3);
-});
+This command adds the Polly package directly to your project. Before running the command, navigate to your project directory in the command line.
 
-// In your service or controller
-public class MyService
-{
-    private readonly IAsyncPolicy _retryPolicy;
+##### Installing Polly in JetBrains Rider
 
-    public MyService(IAsyncPolicy retryPolicy)
-    {
-        _retryPolicy = retryPolicy;
-    }
+JetBrains Rider also supports NuGet package management within its IDE, which makes installing libraries like Polly straightforward:
+1. **Open Your Project**: Start Rider and open the project where you want to add Polly.
+2. **Access NuGet Window**: Go to the "Tools" menu and select "NuGet" and then "Manage NuGet Packages for Solution."
+3. **Search for Polly**: In the NuGet window, click the "Browse" tab and enter "Polly.Core" into the search field.
+4. **Install Polly**: Select the Polly package from the search results, ensure it's the correct package by verifying the publisher, and click "Install." Rider will download and add the references automatically to your project.
 
-    public async Task PerformOperationAsync()
-    {
-        await _retryPolicy.ExecuteAsync(async () =>
-        {
-            // Operation to perform
-            await PerformNetworkOperationAsync();
-        });
-    }
-}
-```
-
-This setup demonstrates how to configure and inject a retry policy using .NET’s built-in dependency injection. This method abstracts the policy setup from its execution context, making the service code cleaner and more focused on its core logic.
-
-Polly integrates seamlessly with .NET applications and supports asynchronous programming patterns, making it an ideal choice for modern network-based or cloud-first applications. By using Polly, developers can enhance the resilience of their applications, ensuring that they handle failures gracefully and maintain a high level of service availability even under adverse conditions. This introduction provides a glimpse into what Polly offers, setting the stage for deeper dives into each specific policy and their use cases in network programming.
+Polly integrates seamlessly with .NET applications and supports asynchronous programming patterns, making it an ideal choice for modern network-based or cloud-first applications. By using Polly, developers can enhance the resilience of their applications, ensuring that they handle failures gracefully and maintain a high level of service availability even under adverse conditions.
 
 ### Retry Mechanisms
 
@@ -715,5 +691,45 @@ Polly integrates seamlessly with .NET applications and supports asynchronous pro
 
 ### Monitoring and Health Checks
 
+In modern network applications, especially those deployed at scale, monitoring and implementing health checks are critical to ensure reliability and availability. These practices provide insight into an application's operational status and can help detect issues before they affect users. In .NET, various tools and techniques are available to monitor application health and implement health checks effectively.
+
+**Monitoring** in .NET can be broadly categorized into logging, performance metrics, and event tracing. Logging involves recording information about application processes and errors, which can be crucial for diagnosing issues after they occur. Tools like NLog, Serilog, or log4net can be configured to log detailed information about network requests, responses, and unexpected failures. **Performance metrics** gather data on various aspects of application performance, such as response times, throughput, and resource utilization. .NET provides performance counters and Application Insights for tracking these metrics in real time, which helps in identifying performance bottlenecks and trends.
+
+**Event tracing** is another vital monitoring part of network programming. It involves recording significant events in the application's lifecycle. This is particularly useful in a distributed environment where understanding the sequence of operations can be challenging. NET's EventSource and TraceSource classes offer robust support for adding custom tracing to your applications.
+
+**Health checks** are proactive measures to assess the health of an application and its dependencies. In .NET, health checks can be implemented using the `Microsoft.Extensions.Diagnostics.HealthChecks` namespace, which is part of the ASP.NET Core. This package allows developers to define health check services that can test various parts of the application and its external dependencies, such as databases, file systems, and external services.
+
+Here is an example of how you can set up a basic health check in an ASP.NET Core application:
+
+```C#
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Other configurations
+
+builder.Services.AddHealthChecks()
+    .AddCheck("example_health_check", () => HealthCheckResult.Healthy("The check indicates a healthy state."));
+    
+var app = builder.Build();
+
+// Other app setups
+
+app.MapHealthChecks("/health");
+```
+
+This code snippet adds a health check service that always returns a healthy state. The health check endpoint is exposed at `/health`, where it can be queried to get the application's health status. Tools like Kubernetes can use this endpoint to manage service availability and perform actions like restarting unhealthy service instances.
+
+By integrating monitoring and health checks into your .NET applications, you ensure that potential problems can be identified and addressed quickly, minimizing downtime and maintaining a high level of service reliability. These practices are essential for any robust network application and are strongly recommended as part of a comprehensive operational strategy.
+
 ## Summary
 
+This chapter on Robust Error Handling and Fault Tolerance Strategies in C# and .NET has not only equipped you with the essential knowledge and tools, but also empowered you to enhance the reliability and resilience of your network applications. By understanding and implementing robust error-handling techniques, you can confidently ensure that your applications manage unexpected failures gracefully and maintain optimal functionality under diverse conditions. We covered a broad range of topics, from the basics of error handling using try, catch, and finally blocks to the intricacies of advanced techniques such as exception filtering and the creation of custom exception classes.
+
+The discussion began with a detailed examination of the .NET exception hierarchy, emphasizing the differentiation between system and application exceptions and introducing network-specific exceptions that are particularly relevant to network programming. We explored how leveraging these can aid in more targeted and effective error management. The chapter also detailed practical implementations of nested try-catch blocks and the strategic use of the finally block for resource cleanup, which is critical in preventing resource leaks and ensuring application stability. These practical implementations are immediately applicable and valuable in your day-to-day work.
+
+Moving into the realm of fault tolerance, we introduced the Polly library, a powerful tool for implementing advanced fault-handling patterns like retries, circuit breakers, and fallback methods. Each pattern was discussed in detail, providing scenarios where they would be most effective and C# code examples to demonstrate their implementation. The critical discussion points were the importance of retries in handling transient faults, circuit breakers to prevent repeated failures, and fallback methods to provide alternative solutions when operations fail.
+
+Additionally, the chapter covered the necessity of incorporating monitoring and health checks into your network applications. This ensures the continuous assessment of an application's health and enhances its reliability and availability through proactive maintenance. Tools and techniques for logging, tracing, and defining health checks in .NET were examined, showing how they can provide critical insights into application performance and operational status.
+
+In conclusion, this chapter has laid a solid foundation for writing more resilient network-driven applications in C#. With the strategies, patterns, and practices discussed, you are now better prepared to design applications that can withstand and recover from the myriad of issues in dynamic network environments. This knowledge will undoubtedly aid in building services that offer enhanced user experiences by being robust, reliable, and responsive.
