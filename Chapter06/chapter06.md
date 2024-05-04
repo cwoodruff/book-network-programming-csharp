@@ -628,9 +628,9 @@ Understanding these concepts is crucial for developers working in .NET, as it se
 
 ### A Look at the Polly Project
 
-Polly is a resilience and transient fault-handling library designed for .NET applications that helps developers add fault tolerance to their systems by providing a variety of policies to handle exceptions and transient errors. It is especially powerful in network programming, where issues like temporary network failures, timeouts, and response delays are common. Polly allows applications to react to these problems by retrying operations, breaking the circuit, or falling back to a predefined alternative method, thus maintaining stability and service availability.
+Polly is a resilience and transient fault-handling library designed for .NET applications that helps developers add fault tolerance to their systems by providing a variety of resilience pipelines to handle exceptions and transient errors. It is especially powerful in network programming, where issues like temporary network failures, timeouts, and response delays are common. Polly allows applications to react to these problems by retrying operations, breaking the circuit, or falling back to a predefined alternative method, thus maintaining stability and service availability.
 
-At its core, Polly provides several types of resilience strategies, each designed to handle failures in a different way. The most commonly used resilience strategy include Retry, Circuit Breaker, Timeout, Bulkhead Isolation, and Fallback. Each policy can be configured with custom settings to tailor the error handling to the specific needs of your application.
+At its core, Polly provides several types of resilience strategies, each designed to handle failures in a different way. The most commonly used resilience strategy include Retry, Circuit Breaker, Timeout, Bulkhead Isolation, and Fallback. Each resilience pipeline can be configured with custom settings to tailor the error handling to the specific needs of your application.
 
 #### Installing Polly
 
@@ -665,29 +665,283 @@ JetBrains Rider also supports NuGet package management within its IDE, which mak
 
 Polly integrates seamlessly with .NET applications and supports asynchronous programming patterns, making it an ideal choice for modern network-based or cloud-first applications. By using Polly, developers can enhance the resilience of their applications, ensuring that they handle failures gracefully and maintain a high level of service availability even under adverse conditions.
 
-### Retry Mechanisms
+### Retry Resilience Strategies in Polly
 
-# TO DO - Rewrite everything for Polly v8
+Retry resilience strategies are a cornerstone of robustness in modern applications, particularly in network programming, where transient failures such as temporary network outages or server overloads are common. The Polly library for .NET provides a sophisticated yet user-friendly framework for implementing retry resilience strategies that help applications recover from such transient failures gracefully. By automatically retrying failed operations, these resilience strategies can significantly improve the reliability and user-friendliness of your applications.
 
-### Circuit Breaker Pattern
+One of the key strengths of Polly is its flexibility in configuring retry resilience pipelines. For instance, a basic retry resilience pipeline can be set to attempt an operation several times before the `finally` handles the failing if the issues persist. This is particularly beneficial for scenarios where the failure is expected to be temporary and resolve quickly. With Polly, you can specify the number of retries and the delay between them, offering both fixed delay retries and more sophisticated exponential backoff strategies.
 
-# TO DO - Rewrite everything for Polly v8
+Here’s an example of how to implement a simple retry resilience pipeline with a fixed delay using Polly:
 
-### Fallback Pattern
+```C#
+var strategy = new ResiliencePipelineBuilder().AddRetry(new()
+{
+    ShouldHandle = new PredicateBuilder().Handle<Exception>(),
+    MaxRetryAttempts = 3,
+    Delay = TimeSpan.FromMilliseconds(200), // Wait between each try
+    OnRetry = args =>
+    {
+        var exception = args.Outcome.Exception!;
+        progress.Report(ProgressWithMessage($"Strategy logging: {exception.Message}", Color.Yellow));
+        Retries++;
+        return default;
+    }
+}).Build();
+```
 
-# TO DO - Rewrite everything for Polly v8
+This code configures the retry resilience pipeline to handle any exception by retrying three times with a two-second pause between each attempt. The onRetry delegate is an optional parameter that executes custom logic with each retry, such as logging the retry attempt, which is helpful for debugging and monitoring.
 
-### Timeout Pattern
+You should implement an exponential backoff strategy for more sophisticated scenarios, where the delay between retries increases exponentially. This approach is helpful to avoid overloading the server or network when it is already under strain. Here's how you can set up exponential backoff with Polly:
 
-# TO DO - Rewrite everything for Polly v8
+```C#
+var strategy = new ResiliencePipelineBuilder().AddRetry(new()
+{
+    ShouldHandle = new PredicateBuilder().Handle<Exception>(),
+    MaxRetryAttempts = 5,
+    Delay = TimeSpan.FromSeconds(Math.Pow(2, Retries)), // Wait between each try
+    OnRetry = args =>
+    {
+        var exception = args.Outcome.Exception!;
+        progress.Report(ProgressWithMessage($"Strategy logging: {exception.Message}", Color.Yellow));
+        Retries++;
+        return default;
+    }
+}).Build();
+```
 
-### Fallback Pattern
+This resilience pipeline retries up to five times, with the delay between retries growing exponentially. Thus, the network or the server has more time to recover as the number of attempts increases.
 
-# TO DO - Rewrite everything for Polly v8
+Moreover, Polly's resilience pipelines are more comprehensive than simple exception handling. They can also be configured to handle specific exceptions or even based on the operation's result. For example, you should retry a network call only if it returns a specific HTTP status code indicating a temporary issue, such as a 504 Gateway Timeout.
+
+```C#
+using System.Net;
+using Polly.Retry;
+
+var statusCodes = new List<HttpStatusCode>
+{
+    HttpStatusCode.GatewayTimeout
+};
+
+PredicateBuilder<HttpResponseMessage> predicateBuilder = new PredicateBuilder<HttpResponseMessage>()
+    // .Handle<HttpRequestException>()  NOTE: this would work see explanation
+    .HandleResult(response => statusCodes.Contains(response.StatusCode));
+
+var strategy =  new ResiliencePipelineBuilder<HttpResponseMessage>()
+    .AddRetry(new RetryStrategyOptions<HttpResponseMessage>()
+    {
+        ShouldHandle = predicateBuilder,
+        ...
+    });
+```
+
+This resilience pipeline specifically retries HTTP calls that result in a `504 Gateway Timeout` status, making it a highly targeted approach to handling specific network-related issues.
+
+These examples show how Polly provides a flexible and powerful way to implement retry strategies in .NET applications. By understanding and leveraging these patterns, developers can build more resilient systems that can better withstand the complexities and challenges of network communication.
+
+### Circuit Breaker Resilience Strategies in Polly
+
+The circuit breaker pattern is a resilience strategy that prevents an application from repeatedly trying to execute an operation that is likely to fail. Adopted from electrical engineering, where a circuit breaker prevents overloads by breaking the circuit, in software, a circuit breaker prevents further strain on an already failing system by temporarily halting potentially harmful operations. This pattern is instrumental in network programming, where continuous failures can exacerbate the problem, such as overwhelming a struggling remote service with repeated requests.
+
+Polly, a comprehensive resilience and transient fault-handling library for .NET, provides an elegant implementation of the circuit breaker pattern. It empowers developers to define conditions under which the circuit should 'break,' and the duration for which it should stay 'open' before attempts to close it resume. When the circuit is open, attempts to execute the operation will automatically fail without actually executing, thereby giving the system time to recover. This straightforward implementation makes it a confident choice for developers.
+
+Here's how to configure a basic circuit breaker using Polly:
+
+```C#
+var circuitBreakerStrategy = new ResiliencePipelineBuilder().AddCircuitBreaker(new()
+{
+    ShouldHandle = new PredicateBuilder().Handle<Exception>(),
+    MinimumThroughput = 4,
+    BreakDuration = TimeSpan.FromSeconds(30),
+    OnOpened = args =>
+    {
+        progress.Report(ProgressWithMessage(
+                $".Breaker logging: Breaking the circuit for {args.BreakDuration.TotalMilliseconds}ms!",
+                Color.Magenta));
+
+        var exception = args.Outcome.Exception!;
+        progress.Report(ProgressWithMessage($"..due to: {exception.Message}", Color.Magenta));
+        return default;
+    },
+    OnClosed = args =>
+    {
+        progress.Report(ProgressWithMessage(".Breaker logging: Call OK! Closed the circuit again!", Color.Magenta));
+        return default;
+    },
+    OnHalfOpened = args =>
+    {
+        progress.Report(ProgressWithMessage(".Breaker logging: Half-open: Next call is a trial!", Color.Magenta));
+        return default;
+    }
+}).Build();
+```
+
+In this example, the circuit breaker resilience pipeline is set to open after four exceptions and will remain open for 30 seconds. During this time, all attempts to execute the protected operation will fail immediately without invoking the operation. After 30 seconds, the circuit transitions to a "half-open" state, where a subsequent trial call is allowed to test if the underlying problem has been resolved. If this trial call succeeds, the circuit resets to the closed state; if it fails, the circuit opens again for the specified duration.
+
+The circuit breaker pattern is essential in systems where continuous failures can cause more harm than stopping the operation altogether. For example, continuously retrying a failed network operation can lead to performance degradation, more errors, or even complete service unavailability. Implementing a circuit breaker can help ensure that the system maintains functionality during faults and can recover more gracefully.
+
+Advanced configurations of Polly's circuit breaker can include tracking successes and failures over a rolling interval rather than counting consecutive failures, which provides a more nuanced approach to determining the circuit's state. Additionally, integrating circuit breakers with other Polly resilience pipelines, such as retries or fallbacks, can effectively create a robust fault-handling strategy that addresses multiple failure scenarios.
+
+By leveraging the circuit breaker pattern through Polly, developers can enhance the stability and resilience of their network applications in .NET. This pattern not only helps manage unresponsive external services but also contributes significantly to the overall robustness of the application, preventing cascading failures and promoting system recovery and stability.
+
+### Fallback Resilience Strategies in Polly
+
+Fallback strategies are essential to resilience and fault tolerance in software development. They not only allow applications to operate smoothly by providing an alternative course of action when a primary method fails but also play a crucial role in enhancing user experience. This is especially critical in network programming, where dependencies on remote services or data can lead to vulnerabilities if those external systems become unreliable or unresponsive. Using fallback strategies, applications can degrade gracefully, maintaining functionality and ensuring a seamless user experience even under partial system failures.
+
+Here’s a simple example of how to implement a fallback strategy with Polly:
+
+```C#
+using Polly.Fallback;
+
+new ResiliencePipelineBuilder<User>().AddFallback<User>(new FallbackStrategyOptions<User>
+{
+    ShouldHandle = new PredicateBuilder<User>()
+        .Handle<HttpRequestException>()
+        .HandleResult(user => user is null),
+    FallbackAction = static args =>
+    {
+        var user = User.GetRandomUser();
+        return Outcome.FromResultAsValueTask(User.Empty);
+    },
+    OnFallback = static args => default
+});
+```
+
+In this example, the fallback resilience pipeline is configured to handle HttpRequestException, which is common in network requests. The fallback action is to send back to the caller a dynamically generated user. This ensures that the application can still provide data to the client, albeit potentially less valuable if the network request fails.
+
+Fallbacks are particularly useful in scenarios where maintaining a non-disruptive user experience is critical, even when some functionalities are impaired. For instance, an e-commerce application might display products from a local cache or a generic product list if the inventory service is down, thus allowing users to browse products and make purchases based on the cached data.
+
+Furthermore, fallback strategies can be combined with other Polly resilience pipelines for a more robust resilience strategy. For example, a fallback could be used with a retry resilience pipeline. This layered approach ensures that the application attempts to handle failures progressively, starting from retries, possibly escalating to a circuit breaker, and finally, if all else fails, executing a fallback.
+
+```C#
+var predicateBuilder = new PredicateBuilder<HttpResponseMessage>()
+    .Handle<HttpRequestException>()
+    .HandleResult(r => r.StatusCode == HttpStatusCode.InternalServerError);
+
+var pipeline = new ResiliencePipelineBuilder<HttpResponseMessage>()
+    .AddFallback(new()
+    {
+        ShouldHandle = predicateBuilder,
+        FallbackAction = args =>
+        {
+            // Try to resolve the fallback response
+            HttpResponseMessage fallbackResponse = ResolveFallbackResponse(args.Outcome);
+
+            return Outcome.FromResultAsValueTask(fallbackResponse);
+        }
+    })
+    .AddCircuitBreaker(new ()
+    {
+        ShouldHandle = predicateBuilder,
+        MinimumThroughput = 4,
+        BreakDuration = TimeSpan.FromSeconds(30),
+        OnOpened = args =>
+        {
+            var exception = args.Outcome.Exception!;
+            return default;
+        },
+        OnClosed = args => default,
+        OnHalfOpened = args => default
+    })
+    .AddRetry(new()
+    {
+        ShouldHandle = predicateBuilder,
+        MaxRetryAttempts = 3,
+    })
+    .Build();
+```
+
+The application will first retry the operation three times using this combined strategy. If the failures continue, the circuit breaker trips to prevent further immediate attempts, and after all these measures, if the operation still fails, the fallback logic is executed. This comprehensive use of Polly's resilience pipelines ensures that applications remain responsive and operational despite adverse conditions, effectively managing failures and providing alternatives seamlessly.
+
+### Timeout Resilience Strategies in Polly
+
+Timeouts are a critical component of resilience strategies in network programming. They ensure that an application does not hang indefinitely while waiting for a response from an external service or operation. Implementing effective timeout strategies can prevent resources from being tied up and maintain an application's responsiveness. Polly, a robust library for implementing resilience patterns in .NET applications, provides versatile and straightforward mechanisms for handling timeouts, making integrating timeouts into your resilience strategies easier.
+
+In Polly, the timeout resilience pipeline can be configured to abort an operation if it exceeds a specified duration. This is particularly useful for network calls where long waits could degrade user experience or lead to resource exhaustion. The timeout resilience pipeline in Polly throws an exception when the timeout period is exceeded, allowing the application to catch this exception and handle it appropriately, whether that means retrying the operation, logging the timeout, or providing feedback to the user.
+
+Now, let's dive into a practical example of how to implement a timeout strategy with Polly.
+
+```C#
+var pipeline = new ResiliencePipelineBuilder()
+    .AddTimeout(new TimeoutStrategyOptions
+    {
+        Timeout = TimeSpan.FromSeconds(10),
+        OnTimeout = args =>
+        {
+            Console.WriteLine("Timeout limit has been exceeded");
+            return default;
+        }
+    }).Build();
+```
+
+In this example the timeout resilience pipeline is set to give up after 10 seconds if the operation has not been completed. This strategy is used when you have operations that may hang or do not handle cancellation tokens internally. The onTimeout delegate is used to log the timeout event.
+
+Using Polly’s timeout resilience pipelines, you can define clear boundaries for how long your application should attempt to perform operations, protecting it against failures in external dependencies and maintaining a smooth and responsive user experience. Moreover, the flexibility to choose between pessimistic and optimistic strategies allows developers to tailor the timeout handling to the nature of the operations they are dealing with, whether entirely under their control or dependent on third-party APIs that support cancellation.
 
 ### Load Balancing and Failover Techniques
 
-# TO DO - Rewrite everything for Polly v8
+Load balancing and failover, two crucial techniques in network programming, play a pivotal role in enhancing application scalability and reliability. These strategies, by distributing the workload across multiple computing resources, such as servers or network paths, ensure no single point of failure and improve response times during high-traffic periods. For developers working in environments where application uptime and performance are key, understanding how to implement these techniques effectively is not just important, but vital.
+
+In .NET, load balancing can typically be managed at several layers, including DNS, hardware, and application logic. Software-level load balancing can be done by distributing requests across a pool of servers or services based on various algorithms like round-robin, least connections, or even more complex, adaptive schemes that consider server load or response times. .NET applications can implement this using various techniques, such as load balancers that support sticky sessions or programmatically routing requests to the least busy servers.
+
+Here is a fundamental conceptual example of implementing a simple load balancing mechanism in C#:
+
+```C#
+void Main(string[] args)
+{
+    var serverPool = new ServerPool();
+    serverPool.AddServer(new Server("Server1", 1)); // Lower weight, less traffic
+    serverPool.AddServer(new Server("Server2", 3)); // Higher weight, more traffic
+    serverPool.AddServer(new Server("Server3", 2)); // Medium weight, medium traffic
+
+    for (int i = 0; i < 10; i++)
+    {
+        Server? selectedServer = serverPool.GetServer();
+        Console.WriteLine($"Redirecting request to {selectedServer?.Name}");
+    }
+}
+
+public class Server(string name, int weight)
+{
+    public string Name { get; } = name;
+    public int Weight { get; } = weight;
+}
+
+public class ServerPool
+{
+    private readonly List<Server?> _servers = new();
+    private readonly Random _random = new Random();
+    private int _totalWeight;
+
+    public void AddServer(Server? server)
+    {
+        _servers.Add(server);
+        _totalWeight += server.Weight;
+    }
+
+    public Server? GetServer()
+    {
+        int randomNumber = _random.Next(_totalWeight);
+        int cumulativeWeight = 0;
+
+        foreach (var server in _servers)
+        {
+            cumulativeWeight += server.Weight;
+            if (randomNumber < cumulativeWeight)
+            {
+                return server;
+            }
+        }
+
+        return null; // This should never happen if servers are correctly weighted
+    }
+}
+```
+
+This load balancer uses a simple weighted random algorithm to distribute requests proportionally based on server weights. This approach can be expanded with more sophisticated load monitoring and dynamic weight adjustments based on ongoing performance metrics, making the load balancer adaptive to changing conditions in server performance or network load.
+
+Failover techniques involve switching over to a redundant or standby system, server, network, or component when the currently active system fails. This is crucial for maintaining service availability and continuity. In .NET, one common approach to achieve failover is through the use of clustering. Clustering allows multiple application instances to run in parallel, and if one fails, others can seamlessly take over, ensuring uninterrupted service. Another approach is to use secondary databases or data stores. These secondary databases are kept in sync with the primary, and in case the primary fails, the application can quickly switch to the secondary, minimizing downtime and ensuring data integrity.
+
+Effective load balancing and failover strategies require technical implementation and thorough planning and testing to ensure they handle expected and unexpected loads and transition smoothly in the event of a component failure. Developers must also consider the trade-offs between complexity and benefits when implementing these strategies to ensure that the solution matches the actual needs of the application in terms of scalability, reliability, and maintainability.
 
 ### Monitoring and Health Checks
 
