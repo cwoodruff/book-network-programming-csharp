@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.768161754087">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.768184736467">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.768161754087" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.768184736467" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.768161754087" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.768184736467" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.768161754087" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.768161754087" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.768184736467" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.768184736467" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -979,14 +979,14 @@ var statusCodes = new List&lt;HttpStatusCode&gt;
 };
 
 PredicateBuilder&lt;HttpResponseMessage&gt; predicateBuilder = new PredicateBuilder&lt;HttpResponseMessage&gt;()
-    // .Handle&lt;HttpRequestException&gt;()  NOTE: this would work see explanation
     .HandleResult(response =&gt; statusCodes.Contains(response.StatusCode));
 
 var strategy =  new ResiliencePipelineBuilder&lt;HttpResponseMessage&gt;()
     .AddRetry(new RetryStrategyOptions&lt;HttpResponseMessage&gt;()
     {
         ShouldHandle = predicateBuilder,
-        ...
+        
+        // additional options
     });</code></pre>
 </doc-codeblock></div>
 <p>This resilience pipeline specifically retries HTTP calls that result in a <code v-pre>504 Gateway Timeout</code> status, making it a highly targeted approach to handling specific network-related issues.</p>
@@ -998,7 +998,7 @@ var strategy =  new ResiliencePipelineBuilder&lt;HttpResponseMessage&gt;()
     </h3>
 </doc-anchor-target>
 <p>The circuit breaker pattern is a resilience strategy that prevents an application from repeatedly trying to execute an operation that is likely to fail. Adopted from electrical engineering, where a circuit breaker prevents overloads by breaking the circuit, in software, a circuit breaker prevents further strain on an already failing system by temporarily halting potentially harmful operations. This pattern is instrumental in network programming, where continuous failures can exacerbate the problem, such as overwhelming a struggling remote service with repeated requests.</p>
-<p>Polly, a comprehensive resilience and transient fault-handling library for .NET, provides an elegant implementation of the circuit breaker pattern. It empowers developers to define conditions under which the circuit should &#x27;break,&#x27; and the duration for which it should stay &#x27;open&#x27; before attempts to close it resume. When the circuit is open, attempts to execute the operation will automatically fail without actually executing, thereby giving the system time to recover. This straightforward implementation makes it a confident choice for developers.</p>
+<p>Polly empowers developers to define conditions under which the circuit should &#x27;break,&#x27; and the duration for which it should stay &#x27;open&#x27; before attempts to close it resume. When the circuit is open, attempts to execute the operation will automatically fail without actually executing, thereby giving the system time to recover. This straightforward implementation makes it a confident choice for developers.</p>
 <p>Here&#x27;s how to configure a basic circuit breaker using Polly:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">var circuitBreakerStrategy = new ResiliencePipelineBuilder().AddCircuitBreaker(new()
@@ -1056,7 +1056,7 @@ new ResiliencePipelineBuilder&lt;User&gt;().AddFallback&lt;User&gt;(new Fallback
     OnFallback = static args =&gt; default
 });</code></pre>
 </doc-codeblock></div>
-<p>In this example, the fallback resilience pipeline is configured to handle HttpRequestException, which is common in network requests. The fallback action is to send back to the caller a dynamically generated user. This ensures that the application can still provide data to the client, albeit potentially less valuable if the network request fails.</p>
+<p>In this example, the fallback resilience pipeline is configured to handle <code v-pre>HttpRequestException</code>, which is common in network requests. The fallback action is to send back to the caller a dynamically generated user. This ensures that the application can still provide data to the client, albeit potentially less valuable if the network request fails.</p>
 <p>Fallbacks are particularly useful in scenarios where maintaining a non-disruptive user experience is critical, even when some functionalities are impaired. For instance, an e-commerce application might display products from a local cache or a generic product list if the inventory service is down, thus allowing users to browse products and make purchases based on the cached data.</p>
 <p>Furthermore, fallback strategies can be combined with other Polly resilience pipelines for a more robust resilience strategy. For example, a fallback could be used with a retry resilience pipeline. This layered approach ensures that the application attempts to handle failures progressively, starting from retries, possibly escalating to a circuit breaker, and finally, if all else fails, executing a fallback.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
