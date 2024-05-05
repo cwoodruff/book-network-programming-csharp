@@ -723,14 +723,14 @@ var statusCodes = new List<HttpStatusCode>
 };
 
 PredicateBuilder<HttpResponseMessage> predicateBuilder = new PredicateBuilder<HttpResponseMessage>()
-    // .Handle<HttpRequestException>()  NOTE: this would work see explanation
     .HandleResult(response => statusCodes.Contains(response.StatusCode));
 
 var strategy =  new ResiliencePipelineBuilder<HttpResponseMessage>()
     .AddRetry(new RetryStrategyOptions<HttpResponseMessage>()
     {
         ShouldHandle = predicateBuilder,
-        ...
+        
+        // additional options
     });
 ```
 
@@ -742,7 +742,7 @@ These examples show how Polly provides a flexible and powerful way to implement 
 
 The circuit breaker pattern is a resilience strategy that prevents an application from repeatedly trying to execute an operation that is likely to fail. Adopted from electrical engineering, where a circuit breaker prevents overloads by breaking the circuit, in software, a circuit breaker prevents further strain on an already failing system by temporarily halting potentially harmful operations. This pattern is instrumental in network programming, where continuous failures can exacerbate the problem, such as overwhelming a struggling remote service with repeated requests.
 
-Polly, a comprehensive resilience and transient fault-handling library for .NET, provides an elegant implementation of the circuit breaker pattern. It empowers developers to define conditions under which the circuit should 'break,' and the duration for which it should stay 'open' before attempts to close it resume. When the circuit is open, attempts to execute the operation will automatically fail without actually executing, thereby giving the system time to recover. This straightforward implementation makes it a confident choice for developers.
+Polly empowers developers to define conditions under which the circuit should 'break,' and the duration for which it should stay 'open' before attempts to close it resume. When the circuit is open, attempts to execute the operation will automatically fail without actually executing, thereby giving the system time to recover. This straightforward implementation makes it a confident choice for developers.
 
 Here's how to configure a basic circuit breaker using Polly:
 
@@ -806,7 +806,7 @@ new ResiliencePipelineBuilder<User>().AddFallback<User>(new FallbackStrategyOpti
 });
 ```
 
-In this example, the fallback resilience pipeline is configured to handle HttpRequestException, which is common in network requests. The fallback action is to send back to the caller a dynamically generated user. This ensures that the application can still provide data to the client, albeit potentially less valuable if the network request fails.
+In this example, the fallback resilience pipeline is configured to handle `HttpRequestException`, which is common in network requests. The fallback action is to send back to the caller a dynamically generated user. This ensures that the application can still provide data to the client, albeit potentially less valuable if the network request fails.
 
 Fallbacks are particularly useful in scenarios where maintaining a non-disruptive user experience is critical, even when some functionalities are impaired. For instance, an e-commerce application might display products from a local cache or a generic product list if the inventory service is down, thus allowing users to browse products and make purchases based on the cached data.
 
