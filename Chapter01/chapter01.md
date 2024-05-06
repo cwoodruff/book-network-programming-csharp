@@ -33,7 +33,7 @@ In this chapter, we are going to cover the following main topics:
 
 A foundational understanding of C# and .NET is essential to grasp the concepts presented in this book thoroughly. Readers should be comfortable with C# syntax, object-oriented programming principles, and basic software development concepts. Familiarity with .NET libraries and its ecosystem will significantly enhance your learning experience.
 
-For hands-on experience and practical application, I've created a dedicated GitHub repository for this book. Each chapter features a collection of code samples and projects corresponding to the discussed concepts. You can find the repository at the book's GitHub location: <https://github.com/cwoodruff/network-programming-csharp-dotnet>. Feel free to clone, fork, and explore the repository at your own pace.
+For hands-on experience and practical application, I've created a dedicated GitHub repository for this book. Each chapter features a collection of code samples and projects corresponding to the discussed concepts. You can find the repository at the book's GitHub location: <https://github.com/cwoodruff/book-network-programming-csharp>. Feel free to clone, fork, and explore the repository at your own pace.
 
 As you navigate through the chapters, refer to the repository to supplement your understanding and practice what you've learned.
 
