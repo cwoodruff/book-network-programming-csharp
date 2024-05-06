@@ -12,7 +12,7 @@ I want to thank every reader who took the time to share their feedback and corre
 |     Date      | Chapter |             Section             | Acknowledgement |                       Notes                       |
 |:-------------:|:-------:|:-------------------------------:|:---------------:|:-------------------------------------------------:|
 | 10 April 2024 |    3    | Handling data of unknown length | Stephen Cleary  | Expanding upon and demostrating the Decoder class |
-|               |         |                                 |                 |                                                   |
+|  6 May 2024   |    1    |     Technical Requirements      | @CodeConscious  |     Update repository link in Chapter 1           |
 |               |         |                                 |                 |                                                   |
 |               |         |                                 |                 |                                                   |
     
