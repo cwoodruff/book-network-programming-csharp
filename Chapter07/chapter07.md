@@ -1,14 +1,14 @@
 ---
 order: 13
 icon: stack
-label: Chap 7
+label: Chap 7 - Data Serialization Techniques
 meta:
-title: "Efficient Data Serialization Techniques"
+title: "Data Serialization Techniques"
 visibility: hidden
 ---
 # 7
 
-# Efficient Data Serialization Techniques
+# Data Serialization Techniques
 
 In network programming with .NET 8 and C# 12, efficient data serialization is not merely a desirable attribute but a fundamental requirement. Serialization, the process of converting data structures or object states into a format that can be stored or transmitted and reconstructed later, plays a pivotal role in the performance and scalability of network applications. As applications grow increasingly interconnected and distributed across varied environments, the choice of serialization method and its implementation can significantly impact the speed and reliability of data exchanges.
 
