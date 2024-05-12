@@ -1,7 +1,7 @@
 ---
 order: 14
 icon: stack
-label: Chap 6
+label: Chap 6 - Error Handling and Fault Tolerance Strategies
 meta:
 title: "Error Handling and Fault Tolerance Strategies"
 ---
