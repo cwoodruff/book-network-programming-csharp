@@ -14,8 +14,8 @@ For the source code for the book, visit the book's GitHub repo. [book-network-pr
 | 3       | [Introduction to Socket Programming](./Chapter03/chapter03.md)            | ✔️        |
 | 4       | [Asynchronous Programming with Async/Await](./Chapter04/chapter04.md)     | ✔️        |
 | 5       | [Multithreading in Network Applications](./Chapter05/chapter05.md)        | ✔️        |
-| 6       | [Error Handling and Fault Tolerance Strategies](./Chapter06/Chapter06.md) | ✔         |
-| 7       | Efficient Data Serialization Techniques                                   |           |
+| 6       | [Error Handling and Fault Tolerance Strategies](./Chapter06/Chapter06.md) | ✔️        |
+| 7       | [Data Serialization Techniques](./Chapter07/Chapter07.md)                 | ✔️        |
 | 8       | Network Performance Optimization                                          |           |
 | 9       | Working with TCP/IP Sockets                                               |           |
 | 10      | Working with UDP Sockets                                                  |           |
