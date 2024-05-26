@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.769883404373">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.770004263502">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,11 +35,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.769883404373" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.770004263502" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.769883404373" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.770004263502" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.769883404373" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.770004263502" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -275,6 +275,39 @@
         <doc-anchor-trigger class="header-anchor-trigger" to="#tools-and-techniques-for-performance-analysis">#</doc-anchor-trigger>
         <span>Tools and Techniques for Performance Analysis</span>
     </h3>
+</doc-anchor-target>
+<p>Applicable performance analysis is critical for optimizing network applications and systems in C# and .NET. Developers can identify and resolve performance bottlenecks by employing suitable techniques, ensuring their applications run smoothly and efficiently. This section covers critical techniques that provide deep insights into network performance and guide the optimization process.</p>
+<p>One essential technique is the use of asynchronous programming models. Asynchronous programming (see Chapter 4), facilitated by the async and await keywords in C#, helps prevent blocking network calls and allows applications to handle multiple network operations concurrently. This approach reduces latency and improves the overall responsiveness of network applications. Additionally, analyzing the execution of asynchronous methods using tools like JetBrains dotTrace can reveal performance bottlenecks and help optimize asynchronous code paths.</p>
+<p>Another technique that can greatly enhance your network applications involves leveraging performance profiling and diagnostic tools. Tools such as Visual Studio Performance Profiler and Event Tracing for Windows (ETW) provide detailed metrics on network activity, CPU usage, and memory allocation. Profiling is a powerful tool that helps identify inefficient code, excessive network calls, and other performance issues. By systematically analyzing these metrics, developers can optimize data transmission, reduce network overhead, and enhance application performance. Combining these techniques with thorough monitoring and continuous performance testing ensures that network applications remain efficient and scalable.</p>
+<doc-anchor-target id="visual-studio-performance-profiler">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#visual-studio-performance-profiler">#</doc-anchor-trigger>
+        <span>Visual Studio Performance Profiler</span>
+    </h4>
+</doc-anchor-target>
+<doc-anchor-target id="jetbrains-dottrace">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#jetbrains-dottrace">#</doc-anchor-trigger>
+        <span>JetBrains dotTrace</span>
+    </h4>
+</doc-anchor-target>
+<doc-anchor-target id="event-tracing-for-windows-etw">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#event-tracing-for-windows-etw">#</doc-anchor-trigger>
+        <span>Event Tracing for Windows (ETW)</span>
+    </h4>
+</doc-anchor-target>
+<doc-anchor-target id="net-trace">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#net-trace">#</doc-anchor-trigger>
+        <span>.NET Trace</span>
+    </h4>
+</doc-anchor-target>
+<doc-anchor-target id="wireshark">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#wireshark">#</doc-anchor-trigger>
+        <span>WireShark</span>
+    </h4>
 </doc-anchor-target>
 <doc-anchor-target id="network-performance-metrics">
     <h3>
