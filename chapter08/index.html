@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.770180107902">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.770180304077">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -35,12 +35,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.770180107902" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.770180304077" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.770180107902" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.770180304077" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.770180107902" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.770180107902" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.770180304077" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.770180304077" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -470,6 +470,7 @@ public class PacketLossTracker
 </doc-anchor-target>
 <p>Optimizing data transmission is crucial for enhancing the performance and efficiency of network applications in C# and .NET. Efficient data transmission reduces latency, minimizes bandwidth usage, and improves application responsiveness. This section explores critical techniques for optimizing data transmission, including compression, efficient serialization formats, and batching requests.</p>
 <p>One effective method for optimizing data transmission is to use data compression. Compression reduces the size of data being transmitted, which can significantly decrease the time required for data transfer and reduce bandwidth consumption. .NET provides built-in support for compression through classes such as GZipStream and BrotliStream.</p>
+<p>The following example is compressing and decompressing using the GZip.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.IO;
 using System.IO.Compression;
@@ -504,6 +505,12 @@ public class GZipDataCompressor
     }
 }</code></pre>
 </doc-codeblock></div>
+<p>Brotli compression is an efficient algorithm that reduces the size of data, which can significantly enhance network performance by minimizing the amount of data transmitted over the network. Below is an example of how to use Brotli compression for network development in C#.</p>
+<p>First, ensure you have the necessary package installed. You can install the Brotli compression package via NuGet:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-shell-session"><code v-pre class="language-shell-session">Install-Package System.IO.Compression.Brotli</code></pre>
+</doc-codeblock></div>
+<p>Here&#x27;s a simple example demonstrating how to compress and decompress data using Brotli in a C# network application.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.IO;
 using System.IO.Compression;
