@@ -201,6 +201,8 @@ Optimizing data transmission is crucial for enhancing the performance and effici
 
 One effective method for optimizing data transmission is to use data compression. Compression reduces the size of data being transmitted, which can significantly decrease the time required for data transfer and reduce bandwidth consumption. .NET provides built-in support for compression through classes such as GZipStream and BrotliStream.
 
+The following example is compressing and decompressing using the GZip.
+
 ```C#
 using System.IO;
 using System.IO.Compression;
@@ -235,6 +237,16 @@ public class GZipDataCompressor
     }
 }
 ```
+
+Brotli compression is an efficient algorithm that reduces the size of data, which can significantly enhance network performance by minimizing the amount of data transmitted over the network. Below is an example of how to use Brotli compression for network development in C#.
+
+First, ensure you have the necessary package installed. You can install the Brotli compression package via NuGet:
+
+```Console
+Install-Package System.IO.Compression.Brotli
+```
+
+Here's a simple example demonstrating how to compress and decompress data using Brotli in a C# network application.
 
 ```C#
 using System.IO;
