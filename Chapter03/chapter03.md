@@ -232,7 +232,7 @@ Creating and configuring a socket is akin to setting up a dedicated post office 
 
 In the digital realm, just as in the physical world, you need an address to send something to someone. Sockets are no different. A combination of an IP address and a port number uniquely identifies each socket. The IP address locates the device on the network, and the port number identifies a specific service on that device.
 
-Much like how homes have unique addresses to receive mail, devices, and applications on a network utilize socket addresses to exchange data. This subsectionUnderstanding socket addressing delves into the intricacies of socket addressing its intricacies, focusing on its significance and implementation within the context of C# and .NET.
+Much like how homes have unique addresses to receive mail, devices, and applications on a network utilize socket addresses to exchange data. The following on understanding socket addressing delves into the intricacies of socket addressing its intricacies, focusing on its significance and implementation within the context of C# and .NET.
 
 ### Fundamentals of socket addressing
 
@@ -271,7 +271,7 @@ IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080); // Listen on por
 // Bind the socket to the local endpoint
 serverSocket.Bind(localEndPoint);
 
-// Place the socket in a non-blocking mode
+// Place the socket in a blocking mode
 serverSocket.Blocking = true;
 ```
 
@@ -359,7 +359,7 @@ At a high level, client-side socket programming can be visualized as a sequence 
 
 Of course, this process isn't without its challenges. Clients must be adept at handling scenarios where servers are unresponsive, be prepared for data inconsistencies, and be efficient in managing resources to ensure that connections are not just established but maintained seamlessly. Furthermore, as the technology landscape evolves, so do client-side requirements. Security considerations, scalability needs, and performance optimizations all come into play, adding layers of complexity to what might seem, at first glance, like a straightforward process.
 
-In this chaptere upcoming subsections, we will dive deep into the nuances of client-side socket programming, exploring each phase of the client's journey in detail. From connection initiation to data reception, from error handling to graceful disconnection, we'll unravel the intricacies that make client-side socket programming a cornerstone of networked applications in the C# ecosystem.
+In this chapter upcoming content, we will dive deep into the nuances of client-side socket programming, exploring each phase of the client's journey in detail. From connection initiation to data reception, from error handling to graceful disconnection, we'll unravel the intricacies that make client-side socket programming a cornerstone of networked applications in the C# ecosystem.
 
 ## The client-server model
 
@@ -848,7 +848,7 @@ catch (SocketException se)
 
 In this snippet, if the Receive method doesn't get any data within 5 seconds, it throws a SocketException with the error code SocketError.TimedOut.
 
-Error handling and ensuring a graceful shutdown are not just auxiliary aspects of socket programming—they are integral to the development of stable and user-friendly applications. C# 12, paired with .NET, offers developers a powerful and expressive toolset to navigate the intricacies of networked communication. Properly harnessing these tools, combined with a good understanding of potential pitfalls, paves the way for efficient, resilient, and professional-grade applications. ///
+Error handling and ensuring a graceful shutdown are not just auxiliary aspects of socket programming—they are integral to the development of stable and user-friendly applications. C# 12, paired with .NET, offers developers a powerful and expressive toolset to navigate the intricacies of networked communication. Properly harnessing these tools, combined with a good understanding of potential pitfalls, paves the way for efficient, resilient, and professional-grade applications.
 
 ### Retrieving the Local Endpoint
 
@@ -872,7 +872,7 @@ int localPort = localEP.Port;
 
 # Server-side socket programming
 
-Server-side socket programming stands as the counterpoint to its client-side counterpart in the grand scheme of networked communication. In the vast realm of interconnected applications, while clients act as the seekers of services or data, servers play the pivotal role of providers. Whether it's serving a webpage, handling email traffic, or transmitting files, behind each of these taskstask is a server diligently listening for incoming connections and fulfilling requests.
+Server-side socket programming stands as the counterpoint to its client-side counterpart in the grand scheme of networked communication. In the vast realm of interconnected applications, while clients act as the seekers of services or data, servers play the pivotal role of providers. Whether it's serving a webpage, handling email traffic, or transmitting files, behind each of these tasks is a server diligently listening for incoming connections and fulfilling requests.
 
 In the context of the C# 12 and .NET 8 ecosystem, server-side socket programming encompasses a wide array of tools and methodologies. These not only facilitate the creation of a listening server but also empower developers to manage multiple concurrent client connections, handle diverse data exchange patterns, and ensure a responsive and robust application architecture.
 
@@ -1403,6 +1403,7 @@ class Program
         }
         finally
         {
+            serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
     }
@@ -1435,6 +1436,7 @@ class Program
             {
                 ClientSockets.Remove(clientSocket);
             }
+            clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
         }
     }
@@ -1600,6 +1602,7 @@ class Program
         }
         finally
         {
+            serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
     }
@@ -1635,6 +1638,7 @@ class Program
             {
                 ClientLastActivity.Remove(clientSocket);
             }
+            clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
         }
     }
@@ -1685,7 +1689,8 @@ void TerminateSession(string sessionId)
 
     // Cleanup operations
     // ...
-
+    
+    clientSocket.Shutdown(SocketShutdown.Both);
     clientSocket.Close();
   }
 }
@@ -1739,6 +1744,7 @@ class Program
         finally
         {
             SaveSessions();
+            serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
     }
@@ -1783,7 +1789,7 @@ In this code, LoadSessions is called at the start of the program to load existin
 
 Keep in mind this is a basic example for illustration. In a real-world application, you should handle exceptions, encrypt sensitive session information, and consider the performance impact of frequent file I/O operations. Also, for high-scale applications, consider using a database or distributed cache for session storage and retrieval.
 
-Managing client sessions is pivotal in maintaining interactive, efficient, and secure server-client communication. C# 12 and .NET 8 provide a rich toolkit, from concurrent collections to timers and serialization, to aid developers in implementing effective session management. By diligently tracking, maintaining, and operating on client sessions, servers can deliver a seamless and efficient experience for usersuser experience.
+Managing client sessions is pivotal in maintaining interactive, efficient, and secure server-client communication. C# 12 and .NET 8 provide a rich toolkit, from concurrent collections to timers and serialization, to aid developers in implementing effective session management. By diligently tracking, maintaining, and operating on client sessions, servers can deliver a seamless and efficient experience for user experience.
 
 ## Error handling and exception management
 
@@ -1822,6 +1828,7 @@ int bytesRead = clientSocket.Receive(buffer);
 catch (SocketException ex)
 {
     Console.WriteLine($"Client disconnected unexpectedly: {ex.Message}");
+    clientSocket.Shutdown(SocketShutdown.Both);
     clientSocket.Close();
 }
 ```
@@ -1864,7 +1871,7 @@ finally
 }
 ```
 
-### Monitoring and lLogging
+### Monitoring and logging
 
 For larger applications, integrate monitoring and logging frameworks like Serilog, NLog, or the built-in logging with ASP.NET Core. This allows tracking exceptions, monitoring socket statuses, and provides insights for further analysis.
 

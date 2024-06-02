@@ -277,7 +277,7 @@ In a world where global communication is the norm, network protocols are the sil
 
 Common network protocols are the building blocks of modern digital communication. These standardized sets of rules and conventions define how data is exchanged, processed, and understood between devices connected to a network. Each protocol serves a specific purpose, catering to different aspects of network communication.
 
-One of the most fundamental network protocols is the **Internet Protocol** ( **IP** ), which forms the foundation of the internetInternet. IP provides addressing and routing functions, allowing data packets to navigate across networks and reach their intended destinations. Transmission Control Protocol (TCP) and User Datagram Protocol (UDP) are transport layer protocols that operate on top of IP, facilitating reliable and connectionless communication, respectively.
+One of the most fundamental network protocols is the **Internet Protocol** ( **IP** ), which forms the foundation of the internet. IP provides addressing and routing functions, allowing data packets to navigate across networks and reach their intended destinations. Transmission Control Protocol (TCP) and User Datagram Protocol (UDP) are transport layer protocols that operate on top of IP, facilitating reliable and connectionless communication, respectively.
 
 For web browsing, the **Hypertext Transfer Protocol** ( **HTTP** ) is essential. It enables the retrieval and display of web pages, images, and other resources from remote servers. Secure communication over the internet is made possible by the HTTPS (Hypertext Transfer Protocol Secure) protocol, which employs encryption to protect sensitive data.
 
