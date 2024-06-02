@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.770180304077">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.770651092468">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.770180304077" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.770651092468" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.770180304077" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.770651092468" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.770180304077" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.770180304077" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.770651092468" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.770651092468" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -518,7 +518,7 @@ int bytesSent = clientSocket.Send(byteData);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>In the digital realm, just as in the physical world, you need an address to send something to someone. Sockets are no different. A combination of an IP address and a port number uniquely identifies each socket. The IP address locates the device on the network, and the port number identifies a specific service on that device.</p>
-<p>Much like how homes have unique addresses to receive mail, devices, and applications on a network utilize socket addresses to exchange data. This subsectionUnderstanding socket addressing delves into the intricacies of socket addressing its intricacies, focusing on its significance and implementation within the context of C# and .NET.</p>
+<p>Much like how homes have unique addresses to receive mail, devices, and applications on a network utilize socket addresses to exchange data. The following on understanding socket addressing delves into the intricacies of socket addressing its intricacies, focusing on its significance and implementation within the context of C# and .NET.</p>
 <doc-anchor-target id="fundamentals-of-socket-addressing">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#fundamentals-of-socket-addressing">#</doc-anchor-trigger>
@@ -572,7 +572,7 @@ IPEndPoint localEndPoint = new IPEndPoint(IPAddress.Any, 8080); // Listen on por
 // Bind the socket to the local endpoint
 serverSocket.Bind(localEndPoint);
 
-// Place the socket in a non-blocking mode
+// Place the socket in a blocking mode
 serverSocket.Blocking = true;</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="non-blocking-mode">
@@ -672,7 +672,7 @@ while (true)
 <p>In the grand tapestry of socket programming, there&#x27;s a clear demarcation between two main players: the server and the client. While servers are often responsible for managing and listening for incoming connections, clients play an equally pivotal role. The client side of socket programming encompasses a series of procedures and conventions that dictate how applications, as clients, initiate, manage, and close connections to servers. This role is instrumental in establishing the bilateral dialogue characteristic of modern network communication.</p>
 <p>At a high level, client-side socket programming can be visualized as a sequence of actions. It begins with the creation of a socket, designed to fit the communication requirements in terms of protocol and data type. Following this, the client seeks out a server, requesting to establish a connection. Once this digital handshake is accomplished, the gateway for data exchange flings open, allowing for a myriad of interactions ranging from simple data requests to intricate, real-time data streaming.</p>
 <p>Of course, this process isn&#x27;t without its challenges. Clients must be adept at handling scenarios where servers are unresponsive, be prepared for data inconsistencies, and be efficient in managing resources to ensure that connections are not just established but maintained seamlessly. Furthermore, as the technology landscape evolves, so do client-side requirements. Security considerations, scalability needs, and performance optimizations all come into play, adding layers of complexity to what might seem, at first glance, like a straightforward process.</p>
-<p>In this chaptere upcoming subsections, we will dive deep into the nuances of client-side socket programming, exploring each phase of the client&#x27;s journey in detail. From connection initiation to data reception, from error handling to graceful disconnection, we&#x27;ll unravel the intricacies that make client-side socket programming a cornerstone of networked applications in the C# ecosystem.</p>
+<p>In this chapter upcoming content, we will dive deep into the nuances of client-side socket programming, exploring each phase of the client&#x27;s journey in detail. From connection initiation to data reception, from error handling to graceful disconnection, we&#x27;ll unravel the intricacies that make client-side socket programming a cornerstone of networked applications in the C# ecosystem.</p>
 <doc-anchor-target id="the-client-server-model">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#the-client-server-model">#</doc-anchor-trigger>
@@ -1179,7 +1179,7 @@ catch (SocketException se)
 }</code></pre>
 </doc-codeblock></div>
 <p>In this snippet, if the Receive method doesn&#x27;t get any data within 5 seconds, it throws a SocketException with the error code SocketError.TimedOut.</p>
-<p>Error handling and ensuring a graceful shutdown are not just auxiliary aspects of socket programming—they are integral to the development of stable and user-friendly applications. C# 12, paired with .NET, offers developers a powerful and expressive toolset to navigate the intricacies of networked communication. Properly harnessing these tools, combined with a good understanding of potential pitfalls, paves the way for efficient, resilient, and professional-grade applications. ///</p>
+<p>Error handling and ensuring a graceful shutdown are not just auxiliary aspects of socket programming—they are integral to the development of stable and user-friendly applications. C# 12, paired with .NET, offers developers a powerful and expressive toolset to navigate the intricacies of networked communication. Properly harnessing these tools, combined with a good understanding of potential pitfalls, paves the way for efficient, resilient, and professional-grade applications.</p>
 <doc-anchor-target id="retrieving-the-local-endpoint">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#retrieving-the-local-endpoint">#</doc-anchor-trigger>
@@ -1208,7 +1208,7 @@ int localPort = localEP.Port;</code></pre>
         <span>Server-side socket programming</span>
     </h1>
 </doc-anchor-target>
-<p>Server-side socket programming stands as the counterpoint to its client-side counterpart in the grand scheme of networked communication. In the vast realm of interconnected applications, while clients act as the seekers of services or data, servers play the pivotal role of providers. Whether it&#x27;s serving a webpage, handling email traffic, or transmitting files, behind each of these taskstask is a server diligently listening for incoming connections and fulfilling requests.</p>
+<p>Server-side socket programming stands as the counterpoint to its client-side counterpart in the grand scheme of networked communication. In the vast realm of interconnected applications, while clients act as the seekers of services or data, servers play the pivotal role of providers. Whether it&#x27;s serving a webpage, handling email traffic, or transmitting files, behind each of these tasks is a server diligently listening for incoming connections and fulfilling requests.</p>
 <p>In the context of the C# 12 and .NET 8 ecosystem, server-side socket programming encompasses a wide array of tools and methodologies. These not only facilitate the creation of a listening server but also empower developers to manage multiple concurrent client connections, handle diverse data exchange patterns, and ensure a responsive and robust application architecture.</p>
 <p>Key characteristics of server-side socket programming include:</p>
 <ul>
@@ -1749,6 +1749,7 @@ class Program
         }
         finally
         {
+            serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
     }
@@ -1781,6 +1782,7 @@ class Program
             {
                 ClientSockets.Remove(clientSocket);
             }
+            clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
         }
     }
@@ -1950,6 +1952,7 @@ class Program
         }
         finally
         {
+            serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
     }
@@ -1985,6 +1988,7 @@ class Program
             {
                 ClientLastActivity.Remove(clientSocket);
             }
+            clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
         }
     }
@@ -2037,7 +2041,8 @@ class Program
 
     // Cleanup operations
     // ...
-
+    
+    clientSocket.Shutdown(SocketShutdown.Both);
     clientSocket.Close();
   }
 }</code></pre>
@@ -2093,6 +2098,7 @@ class Program
         finally
         {
             SaveSessions();
+            serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
     }
@@ -2134,7 +2140,7 @@ class Program
 </doc-codeblock></div>
 <p>In this code, LoadSessions is called at the start of the program to load existing session data from a file. Each session is identified by a unique key, which can be the client&#x27;s remote endpoint string. UpdateSession updates the last active time for a session in the activeSessions dictionary and then calls SaveSessions to write the updated sessions back to the file. This ensures that session data is preserved across server restarts. SaveSessions writes all session information to the file, which is called both when updating individual sessions and when the server is closing.</p>
 <p>Keep in mind this is a basic example for illustration. In a real-world application, you should handle exceptions, encrypt sensitive session information, and consider the performance impact of frequent file I/O operations. Also, for high-scale applications, consider using a database or distributed cache for session storage and retrieval.</p>
-<p>Managing client sessions is pivotal in maintaining interactive, efficient, and secure server-client communication. C# 12 and .NET 8 provide a rich toolkit, from concurrent collections to timers and serialization, to aid developers in implementing effective session management. By diligently tracking, maintaining, and operating on client sessions, servers can deliver a seamless and efficient experience for usersuser experience.</p>
+<p>Managing client sessions is pivotal in maintaining interactive, efficient, and secure server-client communication. C# 12 and .NET 8 provide a rich toolkit, from concurrent collections to timers and serialization, to aid developers in implementing effective session management. By diligently tracking, maintaining, and operating on client sessions, servers can deliver a seamless and efficient experience for user experience.</p>
 <doc-anchor-target id="error-handling-and-exception-management">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#error-handling-and-exception-management">#</doc-anchor-trigger>
@@ -2177,6 +2183,7 @@ int bytesRead = clientSocket.Receive(buffer);
 catch (SocketException ex)
 {
     Console.WriteLine($&quot;Client disconnected unexpectedly: {ex.Message}&quot;);
+    clientSocket.Shutdown(SocketShutdown.Both);
     clientSocket.Close();
 }</code></pre>
 </doc-codeblock></div>
@@ -2222,10 +2229,10 @@ finally
 	clientSocket?.Close();
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="monitoring-and-llogging">
+<doc-anchor-target id="monitoring-and-logging">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#monitoring-and-llogging">#</doc-anchor-trigger>
-        <span>Monitoring and lLogging</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#monitoring-and-logging">#</doc-anchor-trigger>
+        <span>Monitoring and logging</span>
     </h3>
 </doc-anchor-target>
 <p>For larger applications, integrate monitoring and logging frameworks like Serilog, NLog, or the built-in logging with ASP.NET Core. This allows tracking exceptions, monitoring socket statuses, and provides insights for further analysis.</p>
