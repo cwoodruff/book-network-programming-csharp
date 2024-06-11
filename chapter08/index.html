@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.771384488032">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.771425287072">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.771384488032" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.771425287072" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.771384488032" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.771425287072" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.771384488032" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.771384488032" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.771425287072" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.771425287072" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -404,11 +404,7 @@ public void ParseJsonDataOptimized(string jsonData)
 <p><strong>Step 2: Collecting a Trace</strong></p>
 <p>To start tracing your application, use the dotnet trace command. This example demonstrates how to trace a network operation where an application retrieves data from an API and processes it. Here’s the sample code:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-public class NetworkOperation
+<pre class="language-csharp"><code v-pre class="language-csharp">public class NetworkOperation
 {
     public async Task FetchAndProcessDataAsync()
     {
@@ -534,27 +530,31 @@ public async Task FetchAndProcessDataAsync()
 <p>Latency measures the time it takes for data to travel from the source to the destination. It is a critical indicator of the responsiveness of network applications. High latency can negatively impact user experience, especially in real-time applications.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
 
 public class LatencyTracker
 {
-    private PerformanceCounter latencyCounter;
-
+    private readonly PerformanceCounter latencyCounter;
     public LatencyTracker()
     {
-        if (!PerformanceCounterCategory.Exists(&quot;NetworkCategory&quot;))
+        if (!Exists(&quot;NetworkCategory&quot;))
         {
-            CounterCreationDataCollection counters = new CounterCreationDataCollection();
+            CounterCreationDataCollection counters = new();
+            counters.Capacity = 0;
 
-            CounterCreationData latencyData = new CounterCreationData();
-            latencyData.CounterName = &quot;Latency&quot;;
-            latencyData.CounterHelp = &quot;Network latency in milliseconds&quot;;
-            latencyData.CounterType = PerformanceCounterType.NumberOfItems32;
+            CounterCreationData latencyData = new()
+            {
+                CounterType = PerformanceCounterType.NumberOfItems32,
+                CounterHelp = &quot;Network latency in milliseconds&quot;,
+                CounterName = &quot;Latency&quot;
+            };
             counters.Add(latencyData);
 
-            PerformanceCounterCategory.Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;, counters);
+            Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;,
+                PerformanceCounterCategoryType.SingleInstance, counters);
         }
 
-        latencyCounter = new PerformanceCounter(&quot;NetworkCategory&quot;, &quot;Latency&quot;, false);
+        latencyCounter = new(&quot;NetworkCategory&quot;, &quot;Latency&quot;, false);
         latencyCounter.ReadOnly = false;
     }
 
@@ -564,6 +564,9 @@ public class LatencyTracker
     }
 }</code></pre>
 </doc-codeblock></div>
+<blockquote>
+<p><strong>Note</strong>: The previous code is only supported on Windows.</p>
+</blockquote>
 <doc-anchor-target id="throughput">
     <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#throughput">#</doc-anchor-trigger>
@@ -573,28 +576,37 @@ public class LatencyTracker
 <p>Throughput represents the data transmitted over the network in a given period. It indicates the network&#x27;s capacity to handle data traffic efficiently. Monitoring throughput helps identify bottlenecks and optimize data transfer.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
 
 public class ThroughputTracker
 {
-    private PerformanceCounter throughputCounter;
+    private readonly PerformanceCounter throughputCounter;
 
     public ThroughputTracker()
     {
-        if (!PerformanceCounterCategory.Exists(&quot;NetworkCategory&quot;))
+        if (!Exists(&quot;NetworkCategory&quot;))
         {
-            CounterCreationDataCollection counters = new CounterCreationDataCollection();
+            CounterCreationDataCollection counters = new()
+            {
+                Capacity = 0
+            };
 
-            CounterCreationData throughputData = new CounterCreationData();
-            throughputData.CounterName = &quot;Throughput&quot;;
-            throughputData.CounterHelp = &quot;Data throughput in bytes per second&quot;;
-            throughputData.CounterType = PerformanceCounterType.RateOfCountsPerSecond32;
+            CounterCreationData throughputData = new()
+            {
+                CounterName = &quot;Throughput&quot;,
+                CounterHelp = &quot;Data throughput in bytes per second&quot;,
+                CounterType = PerformanceCounterType.RateOfCountsPerSecond32
+            };
             counters.Add(throughputData);
 
-            PerformanceCounterCategory.Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;, counters);
+            Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;,
+                PerformanceCounterCategoryType.SingleInstance, counters);
         }
 
-        throughputCounter = new PerformanceCounter(&quot;NetworkCategory&quot;, &quot;Throughput&quot;, false);
-        throughputCounter.ReadOnly = false;
+        throughputCounter = new(&quot;NetworkCategory&quot;, &quot;Throughput&quot;, false)
+        {
+            ReadOnly = false
+        };
     }
 
     public void RecordThroughput(long bytes)
@@ -603,6 +615,9 @@ public class ThroughputTracker
     }
 }</code></pre>
 </doc-codeblock></div>
+<blockquote>
+<p><strong>Note</strong>: The previous code is only supported on Windows.</p>
+</blockquote>
 <doc-anchor-target id="packet-loss">
     <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#packet-loss">#</doc-anchor-trigger>
@@ -612,28 +627,34 @@ public class ThroughputTracker
 <p>Packet loss occurs when data packets fail to reach their destination. It can severely impact the reliability and quality of network communications. Tracking packet loss helps diagnose network stability issues and ensure data integrity.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
 
 public class PacketLossTracker
 {
-    private PerformanceCounter packetLossCounter;
+    private readonly PerformanceCounter packetLossCounter;
 
     public PacketLossTracker()
     {
-        if (!PerformanceCounterCategory.Exists(&quot;NetworkCategory&quot;))
+        if (!Exists(&quot;NetworkCategory&quot;))
         {
-            CounterCreationDataCollection counters = new CounterCreationDataCollection();
+            CounterCreationDataCollection counters = [];
 
-            CounterCreationData packetLossData = new CounterCreationData();
-            packetLossData.CounterName = &quot;PacketLoss&quot;;
-            packetLossData.CounterHelp = &quot;Number of lost packets&quot;;
-            packetLossData.CounterType = PerformanceCounterType.NumberOfItems32;
+            CounterCreationData packetLossData = new()
+            {
+                CounterName = &quot;PacketLoss&quot;,
+                CounterHelp = &quot;Number of lost packets&quot;,
+                CounterType = PerformanceCounterType.NumberOfItems32
+            };
             counters.Add(packetLossData);
 
-            PerformanceCounterCategory.Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;, counters);
+            Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;,
+                PerformanceCounterCategoryType.SingleInstance, counters);
         }
 
-        packetLossCounter = new PerformanceCounter(&quot;NetworkCategory&quot;, &quot;PacketLoss&quot;, false);
-        packetLossCounter.ReadOnly = false;
+        packetLossCounter = new PerformanceCounter(&quot;NetworkCategory&quot;, &quot;PacketLoss&quot;, false)
+        {
+            ReadOnly = false
+        };
     }
 
     public void RecordPacketLoss(int packets)
@@ -642,6 +663,9 @@ public class PacketLossTracker
     }
 }</code></pre>
 </doc-codeblock></div>
+<blockquote>
+<p><strong>Note</strong>: The previous code is only supported on Windows.</p>
+</blockquote>
 <p>By creating and monitoring these performance metrics, developers can gain valuable insights into the efficiency and reliability of their network applications. This proactive approach allows for timely identification and resolution of performance issues, ensuring that applications remain responsive and robust under varying network conditions.</p>
 <doc-anchor-target id="identifying-bottlenecks">
     <h3>
@@ -673,36 +697,27 @@ public class PacketLossTracker
 <p>One effective method for optimizing data transmission is to use data compression. Compression reduces the size of data being transmitted, which can significantly decrease the time required for data transfer and reduce bandwidth consumption. .NET provides built-in support for compression through classes such as GZipStream and BrotliStream.</p>
 <p>The following example is compressing and decompressing using the GZip.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using System.IO;
-using System.IO.Compression;
+<pre class="language-csharp"><code v-pre class="language-csharp">using System.IO.Compression;
 
 public class GZipDataCompressor
 {
     public byte[] CompressData(byte[] data)
     {
-        using (var outputStream = new MemoryStream())
+        using var outputStream = new MemoryStream();
+        using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
         {
-            using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
-            {
-                gzipStream.Write(data, 0, data.Length);
-            }
-            return outputStream.ToArray();
+            gzipStream.Write(data, 0, data.Length);
         }
+        return outputStream.ToArray();
     }
 
     public byte[] DecompressData(byte[] compressedData)
     {
-        using (var inputStream = new MemoryStream(compressedData))
-        {
-            using (var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    gzipStream.CopyTo(outputStream);
-                    return outputStream.ToArray();
-                }
-            }
-        }
+        using var inputStream = new MemoryStream(compressedData);
+        using var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress);
+        using var outputStream = new MemoryStream();
+        gzipStream.CopyTo(outputStream);
+        return outputStream.ToArray();
     }
 }</code></pre>
 </doc-codeblock></div>
@@ -713,36 +728,25 @@ public class GZipDataCompressor
 </doc-codeblock></div>
 <p>Here&#x27;s a simple example demonstrating how to compress and decompress data using Brotli in a C# network application.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using System.IO;
-using System.IO.Compression;
+<pre class="language-csharp"><code v-pre class="language-csharp">using System.IO.Compression;
 
 public class BrotliDataCompressor
 {
     public static byte[] CompressData(byte[] data)
     {
-        using (var outputStream = new MemoryStream())
-        {
-            using (var brotliStream = new BrotliStream(outputStream, CompressionMode.Compress))
-            {
-                brotliStream.Write(data, 0, data.Length);
-            }
-            return outputStream.ToArray();
-        }
+        using var outputStream = new MemoryStream();
+        using var brotliStream = new BrotliStream(outputStream, CompressionMode.Compress);
+        brotliStream.Write(data, 0, data.Length);
+        return outputStream.ToArray();
     }
 
     public static byte[] DecompressData(byte[] compressedData)
     {
-        using (var inputStream = new MemoryStream(compressedData))
-        {
-            using (var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress))
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    brotliStream.CopyTo(outputStream);
-                    return outputStream.ToArray();
-                }
-            }
-        }
+        using var inputStream = new MemoryStream(compressedData);
+        using var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress);
+        using var outputStream = new MemoryStream();
+        brotliStream.CopyTo(outputStream);
+        return outputStream.ToArray();
     }
 }</code></pre>
 </doc-codeblock></div>
@@ -765,25 +769,17 @@ public class DataSerializer
 </doc-codeblock></div>
 <p>Batching requests is another strategy to optimize data transmission. Instead of sending individual requests for each small piece of data, batching combines multiple data items into a single request. This reduces the overhead associated with each network call and can significantly improve throughput.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+<pre class="language-csharp"><code v-pre class="language-csharp">using System.Text;
 
 public class DataBatcher
 {
-    private readonly HttpClient httpClient;
-
-    public DataBatcher()
-    {
-        httpClient = new HttpClient();
-    }
+    private readonly HttpClient _httpClient = new();
 
     public async Task SendBatchedRequestsAsync(List&lt;string&gt; dataItems)
     {
         var batchedData = string.Join(&quot;,&quot;, dataItems);
         var content = new StringContent(batchedData, Encoding.UTF8, &quot;application/json&quot;);
-        await httpClient.PostAsync(&quot;https://example.com/api/data&quot;, content);
+        await _httpClient.PostAsync(&quot;https://example.com/api/data&quot;, content);
     }
 }</code></pre>
 </doc-codeblock></div>
