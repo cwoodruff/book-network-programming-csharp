@@ -32,8 +32,6 @@ Applicable performance analysis is critical for optimizing network applications 
 
 One essential technique is the use of asynchronous programming models. Asynchronous programming (see Chapter 4), facilitated by the async and await keywords in C#, helps prevent blocking network calls and allows applications to handle multiple network operations concurrently. This approach reduces latency and improves the overall responsiveness of network applications. Additionally, analyzing the execution of asynchronous methods using tools like JetBrains dotTrace can reveal performance bottlenecks and help optimize asynchronous code paths.
 
-
-
 Another technique that can greatly enhance your network applications involves leveraging performance profiling and diagnostic tools. Tools such as Visual Studio Performance Profiler and Event Tracing for Windows (ETW) provide detailed metrics on network activity, CPU usage, and memory allocation. Profiling is a powerful tool that helps identify inefficient code, excessive network calls, and other performance issues. By systematically analyzing these metrics, developers can optimize data transmission, reduce network overhead, and enhance application performance. Combining these techniques with thorough monitoring and continuous performance testing ensures that network applications remain efficient and scalable.
 
 #### Visual Studio Performance Profiler
@@ -162,10 +160,6 @@ dotnet --version
 To start tracing your application, use the dotnet trace command. This example demonstrates how to trace a network operation where an application retrieves data from an API and processes it. Here’s the sample code:
 
 ```C#
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-
 public class NetworkOperation
 {
     public async Task FetchAndProcessDataAsync()
@@ -301,27 +295,31 @@ Latency measures the time it takes for data to travel from the source to the des
 
 ```C#
 using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
 
 public class LatencyTracker
 {
-    private PerformanceCounter latencyCounter;
-
+    private readonly PerformanceCounter latencyCounter;
     public LatencyTracker()
     {
-        if (!PerformanceCounterCategory.Exists("NetworkCategory"))
+        if (!Exists("NetworkCategory"))
         {
-            CounterCreationDataCollection counters = new CounterCreationDataCollection();
+            CounterCreationDataCollection counters = new();
+            counters.Capacity = 0;
 
-            CounterCreationData latencyData = new CounterCreationData();
-            latencyData.CounterName = "Latency";
-            latencyData.CounterHelp = "Network latency in milliseconds";
-            latencyData.CounterType = PerformanceCounterType.NumberOfItems32;
+            CounterCreationData latencyData = new()
+            {
+                CounterType = PerformanceCounterType.NumberOfItems32,
+                CounterHelp = "Network latency in milliseconds",
+                CounterName = "Latency"
+            };
             counters.Add(latencyData);
 
-            PerformanceCounterCategory.Create("NetworkCategory", "Network performance metrics", counters);
+            Create("NetworkCategory", "Network performance metrics",
+                PerformanceCounterCategoryType.SingleInstance, counters);
         }
 
-        latencyCounter = new PerformanceCounter("NetworkCategory", "Latency", false);
+        latencyCounter = new("NetworkCategory", "Latency", false);
         latencyCounter.ReadOnly = false;
     }
 
@@ -332,34 +330,45 @@ public class LatencyTracker
 }
 ```
 
+> __Note__: The previous code is only supported on Windows.
+
 ##### Throughput
 
 Throughput represents the data transmitted over the network in a given period. It indicates the network's capacity to handle data traffic efficiently. Monitoring throughput helps identify bottlenecks and optimize data transfer.
 
 ```C#
 using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
 
 public class ThroughputTracker
 {
-    private PerformanceCounter throughputCounter;
+    private readonly PerformanceCounter throughputCounter;
 
     public ThroughputTracker()
     {
-        if (!PerformanceCounterCategory.Exists("NetworkCategory"))
+        if (!Exists("NetworkCategory"))
         {
-            CounterCreationDataCollection counters = new CounterCreationDataCollection();
+            CounterCreationDataCollection counters = new()
+            {
+                Capacity = 0
+            };
 
-            CounterCreationData throughputData = new CounterCreationData();
-            throughputData.CounterName = "Throughput";
-            throughputData.CounterHelp = "Data throughput in bytes per second";
-            throughputData.CounterType = PerformanceCounterType.RateOfCountsPerSecond32;
+            CounterCreationData throughputData = new()
+            {
+                CounterName = "Throughput",
+                CounterHelp = "Data throughput in bytes per second",
+                CounterType = PerformanceCounterType.RateOfCountsPerSecond32
+            };
             counters.Add(throughputData);
 
-            PerformanceCounterCategory.Create("NetworkCategory", "Network performance metrics", counters);
+            Create("NetworkCategory", "Network performance metrics",
+                PerformanceCounterCategoryType.SingleInstance, counters);
         }
 
-        throughputCounter = new PerformanceCounter("NetworkCategory", "Throughput", false);
-        throughputCounter.ReadOnly = false;
+        throughputCounter = new("NetworkCategory", "Throughput", false)
+        {
+            ReadOnly = false
+        };
     }
 
     public void RecordThroughput(long bytes)
@@ -369,34 +378,42 @@ public class ThroughputTracker
 }
 ```
 
+> __Note__: The previous code is only supported on Windows.
+
 ##### Packet Loss
 
 Packet loss occurs when data packets fail to reach their destination. It can severely impact the reliability and quality of network communications. Tracking packet loss helps diagnose network stability issues and ensure data integrity.
 
 ```C#
 using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
 
 public class PacketLossTracker
 {
-    private PerformanceCounter packetLossCounter;
+    private readonly PerformanceCounter packetLossCounter;
 
     public PacketLossTracker()
     {
-        if (!PerformanceCounterCategory.Exists("NetworkCategory"))
+        if (!Exists("NetworkCategory"))
         {
-            CounterCreationDataCollection counters = new CounterCreationDataCollection();
+            CounterCreationDataCollection counters = [];
 
-            CounterCreationData packetLossData = new CounterCreationData();
-            packetLossData.CounterName = "PacketLoss";
-            packetLossData.CounterHelp = "Number of lost packets";
-            packetLossData.CounterType = PerformanceCounterType.NumberOfItems32;
+            CounterCreationData packetLossData = new()
+            {
+                CounterName = "PacketLoss",
+                CounterHelp = "Number of lost packets",
+                CounterType = PerformanceCounterType.NumberOfItems32
+            };
             counters.Add(packetLossData);
 
-            PerformanceCounterCategory.Create("NetworkCategory", "Network performance metrics", counters);
+            Create("NetworkCategory", "Network performance metrics",
+                PerformanceCounterCategoryType.SingleInstance, counters);
         }
 
-        packetLossCounter = new PerformanceCounter("NetworkCategory", "PacketLoss", false);
-        packetLossCounter.ReadOnly = false;
+        packetLossCounter = new PerformanceCounter("NetworkCategory", "PacketLoss", false)
+        {
+            ReadOnly = false
+        };
     }
 
     public void RecordPacketLoss(int packets)
@@ -405,6 +422,8 @@ public class PacketLossTracker
     }
 }
 ```
+
+> __Note__: The previous code is only supported on Windows.
 
 By creating and monitoring these performance metrics, developers can gain valuable insights into the efficiency and reliability of their network applications. This proactive approach allows for timely identification and resolution of performance issues, ensuring that applications remain responsive and robust under varying network conditions.
 
@@ -437,36 +456,27 @@ One effective method for optimizing data transmission is to use data compression
 The following example is compressing and decompressing using the GZip.
 
 ```C#
-using System.IO;
 using System.IO.Compression;
 
 public class GZipDataCompressor
 {
     public byte[] CompressData(byte[] data)
     {
-        using (var outputStream = new MemoryStream())
+        using var outputStream = new MemoryStream();
+        using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
         {
-            using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
-            {
-                gzipStream.Write(data, 0, data.Length);
-            }
-            return outputStream.ToArray();
+            gzipStream.Write(data, 0, data.Length);
         }
+        return outputStream.ToArray();
     }
 
     public byte[] DecompressData(byte[] compressedData)
     {
-        using (var inputStream = new MemoryStream(compressedData))
-        {
-            using (var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress))
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    gzipStream.CopyTo(outputStream);
-                    return outputStream.ToArray();
-                }
-            }
-        }
+        using var inputStream = new MemoryStream(compressedData);
+        using var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress);
+        using var outputStream = new MemoryStream();
+        gzipStream.CopyTo(outputStream);
+        return outputStream.ToArray();
     }
 }
 ```
@@ -482,36 +492,25 @@ Install-Package System.IO.Compression.Brotli
 Here's a simple example demonstrating how to compress and decompress data using Brotli in a C# network application.
 
 ```C#
-using System.IO;
 using System.IO.Compression;
 
 public class BrotliDataCompressor
 {
     public static byte[] CompressData(byte[] data)
     {
-        using (var outputStream = new MemoryStream())
-        {
-            using (var brotliStream = new BrotliStream(outputStream, CompressionMode.Compress))
-            {
-                brotliStream.Write(data, 0, data.Length);
-            }
-            return outputStream.ToArray();
-        }
+        using var outputStream = new MemoryStream();
+        using var brotliStream = new BrotliStream(outputStream, CompressionMode.Compress);
+        brotliStream.Write(data, 0, data.Length);
+        return outputStream.ToArray();
     }
 
     public static byte[] DecompressData(byte[] compressedData)
     {
-        using (var inputStream = new MemoryStream(compressedData))
-        {
-            using (var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress))
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    brotliStream.CopyTo(outputStream);
-                    return outputStream.ToArray();
-                }
-            }
-        }
+        using var inputStream = new MemoryStream(compressedData);
+        using var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress);
+        using var outputStream = new MemoryStream();
+        brotliStream.CopyTo(outputStream);
+        return outputStream.ToArray();
     }
 }
 ```
@@ -538,25 +537,17 @@ public class DataSerializer
 Batching requests is another strategy to optimize data transmission. Instead of sending individual requests for each small piece of data, batching combines multiple data items into a single request. This reduces the overhead associated with each network call and can significantly improve throughput.
 
 ```C#
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 public class DataBatcher
 {
-    private readonly HttpClient httpClient;
-
-    public DataBatcher()
-    {
-        httpClient = new HttpClient();
-    }
+    private readonly HttpClient _httpClient = new();
 
     public async Task SendBatchedRequestsAsync(List<string> dataItems)
     {
         var batchedData = string.Join(",", dataItems);
         var content = new StringContent(batchedData, Encoding.UTF8, "application/json");
-        await httpClient.PostAsync("https://example.com/api/data", content);
+        await _httpClient.PostAsync("https://example.com/api/data", content);
     }
 }
 ```
