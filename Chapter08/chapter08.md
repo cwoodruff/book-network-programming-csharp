@@ -4,7 +4,6 @@ icon: stack
 label: Chap 8 - Network Performance Optimization
 meta:
 title: "Network Performance Optimization"
-visibility: hidden
 ---
 # 8
 

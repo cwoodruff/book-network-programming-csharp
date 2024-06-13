@@ -16,7 +16,7 @@ For the source code for the book, visit the book's GitHub repo. [book-network-pr
 | 5       | [Multithreading in Network Applications](./Chapter05/chapter05.md)        | ✔️        |
 | 6       | [Error Handling and Fault Tolerance Strategies](./Chapter06/Chapter06.md) | ✔️        |
 | 7       | [Data Serialization Techniques](./Chapter07/Chapter07.md)                 | ✔️        |
-| 8       | Network Performance Optimization                                          |           |
+| 8       | [Network Performance Optimization](./Chapter08/Chapter08.md)              | ✔️        |
 | 9       | Working with TCP/IP Sockets                                               |           |
 | 10      | Working with UDP Sockets                                                  |           |
 | 11      | Working with WebSocket                                                    |           |
