@@ -6,9 +6,9 @@ meta:
 title: "Introduction to Socket Programming"
 ---
 
-![](./Images/Chap03-SocketProgramming.png)
-
 # 3
+
+![](./Images/Chap03-SocketProgramming.png)
 
 # Introduction to Socket Programming
 
