@@ -6,9 +6,9 @@ meta:
 title: "Multithreading in Network Applications"
 ---
 
-![](./Images/Chap05-Multithreaded.png)
-
 # 5
+
+![](./Images/Chap05-Multithreaded.png)
 
 # Multithreading in Network Applications
 
