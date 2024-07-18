@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.774638154320">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.774640003838">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.774638154320" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.774640003838" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.774638154320" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.774640003838" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.774638154320" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.774638154320" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.774640003838" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.774640003838" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -664,10 +664,10 @@ await kitchen.PrepareDinnerAsync();</code></pre>
 }</code></pre>
 </doc-codeblock></div>
 <p>In this optimized version, <code v-pre>ProcessDataInParallelAsync</code> initiates all web requests concurrently by storing the tasks in variables without immediately awaiting them. Only after all tasks have been started does it await their completion using <code v-pre>Task.WhenAll</code>. This approach significantly reduces the total execution time, as the network requests are made in parallel, showcasing the advantage of avoiding premature await.</p>
-<doc-anchor-target id="avoiding-premature-aync">
+<doc-anchor-target id="avoiding-premature-async">
     <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#avoiding-premature-aync">#</doc-anchor-trigger>
-        <span>Avoiding premature aync</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#avoiding-premature-async">#</doc-anchor-trigger>
+        <span>Avoiding premature async</span>
     </h3>
 </doc-anchor-target>
 <p>Premature async refers to the unnecessary or excessive use of asynchronous programming where it does not provide benefits and might even degrade performance. For example, marking a method as <code v-pre>async</code> solely to use the <code v-pre>await</code> keyword on a method that internally performs a quick, in-memory operation or wraps synchronous code without actual I/O operations can lead to overhead without any real concurrency benefit. This increases the code&#x27;s complexity and can also introduce overhead associated with context switching and increased memory usage due to state machine generation in the background.</p>
