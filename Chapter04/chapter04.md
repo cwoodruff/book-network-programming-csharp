@@ -405,7 +405,7 @@ public class DataService
 
 In this optimized version, `ProcessDataInParallelAsync` initiates all web requests concurrently by storing the tasks in variables without immediately awaiting them. Only after all tasks have been started does it await their completion using `Task.WhenAll`. This approach significantly reduces the total execution time, as the network requests are made in parallel, showcasing the advantage of avoiding premature await.
 
-### Avoiding premature aync
+### Avoiding premature async
 
 Premature async refers to the unnecessary or excessive use of asynchronous programming where it does not provide benefits and might even degrade performance. For example, marking a method as `async` solely to use the `await` keyword on a method that internally performs a quick, in-memory operation or wraps synchronous code without actual I/O operations can lead to overhead without any real concurrency benefit. This increases the code's complexity and can also introduce overhead associated with context switching and increased memory usage due to state machine generation in the background.
 
