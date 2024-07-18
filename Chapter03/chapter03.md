@@ -198,32 +198,82 @@ Here, the socket is set to listen on any available network interface (IPAddress.
 
 **Timeouts**: Timeouts can be configured to ensure that a socket operation doesn't wait indefinitely. This is especially useful for operations like connecting or receiving data.
 ```C#
-// Example data object to serialize and send
-var dataObject = new
+using System.Net.Sockets;
+using System.Text;
+
+class Program
 {
-    Name = "Chris Doe",
-    Age = 30,
-    Email = "chrisdoe@example.com"
-};
+    static async Task Main(string[] args)
+    {
+        string serverIp = "127.0.0.1";
+        int serverPort = 12345;
+        int timeoutMilliseconds = 5000;
 
-// Serialize the object to a JSON string
-string jsonString = JsonSerializer.Serialize(dataObject);
+        using TcpClient client = new();
+        
+        try
+        {
+            // Set the connection timeout
+            var connectTask = client.ConnectAsync(serverIp, serverPort);
+            if (await Task.WhenAny(connectTask, Task.Delay(timeoutMilliseconds)) != connectTask)
+            {
+                throw new TimeoutException("Connection attempt timed out.");
+            }
 
-// Convert the JSON string to a byte array
-byte[] byteData = Encoding.UTF8.GetBytes(jsonString);
+            Console.WriteLine("Connected to the server.");
 
-// Server's IP address and port
-string serverIP = "127.0.0.1"; // Replace with server's IP address
-int port = 11000; // Replace with server's port
+            // Set read and write timeouts for the network stream
+            client.ReceiveTimeout = timeoutMilliseconds;
+            client.SendTimeout = timeoutMilliseconds;
 
-// Create a TCP/IP socket
-Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await using NetworkStream stream = client.GetStream();
+            byte[] message = Encoding.UTF8.GetBytes("Hello, Server!");
 
-// Connect to the remote endpoint
-clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIP), port));
+            // Send data
+            await SendMessageAsync(stream, message);
+            
+            // Receive response
+            byte[] buffer = new byte[1024];
+            int bytesRead = await ReceiveMessageAsync(stream, buffer);
+            Console.WriteLine("Received from server: " + Encoding.UTF8.GetString(buffer, 0, bytesRead));
+        }
+        catch (TimeoutException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An error occurred: " + ex.Message);
+        }
+    }
 
-// Send the serialized data to the server
-int bytesSent = clientSocket.Send(byteData);
+    static async Task SendMessageAsync(NetworkStream stream, byte[] message)
+    {
+        try
+        {
+            await stream.WriteAsync(message, 0, message.Length);
+            Console.WriteLine("Message sent.");
+        }
+        catch (IOException ex) when (ex.InnerException is SocketException { SocketErrorCode: SocketError.TimedOut })
+        {
+            Console.WriteLine("Send operation timed out.");
+        }
+    }
+
+    static async Task<int> ReceiveMessageAsync(NetworkStream stream, byte[] buffer)
+    {
+        try
+        {
+            int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+            return bytesRead;
+        }
+        catch (IOException ex) when (ex.InnerException is SocketException { SocketErrorCode: SocketError.TimedOut })
+        {
+            Console.WriteLine("Receive operation timed out.");
+            return 0;
+        }
+    }
+}
 ```
 
 Creating and configuring a socket is akin to setting up a dedicated post office box in the digital realm. It's where the magic begins, marking the starting point of the network communication journey. In C#, the robustness of .NET simplifies this process, providing developers with intuitive methods and classes that encapsulate the intricacies of sockets, enabling them to focus on crafting efficient and powerful network-driven applications.
