@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.774640003838">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.774643552880">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.774640003838" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.774643552880" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.774640003838" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.774643552880" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.774640003838" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.774640003838" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.774643552880" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.774643552880" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -381,7 +381,7 @@ public class InteropSerialization
 <ol>
 <li><strong>Use the Right Serialization Format for the Right Scenario</strong>: Always choose the serialization format based on your application&#x27;s specific requirements. For instance, if your application communicates with external systems or web clients, JSON is often preferred for its broad support and readability.</li>
 <li><strong>Consider Security Implications</strong>: As we looked at in the previous section, be mindful of security vulnerabilities associated with serialization. Only serialize sensitive data with proper security measures like encryption or tokenization. When using XML serialization, guard against XML External Entity (XXE) attacks by turning off DTD processing and schema validation on XML parsers.</li>
-<li><strong>Clarify the Concept of Lazy Loading in Serializatio</strong>n: To enhance serialization performance, consider reducing the size of the data being serialized. This can be achieved by excluding redundant or irrelevant fields from serialization. Additionally, leverage features such as lazy loading, a technique that defers the loading of non-essential data until it&#x27;s actually needed, for large data sets. Where possible, use compression to reduce the size of serialized data, particularly useful in network transmissions. Here is an example of excluding properties from JSON serialization:</li>
+<li><strong>Clarify the Concept of Lazy Loading in Serialization</strong>: To enhance serialization performance, consider reducing the size of the data being serialized. This can be achieved by excluding redundant or irrelevant fields from serialization. Additionally, leverage features such as lazy loading, a technique that defers the loading of non-essential data until it&#x27;s actually needed, for large data sets. Where possible, use compression to reduce the size of serialized data, particularly useful in network transmissions. Here is an example of excluding properties from JSON serialization:</li>
 </ol>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">using System.Text.Json;
