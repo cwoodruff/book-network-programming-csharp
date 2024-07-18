@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.774575108951">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.774638154320">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.5.0.774575108951" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.5.0.774638154320" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.774575108951" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.5.0.774638154320" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.774575108951" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.774575108951" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.5.0.774638154320" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.5.0.774638154320" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -477,32 +477,82 @@ serverSocket.Bind(localEndPoint);</code></pre>
 <p>Here, the socket is set to listen on any available network interface (IPAddress.Any) at port 8080.</p>
 <p><strong>Timeouts</strong>: Timeouts can be configured to ensure that a socket operation doesn&#x27;t wait indefinitely. This is especially useful for operations like connecting or receiving data.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">// Example data object to serialize and send
-var dataObject = new
+<pre class="language-csharp"><code v-pre class="language-csharp">using System.Net.Sockets;
+using System.Text;
+
+class Program
 {
-    Name = &quot;Chris Doe&quot;,
-    Age = 30,
-    Email = &quot;chrisdoe@example.com&quot;
-};
+    static async Task Main(string[] args)
+    {
+        string serverIp = &quot;127.0.0.1&quot;;
+        int serverPort = 12345;
+        int timeoutMilliseconds = 5000;
 
-// Serialize the object to a JSON string
-string jsonString = JsonSerializer.Serialize(dataObject);
+        using TcpClient client = new();
+        
+        try
+        {
+            // Set the connection timeout
+            var connectTask = client.ConnectAsync(serverIp, serverPort);
+            if (await Task.WhenAny(connectTask, Task.Delay(timeoutMilliseconds)) != connectTask)
+            {
+                throw new TimeoutException(&quot;Connection attempt timed out.&quot;);
+            }
 
-// Convert the JSON string to a byte array
-byte[] byteData = Encoding.UTF8.GetBytes(jsonString);
+            Console.WriteLine(&quot;Connected to the server.&quot;);
 
-// Server's IP address and port
-string serverIP = &quot;127.0.0.1&quot;; // Replace with server's IP address
-int port = 11000; // Replace with server's port
+            // Set read and write timeouts for the network stream
+            client.ReceiveTimeout = timeoutMilliseconds;
+            client.SendTimeout = timeoutMilliseconds;
 
-// Create a TCP/IP socket
-Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await using NetworkStream stream = client.GetStream();
+            byte[] message = Encoding.UTF8.GetBytes(&quot;Hello, Server!&quot;);
 
-// Connect to the remote endpoint
-clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverIP), port));
+            // Send data
+            await SendMessageAsync(stream, message);
+            
+            // Receive response
+            byte[] buffer = new byte[1024];
+            int bytesRead = await ReceiveMessageAsync(stream, buffer);
+            Console.WriteLine(&quot;Received from server: &quot; + Encoding.UTF8.GetString(buffer, 0, bytesRead));
+        }
+        catch (TimeoutException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(&quot;An error occurred: &quot; + ex.Message);
+        }
+    }
 
-// Send the serialized data to the server
-int bytesSent = clientSocket.Send(byteData);</code></pre>
+    static async Task SendMessageAsync(NetworkStream stream, byte[] message)
+    {
+        try
+        {
+            await stream.WriteAsync(message, 0, message.Length);
+            Console.WriteLine(&quot;Message sent.&quot;);
+        }
+        catch (IOException ex) when (ex.InnerException is SocketException { SocketErrorCode: SocketError.TimedOut })
+        {
+            Console.WriteLine(&quot;Send operation timed out.&quot;);
+        }
+    }
+
+    static async Task&lt;int&gt; ReceiveMessageAsync(NetworkStream stream, byte[] buffer)
+    {
+        try
+        {
+            int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
+            return bytesRead;
+        }
+        catch (IOException ex) when (ex.InnerException is SocketException { SocketErrorCode: SocketError.TimedOut })
+        {
+            Console.WriteLine(&quot;Receive operation timed out.&quot;);
+            return 0;
+        }
+    }
+}</code></pre>
 </doc-codeblock></div>
 <p>Creating and configuring a socket is akin to setting up a dedicated post office box in the digital realm. It&#x27;s where the magic begins, marking the starting point of the network communication journey. In C#, the robustness of .NET simplifies this process, providing developers with intuitive methods and classes that encapsulate the intricacies of sockets, enabling them to focus on crafting efficient and powerful network-driven applications.</p>
 <doc-anchor-target id="socket-addressing">
