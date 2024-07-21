@@ -3,9 +3,9 @@ order: 1
 icon: stack
 label: Chap 19
 meta:
-title: "Testing and Debugging Network Applications"
+title: "Looking to the Future with QUIC"
 visibility: hidden
 ---
 # 19
 
-# Testing and Debugging Network Applications
+# Looking to the Future with QUIC

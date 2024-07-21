@@ -3,9 +3,9 @@ order: 3
 icon: stack
 label: Chap 17
 meta:
-title: "Implementing Message Queuing"
+title: "Preventing Common Security Threats"
 visibility: hidden
 ---
 # 17
 
-# Implementing Message Queuing
+# Preventing Common Security Threats

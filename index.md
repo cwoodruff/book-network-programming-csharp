@@ -17,15 +17,14 @@ For the source code for the book, visit the book's GitHub repo. [book-network-pr
 | 6       | [Error Handling and Fault Tolerance Strategies](./Chapter06/Chapter06.md) | ✔️        |
 | 7       | [Data Serialization Techniques](./Chapter07/Chapter07.md)                 | ✔️        |
 | 8       | [Network Performance Optimization](./Chapter08/Chapter08.md)              | ✔️        |
-| 9       | Working with TCP/IP Sockets                                               |           |
-| 10      | Working with UDP Sockets                                                  |           |
-| 11      | Working with WebSocket                                                    |           |
-| 12      | Implementing HTTP Communication                                           |           |
-| 13      | Working with WebRTC                                                       |           |
-| 14      | Working with MQTT for IoT (Internet of Things) applications               |           |
-| 15      | Working with GRPC                                                         |           |
-| 16      | Working with WebHooks                                                     |           |
-| 17      | Implementing Message Queuing                                              |           |
+| 10      | Working with WebSocket                                                    |           |
+| 11      | Implementing HTTP Communication                                           |           |
+| 12      | Working with WebRTC                                                       |           |
+| 13      | Working with MQTT for IoT (Internet of Things) applications               |           |
+| 14      | Working with GRPC                                                         |           |
+| 15      | Working with WebHooks                                                     |           |
+| 16      | Implementing Message Queuing                                              |           |
+| 17      | Using SignalR                                                             |           |
 | 18      | Preventing Common Security Threats                                        |           |
 | 19      | Testing and Debugging Network Applications                                |           |
 | 20      | Looking to the Future with QUIC                                           |           |

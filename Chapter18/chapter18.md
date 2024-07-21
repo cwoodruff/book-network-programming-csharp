@@ -3,9 +3,9 @@ order: 2
 icon: stack
 label: Chap 18
 meta:
-title: "Preventing Common Security Threats"
+title: "Testing and Debugging Network Applications"
 visibility: hidden
 ---
 # 18
 
-# Preventing Common Security Threats
+# Testing and Debugging Network Applications

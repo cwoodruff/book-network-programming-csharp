@@ -3,9 +3,9 @@ order: 10
 icon: stack
 label: Chap 10
 meta:
-title: "Working with UDP Sockets"
+title: "Implementing HTTP Communication"
 visibility: hidden
 ---
 # 10
 
-# Working with UDP Sockets
+# Implementing HTTP Communication

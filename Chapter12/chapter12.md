@@ -3,9 +3,9 @@ order: 8
 icon: stack
 label: Chap 12
 meta:
-title: "Implementing HTTP Communication"
+title: "Working with MQTT for IoT (Internet of Things) applications"
 visibility: hidden
 ---
 # 12
 
-# Implementing HTTP Communication
+# Working with MQTT for IoT (Internet of Things) applications
