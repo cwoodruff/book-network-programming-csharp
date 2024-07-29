@@ -7,6 +7,8 @@ Have questions or feedback about the book? My email is [cwoodruff@live.com](mail
 For the source code for the book, visit the book's GitHub repo. [book-network-programming-csharp
 ](https://github.com/cwoodruff/book-network-programming-csharp)
 
+To find translations, please check out the [Translations](./Translations.md) page.
+
 | Chapter | Title                                                                     | Published |
 |---------|---------------------------------------------------------------------------|-----------|
 | 1       | [Overview of Network Programming](./Chapter01/chapter01.md)               | ✔️        |
