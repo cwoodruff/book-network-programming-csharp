@@ -19,8 +19,8 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 6       | [Error Handling and Fault Tolerance Strategies](./Chapter06/Chapter06.md) | ✔️        |
 | 7       | [Data Serialization Techniques](./Chapter07/Chapter07.md)                 | ✔️        |
 | 8       | [Network Performance Optimization](./Chapter08/Chapter08.md)              | ✔️        |
-| 9       | Working with WebSockets                                                   |           |
-| 10      | Implementing HTTP Communication                                           |           |
+| 9       | Implementing HTTP Communication                                           |           |
+| 10      | Working with WebSockets                                                   |           |
 | 11      | Working with WebRTC                                                       |           |
 | 12      | Working with MQTT for IoT (Internet of Things) applications               |           |
 | 13      | Working with GRPC                                                         |           |

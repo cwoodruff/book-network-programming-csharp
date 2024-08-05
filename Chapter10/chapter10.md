@@ -3,7 +3,7 @@ order: 10
 icon: stack
 label: Chap 10
 meta:
-title: "Implementing HTTP Communication"
+title: "Working with WebSockets"
 visibility: hidden
 ---
 # 10
