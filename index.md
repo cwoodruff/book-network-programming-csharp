@@ -28,6 +28,4 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 15      | Working with WebHooks                                                     |           |
 | 16      | Implementing Message Queuing                                              |           |
 | 17      | Using SignalR                                                             |           |
-| 18      | Preventing Common Security Threats                                        |           |
-| 19      | Testing and Debugging Network Applications                                |           |
-| 20      | Looking to the Future with QUIC                                           |           |
+| 18      | Looking to the Future with QUIC                                           |           |
