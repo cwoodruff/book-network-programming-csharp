@@ -20,13 +20,14 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 7       | [Data Serialization Techniques](./Chapter07/Chapter07.md)                 | ✔️        |
 | 8       | [Network Performance Optimization](./Chapter08/Chapter08.md)              | ✔️        |
 | 9       | Implementing HTTP Communication                                           |           |
-| 10      | Working with WebSockets                                                   |           |
-| 11      | Working with WebRTC                                                       |           |
-| 12      | Working with MQTT for IoT (Internet of Things) applications               |           |
-| 13      | Working with GRPC                                                         |           |
-| 14      | Working with WebHooks                                                     |           |
-| 15      | Implementing Message Queuing                                              |           |
-| 16      | Using SignalR                                                             |           |
-| 17      | Preventing Common Security Threats                                        |           |
-| 18      | Testing and Debugging Network Applications                                |           |
-| 19      | Looking to the Future with QUIC                                           |           |
+| 10      | Working with REST                                                         |           |
+| 11      | Working with WebSockets                                                   |           |
+| 12      | Working with WebRTC                                                       |           |
+| 13      | Working with MQTT for IoT (Internet of Things) applications               |           |
+| 14      | Working with GRPC                                                         |           |
+| 15      | Working with WebHooks                                                     |           |
+| 16      | Implementing Message Queuing                                              |           |
+| 17      | Using SignalR                                                             |           |
+| 18      | Preventing Common Security Threats                                        |           |
+| 19      | Testing and Debugging Network Applications                                |           |
+| 20      | Looking to the Future with QUIC                                           |           |
