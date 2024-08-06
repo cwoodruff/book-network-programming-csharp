@@ -20,7 +20,7 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 7       | [Data Serialization Techniques](./Chapter07/Chapter07.md)                 | ✔️        |
 | 8       | [Network Performance Optimization](./Chapter08/Chapter08.md)              | ✔️        |
 | 9       | Implementing HTTP Communication                                           |           |
-| 10      | Working with REST                                                         |           |
+| 10      | Working with REST APIs                                                    |           |
 | 11      | Working with WebSockets                                                   |           |
 | 12      | Working with WebRTC                                                       |           |
 | 13      | Working with MQTT for IoT (Internet of Things) applications               |           |
