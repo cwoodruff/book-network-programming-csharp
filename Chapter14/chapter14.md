@@ -3,9 +3,9 @@ order: 6
 icon: stack
 label: Chap 14
 meta:
-title: "Working with GRPC"
+title: "Working with WebHooks"
 visibility: hidden
 ---
 # 14
 
-# Working with GRPC
+# Working with WebHooks

@@ -3,7 +3,10 @@ order: 10
 icon: stack
 label: Chap 10
 meta:
-title: "Working with REST APIs"
+title: "Working with WebSockets"
 visibility: hidden
 ---
-# 1
+# 10
+
+# Working with WebSockets
+

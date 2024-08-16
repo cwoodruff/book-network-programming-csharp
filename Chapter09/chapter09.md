@@ -3,10 +3,11 @@ order: 11
 icon: stack
 label: Chap 9
 meta:
-title: "Implementing HTTP Communication"
+title: "Working with REST APIs"
 visibility: hidden
 ---
 
 # 9
 
-# Implementing HTTP Communication
+# Working with REST APIs
+

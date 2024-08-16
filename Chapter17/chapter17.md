@@ -3,9 +3,9 @@ order: 3
 icon: stack
 label: Chap 17
 meta:
-title: "Using SignalR"
+title: "Looking to the Future with QUIC"
 visibility: hidden
 ---
 # 17
 
-# Using SignalR
+# Looking to the Future with QUIC

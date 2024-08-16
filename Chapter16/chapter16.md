@@ -3,9 +3,9 @@ order: 4
 icon: stack
 label: Chap 16
 meta:
-title: "Implementing Message Queuing"
+title: "Using SignalR"
 visibility: hidden
 ---
 # 16
 
-# Implementing Message Queuing
+# Using SignalR
