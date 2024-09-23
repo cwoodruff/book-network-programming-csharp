@@ -1,7 +1,7 @@
 ---
 order: 11
 icon: stack
-label: Chap 9
+label: Chap 9 - Working with REST APIs
 meta:
 title: "Working with REST APIs"
 ---
