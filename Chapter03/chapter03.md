@@ -519,7 +519,7 @@ Mastering socket creation and connection in C# is fundamental for anyone aspirin
 
 ## Sending data
 
-Establishing a connection between a client and a server sets the stage for the most crucial aspect of client-side socket programming: data exchange. "Sending data" encapsulates the methods and nuances of how the client dispatches information to the server. This procedure, while seemingly straightforward, While seemingly straightforward, this procedure requires careful handling to ensure data integrity, efficiency, and reliability.
+Establishing a connection between a client and a server sets the stage for the most crucial aspect of client-side socket programming: data exchange. "Sending data" encapsulates the methods and nuances of how the client dispatches information to the server. While seemingly straightforward, this procedure requires careful handling to ensure data integrity, efficiency, and reliability.
 
 ### Sending data in bytes
 
