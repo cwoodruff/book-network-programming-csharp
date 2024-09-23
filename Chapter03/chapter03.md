@@ -607,7 +607,7 @@ while (bytesLeft > 0)
 }
 ```
 
-Ensuring reliable data transmission
+## Ensuring reliable data transmission
 
 Although TCP (used in combination with SocketType.Stream) is a reliable protocol, ensuring that data is sent completely and correctly is crucial. Some best practices include:
 
