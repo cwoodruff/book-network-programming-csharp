@@ -4,10 +4,11 @@ icon: stack
 label: Chap 9
 meta:
 title: "Working with REST APIs"
-visibility: hidden
 ---
 
 # 9
+
+![](./Images/Chap08-HTTP-REST-Web-APIs.png)
 
 # Working with REST APIs
 
