@@ -7,6 +7,8 @@ title: "Working with WebSockets"
 ---
 # 10
 
+![](./Images/Chap10-WebSockets.png)
+
 # Working with WebSockets
 
 WebSockets, a critical technology, enable full-duplex, real-time communication between clients and servers, fostering a more dynamic data exchange in networked applications. Unlike traditional HTTP requests, which follow a request-response pattern, WebSockets provide a persistent connection where data can flow freely in both directions. This makes WebSockets particularly useful for applications that require low-latency communication, such as online gaming, live chat, and real-time financial data streams. With full support in .NET 8 and C# 12 and higher, developers can build highly interactive and responsive applications, inspired by the benefits of WebSockets.
