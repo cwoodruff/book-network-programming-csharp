@@ -1,7 +1,7 @@
 ---
 order: 10
 icon: stack
-label: Chap 10
+label: Chap 10 - Working with WebSockets
 meta:
 title: "Working with WebSockets"
 ---
