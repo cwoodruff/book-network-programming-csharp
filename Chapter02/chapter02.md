@@ -96,7 +96,7 @@ Subnet masks are expressed in the same format as IP addresses, comprising four o
 
 ![Chapter02-02](./Images/Chapter02-02.jpg)
 
-**\*\*\*\*\*\* DiagramFigure 2.2 – IP Subnet Masking**
+**DiagramFigure 2.2 – IP Subnet Masking**
 
 To grasp the concept of subnet masks, consider a simple analogy: an IP address and its subnet mask are like a street address and a zip code. Just as a street address indicates a specific location, an IP address designates a particular device on a network. The subnet mask, analogous to the zip code, guides data packets to their intended destination. For example, let's take the IP address 192.168.1.25 and a subnet mask of 255.255.255.0 (/24). In binary representation, the subnet mask appears as 11111111.11111111.11111111.00000000. This signifies that the first 24 bits of the IP address pertain to the network portion, while the remaining 8 bits are allocated for host identification.
 
