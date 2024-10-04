@@ -116,7 +116,7 @@ There are various subnetting techniques, each serving specific needs and require
 
 Fixed-Length Subnetting is a straightforward technique that divides an IP address range into subnets of equal size. This is achieved by allocating a fixed number of bits from the host portion of the IP address for subnetting. The number of bits allocated determines the number of subnets and hosts per subnet.
 
-For example, consider a network with IP address range 192.168.1.0/24. In a fixed-length subnetting approach, if you allocate 3 bits for subnetting, you have 2^3 (8) subnets, each with 2^5 (32) usable host addresses. This results in subnets like 192.168.1.0/27, 192.168.1.32/27, and so on.
+For example, consider a network with IP address range 192.168.1.0/24. In a fixed-length subnetting approach, if you allocate 3 bits for subnetting, you have $2^3$ (8) subnets, each with $2^5$ (32) usable host addresses. This results in subnets like 192.168.1.0/27, 192.168.1.32/27, and so on.
 
 Fixed-Length Subnetting is relatively simple and easy to implement. However, it may lead to inefficient utilization of IP addresses if some subnets require more hosts than others.
 
