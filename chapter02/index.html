@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781386112106">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781386423740">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,11 +37,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.781386112106" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.781386423740" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781386112106" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781386423740" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781386112106" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781386423740" data-turbo-eval="false" defer></script>
     <link href="../resources/css/katex.css?v=3.6.0" rel="stylesheet">
     <script id="katex-js" data-cfasync="false" src="../resources/js/katex.js?v=3.6.0" defer></script>
 </head>
@@ -307,7 +307,7 @@
     <figcaption class="caption">Chapter02-01</figcaption>
 </figure>
 </p>
-<p><strong>****** DiagramFigure 2.1 -– IPv4 Addressing</strong></p>
+<p><strong>DiagramFigure 2.1 -– IPv4 Addressing</strong></p>
 <p>An IPv4 address is a 32-bit numerical label that is divided into four octets, each containing 8 bits. These octets are separated by periods, giving rise to the familiar decimal-dot notation, such as 192.168.0.1. This arrangement is crucial for both human comprehension and the computational efficiency of network routers and devices.</p>
 <p>However, the significance of IPv4 addresses goes beyond their mere presentation. The 32 bits are grouped into two distinct portions: the network portion and the host portion. The division between these portions is defined by a subnet mask, which acts as a virtual boundary.</p>
 <p>In essence, the subnet mask designates which bits of the 32-bit address represent the network and which correspond to the host within that network. This concept is central to routing and data transmission: routers use the subnet mask to determine whether a packet should be forwarded within the local network or to an external network.</p>
@@ -436,7 +436,7 @@
     <figcaption class="caption">Chapter02-03</figcaption>
 </figure>
 </p>
-<p><strong>****** DiagramFigure 2.3 – Common Network Topologies</strong></p>
+<p><strong>DiagramFigure 2.3 – Common Network Topologies</strong></p>
 <p>Choosing the right topology depends on factors such as network size, communication patterns, fault tolerance needs, and budget constraints. A small office might benefit from a star topology, while a data center might prefer a mesh topology for maximum redundancy.</p>
 <p>It&#x27;s important to note that the physical layout doesn&#x27;t necessarily mirror the logical data flow. Modern networks often use logical topologies, like Ethernet&#x27;s logical bus or star topology, irrespective of the physical layout.</p>
 <doc-anchor-target id="static-routing-versus-dynamic-routing">
@@ -507,7 +507,12 @@
 <p><strong>Domain Name System</strong> ( <strong>DNS</strong> ) protocol plays a critical role in converting human-readable domain names (for examplee.g., <em><a href="http://www.example.com">www.example.com</a></em>) into IP addresses that computers can understand. This enables users to access websites without needing to remember numerical IP addresses.</p>
 <p>Additionally, protocols like <strong>Simple Network Management Protocol</strong> ( <strong>SNMP</strong> ) facilitate the monitoring and management of network devices, ensuring their proper functioning and performance.</p>
 <p>Each of these common network protocols addresses specific communication needs, facilitating seamless interactions and powering the functionalities that we often take for granted in our digital lives. Understanding these protocols is essential for anyone venturing into the world of networking, as they lay the groundwork for effective and efficient data exchange across global networks.</p>
-<p><strong>****** DiagramFigure 2.4</strong></p>
+<p><figure class="content-center">
+    <img src="images/chapter02-05.jpg" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<p><strong>DiagramFigure 2.4 -– Common Protocols and Ports</strong></p>
 <doc-anchor-target id="communication-process">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#communication-process">#</doc-anchor-trigger>
@@ -531,7 +536,7 @@
     <figcaption class="caption">Chapter02-04</figcaption>
 </figure>
 </p>
-<p><strong>****** DiagramFigure 2.5 -– How TCP/IP Works</strong></p>
+<p><strong>DiagramFigure 2.5 -– How TCP/IP Works</strong></p>
 <p>Understanding the communication process is crucial for network engineers, software developers, and anyone working with networked systems. It enables the design of efficient and reliable communication systems, the troubleshooting of issues, and the optimization of network performance.</p>
 <doc-anchor-target id="protocol-stack-and-layered-architecture">
     <h2>
