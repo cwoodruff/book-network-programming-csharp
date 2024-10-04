@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781386024164">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781386112106">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,11 +37,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.781386024164" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.781386112106" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781386024164" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781386112106" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781386024164" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781386112106" data-turbo-eval="false" defer></script>
     <link href="../resources/css/katex.css?v=3.6.0" rel="stylesheet">
     <script id="katex-js" data-cfasync="false" src="../resources/js/katex.js?v=3.6.0" defer></script>
 </head>
@@ -341,7 +341,7 @@
     <figcaption class="caption">Chapter02-02</figcaption>
 </figure>
 </p>
-<p><strong>****** DiagramFigure 2.2 – IP Subnet Masking</strong></p>
+<p><strong>DiagramFigure 2.2 – IP Subnet Masking</strong></p>
 <p>To grasp the concept of subnet masks, consider a simple analogy: an IP address and its subnet mask are like a street address and a zip code. Just as a street address indicates a specific location, an IP address designates a particular device on a network. The subnet mask, analogous to the zip code, guides data packets to their intended destination. For example, let&#x27;s take the IP address 192.168.1.25 and a subnet mask of 255.255.255.0 (/24). In binary representation, the subnet mask appears as 11111111.11111111.11111111.00000000. This signifies that the first 24 bits of the IP address pertain to the network portion, while the remaining 8 bits are allocated for host identification.</p>
 <p>When a device sends data to another device on the same network, it checks whether the destination IP address falls within the same subnet. It does this by applying the subnet mask to the destination IP address. This process involves performing a bitwise AND operation between the subnet mask and the IP address. The result helps identify the network to which the destination belongs.</p>
 <p>In the context of our example, when the device wants to communicate with IP address 192.168.1.30, it applies the subnet mask 255.255.255.0 to both addresses. The AND operation reveals that the network portions match (192.168.1), signifying that the devices are on the same subnet. Consequently, the device can send data directly without involving a router.</p>
