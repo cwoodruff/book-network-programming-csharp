@@ -127,7 +127,7 @@ TCP/IP operates on a layered architecture. This modular approach breaks down the
 - **Transport Layer** : This is where TCP and UDP (User Datagram Protocol) reside. While TCP ensures reliable and ordered data delivery, UDP is for quick, connectionless communication.
 - **Application Layer** : Here, various application protocols like HTTP, FTP, and SMTP operate. This layer directly interacts with end-user applications and is responsible for data formatting, encryption, and other session management.
 
-![Chapter01-02](./Images/Chapter01-02.png)
+![](./Images/Chapter01-02.png)
 
 **Figure 1.1 - 1TCP/IP Protocol Layers**
 
@@ -208,7 +208,7 @@ In the landscape of network programming, the client-server architecture plays a 
 
 Client-server architecture serves as the blueprint for communication between devices in network programming. It embodies a clear division of responsibilities: clients initiate requests, while servers respond with the requested resources or services. This separation streamlines application development by enabling modular design, enhancing security, and optimizing resource utilization. The architecture fosters collaboration between devices regardless of their geographical locations, underpinning the foundation of modern distributed computing.
 
-![Chapter01-01](./Images/Chapter01-01.png)
+![](./Images/Chapter01-01.png)
 
 **Figure 1.2 - Client-Server Model**
 
