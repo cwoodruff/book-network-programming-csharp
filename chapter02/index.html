@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781226082801">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781385836885">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,11 +37,13 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.781226082801" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.781385836885" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781226082801" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781385836885" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781226082801" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781385836885" data-turbo-eval="false" defer></script>
+    <link href="../resources/css/katex.css?v=3.6.0" rel="stylesheet">
+    <script id="katex-js" data-cfasync="false" src="../resources/js/katex.js?v=3.6.0" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -354,7 +356,7 @@
 <p>IP subnetting techniques are fundamental to efficiently managing IP address space within a network. Subnetting allows network administrators to divide a larger IP address range into smaller, manageable subnetworks. This process provides several advantages, including improved IP address utilization, enhanced network security, and simplified network management.</p>
 <p>There are various subnetting techniques, each serving specific needs and requirements. Two prominent techniques are Fixed-Length Subnetting and <strong>Variable-Length Subnetting</strong> ( <strong>VLSM</strong> ).</p>
 <p>Fixed-Length Subnetting is a straightforward technique that divides an IP address range into subnets of equal size. This is achieved by allocating a fixed number of bits from the host portion of the IP address for subnetting. The number of bits allocated determines the number of subnets and hosts per subnet.</p>
-<p>For example, consider a network with IP address range 192.168.1.0/24. In a fixed-length subnetting approach, if you allocate 3 bits for subnetting, you have 2<sup>3 (8) subnets, each with 2</sup>5 (32) usable host addresses. This results in subnets like 192.168.1.0/27, 192.168.1.32/27, and so on.</p>
+<p>For example, consider a network with IP address range 192.168.1.0/24. In a fixed-length subnetting approach, if you allocate 3 bits for subnetting, you have <span class="math">2^3</span> (8) subnets, each with <span class="math">2^5</span> (32) usable host addresses. This results in subnets like 192.168.1.0/27, 192.168.1.32/27, and so on.</p>
 <p>Fixed-Length Subnetting is relatively simple and easy to implement. However, it may lead to inefficient utilization of IP addresses if some subnets require more hosts than others.</p>
 <p>VLSM is a more flexible approach that allows subnets to have different sizes based on their specific needs. It&#x27;s particularly useful when you have subnets with varying numbers of hosts. VLSM enables you to allocate different subnet mask lengths to different subnets, optimizing IP address allocation.</p>
 <p>Continuing from the previous example, let&#x27;s say you have a requirement for one subnet with 50 hosts and another with 10 hosts. Instead of using a uniform /27 subnet mask for all subnets, you can allocate a /26 subnet mask for the first subnet (allowing 64 hosts) and a /28 subnet mask for the second subnet (allowing 16 hosts). This ensures efficient use of IP addresses and meets the needs of each subnet.</p>
@@ -804,6 +806,6 @@
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 2 - Fundamentals of Networking Concepts", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 2 - Fundamentals of Networking Concepts", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: true, tocDepth: 23 }</script>
 </body>
 </html>
