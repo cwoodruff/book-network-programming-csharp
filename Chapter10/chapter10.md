@@ -15,7 +15,7 @@ WebSockets, a critical technology, enable full-duplex, real-time communication b
 
 Working with WebSockets in .NET involves both server-side and client-side components. On the server, ASP.NET Core provides built-in support for WebSockets, allowing the server to handle incoming WebSocket connections, manage the data flow, and respond to client requests. This is achieved by integrating WebSocket middleware into the server application. On the client side, developers can use the System.Net.WebSockets namespace to establish WebSocket connections, send and receive messages, and manage the lifecycle of the WebSocket connection.
 
-This chapter is a comprehensive guide to implementing WebSocket communication in server and client scenarios using .NET 8 and C# 12. It covers everything from the setup of WebSocket connections to message handling, error management, and the benefits of this protocol for creating real-time, interactive applications. By the end of this chapter, you will be well-informed and prepared to leverage WebSockets for high-performance network programming in your .NET applications.
+This chapter is a comprehensive guide to implementing WebSocket communication in server and client scenarios using .NET and C#. It covers everything from the setup of WebSocket connections to message handling, error management, and the benefits of this protocol for creating real-time, interactive applications. By the end of this chapter, you will be well-informed and prepared to leverage WebSockets for high-performance network programming in your .NET applications.
 
 ## Overview of WebSocket Protocol
 
@@ -25,7 +25,7 @@ WebSocket connections start with an HTTP handshake initiated by the client, requ
 
 The WebSocket protocol is framed-based, meaning data is transmitted as discrete frames. These frames can carry either text or binary data, allowing for flexible communication depending on the application’s needs. Each frame includes control information, such as message fragmentation or connection termination. This lightweight structure allows WebSocket to handle a high traffic volume with minimal performance impact, making it a popular choice for applications requiring efficient, high-speed communication.
 
-In .NET, support for the WebSocket protocol is integrated, providing developers with robust tools to implement WebSocket-based communication both on the server and client sides. Using the System.Net.WebSockets namespace, developers can easily manage WebSocket connections, handle messages, and ensure efficient, real-time communication in their applications. As we delve further into this chapter, we will explore the technical details of setting up and managing WebSocket connections in .NET 8, demonstrating how this protocol can enhance the performance and interactivity of modern networked applications.
+In .NET, support for the WebSocket protocol is integrated, providing developers with robust tools to implement WebSocket-based communication both on the server and client sides. Using the System.Net.WebSockets namespace, developers can easily manage WebSocket connections, handle messages, and ensure efficient, real-time communication in their applications. As we delve further into this chapter, we will explore the technical details of setting up and managing WebSocket connections in .NET, demonstrating how this protocol can enhance the performance and interactivity of modern networked applications.
 
 ### Use Cases, Benefits, and Comparison to Traditional HTTP
 
@@ -61,7 +61,7 @@ In short, while WebSockets provide a powerful way to enable real-time, interacti
 
 ## Introduction to WebSockets in C#
 
-After learning about the basics of WebSockets, the protocol and mechanics, we're diving into how to work with WebSockets using C#—bringing everything we've covered so far into the practical realm of implementation. .NET 8 provides a robust framework for leveraging WebSockets, making it relatively straightforward to set up both server-side and client-side components for real-time communication. By using C#, you can efficiently handle the connection lifecycle, transmit data, and react to events, all while tapping into the rich features of .NET that simplify the process.
+After learning about the basics of WebSockets, the protocol and mechanics, we're diving into how to work with WebSockets using C#—bringing everything we've covered so far into the practical realm of implementation. .NET provides a robust framework for leveraging WebSockets, making it relatively straightforward to set up both server-side and client-side components for real-time communication. By using C#, you can efficiently handle the connection lifecycle, transmit data, and react to events, all while tapping into the rich features of .NET that simplify the process.
 
 On the server side, ASP.NET Core offers integrated middleware for handling WebSocket connections. This means you can easily upgrade an incoming HTTP request to a WebSocket connection, manage the persistent channel, and start exchanging messages within your usual C# code structure. The built-in support ensures you can control message flow, handle exceptions, and manage connection state without reinventing the wheel. This is particularly useful for scenarios like chat services or live data feeds, where server-side handling must be responsive and scalable.
 
