@@ -129,7 +129,7 @@ TCP/IP operates on a layered architecture. This modular approach breaks down the
 
 ![](./Images/Chapter01-02.png)
 
-**Figure 1.1 - 1TCP/IP Protocol Layers**
+<figcaption align = "center"><b>TCP/IP Protocol Layer</b></figcaption>
 
 This layered architecture enables modular design, where each layer contributes specific functionalities, resulting in the robust and scalable network communication we rely on today. In the diagram illustrated above, showing the layered architecture of the TCP/IP protocol, each layer transitions seamlessly into the next, representing a hierarchy of functions essential for network communication. Starting at the application layer, protocols like HTTP and FTP interact with end-user applications, preparing data for communication. This data is then encapsulated into segments by the transport layer, where TCP or UDP manages the trustworthiness and flow of the data between hosts. Following this, the internet layer takes charge, wrapping the data with IP addresses through the Internet Protocol, ensuring it reaches the correct destination across the network. Finally, the link layer translates these IP packets into frames appropriate for the physical network medium, handling the data transmission over physical hardware such as Ethernet. Each layer serves a precise purpose, and together, they form the framework that allows data to be carried from one device to another across diverse and complex networks.
 
@@ -210,7 +210,7 @@ Client-server architecture serves as the blueprint for communication between dev
 
 ![](./Images/Chapter01-01.png)
 
-**Figure 1.2 - Client-Server Model**
+<figcaption align = "center"><b>Client-Server Model</b></figcaption>
 
 This architecture (seen in _Figure 1.2_) enables efficient distribution of tasks, with servers handling resource-intensive processes and clients focusing on user interfaces and interactions. It forms the backbone of modern networked applications, allowing for scalable, centralized, and secure data processing and access in various domains, from web hosting to database management.
 

@@ -562,9 +562,13 @@ In this example, `ThreadSafeLogger` ensures that log entries are written without
 
 For more in-depth testing, tools like **Visual Studio’s Concurrency Visualizer** or **Parallel Stack in JetBrains Rider** can help identify performance bottlenecks and threading issues such as lock contention and deadlocks. Unit testing frameworks like NUnit or xUnit, combined with `Task` and async/await patterns, allow for the simulation and testing of asynchronous and parallel operations in a controlled environment.
 
-![Visual Studio’s Concurrency Visualizer](./Images/ConcurrencyVisualizer.png)
+![](./Images/ConcurrencyVisualizer.png)
 
-![JetBrains Rider's Parallel Stack](./Images/ParallelStack.png)
+<figcaption align = "center"><b>Visual Studio’s Concurrency Visualizer</b></figcaption>
+
+![](./Images/ParallelStack.png)
+
+<figcaption align = "center"><b>JetBrains Rider's Parallel Stack</b></figcaption>
 
 Unit testing frameworks like NUnit or xUnit can be used to test multithreaded code, but they require careful planning to cover concurrency issues. One approach is to simulate multithreading scenarios where shared resources are accessed concurrently to ensure the code behaves as expected. Here’s a simple example using xUnit and the Task class to test a thread-safe counter class:
 
@@ -874,9 +878,13 @@ Optimizing network communication itself is also vital. Techniques such as reduci
 
 Finally, profiling and monitoring tools such as **Visual Studio Diagnostic Tools** or **JetBrains' Monitor Tool Window** can be instrumental in identifying bottlenecks and performance issues. Regularly profiling your network applications can help you understand where delays or excessive resource usage occur, allowing for targeted optimizations that can substantially improve overall performance.
 
-![Visual Studio Diagnostic Tool](./Images/DiagnosticTools.png)\
+![](./Images/DiagnosticTools.png)
 
-![JetBrains' Monitor Tool Window](./Images/MonitoringToolWindow.png)\
+<figcaption align = "center"><b>Visual Studio Diagnostic Tool</b></figcaption>
+
+![](./Images/MonitoringToolWindow.png)
+
+<figcaption align = "center"><b>JetBrains' Monitor Tool Window</b></figcaption>
 
 By implementing these performance optimization techniques, developers can ensure that their network applications are not only functional but also robust and efficient, capable of efficiently handling real-world loads.
 

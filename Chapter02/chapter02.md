@@ -56,7 +56,7 @@ The structure of IPv4 addresses lies at the core of the internet's architecture,
 
 ![Chapter02-01](./Images/Chapter02-01.jpg)
 
-**Figure 2.1 -– IPv4 Addressing**
+<figcaption align = "center"><b>IPv4 Addressing</b></figcaption>
 
 An IPv4 address is a 32-bit numerical label that is divided into four octets, each containing 8 bits. These octets are separated by periods, giving rise to the familiar decimal-dot notation, such as 192.168.0.1. This arrangement is crucial for both human comprehension and the computational efficiency of network routers and devices.
 
@@ -96,7 +96,7 @@ Subnet masks are expressed in the same format as IP addresses, comprising four o
 
 ![Chapter02-02](./Images/Chapter02-02.jpg)
 
-**Figure 2.2 – IP Subnet Masking**
+<figcaption align = "center"><b>IP Subnet Masking</b></figcaption>
 
 To grasp the concept of subnet masks, consider a simple analogy: an IP address and its subnet mask are like a street address and a zip code. Just as a street address indicates a specific location, an IP address designates a particular device on a network. The subnet mask, analogous to the zip code, guides data packets to their intended destination. For example, let's take the IP address 192.168.1.25 and a subnet mask of 255.255.255.0 (/24). In binary representation, the subnet mask appears as 11111111.11111111.11111111.00000000. This signifies that the first 24 bits of the IP address pertain to the network portion, while the remaining 8 bits are allocated for host identification.
 
@@ -201,7 +201,7 @@ Network topologies, like the diverse landscapes of a digital realm, define how d
 
 ![Chapter02-03](./Images/Chapter02-03.jpg)
 
-**Figure 2.3 – Common Network Topologies**
+<figcaption align = "center"><b>Common Network Topologies</b></figcaption>
 
 Choosing the right topology depends on factors such as network size, communication patterns, fault tolerance needs, and budget constraints. A small office might benefit from a star topology, while a data center might prefer a mesh topology for maximum redundancy.
 
@@ -309,7 +309,7 @@ The communication process is the backbone of data exchange in a networked enviro
 
 ![Chapter02-04](./Images/Chapter02-04.jpg)
 
-**Figure 2.4 -– How TCP/IP Works**
+<figcaption align = "center"><b>How TCP/IP Works</b></figcaption>
 
 Understanding the communication process is crucial for network engineers, software developers, and anyone working with networked systems. It enables the design of efficient and reliable communication systems, the troubleshooting of issues, and the optimization of network performance.
 
@@ -377,7 +377,7 @@ In the vast expanse of networked systems, a tapestry of indispensable services w
 
 ![](Images/Chapter02-05.jpg)
 
-**Figure 2.5 – Common Protocols and Ports**
+<figcaption align = "center"><b>Common Protocols and Ports</b></figcaption>
 
 These are but a few threads in the intricate tapestry of network services that enable our digital lives. Each service weaves its unique functionality into the collective experience, fostering connectivity, collaboration, and communication across the networked landscape.
 

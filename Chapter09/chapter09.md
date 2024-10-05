@@ -55,7 +55,8 @@ The HEAD method is similar to GET but with a key difference: it only retrieves t
 Each of these methods plays a vital role in building web services that are efficient, scalable, and easy to maintain. When designing APIs, your choice of the appropriate HTTP method is crucial. It ensures clarity in communication between client and server, adheres to REST principles, and improves the overall structure and reliability of your application. This responsibility in choosing the right method gives you full control over your API design, ensuring that your application is efficient and reliable.
 
 ![](./Images/HTTP Verbs.png)
-*HTTP Verbs*
+
+<figcaption align = "center"><b>HTTP Verbs</b></figcaption>
 
 ### HTTP Headers
 
@@ -86,7 +87,8 @@ Finally, the 5xx series represents server-side errors, which occur when the serv
 Using the correct HTTP status codes is not just a best practice, it's a responsibility. It helps establish clear communication between clients and servers. Clients rely on these codes to interpret the result of their requests and take the necessary actions. As we delve deeper into RESTful API design, proper use of status codes will play a critical role in defining the behavior and reliability of the APIs we build. It ensures both developers and consumers of the API can interact with the system smoothly and effectively, reinforcing your commitment to your work.
 
 ![](./Images/HTTP Status Codes.png)
-*HTTP Status Codes*
+
+<figcaption align = "center"><b>HTTP Status Codes</b></figcaption>
 
 ### HTTP Messages and Data Exchange
 
@@ -193,22 +195,26 @@ To begin building a RESTful API with ASP.NET Core 8, the first step is setting u
 Open Visual Studio 2022 and create a new project by selecting **Create a new project** from the start window. From the project template list, choose **ASP.NET Core Web API** and click **Next**. Provide a name for your project, choose a location to save it, and click **Create**. In the following dialog, ensure that **.NET 8** is selected as the target framework, and check the option to enable **OpenAPI support** for automatic API documentation generation. Click **Create** to initialize the project. 
 
 ![](./Images/VS22-WebAPI-Creation.png)
-*Visual Studio 2022 Project Creation*
+
+<figcaption align = "center"><b>Visual Studio 2022 Project Creation</b></figcaption>
 
 ![](./Images/VS22-WebAPI-Additional.png)
-*Visual Studio 2022 Web API Project Additional*
+
+<figcaption align = "center"><b>Visual Studio 2022 Web API Project Additional</b></figcaption>
 
 Once the project is generated, Visual Studio creates a default folder structure that includes several key components. The **Controllers** folder contains the default WeatherForecastController file, demonstrating how a basic API controller works. In a RESTful API, controllers handle incoming requests and map them to appropriate actions, such as retrieving, creating, or updating resources. You can expand this folder as needed to include additional controllers for various resources in your API.
 
 ![](./Images/VS22-WebAPI-Structure.png)
-*Visual Studio 2022 Web API Project Structure*
+
+<figcaption align = "center"><b>Visual Studio 2022 Web API Project Structure</b></figcaption>
 
 ASP.NET Core uses dependency injection by default, and services are registered in the **Program.cs** file. This file is crucial in configuring middleware, routing, and services like database connections or authentication. By default, the Program.cs file already contains the basic configuration for handling API requests and serving JSON responses. To add more functionality, you will modify this file to include additional services, such as support for Entity Framework Core or third-party libraries for logging or security.
 
 At this point, your API project is ready to run. Press **F5** or click **Start** to launch the API in the browser. Visual Studio will open the Swagger UI by default, allowing you to interact with the available API endpoints. The Swagger UI is a convenient way to explore and test your API without needing a separate tool like Postman. It automatically generates API documentation based on the OpenAPI specification and allows you to test requests against the available endpoints.
 
 ![](./Images/VS22-WebAPI-Swagger.png)
-*Web API Project Swagger*
+
+<figcaption align = "center"><b>Web API Project Swagger</b></figcaption>
 
 To add your first custom API controller:
 1. Right-click on the **Controllers** folder and select **Add > Controller**.
