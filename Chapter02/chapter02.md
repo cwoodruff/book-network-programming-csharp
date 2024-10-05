@@ -367,16 +367,6 @@ At the heart of this exploration lies the concept of ports – those virtual por
 
 As we traverse the intricate threads of network services and ports, we will decode their role in the communication matrix, understand how they enable diverse functionalities, and appreciate the robustness of the system. The journey is illuminating, offering insight into the subtle yet powerful components that sustain our modern digital interactions.
 
-## Introduction to network services
-
-In the intricate web of modern networking, the role of network services and ports is nothing short of pivotal. As we navigate the digital landscape, we encounter a myriad of tasks and functionalities – from exchanging emails to browsing web pages and transferring files to remote access. These actions are made possible by a diverse array of software applications and processes known as network services. They are the engines that drive our digital interactions, seamlessly connecting devices and enabling data exchange.
-
-This section delves into the realm of network services and ports, illuminating their significance in the broader context of networking concepts. We embark on a journey to understand how specific software components fulfill distinct purposes, all while unveiling the mechanism that underpins their operation.
-
-At the heart of this exploration lies the concept of ports – those virtual portals that allow different services to coexist on a single device, ensuring the harmonious flow of data. From web servers to email clients, each service claims its designated entrance, known as a port, through which it communicates with the outside world.
-
-As we traverse the intricate threads of network services and ports, we will decode their role in the communication matrix, understand how they enable diverse functionalities, and appreciate the robustness of the system. The journey is illuminating, offering insight into the subtle yet powerful components that sustain our modern digital interactions.
-
 ## Common network services
 
 In the vast expanse of networked systems, a tapestry of indispensable services weaves together the very fabric of modern communication. These services are the tools, the conduits, and the engines that propel our digital interactions forward. Let's embark on a journey to explore some of the most common network services, each a cornerstone in its own right, contributing to the seamless exchange of data and enabling our interconnected world.
