@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781444084582">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781445198851">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.781444084582" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.781445198851" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781444084582" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781445198851" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781444084582" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.781444084582" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781445198851" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.781445198851" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -304,8 +304,8 @@
 <p>DELETE is a straightforward method for removing resources from the server. Like PUT, DELETE is idempotent, meaning multiple requests will have the same effect as a single one—removing the resource in question. DELETE requests typically do not contain a message body. Still, the server will respond with a confirmation or appropriate status code and an empty response body indicating whether the operation was successful or the resource was already gone.</p>
 <p>The HEAD method is similar to GET but with a key difference: it only retrieves the headers of a resource, not the body. This makes HEAD useful for checking metadata, such as a resource&#x27;s size or last modification date, without downloading the entire content. It is often used for lightweight checks before making full GET requests, helping to optimize performance by reducing unnecessary data transfer.</p>
 <p>Each of these methods plays a vital role in building web services that are efficient, scalable, and easy to maintain. When designing APIs, your choice of the appropriate HTTP method is crucial. It ensures clarity in communication between client and server, adheres to REST principles, and improves the overall structure and reliability of your application. This responsibility in choosing the right method gives you full control over your API design, ensuring that your application is efficient and reliable.</p>
-<p>![](./Images/HTTP Verbs.png)
-<em>HTTP Verbs</em></p>
+<p>![](./Images/HTTP Verbs.png)</p>
+<figcaption align = "center"><b>HTTP Verbs</b></figcaption>
 <doc-anchor-target id="http-headers">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#http-headers">#</doc-anchor-trigger>
@@ -330,8 +330,8 @@
 <p>Client error responses are captured by 4xx status codes, which indicate that the request contains bad syntax or cannot be fulfilled. A common example is <code v-pre>400 Bad Request</code>, used when the server cannot understand the request due to invalid syntax. Another frequently seen code is <code v-pre>401 Unauthorized</code>, which informs the client that authentication is required. Similarly, <code v-pre>403 Forbidden</code> is returned when the server understands the request but refuses to authorize it. <code v-pre>404 Not Found</code> is one of the most well-known codes, indicating that the requested resource could not be found on the server. Using these codes appropriately helps clarify errors to the client and guides them toward correcting their request.</p>
 <p>Finally, the 5xx series represents server-side errors, which occur when the server fails to fulfill an otherwise valid request. <code v-pre>500 Internal Server</code> error is the catch-all for unexpected conditions, often due to server misconfiguration or unhandled exceptions. Other relevant codes include <code v-pre>502 Bad Gateway</code>, indicating that the server, acting as a gateway or proxy, received an invalid response from the upstream server, and <code v-pre>503 Service Unavailable</code>, which is used when the server is temporarily unable to handle the request, often due to maintenance or overload.</p>
 <p>Using the correct HTTP status codes is not just a best practice, it&#x27;s a responsibility. It helps establish clear communication between clients and servers. Clients rely on these codes to interpret the result of their requests and take the necessary actions. As we delve deeper into RESTful API design, proper use of status codes will play a critical role in defining the behavior and reliability of the APIs we build. It ensures both developers and consumers of the API can interact with the system smoothly and effectively, reinforcing your commitment to your work.</p>
-<p>![](./Images/HTTP Status Codes.png)
-<em>HTTP Status Codes</em></p>
+<p>![](./Images/HTTP Status Codes.png)</p>
+<figcaption align = "center"><b>HTTP Status Codes</b></figcaption>
 <doc-anchor-target id="http-messages-and-data-exchange">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#http-messages-and-data-exchange">#</doc-anchor-trigger>
@@ -418,25 +418,29 @@
     <img src="images/vs22-webapi-creation.png" alt="">
     <figcaption class="caption"></figcaption>
 </figure>
-<em>Visual Studio 2022 Project Creation</em></p>
+</p>
+<figcaption align = "center"><b>Visual Studio 2022 Project Creation</b></figcaption>
 <p><figure class="content-center">
     <img src="images/vs22-webapi-additional.png" alt="">
     <figcaption class="caption"></figcaption>
 </figure>
-<em>Visual Studio 2022 Web API Project Additional</em></p>
+</p>
+<figcaption align = "center"><b>Visual Studio 2022 Web API Project Additional</b></figcaption>
 <p>Once the project is generated, Visual Studio creates a default folder structure that includes several key components. The <strong>Controllers</strong> folder contains the default WeatherForecastController file, demonstrating how a basic API controller works. In a RESTful API, controllers handle incoming requests and map them to appropriate actions, such as retrieving, creating, or updating resources. You can expand this folder as needed to include additional controllers for various resources in your API.</p>
 <p><figure class="content-center">
     <img src="images/vs22-webapi-structure.png" alt="">
     <figcaption class="caption"></figcaption>
 </figure>
-<em>Visual Studio 2022 Web API Project Structure</em></p>
+</p>
+<figcaption align = "center"><b>Visual Studio 2022 Web API Project Structure</b></figcaption>
 <p>ASP.NET Core uses dependency injection by default, and services are registered in the <strong>Program.cs</strong> file. This file is crucial in configuring middleware, routing, and services like database connections or authentication. By default, the Program.cs file already contains the basic configuration for handling API requests and serving JSON responses. To add more functionality, you will modify this file to include additional services, such as support for Entity Framework Core or third-party libraries for logging or security.</p>
 <p>At this point, your API project is ready to run. Press <strong>F5</strong> or click <strong>Start</strong> to launch the API in the browser. Visual Studio will open the Swagger UI by default, allowing you to interact with the available API endpoints. The Swagger UI is a convenient way to explore and test your API without needing a separate tool like Postman. It automatically generates API documentation based on the OpenAPI specification and allows you to test requests against the available endpoints.</p>
 <p><figure class="content-center">
     <img src="images/vs22-webapi-swagger.png" alt="">
     <figcaption class="caption"></figcaption>
 </figure>
-<em>Web API Project Swagger</em></p>
+</p>
+<figcaption align = "center"><b>Web API Project Swagger</b></figcaption>
 <p>To add your first custom API controller:</p>
 <ol>
 <li>Right-click on the <strong>Controllers</strong> folder and select <strong>Add &gt; Controller</strong>.</li>
