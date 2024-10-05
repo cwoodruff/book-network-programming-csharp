@@ -54,7 +54,7 @@ The HEAD method is similar to GET but with a key difference: it only retrieves t
 
 Each of these methods plays a vital role in building web services that are efficient, scalable, and easy to maintain. When designing APIs, your choice of the appropriate HTTP method is crucial. It ensures clarity in communication between client and server, adheres to REST principles, and improves the overall structure and reliability of your application. This responsibility in choosing the right method gives you full control over your API design, ensuring that your application is efficient and reliable.
 
-![](./Images/HTTP Verbs.png)
+![](./Images/HTTP-Verbs.png)
 
 <figcaption align = "center"><b>HTTP Verbs</b></figcaption>
 
@@ -86,7 +86,7 @@ Finally, the 5xx series represents server-side errors, which occur when the serv
 
 Using the correct HTTP status codes is not just a best practice, it's a responsibility. It helps establish clear communication between clients and servers. Clients rely on these codes to interpret the result of their requests and take the necessary actions. As we delve deeper into RESTful API design, proper use of status codes will play a critical role in defining the behavior and reliability of the APIs we build. It ensures both developers and consumers of the API can interact with the system smoothly and effectively, reinforcing your commitment to your work.
 
-![](./Images/HTTP Status Codes.png)
+![](./Images/HTTP-Status-Codes.png)
 
 <figcaption align = "center"><b>HTTP Status Codes</b></figcaption>
 
