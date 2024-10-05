@@ -56,7 +56,7 @@ The structure of IPv4 addresses lies at the core of the internet's architecture,
 
 ![Chapter02-01](./Images/Chapter02-01.jpg)
 
-**DiagramFigure 2.1 -– IPv4 Addressing**
+**Figure 2.1 -– IPv4 Addressing**
 
 An IPv4 address is a 32-bit numerical label that is divided into four octets, each containing 8 bits. These octets are separated by periods, giving rise to the familiar decimal-dot notation, such as 192.168.0.1. This arrangement is crucial for both human comprehension and the computational efficiency of network routers and devices.
 
@@ -96,7 +96,7 @@ Subnet masks are expressed in the same format as IP addresses, comprising four o
 
 ![Chapter02-02](./Images/Chapter02-02.jpg)
 
-**DiagramFigure 2.2 – IP Subnet Masking**
+**Figure 2.2 – IP Subnet Masking**
 
 To grasp the concept of subnet masks, consider a simple analogy: an IP address and its subnet mask are like a street address and a zip code. Just as a street address indicates a specific location, an IP address designates a particular device on a network. The subnet mask, analogous to the zip code, guides data packets to their intended destination. For example, let's take the IP address 192.168.1.25 and a subnet mask of 255.255.255.0 (/24). In binary representation, the subnet mask appears as 11111111.11111111.11111111.00000000. This signifies that the first 24 bits of the IP address pertain to the network portion, while the remaining 8 bits are allocated for host identification.
 
@@ -201,7 +201,7 @@ Network topologies, like the diverse landscapes of a digital realm, define how d
 
 ![Chapter02-03](./Images/Chapter02-03.jpg)
 
-**DiagramFigure 2.3 – Common Network Topologies**
+**Figure 2.3 – Common Network Topologies**
 
 Choosing the right topology depends on factors such as network size, communication patterns, fault tolerance needs, and budget constraints. A small office might benefit from a star topology, while a data center might prefer a mesh topology for maximum redundancy.
 
@@ -293,13 +293,9 @@ Additionally, protocols like **Simple Network Management Protocol** ( **SNMP** )
 
 Each of these common network protocols addresses specific communication needs, facilitating seamless interactions and powering the functionalities that we often take for granted in our digital lives. Understanding these protocols is essential for anyone venturing into the world of networking, as they lay the groundwork for effective and efficient data exchange across global networks.
 
-![](Images/Chapter02-05.jpg)
-
-**DiagramFigure 2.4 -– Common Protocols and Ports**
-
 ## Communication process
 
-The communication process is the backbone of data exchange in a networked environment, enabling devices to share information, messages, and resources seamlessly. This process encompasses several key steps that ensure effective and reliable communication between sender and receiver. //
+The communication process is the backbone of data exchange in a networked environment, enabling devices to share information, messages, and resources seamlessly. This process encompasses several key steps that ensure effective and reliable communication between sender and receiver.
 
 - **Establishing a Connection** : Communication begins with establishing a connection between the sender and receiver. This involves initiating a logical or physical link between the two devices, allowing them to exchange data. In a network context, this connection can be wired or wireless, and it can involve multiple intermediary devices such as routers and switches.
 - **Data Transmission** : Once a connection is established, the sender can start transmitting data. The data can include text, images, files, or any information that needs to be communicated. Depending on the nature of the communication, different protocols may be used to ensure data integrity, such as TCP for reliable transmission or UDP for faster, connectionless communication.
@@ -313,7 +309,7 @@ The communication process is the backbone of data exchange in a networked enviro
 
 ![Chapter02-04](./Images/Chapter02-04.jpg)
 
-**DiagramFigure 2.5 -– How TCP/IP Works**
+**Figure 2.4 -– How TCP/IP Works**
 
 Understanding the communication process is crucial for network engineers, software developers, and anyone working with networked systems. It enables the design of efficient and reliable communication systems, the troubleshooting of issues, and the optimization of network performance.
 
@@ -379,9 +375,9 @@ In the vast expanse of networked systems, a tapestry of indispensable services w
 - **Secure Shell (SSH)**: In the world of remote access, SSH emerges as the guardian of secure connections. It allows users to remotely access systems, execute commands, and even transfer files, all within the protective cloak of encryption.
 - **Telnet** : While its security is often questioned in the age of encryption, Telnet's historical significance is undeniable. It paved the way for remote access to systems, making it possible to log in and operate a remote computer as if you were physically present.
 
-![Chapter02-05](/Volumes/backup/Git/network-programming-csharp-dotnet/Chapter02/Images/Chapter02-05.jpg)
+![](Images/Chapter02-05.jpg)
 
-**\*\*\*\*\*\* DiagramFigure 2.6 – Common Protocols and Ports**
+**Figure 2.5 – Common Protocols and Ports**
 
 These are but a few threads in the intricate tapestry of network services that enable our digital lives. Each service weaves its unique functionality into the collective experience, fostering connectivity, collaboration, and communication across the networked landscape.
 
