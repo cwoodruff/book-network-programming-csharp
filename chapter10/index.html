@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781445474579">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.781460356322">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.781445474579" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.781460356322" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781445474579" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.781460356322" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781445474579" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.781445474579" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.781460356322" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.781460356322" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -268,7 +268,7 @@
 </doc-anchor-target>
 <p>WebSockets, a critical technology, enable full-duplex, real-time communication between clients and servers, fostering a more dynamic data exchange in networked applications. Unlike traditional HTTP requests, which follow a request-response pattern, WebSockets provide a persistent connection where data can flow freely in both directions. This makes WebSockets particularly useful for applications that require low-latency communication, such as online gaming, live chat, and real-time financial data streams. With full support in .NET 8 and C# 12 and higher, developers can build highly interactive and responsive applications, inspired by the benefits of WebSockets.</p>
 <p>Working with WebSockets in .NET involves both server-side and client-side components. On the server, ASP.NET Core provides built-in support for WebSockets, allowing the server to handle incoming WebSocket connections, manage the data flow, and respond to client requests. This is achieved by integrating WebSocket middleware into the server application. On the client side, developers can use the System.Net.WebSockets namespace to establish WebSocket connections, send and receive messages, and manage the lifecycle of the WebSocket connection.</p>
-<p>This chapter is a comprehensive guide to implementing WebSocket communication in server and client scenarios using .NET 8 and C# 12. It covers everything from the setup of WebSocket connections to message handling, error management, and the benefits of this protocol for creating real-time, interactive applications. By the end of this chapter, you will be well-informed and prepared to leverage WebSockets for high-performance network programming in your .NET applications.</p>
+<p>This chapter is a comprehensive guide to implementing WebSocket communication in server and client scenarios using .NET and C#. It covers everything from the setup of WebSocket connections to message handling, error management, and the benefits of this protocol for creating real-time, interactive applications. By the end of this chapter, you will be well-informed and prepared to leverage WebSockets for high-performance network programming in your .NET applications.</p>
 <doc-anchor-target id="overview-of-websocket-protocol">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-websocket-protocol">#</doc-anchor-trigger>
@@ -278,7 +278,7 @@
 <p>The WebSocket protocol enables full-duplex, bidirectional communication over a single TCP connection. Unlike traditional HTTP, which operates on a request-response model, WebSocket allows for continuous communication between the client and server without the overhead of establishing a new connection for each message. This makes WebSocket ideal for scenarios that require real-time data transfer, such as chat applications, live streaming, and interactive gaming, where low latency and constant data flow are critical.</p>
 <p>WebSocket connections start with an HTTP handshake initiated by the client, requesting an upgrade to the WebSocket protocol. Once the server acknowledges and accepts the request, the protocol switches to WebSocket, and the connection becomes persistent. From this point, the client and server can send and receive messages independently, making the communication model asynchronous and highly efficient. This ability to maintain a persistent connection eliminates the need for multiple HTTP requests and significantly reduces the overhead of traditional polling mechanisms.</p>
 <p>The WebSocket protocol is framed-based, meaning data is transmitted as discrete frames. These frames can carry either text or binary data, allowing for flexible communication depending on the application’s needs. Each frame includes control information, such as message fragmentation or connection termination. This lightweight structure allows WebSocket to handle a high traffic volume with minimal performance impact, making it a popular choice for applications requiring efficient, high-speed communication.</p>
-<p>In .NET, support for the WebSocket protocol is integrated, providing developers with robust tools to implement WebSocket-based communication both on the server and client sides. Using the System.Net.WebSockets namespace, developers can easily manage WebSocket connections, handle messages, and ensure efficient, real-time communication in their applications. As we delve further into this chapter, we will explore the technical details of setting up and managing WebSocket connections in .NET 8, demonstrating how this protocol can enhance the performance and interactivity of modern networked applications.</p>
+<p>In .NET, support for the WebSocket protocol is integrated, providing developers with robust tools to implement WebSocket-based communication both on the server and client sides. Using the System.Net.WebSockets namespace, developers can easily manage WebSocket connections, handle messages, and ensure efficient, real-time communication in their applications. As we delve further into this chapter, we will explore the technical details of setting up and managing WebSocket connections in .NET, demonstrating how this protocol can enhance the performance and interactivity of modern networked applications.</p>
 <doc-anchor-target id="use-cases-benefits-and-comparison-to-traditional-http">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#use-cases-benefits-and-comparison-to-traditional-http">#</doc-anchor-trigger>
@@ -316,7 +316,7 @@
         <span>Introduction to WebSockets in C#</span>
     </h2>
 </doc-anchor-target>
-<p>After learning about the basics of WebSockets, the protocol and mechanics, we&#x27;re diving into how to work with WebSockets using C#—bringing everything we&#x27;ve covered so far into the practical realm of implementation. .NET 8 provides a robust framework for leveraging WebSockets, making it relatively straightforward to set up both server-side and client-side components for real-time communication. By using C#, you can efficiently handle the connection lifecycle, transmit data, and react to events, all while tapping into the rich features of .NET that simplify the process.</p>
+<p>After learning about the basics of WebSockets, the protocol and mechanics, we&#x27;re diving into how to work with WebSockets using C#—bringing everything we&#x27;ve covered so far into the practical realm of implementation. .NET provides a robust framework for leveraging WebSockets, making it relatively straightforward to set up both server-side and client-side components for real-time communication. By using C#, you can efficiently handle the connection lifecycle, transmit data, and react to events, all while tapping into the rich features of .NET that simplify the process.</p>
 <p>On the server side, ASP.NET Core offers integrated middleware for handling WebSocket connections. This means you can easily upgrade an incoming HTTP request to a WebSocket connection, manage the persistent channel, and start exchanging messages within your usual C# code structure. The built-in support ensures you can control message flow, handle exceptions, and manage connection state without reinventing the wheel. This is particularly useful for scenarios like chat services or live data feeds, where server-side handling must be responsive and scalable.</p>
 <p>The <code v-pre>System.Net.WebSockets</code> namespace provides all the tools you need to initiate connections and send or receive messages for client-side WebSocket communication. Whether you&#x27;re building a desktop application, a mobile client, or even a console tool, using C# and this namespace gives you a reliable way to interact with WebSocket servers. The client library handles the protocol intricacies, allowing you to focus on building features rather than worrying about the underlying communication details.</p>
 <p>As we move forward, we&#x27;ll explore examples of establishing a WebSocket server in ASP.NET Core, creating client connections in C#, and handling the message flow between them. These examples will show how to build scalable and efficient networked applications that fully utilize WebSocket&#x27;s capabilities, leveraging .NET to deliver low-latency, real-time interaction.</p>
