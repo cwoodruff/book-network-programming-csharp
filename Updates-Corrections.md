@@ -14,5 +14,5 @@ I want to thank every reader who took the time to share their feedback and corre
 | 10 April 2024  |    3    | Handling data of unknown length |      Stephen Cleary      | Expanding upon and demostrating the Decoder class  |
 |   6 May 2024   |    1    |     Technical Requirements      |      @CodeConscious      |        Update repository link in Chapter 1         |
 |  2 June 2024   |  2, 3   |   Typos and code suggestions    | Michał Turczyn @mturczyn | Numerous typos and code suggestions about sockets  |
-| 4 October 2024 |    2    |   Subnetting techniques         | Chukwuma Akunyili        | fixed an inline mathematical expression expression |
-    
+| 4 October 2024 |    2    |      Subnetting techniques      | Chukwuma Akunyili        | fixed an inline mathematical expression expression |
+| 6 October 2024 |    3    |     Session timeouts            | Chukwuma Akunyili        |              fixed a bug in the code               |

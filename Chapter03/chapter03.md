@@ -1612,8 +1612,8 @@ using System.Collections.Concurrent;
 
 class Program
 {
-    private static readonly ConcurrentDictionary<Socket, DateTime> ClientLastActivity = new ConcurrentDictionary<Socket, DateTime>();
-    private static readonly object LockObject = new object();
+    private static readonly ConcurrentDictionary<Socket, DateTime> ClientLastActivity = new();
+    private static readonly object LockObject = new();
     private static readonly TimeSpan Timeout = TimeSpan.FromMinutes(5); // 5 minutes timeout for demo
 
     static void Main()
@@ -1686,7 +1686,7 @@ class Program
             // Clean up resources
             lock (LockObject)
             {
-                ClientLastActivity.Remove(clientSocket);
+                ClientLastActivity.Remove(clientSocket, out _);
             }
             clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
@@ -1713,7 +1713,7 @@ class Program
 
                 foreach (var client in clientsToRemove)
                 {
-                    ClientLastActivity.Remove(client);
+                    ClientLastActivity.Remove(client, out _);
                 }
             }
 
