@@ -1,7 +1,7 @@
 ---
 order: 9
 icon: stack
-label: Chap 11
+label: Chap 11 - Working with WebRTC
 meta:
 title: "Working with WebRTC"
 ---
