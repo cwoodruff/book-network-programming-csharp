@@ -1,12 +1,14 @@
 ---
 order: 8
 icon: stack
-label: Chap 12
+label: Chap 12 - Working with MQTT for IoT (Internet of Things)
 meta:
 title: "Working with MQTT for IoT (Internet of Things)"
 visibility: hidden
 ---
 # 12
+
+![](./Images/Chap12-MQTT.png)
 
 # Working with MQTT for IoT (Internet of Things)
 
