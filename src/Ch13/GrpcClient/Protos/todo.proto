@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+service TodoService {
+  rpc AddTodo (TodoRequest) returns (TodoReply);
+  rpc GetTodos (Empty) returns (stream TodoItem);
+}
+
+message TodoRequest {
+  string title = 1;
+  string description = 2;
+}
+
+message TodoReply {
+  string status = 1;
+}
+
+message TodoItem {
+  string title = 1;
+  string description = 2;
+}
+
+message Empty {}
