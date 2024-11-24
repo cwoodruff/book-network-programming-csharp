@@ -12,7 +12,7 @@ visibility: hidden
 
 # Working with gRPC
 
-gRPC, a robust framework, has emerged as a powerful tool for building fast, efficient, and scalable communication between services. Its efficiency, surpassing that of traditional REST APIs, is due to its use of HTTP/2 and Protocol Buffers, which enable features like bidirectional streaming, multiplexing, and compact message serialization. These attributes make gRPC intriguing for scenarios demanding low latency and high throughput, such as real-time data streaming, microservices, and mobile-to-backend communication.
+gRPC, a robust framework, has emerged as a powerful tool for building fast, efficient, and scalable communication between services. Its efficiency, surpassing that of traditional REST APIs, is due to its use of HTTP/2 and **Protocol Buffers** (**Protobuf**), which enable features like bidirectional streaming, multiplexing, and compact message serialization. These attributes make gRPC intriguing for scenarios demanding low latency and high throughput, such as real-time data streaming, microservices, and mobile-to-backend communication.
 
 With .NET 8, gRPC has become a first-class citizen in the .NET ecosystem, providing robust support for creating gRPC services and clients. Whether building APIs for internal microservices or delivering real-time updates to thousands of connected devices, gRPC enables you to write strongly typed, efficient code while taking advantage of modern networking capabilities. Its seamless integration with C# ensures a reassuring and confident development experience, with generated classes and intuitive APIs handling much of the heavy lifting for you.
 
@@ -24,31 +24,25 @@ Compared to traditional communication protocols like REST, gRPC offers significa
 
 gRPC’s role in modern application architectures is not limited to microservices. It is a versatile tool that finds applications in diverse areas such as IoT communication, real-time analytics, backend-to-backend APIs, and even mobile-to-server interactions. Its cross-platform nature and multi-language support ensure seamless communication, regardless of the technology stack, instilling confidence in its applicability to a wide range of use cases.
 
-This section will explore how gRPC fits into today’s software ecosystem and why it has become a go-to solution for building high-performance networked applications. By understanding its core features and unique strengths, such as its ability to reduce network latency and improve data transfer efficiency, you’ll gain insight into how gRPC can elevate your development practices and significantly improve the efficiency of your systems.
-
-### What is gRPC?
-
-gRPC is a high-performance framework that facilitates seamless communication between distributed systems. It operates on the **Remote Procedure Call** (**RPC**) paradigm, allowing a client to execute a function on a remote server as a local method. gRPC's efficiency is underscored by its use of strongly typed contracts between clients and servers, its reliance on Protobuf for serialization, and its adoption of HTTP/2 as its transport layer. These foundational choices ensure that gRPC is a robust framework for efficient, reliable, and scalable communication.
-
-What sets gRPC apart from other communication protocols is its focus on performance and modern capabilities. Protocol Buffers, gRPC's serialization mechanism, creates compact, binary-encoded payloads that are smaller and faster to process than traditional text-based formats like JSON or XML. Combined with HTTP/2, gRPC benefits from features such as multiplexing (sending multiple streams over a single connection), full-duplex streaming (bidirectional communication), and header compression. These modern capabilities make gRPC particularly well-suited for low-latency, high-throughput applications, and open up exciting possibilities for developers.
+What sets gRPC apart from other communication protocols is its focus on performance and modern capabilities. Protobuf, gRPC's serialization mechanism, creates compact, binary-encoded payloads that are smaller and faster to process than traditional text-based formats like JSON or XML. Combined with HTTP/2, gRPC benefits from features such as multiplexing (sending multiple streams over a single connection), full-duplex streaming (bidirectional communication), and header compression. These modern capabilities make gRPC particularly well-suited for low-latency, high-throughput applications, and open up exciting possibilities for developers.
 
 gRPC's design philosophy is centered around interoperability, offering official support for multiple programming languages, including C#, Java, Python, and Go. This multi-language support allows developers to build systems where services written in different languages can communicate seamlessly. GRPC's platform-agnostic nature, combined with Protobuf-generated code, simplifies development by eliminating manual serialization and deserialization, reducing errors and speeding up the development process. This flexibility reassures developers that gRPC can adapt to their specific needs.
 
-By choosing gRPC, developers gain access to a powerful toolset for building modern applications that require real-time responsiveness. gRPC's use of HTTP/2 and its support for bidirectional streaming enable quick and efficient communication, making it ideal for applications that need to respond to user actions in real time. Whether you're working on a microservices architecture, implementing backend APIs for mobile apps, or enabling real-time data streaming, gRPC provides the performance and flexibility to meet today's demanding network programming requirements
+This section will explore how gRPC fits into today’s software ecosystem and why it has become a go-to solution for building high-performance networked applications. By understanding its core features and unique strengths, such as its ability to reduce network latency and improve data transfer efficiency, you’ll gain insight into how gRPC can elevate your development practices and significantly improve the efficiency of your systems.
 
 ### Comparison to REST and Other Protocols
 
 Comparing gRPC to REST and other communication protocols highlights its strengths in scenarios requiring high performance, low latency, and modern features. REST, one of the most widely used protocols, operates over HTTP and typically uses JSON for data exchange. At the same time, REST’s simplicity and universality have made it a standard for web APIs. Its reliance on text-based serialization, lack of native streaming, and statelessness can introduce inefficiencies, especially in resource-constrained or high-demand environments.
 
-gRPC efficiently overcomes these limitations with a binary serialization format (Protobuf) that is significantly more compact and faster to process than JSON. This leads to reduced payload sizes, faster serialization and deserialization, and overall lower network overhead. Furthermore, gRPC’s use of HTTP/2 enables advanced features like multiplexing, where multiple streams can share a single connection, and full-duplex communication, allowing clients and servers to send data simultaneously. These features are highly efficient in real-time applications like live data streaming or bidirectional messaging, instilling confidence in gRPC's performance.
+gRPC efficiently overcomes these limitations with a binary serialization format (Protobuf) that is significantly more compact and faster to process than JSON. This leads to reduced payload sizes, faster serialization and deserialization, and overall lower network overhead. Furthermore, gRPC’s use of HTTP/2 enables advanced features like multiplexing, where multiple streams can share a single connection, and full-duplex communication, allowing clients and servers to send data simultaneously. These features are highly efficient in real-time applications like live data streaming or bidirectional messaging..
 
 Another critical advantage of gRPC is its built-in support for strongly typed contracts, defined in .proto files. This ensures consistency between clients and servers, as the Protobuf definitions are used to generate language-specific classes. In contrast, REST APIs often rely on ad-hoc documentation or tools like Swagger/OpenAPI to define contracts, which can introduce ambiguity and require manual updates. gRPC’s approach, on the other hand, reduces errors and accelerates development by automating the generation of code that strictly adheres to the service definition, relieving developers from manual tasks.
 
-While gRPC outperforms REST in many technical dimensions, it is not a universal replacement. REST remains a strong choice for public-facing APIs due to its simplicity, compatibility with web technologies, and human-readable payloads. Similarly, protocols like WebSockets or GraphQL excel in specific domains such as event-driven applications or flexible querying. Using gRPC, REST, or another protocol should align with the application’s requirements, factoring in performance needs, developer experience, and ecosystem compatibility. Understanding these trade-offs is crucial as it empowers you to select the most effective communication protocol for your .NET applications.
+While gRPC outperforms REST in many technical dimensions, it is not a universal replacement. REST remains a strong choice for public-facing APIs due to its simplicity, compatibility with web technologies, and human-readable payloads. Similarly, protocols like WebSockets or GraphQL excel in specific domains such as event-driven applications or flexible querying. Using gRPC, REST, or another protocol or framework should align with the application’s requirements, factoring in performance needs, developer experience, and ecosystem compatibility. Understanding these trade-offs is crucial as it empowers you to select the most effective communication protocol or framework for your .NET applications.
 
 ### Common Use Cases for gRPC
 
-gRPC excels in scenarios where high performance, low latency, and efficient communication are critical. One of its most prominent use cases is microservices architecture, where services must communicate frequently and quickly exchange data. In this context, gRPC's compact serialization format and HTTP/2 features make it ideal for service-to-service communication, reducing overhead and improving throughput. The strongly typed contracts provided by Protocol Buffers ensure consistency across services, even in polyglot environments, enabling teams to work more efficiently and with fewer integration issues.
+gRPC excels in scenarios where high performance, low latency, and efficient communication are critical. One of its most prominent use cases is microservices architecture, where services must communicate frequently and quickly exchange data. In this context, gRPC's compact serialization format and HTTP/2 features make it ideal for service-to-service communication, reducing overhead and improving throughput. The strongly typed contracts provided by Protobuf ensure consistency across services, even in polyglot environments, enabling teams to work more efficiently and with fewer integration issues.
 
 Another common use case for gRPC is real-time data streaming. Applications such as live sports updates, financial market feeds, and IoT telemetry require continuous, bidirectional data exchange between clients and servers. gRPC's support for streaming RPCs—whether server-side, client-side, or bidirectional—ensures a seamless implementation of these scenarios. Unlike REST, which would require cumbersome workarounds like long polling or server-sent events, gRPC handles streaming natively, providing a more elegant and efficient solution.
 
@@ -57,7 +51,7 @@ Mobile and edge computing applications also benefit from gRPC's lightweight and 
 
 ### How gRPC Fits in Modern Application Architectures
 
-gRPC is a robust solution that plays a pivotal role in modern application architectures. It effectively addresses the challenges of efficient, reliable communication in distributed systems, particularly in microservices-based architectures. In scenarios where services often need to interact with each other in low-latency, high-throughput situations, gRPC's use of HTTP/2 and Protocol Buffers provides performance benefits, such as reduced payload sizes, multiplexing, and bidirectional streaming. These features are essential for maintaining scalability and responsiveness in complex systems, instilling confidence in its reliability.
+gRPC is a robust solution that plays a pivotal role in modern application architectures. It effectively addresses the challenges of efficient, reliable communication in distributed systems, particularly in microservices-based architectures. In scenarios where services often need to interact with each other in low-latency, high-throughput situations, gRPC's use of HTTP/2 and Protobuf provides performance benefits, such as reduced payload sizes, multiplexing, and bidirectional streaming. These features are essential for maintaining scalability and responsiveness in complex systems.
 
 Beyond microservices, gRPC seamlessly integrates into cloud-native ecosystems. Its service discovery, which allows services to find and communicate with each other without hard-coding their locations, and load balancing support, which distributes incoming network traffic across a group of backend servers, align well with container orchestration platforms like Kubernetes. By using gRPC with tools such as Envoy or Istio, developers can implement advanced networking features like retries, circuit breaking, and traffic shaping, all while maintaining efficient communication between services. This makes gRPC a natural fit for building resilient, scalable applications in cloud environments.
 
@@ -71,7 +65,7 @@ gRPC's architecture is tightly coupled with HTTP/2, a modern transport protocol 
 
 Another defining aspect of gRPC is its adaptability in communication patterns. It supports four types of RPCs—unary (one request, one response), server streaming (one request, multiple responses), client streaming (multiple requests, one response), and bidirectional streaming (multiple requests and responses). These patterns allow gRPC to adapt to various application needs, from simple request-response APIs to complex, real-time communication workflows, providing reassurance in its versatility.
 
-By combining Protobuf's compact serialization, HTTP/2's advanced transport capabilities, and flexible communication patterns, gRPC provides a robust framework for building efficient, scalable, and maintainable applications. In the following sections, we'll delve deeper into these architectural components, exploring how they work together to deliver the performance and versatility that have made gRPC a cornerstone of modern network programming, instilling confidence in its robustness.
+By combining Protobuf's compact serialization, HTTP/2's advanced transport capabilities, and flexible communication patterns, gRPC provides a robust framework for building efficient, scalable, and maintainable applications. In the following sections, we'll delve deeper into these architectural components, exploring how they work together to deliver the performance and versatility that have made gRPC a cornerstone of modern network programming.
 
 ### Core Concepts of gRPC
 
@@ -95,21 +89,13 @@ HTTP/2, a pivotal element of gRPC’s architecture, revolutionizes the efficienc
 
 Another powerful feature of HTTP/2 in gRPC is its support for full-duplex communication. With full-duplex streaming, clients and servers can send and receive data simultaneously, enabling advanced use cases like real-time data feeds, interactive gaming, and bidirectional IoT messaging. This real-time capability is a game-changer, allowing gRPC to deliver low-latency, high-efficiency communication patterns that traditional REST APIs struggle to match. Together, HTTP/2’s capabilities form the backbone of gRPC’s performance, scalability, and adaptability, making it a modern solution for network programming in .NET.
 
-### Types of RPCs in gRPC
-
-gRPC supports four distinct types of RPCs, each tailored to specific communication needs in modern applications. These types—unary, server streaming, client streaming, and bidirectional streaming—allow developers to create efficient, flexible interactions between clients and servers. By understanding these RPC patterns, you can choose the most appropriate approach for your application’s requirements, optimizing performance and usability.
-
-**Unary RPCs**, the simplest type, offer a straightforward one-to-one communication pattern. This pattern, similar to traditional REST API calls, is ideal for scenarios like data retrieval or command execution, where ongoing interaction is not required. The ease of implementing unary calls in .NET makes them an excellent starting point for developers new to gRPC, providing a sense of comfort and familiarity.
-
-The streaming RPC types—**server streaming**, **client streaming**, and **bidirectional streaming**—unleash advanced capabilities, particularly in real-time scenarios. In server streaming, the client sends a single request, and the server responds with a continuous stream of data, perfect for real-time updates or data feeds. Client streaming, in contrast, allows the client to send a stream of data to the server, which processes it and returns a single response, ideal for batch uploads or aggregation tasks. Bidirectional streaming combines both, enabling clients and servers to simultaneously send and receive data streams, a feature that excites in real-time applications like chat systems, collaborative tools, or IoT device communication. These RPC patterns offer a rich toolkit for building responsive, high-performance networked applications in .NET, sparking excitement in developers for the possibilities of real-time communication.
-
 ### Extensibility and Interoperability
 
 One of gRPC’s greatest strengths lies in its extensibility and interoperability, making it a versatile framework for building distributed systems. At its core, gRPC is designed to work seamlessly across multiple programming languages and platforms, ensuring efficient communication between diverse components of a system, regardless of their underlying implementation. Using Protobuf to define service contracts, gRPC enables developers to generate strongly typed client and server code in C#, Java, Python, and Go, further boosting its efficiency and versatility.
 
 Extensibility in gRPC is achieved through features like interceptors and custom metadata. Interceptors allow developers to implement cross-cutting concerns such as logging, monitoring, and authentication without modifying core service logic, enhancing the adaptability of gRPC to the unique needs of complex applications. On the other hand, custom metadata provides a flexible way to attach additional information to requests and responses, enabling advanced use cases like tracking, debugging, or custom authorization schemes. These features make gRPC highly adaptable and reassuringly flexible.
 
-Interoperability is further enhanced by gRPC’s compatibility with HTTP/2 and support for **gRPC-Web**. While native gRPC relies on HTTP/2, gRPC-Web extends its reach to environments like browsers that do not fully support HTTP/2. This makes gRPC ideal for integrating modern front-end applications with back-end services. Together, these capabilities ensure that gRPC is not just a high-performance protocol, but also a future-proof solution for building scalable, language-agnostic systems in .NET and beyond, providing a sense of security about its longevity.
+Interoperability is further enhanced by gRPC’s compatibility with HTTP/2 and support for **gRPC-Web**. While native gRPC relies on HTTP/2, gRPC-Web extends its reach to environments like browsers that do not fully support HTTP/2. This makes gRPC ideal for integrating modern front-end applications with back-end services. Together, these capabilities ensure that gRPC is not just a high-performance framework, but also a future-proof solution for building scalable, language-agnostic systems in .NET and beyond, providing a sense of security about its longevity.
 
 ## Setting Up a gRPC Service in .NET
 
@@ -352,8 +338,6 @@ Running your gRPC service is more than just starting the server; it’s also abo
 ## Creating a gRPC Client in .NET
 
 Creating a client is a straightforward and essential part of working with gRPC. It enables applications to consume the services hosted on a gRPC server. In .NET, gRPC clients are strongly typed and generated directly from the .proto service definition, ensuring that the client and server adhere to the same contract. This tight coupling simplifies development, eliminates potential mismatches, and provides a seamless developer experience.
-
-Unlike traditional REST clients that rely on manual URL handling and serialization logic, gRPC clients relieve you from the burden of network communication, message serialization, and error handling. The generated client classes expose methods corresponding to the server-side RPCs, allowing you to invoke them as local method calls. For example, a call to a unary RPC is as simple as calling a method on an object, while streaming RPCs use async patterns that integrate naturally into .NET applications.
 
 In this section, we’ll explore how to create and configure a gRPC client in .NET, from generating client code to establishing a connection with the server. We’ll also delve into advanced topics, such as securing communication with TLS, a crucial aspect of gRPC applications. Understanding this will ensure that your applications are secure. We'll also cover handling custom headers, and managing client-side streaming. These concepts will prepare you to build robust and efficient applications that interact seamlessly with gRPC services.
 
@@ -723,7 +707,7 @@ await call.RequestStream.CompleteAsync();
 await responseTask;
 ```
 
-Streaming in gRPC adds a powerful dimension to client-server communication. By using these patterns effectively, you can build systems that handle large volumes of data, operate in real-time, and provide seamless interactivity while maintaining the efficiency and reliability of gRPC’s protocol.
+Streaming in gRPC adds a powerful dimension to client-server communication. By using these patterns effectively, you can build systems that handle large volumes of data, operate in real-time, and provide seamless interactivity while maintaining the efficiency and reliability of gRPC’s framework.
 
 ### Interceptors for Cross-Cutting Concerns
 
@@ -926,7 +910,7 @@ foreach (var header in headers)
 }
 ```
 
-Using metadata and headers effectively enables you to implement cross-cutting concerns like security, observability, and versioning in a modular way. These features ensure that your gRPC services can communicate context and auxiliary data while maintaining a clean separation from the core application logic. By leveraging metadata, you add an extra layer of flexibility and extensibility to your gRPC solutions, empowering you to design and control the behavior of your services and instilling confidence in your capabilities.
+Using metadata and headers effectively enables you to implement cross-cutting concerns like security, observability, and versioning in a modular way. These features ensure that your gRPC services can communicate context and auxiliary data while maintaining a clean separation from the core application logic. By leveraging metadata, you add an extra layer of flexibility and extensibility to your gRPC solutions, empowering you to design and control the behavior of your services.
 
 ## Securing gRPC Communication
 
@@ -1234,7 +1218,7 @@ By proactively addressing these common threats, you can significantly enhance th
 
 ## Testing and Debugging gRPC Applications
 
-Testing and debugging gRPC applications are essential to ensure reliability, performance, and correctness in a networked environment. Unlike traditional HTTP services, gRPC operates over HTTP/2 and uses binary serialization via Protocol Buffers, which adds layers of complexity to the debugging process. However, .NET empowers you with a robust set of tools, such as unit testing frameworks, logging mechanisms, and network monitoring utilities, to effectively test and debug your gRPC services, instilling confidence in your capabilities.
+Testing and debugging gRPC applications are essential to ensure reliability, performance, and correctness in a networked environment. Unlike traditional HTTP services, gRPC operates over HTTP/2 and uses binary serialization via Protobuf, which adds layers of complexity to the debugging process. However, .NET empowers you with a robust set of tools, such as unit testing frameworks, logging mechanisms, and network monitoring utilities, to effectively test and debug your gRPC services.
 
 Unit testing of individual gRPC methods can be done using mock gRPC clients and servers. Libraries like Moq or custom stubs can simulate gRPC behavior, enabling you to verify business logic without relying on a live service. For integration tests, tools like TestServer in ASP.NET Core give you the control to host a gRPC service in-memory, providing a secure and controlled environment for end-to-end testing. Additionally, leverage gRPC health checks to ensure the readiness and liveness of your services during automated test pipelines.
 
@@ -1299,7 +1283,7 @@ public async Task Client_ShouldReceiveExpectedResponse()
 
 For comprehensive unit testing, ensure each method is covered for a range of success and failure scenarios. For example, a success scenario could be a user successfully logging in, while a failure scenario could be a user entering an incorrect password. Mocking mechanisms like Moq simplify testing for error handling by simulating exceptions or edge cases.
 
-By adopting unit testing for both gRPC services and clients, you create a safety net that detects regressions early, ensuring that your application functions as intended. When combined with integration and end-to-end testing, these tests establish a strong foundation for delivering reliable, scalable, networked applications, instilling confidence in your work.
+By adopting unit testing for both gRPC services and clients, you create a safety net that detects regressions early, ensuring that your application functions as intended. When combined with integration and end-to-end testing, these tests establish a strong foundation for delivering reliable, scalable, networked applications.
 
 ### Integration Testing gRPC Workflows
 
@@ -1379,7 +1363,7 @@ Integration tests are critical to a robust testing strategy. By combining them w
 
 ### Debugging Common gRPC Issues
 
-Debugging gRPC applications can be challenging due to their reliance on HTTP/2, Protocol Buffers, and binary data serialization. Identifying and resolving common issues requires diagnostic tools, effective logging, and structured testing. You can pinpoint problems efficiently with the right techniques, ensuring your gRPC services remain robust and reliable.
+Debugging gRPC applications can be challenging due to their reliance on HTTP/2, Protobuf, and binary data serialization. Identifying and resolving common issues requires diagnostic tools, effective logging, and structured testing. You can pinpoint problems efficiently with the right techniques, ensuring your gRPC services remain robust and reliable.
 
 #### Connection Issues
 
@@ -1407,7 +1391,7 @@ Enable logging on the server side by configuring `ILogger` to capture detailed r
 
 #### Serialization and Deserialization Issues
 
-Errors in Protocol Buffers, such as `InvalidArgument` or 'Failed to deserialize response,' often indicate mismatched Protobuf definitions between client and server. To resolve this, always ensure both sides use the same `.proto` file. When updates are made to the `.proto` file, regenerate the client and server code by running the appropriate Protobuf compiler commands. This ensures that the code is always in sync with the latest `.proto` file.
+Errors in Protobuf, such as `InvalidArgument` or 'Failed to deserialize response,' often indicate mismatched Protobuf definitions between client and server. To resolve this, always ensure both sides use the same `.proto` file. When updates are made to the `.proto` file, regenerate the client and server code by running the appropriate Protobuf compiler commands. This ensures that the code is always in sync with the latest `.proto` file.
 
 If a method fails unexpectedly, you can log serialized request and response objects to verify their structure:
 
