@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785786882298">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785787574643">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -25,22 +25,24 @@
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter13/">
     <meta property="og:title" content="Working with gRPC">
     <meta property="og:description" content="gRPC, a robust framework, has emerged as a powerful tool for building fast, efficient, and scalable communication between services.">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter13/images/chap13-grpc.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter13/">
     <meta property="twitter:title" content="Working with gRPC">
     <meta property="twitter:description" content="gRPC, a robust framework, has emerged as a powerful tool for building fast, efficient, and scalable communication between services.">
+    <meta property="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter13/images/chap13-grpc.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.785786882298" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.785787574643" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785786882298" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785787574643" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785786882298" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785786882298" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785787574643" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785787574643" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -253,6 +255,11 @@
         <span>13</span>
     </h1>
 </doc-anchor-target>
+<p><figure class="content-center">
+    <img src="images/chap13-grpc.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
 <doc-anchor-target id="working-with-grpc">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#working-with-grpc">#</doc-anchor-trigger>
@@ -434,7 +441,7 @@ app.MapGet(&quot;/&quot;, () =&gt; &quot;Use a gRPC client to connect.&quot;);
 
 app.Run();</code></pre>
 </doc-codeblock></div>
-<p>Run the application with dotnet run, and your gRPC service will be accessible via HTTP/2. To test the service, use a gRPC client like grpcurl or implement a client in .NET. This foundational setup paves the way for building more advanced gRPC services and integrating them into your application. The following steps will explore implementing additional methods, securing the service, and creating clients.</p>
+<p>Run the application with dotnet run, and your gRPC service will be accessible via HTTP/2. To test the service, use a gRPC client like grpcurl (<a href="https://github.com/fullstorydev/grpcurl">https://github.com/fullstorydev/grpcurl</a>) or implement a client in .NET. This foundational setup paves the way for building more advanced gRPC services and integrating them into your application. The following steps will explore implementing additional methods, securing the service, and creating clients.</p>
 <doc-anchor-target id="defining-the-service-contract-with-protobuf">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#defining-the-service-contract-with-protobuf">#</doc-anchor-trigger>
