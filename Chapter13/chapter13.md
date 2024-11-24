@@ -20,8 +20,6 @@ This chapter will explore the essentials of working with gRPC in .NET, from unde
 
 ## Introduction to gRPC and Its Role in Modern Applications
 
-**gRPC**, which stands for **Google Remote Procedure Call**, is a high-performance framework for efficient communication in distributed systems. It enables client-server communication with strongly typed contracts defined using **Protocol Buffers** (**Protobuf**). By leveraging HTTP/2, gRPC supports advanced features like multiplexing, bidirectional streaming, and low-latency communication. This real-time responsiveness makes it an exciting choice for modern applications that demand immediate action and high throughput.
-
 Compared to traditional communication protocols like REST, gRPC offers significant advantages in terms of performance and scalability. While REST relies on text-based formats like JSON, gRPC uses compact, binary Protobuf serialization, reducing payload size and speeding up processing. Its HTTP/2 foundation allows gRPC to maintain a single connection for multiple streams, ensuring efficient data exchange even in high-traffic environments, thereby reassuring the audience about its performance.
 
 gRPC’s role in modern application architectures is not limited to microservices. It is a versatile tool that finds applications in diverse areas such as IoT communication, real-time analytics, backend-to-backend APIs, and even mobile-to-server interactions. Its cross-platform nature and multi-language support ensure seamless communication, regardless of the technology stack, instilling confidence in its applicability to a wide range of use cases.
