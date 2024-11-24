@@ -8,6 +8,8 @@ visibility: hidden
 ---
 # 13
 
+![](./Images/Chap13-gRPC.png)
+
 # Working with gRPC
 
 gRPC, a robust framework, has emerged as a powerful tool for building fast, efficient, and scalable communication between services. Its efficiency, surpassing that of traditional REST APIs, is due to its use of HTTP/2 and Protocol Buffers, which enable features like bidirectional streaming, multiplexing, and compact message serialization. These attributes make gRPC intriguing for scenarios demanding low latency and high throughput, such as real-time data streaming, microservices, and mobile-to-backend communication.
@@ -189,7 +191,7 @@ app.MapGet("/", () => "Use a gRPC client to connect.");
 app.Run();
 ```
 
-Run the application with dotnet run, and your gRPC service will be accessible via HTTP/2. To test the service, use a gRPC client like grpcurl or implement a client in .NET. This foundational setup paves the way for building more advanced gRPC services and integrating them into your application. The following steps will explore implementing additional methods, securing the service, and creating clients.
+Run the application with dotnet run, and your gRPC service will be accessible via HTTP/2. To test the service, use a gRPC client like grpcurl ([https://github.com/fullstorydev/grpcurl](https://github.com/fullstorydev/grpcurl)) or implement a client in .NET. This foundational setup paves the way for building more advanced gRPC services and integrating them into your application. The following steps will explore implementing additional methods, securing the service, and creating clients.
 
 ### Defining the Service Contract with Protobuf
 
