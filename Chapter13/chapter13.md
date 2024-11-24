@@ -20,7 +20,7 @@ This chapter will explore the essentials of working with gRPC in .NET, from unde
 
 ## Introduction to gRPC and Its Role in Modern Applications
 
-gRPC, which stands for **Google Remote Procedure Call**, is a high-performance framework for efficient communication in distributed systems. It enables client-server communication with strongly typed contracts defined using **Protocol Buffers** (**Protobuf**). By leveraging HTTP/2, gRPC supports advanced features like multiplexing, bidirectional streaming, and low-latency communication. This real-time responsiveness makes it an exciting choice for modern applications that demand immediate action and high throughput.
+**gRPC**, which stands for **Google Remote Procedure Call**, is a high-performance framework for efficient communication in distributed systems. It enables client-server communication with strongly typed contracts defined using **Protocol Buffers** (**Protobuf**). By leveraging HTTP/2, gRPC supports advanced features like multiplexing, bidirectional streaming, and low-latency communication. This real-time responsiveness makes it an exciting choice for modern applications that demand immediate action and high throughput.
 
 Compared to traditional communication protocols like REST, gRPC offers significant advantages in terms of performance and scalability. While REST relies on text-based formats like JSON, gRPC uses compact, binary Protobuf serialization, reducing payload size and speeding up processing. Its HTTP/2 foundation allows gRPC to maintain a single connection for multiple streams, ensuring efficient data exchange even in high-traffic environments, thereby reassuring the audience about its performance.
 
@@ -42,7 +42,7 @@ By choosing gRPC, developers gain access to a powerful toolset for building mode
 
 Comparing gRPC to REST and other communication protocols highlights its strengths in scenarios requiring high performance, low latency, and modern features. REST, one of the most widely used protocols, operates over HTTP and typically uses JSON for data exchange. At the same time, REST’s simplicity and universality have made it a standard for web APIs. Its reliance on text-based serialization, lack of native streaming, and statelessness can introduce inefficiencies, especially in resource-constrained or high-demand environments.
 
-gRPC efficiently overcomes these limitations with a binary serialization format (Protocol Buffers) that is significantly more compact and faster to process than JSON. This leads to reduced payload sizes, faster serialization and deserialization, and overall lower network overhead. Furthermore, gRPC’s use of HTTP/2 enables advanced features like multiplexing, where multiple streams can share a single connection, and full-duplex communication, allowing clients and servers to send data simultaneously. These features are highly efficient in real-time applications like live data streaming or bidirectional messaging, instilling confidence in gRPC's performance.
+gRPC efficiently overcomes these limitations with a binary serialization format (Protobuf) that is significantly more compact and faster to process than JSON. This leads to reduced payload sizes, faster serialization and deserialization, and overall lower network overhead. Furthermore, gRPC’s use of HTTP/2 enables advanced features like multiplexing, where multiple streams can share a single connection, and full-duplex communication, allowing clients and servers to send data simultaneously. These features are highly efficient in real-time applications like live data streaming or bidirectional messaging, instilling confidence in gRPC's performance.
 
 Another critical advantage of gRPC is its built-in support for strongly typed contracts, defined in .proto files. This ensures consistency between clients and servers, as the Protobuf definitions are used to generate language-specific classes. In contrast, REST APIs often rely on ad-hoc documentation or tools like Swagger/OpenAPI to define contracts, which can introduce ambiguity and require manual updates. gRPC’s approach, on the other hand, reduces errors and accelerates development by automating the generation of code that strictly adheres to the service definition, relieving developers from manual tasks.
 
@@ -67,7 +67,7 @@ gRPC is a highly efficient tool that enhances client-server interactions in edge
 
 ## Understanding gRPC Architecture and Protocols
 
-Understanding its architecture and underlying protocols is crucial to fully leveraging gRPC's power. At its core, gRPC is a Remote Procedure Call (RPC) framework designed for high-performance communication. It operates on a client-server model, where clients call methods on remote servers as if they were local. This abstraction is achieved through strongly typed service definitions, enabled by Protobuf. Protobuf, a language-agnostic data serialization format, handles message serialization and deserialization seamlessly, providing efficient and compact data transfer.
+Understanding its architecture and underlying protocols is crucial to fully leveraging gRPC's power. At its core, gRPC is a RPC framework designed for high-performance communication. It operates on a client-server model, where clients call methods on remote servers as if they were local. This abstraction is achieved through strongly typed service definitions, enabled by Protobuf. Protobuf, a language-agnostic data serialization format, handles message serialization and deserialization seamlessly, providing efficient and compact data transfer.
 
 gRPC's architecture is tightly coupled with HTTP/2, a modern transport protocol with multiplexing, bidirectional streaming, and header compression features. Unlike the stateless nature of traditional HTTP/1.1, HTTP/2 allows for persistent connections, enabling multiple streams to operate concurrently without the overhead of opening new connections. This design significantly reduces latency and improves throughput, making gRPC well-suited for real-time data exchange scenarios and low-latency interactions. For example, in a stock trading application, gRPC's bidirectional streaming can be used to continuously update stock prices for multiple users in real time.
 
@@ -85,7 +85,7 @@ gRPC's architecture is also deeply integrated with HTTP/2, a protocol that provi
 
 ### The Role of Protocol Buffers
 
-Protocol Buffers, or Protobuf, is the foundation of gRPC's efficiency and flexibility, serving as its interface definition language (IDL) and serialization mechanism. Protobuf allows developers to define service contracts and message structures in a compact .proto file, which is the blueprint for client-server communication. This file defines RPC methods, their request and response messages, and any additional metadata, ensuring a consistent, strongly typed interface across multiple platforms and languages.
+Protocol Buffers, or Protobuf, is the foundation of gRPC's efficiency and flexibility, serving as its **interface definition language** (**IDL**) and serialization mechanism. Protobuf allows developers to define service contracts and message structures in a compact .proto file, which is the blueprint for client-server communication. This file defines RPC methods, their request and response messages, and any additional metadata, ensuring a consistent, strongly typed interface across multiple platforms and languages.
 
 One of Protobuf's key strengths lies in its highly efficient serialization. Protobuf encodes data into a compact binary format, unlike text-based formats such as JSON or XML, significantly reducing payload sizes and processing overhead. This reduction in payload sizes, which can be substantial, makes it particularly well-suited for scenarios with high data throughput or constrained network bandwidth. For example, a structured JSON message of several kilobytes can be reduced to a fraction of its size using Protobuf without sacrificing the integrity or detail of the information, showcasing the efficiency of Protobuf.
 
@@ -99,7 +99,7 @@ Another powerful feature of HTTP/2 in gRPC is its support for full-duplex commun
 
 ### Types of RPCs in gRPC
 
-gRPC supports four distinct types of Remote Procedure Calls (RPCs), each tailored to specific communication needs in modern applications. These types—unary, server streaming, client streaming, and bidirectional streaming—allow developers to create efficient, flexible interactions between clients and servers. By understanding these RPC patterns, you can choose the most appropriate approach for your application’s requirements, optimizing performance and usability.
+gRPC supports four distinct types of RPCs, each tailored to specific communication needs in modern applications. These types—unary, server streaming, client streaming, and bidirectional streaming—allow developers to create efficient, flexible interactions between clients and servers. By understanding these RPC patterns, you can choose the most appropriate approach for your application’s requirements, optimizing performance and usability.
 
 **Unary RPCs**, the simplest type, offer a straightforward one-to-one communication pattern. This pattern, similar to traditional REST API calls, is ideal for scenarios like data retrieval or command execution, where ongoing interaction is not required. The ease of implementing unary calls in .NET makes them an excellent starting point for developers new to gRPC, providing a sense of comfort and familiarity.
 
@@ -195,7 +195,7 @@ Run the application with dotnet run, and your gRPC service will be accessible vi
 
 ### Defining the Service Contract with Protobuf
 
-Defining the service contract is crucial in creating a gRPC service, as it specifies the communication between clients and servers. In gRPC, service contracts are defined using Protocol Buffers (Protobuf), which provide a compact and language-neutral way to describe the structure of data and the methods available in the service. This `.proto` file is the single source of truth for generating strongly typed code in multiple programming languages, including C#.
+Defining the service contract is crucial in creating a gRPC service, as it specifies the communication between clients and servers. In gRPC, service contracts are defined using Protobuf, which provide a compact and language-neutral way to describe the structure of data and the methods available in the service. This `.proto` file is the single source of truth for generating strongly typed code in multiple programming languages, including C#.
 
 To define a service contract, create a `.proto` file in the `Protos` directory of your gRPC project. For example, consider a service for managing a to-do list, which allows users to create, update, and delete tasks. The `.proto` file might look like this:
 
@@ -934,13 +934,13 @@ Using metadata and headers effectively enables you to implement cross-cutting co
 
 Securing gRPC communication is critical for protecting data integrity, confidentiality, and authenticity in distributed applications. gRPC natively supports robust security mechanisms by relying on HTTP/2, which integrates seamlessly with **Transport Layer Security** (**TLS**). Encrypting data in transit, TLS ensures that sensitive information remains private and prevents unauthorized interception or tampering during communication.
 
-To enable secure communication, gRPC requires TLS certificates for both the server and, optionally, the client, supporting mutual TLS (mTLS) for enhanced security. Mutual TLS provides bidirectional authentication, ensuring the server and the client verify each other's identities. This is particularly valuable in environments with strict security requirements, such as financial systems or IoT networks. Additionally, gRPC can utilize token-based authentication or API keys via metadata headers to provide application-level security, complementing TLS at the transport level.
+To enable secure communication, gRPC requires TLS certificates for both the server and, optionally, the client, supporting **mutual TLS** (**mTLS**) for enhanced security. Mutual TLS provides bidirectional authentication, ensuring the server and the client verify each other's identities. This is particularly valuable in environments with strict security requirements, such as financial systems or IoT networks. Additionally, gRPC can utilize token-based authentication or API keys via metadata headers to provide application-level security, complementing TLS at the transport level.
 
 GRPC goes beyond encryption and authentication, supporting advanced security integrations with service meshes and third-party solutions. Service meshes like Istio and Linkerd offer automatic certificate rotation, traffic encryption, and policy enforcement, enhancing security in dynamic environments like Kubernetes clusters. However, it's the combination of these security measures with best practices—such as rotating secrets, using least privilege principles, and auditing communication—that empowers developers to ensure that gRPC applications remain resilient to evolving threats while maintaining high performance and reliability.
 
 ### TLS for Encrypted Communication
 
-Transport Layer Security (TLS) is not just a feature, but the cornerstone of encrypted communication in gRPC. It ensures that data transmitted between clients and servers remains confidential and tamper-proof. By default, gRPC strongly encourages using TLS, leveraging its integration with HTTP/2 to provide robust encryption without significant performance overhead. Implementing TLS in your gRPC services involves configuring the server to use a certificate and ensuring that clients connect securely.
+TLS is not just a feature, but the cornerstone of encrypted communication in gRPC. It ensures that data transmitted between clients and servers remains confidential and tamper-proof. By default, gRPC strongly encourages using TLS, leveraging its integration with HTTP/2 to provide robust encryption without significant performance overhead. Implementing TLS in your gRPC services involves configuring the server to use a certificate and ensuring that clients connect securely.
 
 Configuring TLS on the server side is a straightforward process, done in the `Program.cs` file by specifying a certificate and enabling HTTPS in the Kestrel web server. A typical setup involves loading a `.pfx` certificate file and binding it to the server:
 
@@ -954,7 +954,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 ```
 
-This configuration ensures that all communication on port 5001 is encrypted using the provided certificate. In production, you should use certificates from a trusted Certificate Authority (CA), such as Let's Encrypt or a commercial provider like DigiCert or Comodo, instead of self-signed certificates.
+This configuration ensures that all communication on port 5001 is encrypted using the provided certificate. In production, you should use certificates from a trusted **Certificate Authority** (**CA**), such as Let's Encrypt or a commercial provider like DigiCert or Comodo, instead of self-signed certificates.
 
 Clients connecting to a TLS-enabled server must use the `GrpcChannel` class, which is a part of the gRPC framework, with an HTTPS endpoint. This class is responsible for managing the connection to the server and handling the TLS encryption. If the server uses a certificate from a trusted CA, the client automatically validates it. However, for self-signed certificates (commonly used in development), you must explicitly configure the client to trust the certificate:
 
@@ -1000,7 +1000,7 @@ TLS not only encrypts communication but also provides mechanisms for verifying t
 
 ### Authentication Mechanisms
 
-Authentication is vital to securing gRPC services, ensuring that only authorized clients can access sensitive data or perform specific actions. gRPC supports various authentication mechanisms, including token-based systems, API keys, and mutual TLS (mTLS). Your role in choosing the suitable mechanism is crucial, as it depends on the application's security requirements and deployment environment. .NET provides robust support for each approach, making you an integral part of the authentication process.
+Authentication is vital to securing gRPC services, ensuring that only authorized clients can access sensitive data or perform specific actions. gRPC supports various authentication mechanisms, including token-based systems, API keys, and mTLS. Your role in choosing the suitable mechanism is crucial, as it depends on the application's security requirements and deployment environment. .NET provides robust support for each approach, making you an integral part of the authentication process.
 
 #### Token-Based Authentication
 
@@ -1170,7 +1170,7 @@ if (!context.RequestHeaders.Any(h => h.Key == "Authorization"))
 }
 ```
 
-Incorporating access control lists (ACLs) or IP whitelists can further restrict access to known and trusted sources.
+Incorporating **access control lists** (**ACLs**) or IP whitelists can further restrict access to known and trusted sources.
 
 #### Preventing Data Interception
 
