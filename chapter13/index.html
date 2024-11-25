@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785804693419">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785894391003">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.785804693419" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.785894391003" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785804693419" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785894391003" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785804693419" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785804693419" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785894391003" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785894391003" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -275,9 +275,7 @@
         <span>Introduction to gRPC and Its Role in Modern Applications</span>
     </h2>
 </doc-anchor-target>
-<p>Compared to traditional communication protocols like REST, gRPC offers significant advantages in terms of performance and scalability. While REST relies on text-based formats like JSON, gRPC uses compact, binary Protobuf serialization, reducing payload size and speeding up processing. Its HTTP/2 foundation allows gRPC to maintain a single connection for multiple streams, ensuring efficient data exchange even in high-traffic environments, thereby reassuring the audience about its performance.</p>
 <p>gRPC’s role in modern application architectures is not limited to microservices. It is a versatile tool that finds applications in diverse areas such as IoT communication, real-time analytics, backend-to-backend APIs, and even mobile-to-server interactions. Its cross-platform nature and multi-language support ensure seamless communication, regardless of the technology stack, instilling confidence in its applicability to a wide range of use cases.</p>
-<p>What sets gRPC apart from other communication protocols is its focus on performance and modern capabilities. Protobuf, gRPC&#x27;s serialization mechanism, creates compact, binary-encoded payloads that are smaller and faster to process than traditional text-based formats like JSON or XML. Combined with HTTP/2, gRPC benefits from features such as multiplexing (sending multiple streams over a single connection), full-duplex streaming (bidirectional communication), and header compression. These modern capabilities make gRPC particularly well-suited for low-latency, high-throughput applications, and open up exciting possibilities for developers.</p>
 <p>gRPC&#x27;s design philosophy is centered around interoperability, offering official support for multiple programming languages, including C#, Java, Python, and Go. This multi-language support allows developers to build systems where services written in different languages can communicate seamlessly. GRPC&#x27;s platform-agnostic nature, combined with Protobuf-generated code, simplifies development by eliminating manual serialization and deserialization, reducing errors and speeding up the development process. This flexibility reassures developers that gRPC can adapt to their specific needs.</p>
 <p>This section will explore how gRPC fits into today’s software ecosystem and why it has become a go-to solution for building high-performance networked applications. By understanding its core features and unique strengths, such as its ability to reduce network latency and improve data transfer efficiency, you’ll gain insight into how gRPC can elevate your development practices and significantly improve the efficiency of your systems.</p>
 <doc-anchor-target id="comparison-to-rest-and-other-protocols">
@@ -327,23 +325,6 @@
 <p>At the heart of gRPC are several core concepts that define its architecture and enable its high-performance communication capabilities. One fundamental concept is the RPC paradigm, which gRPC not only utilizes but also modernizes for today&#x27;s distributed systems. In this model, a client application can directly invoke methods on a server application as if it were a local object, simplifying the development of networked services. This abstraction hides the complexities of the underlying network communication, allowing developers to focus on application logic rather than low-level protocol details.</p>
 <p>Another core concept is the use of Protobuf as the interface definition language and message serialization mechanism. Protobuf allows developers to define service contracts and message structures in a language-agnostic .proto file. These definitions are then used to generate strongly typed code for clients and servers in multiple programming languages, including C#. This approach ensures type safety, reduces errors, and accelerates development by automating the creation of data access classes and service stubs based on a consistent contract, providing a robust foundation for gRPC.</p>
 <p>gRPC&#x27;s architecture is also deeply integrated with HTTP/2, a protocol that provides advanced transport features essential for modern applications. HTTP/2 enables multiplexing of multiple streams over a single TCP connection, reducing latency and improving resource utilization. This means that gRPC can handle multiple requests and responses at the same time, making it more efficient than traditional HTTP/1.1. It also supports full-duplex communication, allowing clients and servers to send and receive data simultaneously. This capability is crucial for gRPC&#x27;s support of various communication patterns, such as unary calls, server streaming, client streaming, and bidirectional streaming. These core concepts empower gRPC to deliver efficient, scalable, and robust communication in distributed systems.</p>
-<doc-anchor-target id="the-role-of-protocol-buffers">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#the-role-of-protocol-buffers">#</doc-anchor-trigger>
-        <span>The Role of Protocol Buffers</span>
-    </h3>
-</doc-anchor-target>
-<p>Protocol Buffers, or Protobuf, is the foundation of gRPC&#x27;s efficiency and flexibility, serving as its <strong>interface definition language</strong> (<strong>IDL</strong>) and serialization mechanism. Protobuf allows developers to define service contracts and message structures in a compact .proto file, which is the blueprint for client-server communication. This file defines RPC methods, their request and response messages, and any additional metadata, ensuring a consistent, strongly typed interface across multiple platforms and languages.</p>
-<p>One of Protobuf&#x27;s key strengths lies in its highly efficient serialization. Protobuf encodes data into a compact binary format, unlike text-based formats such as JSON or XML, significantly reducing payload sizes and processing overhead. This reduction in payload sizes, which can be substantial, makes it particularly well-suited for scenarios with high data throughput or constrained network bandwidth. For example, a structured JSON message of several kilobytes can be reduced to a fraction of its size using Protobuf without sacrificing the integrity or detail of the information, showcasing the efficiency of Protobuf.</p>
-<p>The .proto file ensures consistency and accelerates development by automatically generating code for client and server implementations. In .NET, tools like dotnet-grpc generate strongly typed C# classes and methods from the .proto definitions, simplifying integration and reducing the risk of errors. This seamless generation and enforcement of type safety, facilitated by Protobuf, provides a powerful framework for building robust gRPC applications. By leveraging Protobuf, gRPC not only ensures that communication between components always adheres to the defined contract but also balances performance, reliability, and developer productivity, making it a standout choice for modern distributed systems.</p>
-<doc-anchor-target id="communication-over-http2">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#communication-over-http2">#</doc-anchor-trigger>
-        <span>Communication over HTTP/2</span>
-    </h3>
-</doc-anchor-target>
-<p>HTTP/2, a pivotal element of gRPC’s architecture, revolutionizes the efficiency and performance of client-server communication. Unlike the conventional HTTP/1.1 protocol, HTTP/2 introduces multiplexing, a feature that enables the simultaneous transmission of multiple data streams over a single connection. This eliminates the need for repetitive connection opening and closing, significantly reducing latency and enhancing resource utilization. Features like header compression further optimize network traffic, making HTTP/2 particularly beneficial for applications that demand high throughput or operate in bandwidth-constrained environments.</p>
-<p>Another powerful feature of HTTP/2 in gRPC is its support for full-duplex communication. With full-duplex streaming, clients and servers can send and receive data simultaneously, enabling advanced use cases like real-time data feeds, interactive gaming, and bidirectional IoT messaging. This real-time capability is a game-changer, allowing gRPC to deliver low-latency, high-efficiency communication patterns that traditional REST APIs struggle to match. Together, HTTP/2’s capabilities form the backbone of gRPC’s performance, scalability, and adaptability, making it a modern solution for network programming in .NET.</p>
 <doc-anchor-target id="extensibility-and-interoperability">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#extensibility-and-interoperability">#</doc-anchor-trigger>
@@ -430,7 +411,9 @@ app.Run();</code></pre>
         <span>Defining the Service Contract with Protobuf</span>
     </h3>
 </doc-anchor-target>
-<p>Defining the service contract is crucial in creating a gRPC service, as it specifies the communication between clients and servers. In gRPC, service contracts are defined using Protobuf, which provide a compact and language-neutral way to describe the structure of data and the methods available in the service. This <code v-pre>.proto</code> file is the single source of truth for generating strongly typed code in multiple programming languages, including C#.</p>
+<p>Protocol Buffers, or Protobuf, is the foundation of gRPC&#x27;s efficiency and flexibility, serving as its <strong>interface definition language</strong> (<strong>IDL</strong>) and serialization mechanism. Protobuf allows developers to define service contracts and message structures in a compact .proto file, which is the blueprint for client-server communication. This file defines RPC methods, their request and response messages, and any additional metadata, ensuring a consistent, strongly typed interface across multiple platforms and languages.</p>
+<p>One of Protobuf&#x27;s key strengths lies in its highly efficient serialization. Protobuf encodes data into a compact binary format, unlike text-based formats such as JSON or XML, significantly reducing payload sizes and processing overhead. This reduction in payload sizes, which can be substantial, makes it particularly well-suited for scenarios with high data throughput or constrained network bandwidth. For example, a structured JSON message of several kilobytes can be reduced to a fraction of its size using Protobuf without sacrificing the integrity or detail of the information, showcasing the efficiency of Protobuf.</p>
+<p>The <code v-pre>.proto</code> file ensures consistency and accelerates development by automatically generating code for client and server implementations. In .NET, tools like dotnet-grpc generate strongly typed C# classes and methods from the .proto definitions, simplifying integration and reducing the risk of errors. This seamless generation and enforcement of type safety, facilitated by Protobuf, provides a powerful framework for building robust gRPC applications. By leveraging Protobuf, gRPC not only ensures that communication between components always adheres to the defined contract but also balances performance, reliability, and developer productivity, making it a standout choice for modern distributed systems.</p>
 <p>To define a service contract, create a <code v-pre>.proto</code> file in the <code v-pre>Protos</code> directory of your gRPC project. For example, consider a service for managing a to-do list, which allows users to create, update, and delete tasks. The <code v-pre>.proto</code> file might look like this:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">syntax = &quot;proto3&quot;;
@@ -496,57 +479,6 @@ message Empty {}</code></pre>
 }</code></pre>
 </doc-codeblock></div>
 <p>This implementation handles adding to-do items and streaming them back to clients. The term&#x27; streaming&#x27; here refers to the process of sending a continuous flow of data from the server to the client, or vice versa, rather than a single, one-time transfer. The Protobuf definitions ensure consistent serialization and deserialization of data, while the generated base classes simplify service development. Defining the service contract early in the process sets a strong foundation for building and evolving your gRPC services. Subsequent sections will explore how to host and consume these services efficiently in .NET.</p>
-<doc-anchor-target id="implementing-the-grpc-service">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-the-grpc-service">#</doc-anchor-trigger>
-        <span>Implementing the gRPC Service</span>
-    </h3>
-</doc-anchor-target>
-<p>Once the service contract is defined in a <code v-pre>.proto</code> file and the Protobuf definitions have been compiled into C# classes, the next step is implementing the service logic. This involves creating a class that derives from the generated service base class and overriding its methods to provide the functionality defined in the contract. Implementing a gRPC service in .NET is straightforward, leveraging familiar patterns and tools to deliver powerful and efficient server-side logic, a key advantage of this approach.</p>
-<p>For example, consider the <code v-pre>TodoService</code> defined earlier with methods to add to-do items and retrieve them. The first step is to create a new class that inherits from <code v-pre>TodoService.TodoServiceBase</code>, the base class generated by the Protobuf compiler. In this class, override the methods specified in the <code v-pre>.proto</code> file to define the service logic:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public class TodoServiceImpl : TodoService.TodoServiceBase
-{
-    private readonly List&lt;TodoItem&gt; _todos = new();
-
-    public override Task&lt;TodoReply&gt; AddTodo(TodoRequest request, ServerCallContext context)
-    {
-        var todo = new TodoItem
-        {
-            Title = request.Title,
-            Description = request.Description,
-            Status = &quot;Pending&quot;
-        };
-        _todos.Add(todo);
-
-        return Task.FromResult(new TodoReply { Status = &quot;Added&quot; });
-    }
-
-    public override async Task GetTodos(Empty request, IServerStreamWriter&lt;TodoItem&gt; responseStream, ServerCallContext context)
-    {
-        foreach (var todo in _todos)
-        {
-            await responseStream.WriteAsync(todo);
-        }
-    }
-}</code></pre>
-</doc-codeblock></div>
-<p>The <code v-pre>AddTodo</code> method processes a client request to add a new to-do item by creating a <code v-pre>TodoItem</code> object, adding it to an in-memory list, and returning a <code v-pre>TodoReply</code> indicating success. In contrast, the <code v-pre>GetTodos</code> method plays a key role in the system, demonstrating server streaming by iterating over the list of to-do items and sending each one to the client using the <code v-pre>IServerStreamWriter</code>.</p>
-<p>To host this service, configure it in the <code v-pre>Program.cs</code> file of your ASP.NET Core project. Add the gRPC service to the middleware pipeline using the <code v-pre>MapGrpcService&lt;T&gt;()</code> extension method, which is designed to integrate gRPC services into the middleware pipeline.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddGrpc();
-
-var app = builder.Build();
-
-app.MapGrpcService&lt;TodoServiceImpl&gt;();
-app.MapGet(&quot;/&quot;, () =&gt; &quot;Use a gRPC client to connect.&quot;);
-
-app.Run();</code></pre>
-</doc-codeblock></div>
-<p>With this configuration, the gRPC service is ready to handle incoming requests. Clients can invoke the <code v-pre>AddTodo</code> and <code v-pre>GetTodos</code> methods when the server runs using the generated client code. For example, you can easily test the service directly from the command line using <code v-pre>grpcurl</code>, providing a quick and reliable way to verify the service&#x27;s functionality, or build a gRPC client in .NET to consume it programmatically.</p>
-<p>This pattern of deriving from the generated base class and overriding its methods ensures that the implementation adheres to the contract defined in the <code v-pre>.proto</code> file. By maintaining this vital link between the contract and the implementation, gRPC provides a reliable and consistent framework for building robust, scalable services. In the next sections, we’ll explore how to consume these services with gRPC clients and implement advanced features like security and streaming, all within the reliable framework of gRPC.</p>
 <doc-anchor-target id="running-the-grpc-service">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#running-the-grpc-service">#</doc-anchor-trigger>
@@ -576,7 +508,7 @@ info: Microsoft.Hosting.Lifetime[0]
     </h2>
 </doc-anchor-target>
 <p>Creating a client is a straightforward and essential part of working with gRPC. It enables applications to consume the services hosted on a gRPC server. In .NET, gRPC clients are strongly typed and generated directly from the .proto service definition, ensuring that the client and server adhere to the same contract. This tight coupling simplifies development, eliminates potential mismatches, and provides a seamless developer experience.</p>
-<p>In this section, we’ll explore how to create and configure a gRPC client in .NET, from generating client code to establishing a connection with the server. We’ll also delve into advanced topics, such as securing communication with TLS, a crucial aspect of gRPC applications. Understanding this will ensure that your applications are secure. We&#x27;ll also cover handling custom headers, and managing client-side streaming. These concepts will prepare you to build robust and efficient applications that interact seamlessly with gRPC services.</p>
+<p>In this section, we’ll explore how to create and configure a gRPC client in .NET, from generating client code to establishing a connection with the server. We’ll also delve into advanced topics, such as securing communication with <strong>Transport Layer Security</strong> (<strong>TLS</strong>), a crucial aspect of gRPC applications. Understanding this will ensure that your applications are secure. We&#x27;ll also cover handling custom headers, and managing client-side streaming. These concepts will prepare you to build robust and efficient applications that interact seamlessly with gRPC services.</p>
 <p>By the end of this section, you’ll understand how to integrate gRPC clients into your .NET solutions. Whether you’re building a console application, a web client, or an IoT device, the tools and techniques covered here will empower you to leverage the full potential of gRPC in your applications. Let’s dive into the practical steps of setting up your first gRPC client.</p>
 <doc-anchor-target id="understanding-the-grpc-client-workflow">
     <h3>
@@ -695,54 +627,6 @@ var replyWithAuth = await client.AddTodoAsync(new TodoRequest
 Console.WriteLine($&quot;Authenticated Response: {replyWithAuth.Status}&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Setting up a gRPC client in .NET establishes the foundation for consuming gRPC services and opens up customization opportunities. With the client now configured and ready, you are fully prepared to move forward to more advanced scenarios, such as error handling, retries, and performance optimization, to ensure your application&#x27;s robust and reliable communication layer.</p>
-<doc-anchor-target id="invoking-grpc-methods">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#invoking-grpc-methods">#</doc-anchor-trigger>
-        <span>Invoking gRPC Methods</span>
-    </h3>
-</doc-anchor-target>
-<p>Invoking gRPC methods in .NET is designed to feel like calling local methods, thanks to the strongly typed client classes generated from the Protobuf service definitions. Each RPC method defined in the .proto file corresponds to a method in the client class, making the process straightforward, intuitive, and confidence-inspiring. Whether you are working with unary, server streaming, client streaming, or bidirectional streaming methods, gRPC provides an API that integrates seamlessly with .NET’s async patterns.</p>
-<p>For unary RPCs, the client exposes methods that take a request object and return a response, often wrapped in a Task for convenient and facilitated asynchronous execution. For instance, using the AddTodo method from a TodoService:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using var call = client.GetTodos(new Empty());
-await foreach (var todo in call.ResponseStream.ReadAllAsync())
-{
-    Console.WriteLine($&quot;Title: {todo.Title}, Status: {todo.Status}&quot;);
-}</code></pre>
-</doc-codeblock></div>
-<p>n this example, the ReadAllAsync method enables asynchronous iteration over the server’s stream, processing each item as it arrives.</p>
-<p>Client streaming requires sending multiple requests to the server in a single method call. This involves writing requests to the RequestStream and then reading a single response. For example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using var call = client.AddTodos();
-foreach (var todo in todosToAdd)
-{
-    await call.RequestStream.WriteAsync(new TodoRequest
-    {
-        Title = todo.Title,
-        Description = todo.Description
-    });
-}
-await call.RequestStream.CompleteAsync();
-
-var summary = await call.ResponseAsync;
-Console.WriteLine($&quot;Server Summary: {summary.Status}&quot;);</code></pre>
-</doc-codeblock></div>
-<p>Bidirectional streaming combines both patterns, allowing the client to send and receive data simultaneously. The client manages streams for both requests and responses, making it ideal for interactive or real-time scenarios like chat applications:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">using var call = client.Chat();
-await foreach (var message in GetChatMessagesAsync())
-{
-    await call.RequestStream.WriteAsync(new ChatMessage { Content = message });
-}
-
-await call.RequestStream.CompleteAsync();
-
-await foreach (var response in call.ResponseStream.ReadAllAsync())
-{
-    Console.WriteLine($&quot;Server: {response.Content}&quot;);
-}</code></pre>
-</doc-codeblock></div>
-<p>Each gRPC method type aligns with specific application needs, and .NET’s support for async workflows ensures these interactions are efficient and easy to implement. As you invoke gRPC methods, you can further enhance functionality with metadata, error handling, and retries to create a robust client-server communication system.</p>
 <doc-anchor-target id="error-handling-and-retries">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#error-handling-and-retries">#</doc-anchor-trigger>
@@ -1100,9 +984,7 @@ foreach (var header in headers)
         <span>Securing gRPC Communication</span>
     </h2>
 </doc-anchor-target>
-<p>Securing gRPC communication is critical for protecting data integrity, confidentiality, and authenticity in distributed applications. gRPC natively supports robust security mechanisms by relying on HTTP/2, which integrates seamlessly with <strong>Transport Layer Security</strong> (<strong>TLS</strong>). Encrypting data in transit, TLS ensures that sensitive information remains private and prevents unauthorized interception or tampering during communication.</p>
-<p>To enable secure communication, gRPC requires TLS certificates for both the server and, optionally, the client, supporting <strong>mutual TLS</strong> (<strong>mTLS</strong>) for enhanced security. Mutual TLS provides bidirectional authentication, ensuring the server and the client verify each other&#x27;s identities. This is particularly valuable in environments with strict security requirements, such as financial systems or IoT networks. Additionally, gRPC can utilize token-based authentication or API keys via metadata headers to provide application-level security, complementing TLS at the transport level.</p>
-<p>GRPC goes beyond encryption and authentication, supporting advanced security integrations with service meshes and third-party solutions. Service meshes like Istio and Linkerd offer automatic certificate rotation, traffic encryption, and policy enforcement, enhancing security in dynamic environments like Kubernetes clusters. However, it&#x27;s the combination of these security measures with best practices—such as rotating secrets, using least privilege principles, and auditing communication—that empowers developers to ensure that gRPC applications remain resilient to evolving threats while maintaining high performance and reliability.</p>
+<p>gRPC delivers robust security through its integration with HTTP/2 and TLS, ensuring encryption for data in transit to protect sensitive information from interception and tampering. It supports server-side TLS and mutual TLS (mTLS) for bidirectional authentication, making it suitable for high-security environments like financial systems and IoT. In addition to transport-layer security, gRPC facilitates token-based authentication and API keys via metadata for application-level protection. Advanced integrations with service meshes, such as Istio and Linkerd, enhance security features like automatic certificate rotation and policy enforcement. By implementing best practices—such as rotating secrets, applying least privilege, and auditing communications—developers can create secure, high-performing gRPC applications.</p>
 <doc-anchor-target id="tls-for-encrypted-communication">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#tls-for-encrypted-communication">#</doc-anchor-trigger>
@@ -1233,13 +1115,6 @@ var reply = await client.AddTodoAsync(new TodoRequest
     return Task.FromResult(new TodoReply { Status = &quot;Success&quot; });
 }</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="mutual-tls-mtls">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#mutual-tls-mtls">#</doc-anchor-trigger>
-        <span>Mutual TLS (mTLS)</span>
-    </h4>
-</doc-anchor-target>
-<p>In high-security environments, the use of mutual TLS is of utmost importance. It ensures both the client and server authenticate each other, thereby enhancing the security of the system. The beauty of mTLS is that it is configured during the TLS setup by requiring client certificates, and the server validates the client certificate automatically, eliminating the need for additional code changes for authentication.</p>
 <doc-anchor-target id="combining-mechanisms">
     <h4>
         <doc-anchor-trigger class="header-anchor-trigger" to="#combining-mechanisms">#</doc-anchor-trigger>
