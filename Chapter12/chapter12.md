@@ -86,7 +86,7 @@ Retained messages are a simple yet powerful concept. When a publisher sends a me
 
 The Last Will and Testament feature steps in when a device disconnects unexpectedly. When a client connects to the broker, it can specify an LWT message published to a predefined topic if the connection is lost without a proper disconnection message. For instance, an IoT sensor in a factory might set an LWT message like "Sensor offline" to notify other systems of its unexpected absence. This is invaluable in monitoring scenarios where knowing the status of devices is as important as the data they provide.
 
-Implementing retained messages and LWT in your .NET applications is straightforward with MQTT libraries like MQTTnet. These features not only enhance the reliability of your IoT system but also provide a more seamless experience for users and systems interacting with it. As we explore these capabilities in code, you'll see how they ensure your IoT applications are always informed and prepared, even in the face of network hiccups or device failures, thereby enhancing the overall user and system experience.
+Implementing retained messages and LWT in your .NET applications is straightforward with MQTT libraries like [MQTTnet](https://github.com/dotnet/MQTTnet). These features not only enhance the reliability of your IoT system but also provide a more seamless experience for users and systems interacting with it. As we explore these capabilities in code, you'll see how they ensure your IoT applications are always informed and prepared, even in the face of network hiccups or device failures, thereby enhancing the overall user and system experience.
 
 ## Setting Up MQTT in a .NET Environment
 
