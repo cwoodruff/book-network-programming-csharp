@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785894391003">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785894404249">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.785894391003" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.785894404249" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785894391003" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785894404249" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785894391003" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785894391003" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785894404249" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785894404249" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -333,7 +333,7 @@
 <p>MQTT&#x27;s retained messages and LWT features are like the protocol&#x27;s safety nets and contingency plans, ensuring critical information is available when needed and that devices can gracefully handle unexpected disconnects. These features add a layer of robustness to MQTT, making it particularly effective for IoT systems where devices frequently come and go or operate in less-than-ideal conditions.</p>
 <p>Retained messages are a simple yet powerful concept. When a publisher sends a message with the &quot;retained&quot; flag set, the broker holds onto it, ensuring that any new subscriber to the topic immediately receives the latest message. This immediate data availability is like a dashboard application for a home automation system with a smart thermostat publishing temperature updates to a topic. A new subscriber doesn&#x27;t have to wait for the next update; it gets the current temperature right away. This ensures that critical state information is always available, reducing delays and enhancing responsiveness.</p>
 <p>The Last Will and Testament feature steps in when a device disconnects unexpectedly. When a client connects to the broker, it can specify an LWT message published to a predefined topic if the connection is lost without a proper disconnection message. For instance, an IoT sensor in a factory might set an LWT message like &quot;Sensor offline&quot; to notify other systems of its unexpected absence. This is invaluable in monitoring scenarios where knowing the status of devices is as important as the data they provide.</p>
-<p>Implementing retained messages and LWT in your .NET applications is straightforward with MQTT libraries like MQTTnet. These features not only enhance the reliability of your IoT system but also provide a more seamless experience for users and systems interacting with it. As we explore these capabilities in code, you&#x27;ll see how they ensure your IoT applications are always informed and prepared, even in the face of network hiccups or device failures, thereby enhancing the overall user and system experience.</p>
+<p>Implementing retained messages and LWT in your .NET applications is straightforward with MQTT libraries like <a href="https://github.com/dotnet/MQTTnet">MQTTnet</a>. These features not only enhance the reliability of your IoT system but also provide a more seamless experience for users and systems interacting with it. As we explore these capabilities in code, you&#x27;ll see how they ensure your IoT applications are always informed and prepared, even in the face of network hiccups or device failures, thereby enhancing the overall user and system experience.</p>
 <doc-anchor-target id="setting-up-mqtt-in-a-net-environment">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#setting-up-mqtt-in-a-net-environment">#</doc-anchor-trigger>
