@@ -1,8 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttBroker", "MQTT-TLS\MqttBroker\MqttBroker.csproj", "{A830863E-E051-4564-A5D2-02C0D5FD5B5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttClientApp", "MQTT-TLS\MqttClientApp\MqttClientApp.csproj", "{2F1E7260-BE37-433F-A216-186972357F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTServer", "MQTT-Simple\MQTTServer\MQTTServer.csproj", "{10E0EAE5-FF86-4198-B965-77930F3F336E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTClient", "MQTT-Simple\MQTTClient\MQTTClient.csproj", "{58AE9E23-331C-418F-95CA-F058BD972817}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A830863E-E051-4564-A5D2-02C0D5FD5B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A830863E-E051-4564-A5D2-02C0D5FD5B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A830863E-E051-4564-A5D2-02C0D5FD5B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A830863E-E051-4564-A5D2-02C0D5FD5B5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1E7260-BE37-433F-A216-186972357F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1E7260-BE37-433F-A216-186972357F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1E7260-BE37-433F-A216-186972357F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1E7260-BE37-433F-A216-186972357F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10E0EAE5-FF86-4198-B965-77930F3F336E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E0EAE5-FF86-4198-B965-77930F3F336E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E0EAE5-FF86-4198-B965-77930F3F336E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E0EAE5-FF86-4198-B965-77930F3F336E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58AE9E23-331C-418F-95CA-F058BD972817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58AE9E23-331C-418F-95CA-F058BD972817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58AE9E23-331C-418F-95CA-F058BD972817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58AE9E23-331C-418F-95CA-F058BD972817}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
