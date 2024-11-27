@@ -366,7 +366,7 @@ client.ConnectedAsync += e =>
 client.DisconnectedAsync += async e =>
 {
     Console.WriteLine("Disconnected from MQTT broker. Attempting to reconnect...");
-    await ReconnectAsync(client, options);
+    await client.ReconnectAsync(client, options);
 };
 ```
 
@@ -399,11 +399,17 @@ You can also leverage MQTT’s LWT feature for critical applications to notify o
 var options = new MqttClientOptionsBuilder()
     .WithClientId("CriticalDevice")
     .WithTcpServer("localhost", 1883)
-    .WithWillMessage(new MqttApplicationMessageBuilder()
-        .WithTopic("devices/status")
-        .WithPayload("CriticalDevice disconnected")
-        .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-        .Build())
+    .WithWillTopic("devices/status")
+    .WithWillPayload("CriticalDevice disconnected")
+    .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+    .WithTls(new MqttClientOptionsBuilderTlsParameters
+    {
+        UseTls = true,
+        Certificates = new List(), // Optionally add your certificates here
+        AllowUntrustedCertificates = true, // Set to false in production
+        IgnoreCertificateChainErrors = true, // Set to false in production
+        IgnoreCertificateRevocationErrors = true // Set to false in production
+    })
     .Build();
 ```
 
@@ -497,7 +503,7 @@ Securing MQTT connections with TLS is not just a good practice, but a fundamenta
 
 To enable TLS, the MQTT broker must support encrypted connections. The good news is that most brokers, such as Eclipse Mosquitto or HiveMQ, provide options to configure TLS. You’ll need to generate or obtain SSL certificates, which typically include a certificate file (`.crt`), a private key (`.key`), and, optionally, a Certificate Authority (CA) file. These files are used to establish trust between the client and the broker. Here’s an example configuration snippet for Mosquitto:
 
-```C#
+```Bash
 listener 8883
 cafile /path/to/ca.crt
 certfile /path/to/server.crt
@@ -653,11 +659,9 @@ To configure LWT in your .NET MQTT client, specify the message, topic, and QoS l
 var options = new MqttClientOptionsBuilder()
     .WithClientId("TemperatureSensor")
     .WithTcpServer("localhost", 1883)
-    .WithWillMessage(new MqttApplicationMessageBuilder()
-        .WithTopic("sensors/temperature/status")
-        .WithPayload("TemperatureSensor is offline")
-        .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-        .Build())
+    .WithWillTopic("sensors/temperature/status")
+    .WithWillPayload("TemperatureSensor is offline")
+    .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
     .Build();
 
 await client.ConnectAsync(options);
@@ -669,12 +673,12 @@ When the broker detects an abnormal disconnection—such as a network failure or
 You can enhance reliability further by pairing LWT with retained messages. By setting the retain flag, the broker ensures that any new subscribers to the topic receive the LWT message immediately upon subscription, even if it was published in the past. This immediate update feature keeps all subscribers informed and up-to-date, which is particularly useful in scenarios where devices or systems may join the network after a disconnection has occurred:
 
 ```C#
-.WithWillMessage(new MqttApplicationMessageBuilder()
-    .WithTopic("sensors/temperature/status")
-    .WithPayload("TemperatureSensor is offline")
-    .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-    .WithRetainFlag(true)
-    .Build())
+var options = new MqttClientOptionsBuilder()
+    .WithWillTopic("sensors/temperature/status")
+    .WithWillPayload("TemperatureSensor is offline")
+    .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+    .WithWillRetain(true)
+    .Build();
 ```
 
 Testing LWT behavior is crucial during development. Simulate unexpected disconnections by abruptly stopping the client or disabling the network and verify that the broker, a key component in the MQTT system, publishes the LWT message to the appropriate topic. Additionally, ensure that other system components subscribe to these topics and handle the offline status appropriately, such as by logging the event or alerting operators.
@@ -721,6 +725,7 @@ for (int i = 0; i < 10; i++) // Simulate 10 messages
 Next, simulate a subscriber that listens to the same topic and processes incoming messages. This can be used to validate that the broker routes messages correctly and that your application processes them as expected:
 
 ```C#
+var factory = new MqttFactory();
 var subscriber = factory.CreateMqttClient();
 
 var subOptions = new MqttClientOptionsBuilder()
@@ -754,7 +759,7 @@ var malformedMessage = new MqttApplicationMessageBuilder()
     .WithPayload("INVALID_PAYLOAD") // Simulating a bad payload
     .Build();
 
-await client.PublishAsync(malformedMessage);
+await subscriber.PublishAsync(malformedMessage);
 Console.WriteLine("Published malformed message");
 ```
 
