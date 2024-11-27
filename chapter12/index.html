@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.785894404249">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786032526034">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.785894404249" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.786032526034" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.785894404249" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.786032526034" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.785894404249" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.785894404249" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.786032526034" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.786032526034" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -591,7 +591,7 @@ public class Command
 client.DisconnectedAsync += async e =&gt;
 {
     Console.WriteLine(&quot;Disconnected from MQTT broker. Attempting to reconnect...&quot;);
-    await ReconnectAsync(client, options);
+    await client.ReconnectAsync(client, options);
 };</code></pre>
 </doc-codeblock></div>
 <p>Reconnection logic is critical for ensuring devices recover gracefully from unexpected disconnections. A simple <code v-pre>ReconnectAsync</code> method can retry the connection with exponential backoff to avoid overwhelming the broker or network during outages:</p>
@@ -620,11 +620,17 @@ client.DisconnectedAsync += async e =&gt;
 <pre class="language-csharp"><code v-pre class="language-csharp">var options = new MqttClientOptionsBuilder()
     .WithClientId(&quot;CriticalDevice&quot;)
     .WithTcpServer(&quot;localhost&quot;, 1883)
-    .WithWillMessage(new MqttApplicationMessageBuilder()
-        .WithTopic(&quot;devices/status&quot;)
-        .WithPayload(&quot;CriticalDevice disconnected&quot;)
-        .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-        .Build())
+    .WithWillTopic(&quot;devices/status&quot;)
+    .WithWillPayload(&quot;CriticalDevice disconnected&quot;)
+    .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+    .WithTls(new MqttClientOptionsBuilderTlsParameters
+    {
+        UseTls = true,
+        Certificates = new List(), // Optionally add your certificates here
+        AllowUntrustedCertificates = true, // Set to false in production
+        IgnoreCertificateChainErrors = true, // Set to false in production
+        IgnoreCertificateRevocationErrors = true // Set to false in production
+    })
     .Build();</code></pre>
 </doc-codeblock></div>
 <p>Adding periodic keep-alive checks ensures the connection remains active and responsive. MQTTnet handles this automatically with its KeepAlivePeriod setting, but you can also implement custom health checks to confirm connectivity, such as periodically publishing a heartbeat message:</p>
@@ -712,7 +718,7 @@ var timer = new Timer(async _ =&gt;
 <p>Securing MQTT connections with TLS is not just a good practice, but a fundamental step in protecting IoT communications from eavesdropping and unauthorized access. TLS encrypts data in transit between MQTT clients and brokers, ensuring that sensitive information, like sensor data or device commands, remains confidential. Configuring TLS for MQTT in .NET is straightforward, especially when using the MQTTnet library, and it is an absolute necessity for any IoT deployment in production.</p>
 <p>To enable TLS, the MQTT broker must support encrypted connections. The good news is that most brokers, such as Eclipse Mosquitto or HiveMQ, provide options to configure TLS. You’ll need to generate or obtain SSL certificates, which typically include a certificate file (<code v-pre>.crt</code>), a private key (<code v-pre>.key</code>), and, optionally, a Certificate Authority (CA) file. These files are used to establish trust between the client and the broker. Here’s an example configuration snippet for Mosquitto:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">listener 8883
+<pre class="language-bash"><code v-pre class="language-bash">listener 8883
 cafile /path/to/ca.crt
 certfile /path/to/server.crt
 keyfile /path/to/server.key</code></pre>
@@ -852,11 +858,9 @@ Console.WriteLine(&quot;Message published with QoS 2&quot;);</code></pre>
 <pre class="language-csharp"><code v-pre class="language-csharp">var options = new MqttClientOptionsBuilder()
     .WithClientId(&quot;TemperatureSensor&quot;)
     .WithTcpServer(&quot;localhost&quot;, 1883)
-    .WithWillMessage(new MqttApplicationMessageBuilder()
-        .WithTopic(&quot;sensors/temperature/status&quot;)
-        .WithPayload(&quot;TemperatureSensor is offline&quot;)
-        .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-        .Build())
+    .WithWillTopic(&quot;sensors/temperature/status&quot;)
+    .WithWillPayload(&quot;TemperatureSensor is offline&quot;)
+    .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
     .Build();
 
 await client.ConnectAsync(options);
@@ -865,12 +869,12 @@ Console.WriteLine(&quot;Connected with Last Will and Testament configured&quot;)
 <p>When the broker detects an abnormal disconnection—such as a network failure or a client crash—it automatically publishes the LWT message to the specified topic. Subscribers to this topic can react accordingly by triggering alerts, attempting to reconnect to the device, or switching to a backup system. This role of LWT messages in maintaining system reliability should reassure and instill confidence in the audience.</p>
 <p>You can enhance reliability further by pairing LWT with retained messages. By setting the retain flag, the broker ensures that any new subscribers to the topic receive the LWT message immediately upon subscription, even if it was published in the past. This immediate update feature keeps all subscribers informed and up-to-date, which is particularly useful in scenarios where devices or systems may join the network after a disconnection has occurred:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">.WithWillMessage(new MqttApplicationMessageBuilder()
-    .WithTopic(&quot;sensors/temperature/status&quot;)
-    .WithPayload(&quot;TemperatureSensor is offline&quot;)
-    .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
-    .WithRetainFlag(true)
-    .Build())</code></pre>
+<pre class="language-csharp"><code v-pre class="language-csharp">var options = new MqttClientOptionsBuilder()
+    .WithWillTopic(&quot;sensors/temperature/status&quot;)
+    .WithWillPayload(&quot;TemperatureSensor is offline&quot;)
+    .WithWillQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
+    .WithWillRetain(true)
+    .Build();</code></pre>
 </doc-codeblock></div>
 <p>Testing LWT behavior is crucial during development. Simulate unexpected disconnections by abruptly stopping the client or disabling the network and verify that the broker, a key component in the MQTT system, publishes the LWT message to the appropriate topic. Additionally, ensure that other system components subscribe to these topics and handle the offline status appropriately, such as by logging the event or alerting operators.</p>
 <p>Using LWT, you create more resilient IoT systems that are aware of their operational state. Devices that go offline don’t disappear silently; their absence is actively communicated, making the system responsive and enabling it to maintain continuity or take corrective action. This feature and other MQTT capabilities lay the foundation for building robust, real-world IoT applications.</p>
@@ -916,7 +920,8 @@ for (int i = 0; i &lt; 10; i++) // Simulate 10 messages
 </doc-codeblock></div>
 <p>Next, simulate a subscriber that listens to the same topic and processes incoming messages. This can be used to validate that the broker routes messages correctly and that your application processes them as expected:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var subscriber = factory.CreateMqttClient();
+<pre class="language-csharp"><code v-pre class="language-csharp">var factory = new MqttFactory();
+var subscriber = factory.CreateMqttClient();
 
 var subOptions = new MqttClientOptionsBuilder()
     .WithClientId(&quot;MockSubscriber&quot;)
@@ -946,7 +951,7 @@ subscriber.ApplicationMessageReceivedAsync += e =&gt;
     .WithPayload(&quot;INVALID_PAYLOAD&quot;) // Simulating a bad payload
     .Build();
 
-await client.PublishAsync(malformedMessage);
+await subscriber.PublishAsync(malformedMessage);
 Console.WriteLine(&quot;Published malformed message&quot;);</code></pre>
 </doc-codeblock></div>
 <p>By incorporating simulated clients into your testing workflow, you create a controlled environment to identify and resolve potential issues early in development. This ensures that your MQTT system is robust and reliable. Moreover, it provides valuable insights into how it performs under various conditions, enhancing its reliability. As we continue, we’ll explore additional tools and techniques for debugging and monitoring MQTT applications in .NET.</p>
