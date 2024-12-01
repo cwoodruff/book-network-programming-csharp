@@ -8,6 +8,8 @@ visibility: hidden
 ---
 # 14
 
+![](./Images/Chap14-WebHooks.png)
+
 # Working with WebHooks
 
 WebHooks have transformed applications' communication, offering an elegant, event-driven alternative to traditional polling mechanisms. Instead of repeatedly checking for updates, WebHooks enable systems to send real-time notifications whenever significant events occur, significantly reducing latency and conserving resources. This chapter delves into the world of WebHooks, exploring how to implement them effectively using the powerful tools and modern features of .NET 8 and C# 12.
