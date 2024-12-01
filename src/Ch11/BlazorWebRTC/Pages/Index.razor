@@ -1,0 +1,37 @@
+﻿@page "/"
+@inject IJSRuntime JS
+
+<h3>WebRTC Video Chat</h3>
+
+<video id="localVideo" autoplay playsinline></video>
+<video id="remoteVideo" autoplay playsinline></video>
+
+<button @onclick="InitializeConnection">Initialize Connection</button>
+<button @onclick="StartCall">Start Call</button>
+
+<button @onclick="AddTrack">Add Track</button>
+<button @onclick="RemoveTrack">Remove Track</button>
+
+@code {
+    private async Task InitializeConnection()
+    {
+        await JS.InvokeVoidAsync("webRTCInterop.initializeConnection");
+    }
+
+    private async Task StartCall()
+    {
+        await JS.InvokeVoidAsync("webRTCInterop.startCall");
+    }
+    
+    public async Task AddTrack()
+    {
+        await JS.InvokeVoidAsync("webRTCInterop.addTrack");
+    }
+
+    private async Task RemoveTrack()
+    {
+        // Assuming you have the trackId to remove
+        string trackId = "your-track-id";
+        await JS.InvokeVoidAsync("webRTCInterop.removeTrack", trackId);
+    }
+}
