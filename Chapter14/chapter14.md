@@ -20,7 +20,7 @@ From setting up a WebHook receiver to securing, scaling, and customizing your im
 
 WebHooks, the unsung heroes of modern network communication, are quietly revolutionizing how applications interact in real-time. Building on the foundation laid in the previous chapter, this section delves deeper into what makes WebHooks a game-changer. At their core, WebHooks offer a straightforward yet powerful mechanism: rather than asking for updates repeatedly (as with polling), they allow systems to send updates proactively when an event occurs. This elegance not only reduces resource usage but also opens doors to more seamless and responsive application designs, providing a practical and efficient solution for modern applications.
 
-In the .NET 8 ecosystem, WebHooks become even more compelling. With its cutting-edge features and C#12's syntactic enhancements, implementing WebHooks is now more accessible and efficient than ever. However, understanding WebHooks goes beyond just writing code—it's about appreciating their pivotal role in fostering interconnected systems. Whether you're orchestrating microservices, handling notifications, or enabling real-time integrations, WebHooks act as the glue that binds disparate components into a cohesive, event-driven architecture, underscoring the significance of your work in the tech industry.
+In the .NET ecosystem, WebHooks become even more compelling. With its cutting-edge features and C#'s syntactic enhancements, implementing WebHooks is now more accessible and efficient than ever. However, understanding WebHooks goes beyond just writing code—it's about appreciating their pivotal role in fostering interconnected systems. Whether you're orchestrating microservices, handling notifications, or enabling real-time integrations, WebHooks act as the glue that binds disparate components into a cohesive, event-driven architecture, underscoring the significance of your work in the tech industry.
 
 This section will equip you with a solid conceptual foundation before diving into implementation details. We'll explore the essence of WebHooks, how they differ from traditional communication models, and why they're indispensable for modern network programming. By grounding these ideas in practical examples and relatable scenarios, such as orchestrating microservices or enabling real-time integrations, you'll be prepared to tackle the intricacies of WebHook development with confidence and creativity. Welcome to the future of connectivity—one HTTP callback at a time.
 
@@ -30,7 +30,7 @@ WebHooks might sound like a buzzword, but they represent a foundational shift in
 
 Under the hood, WebHooks leverage standard HTTP protocols, making them easy to implement and integrate across a wide range of platforms and services. They operate in a publisher-subscriber model: the sender (publisher) generates an event, such as a new message in a chat application, packages the relevant data into a payload, and delivers it to a subscriber's WebHook endpoint. The subscriber, in this case, is the application that needs to be notified about the new message. The beauty of WebHooks lies in their simplicity. There's no need for a fancy middleware layer or proprietary technology—just HTTP, JSON (or your preferred data format), and some well-thought-out endpoints.
 
-What makes WebHooks particularly exciting in the context of .NET 8 and C# 12 is how these tools elevate their implementation. With .NET 8's robust HTTP client APIs and C#12's expressive language features, you can craft WebHook solutions that are secure, scalable, and maintainable. Whether you're integrating a payment gateway, syncing a database, enabling live notifications in a web app, or even building a real-time chat application, WebHooks provides a flexible and efficient way to get the job done. In the chapters ahead, we'll break down how to implement these systems, but for now, let's appreciate the elegance of the hook itself—transformative yet straightforward.
+What makes WebHooks particularly exciting in the context of .NET 8 and C# is how these tools elevate their implementation. With .NET 8's robust HTTP client APIs and C#'s expressive language features, you can craft WebHook solutions that are secure, scalable, and maintainable. Whether you're integrating a payment gateway, syncing a database, enabling live notifications in a web app, or even building a real-time chat application, WebHooks provides a flexible and efficient way to get the job done. In the chapters ahead, we'll break down how to implement these systems, but for now, let's appreciate the elegance of the hook itself—transformative yet straightforward.
 
 ### The WebHook Ecosystem: Senders and Receivers
 
@@ -38,7 +38,7 @@ The WebHook ecosystem operates on a symbiotic relationship between two primary a
 
 A sender’s job begins with identifying meaningful events. For example, an e-commerce platform might trigger a WebHook when an order status changes. The sender prepares a payload, typically in JSON format, encapsulating relevant details about the event. It then makes an HTTP request to a preconfigured URL provided by the receiver. The simplicity of this process belies its power: whether it’s notifying a warehouse system, updating customer-facing dashboards, or syncing with external APIs, senders drive automation and efficiency across distributed systems.
 
-On the flip side, receivers are the reactive heroes of the ecosystem. A receiver must be prepared to validate incoming requests, authenticate the sender, and process the payload efficiently. In .NET 8, tools like ASP.NET Core make it easier than ever to build robust WebHook endpoints, complete with validation, security, and scalability features. Senders and receivers form a streamlined pipeline, enabling real-time communication and reducing manual intervention. As we explore the implementation details in upcoming sections, you’ll learn how to craft both sides of this partnership with precision and creativity.
+On the flip side, receivers are the reactive heroes of the ecosystem. A receiver must be prepared to validate incoming requests, authenticate the sender, and process the payload efficiently. In .NET, tools like ASP.NET Core make it easier than ever to build robust WebHook endpoints, complete with validation, security, and scalability features. Senders and receivers form a streamlined pipeline, enabling real-time communication and reducing manual intervention. As we explore the implementation details in upcoming sections, you’ll learn how to craft both sides of this partnership with precision and creativity.
 
 ### A Conversation Starter: How WebHooks Work
 
@@ -46,7 +46,7 @@ At its heart, a WebHook is a simple yet powerful conversation between two system
 
 The WebHook lifecycle begins with the sender detecting an event, such as a new user signing up, placing an order, or uploading a file. The sender then compiles the relevant event data into a structured payload, typically formatted in JSON for maximum interoperability. This payload and additional headers for identification and security are sent to the receiver's WebHook endpoint. Upon receiving the request, the receiver processes the payload and executes any necessary actions, such as updating a database, sending a notification, or triggering a downstream API call.
 
-What makes this interaction seamless in .NET 8 is the enhanced support for HTTP communication and payload handling. With the refined capabilities of `HttpClient` for senders and ASP.NET Core's robust middleware for receivers, crafting efficient WebHook interactions becomes straightforward. The beauty of this conversation is its flexibility—whether you're sending notifications across microservices, integrating with third-party APIs, or enabling user-defined workflows, WebHooks adapts to your needs. By mastering how they work, you unlock a powerful tool to keep your applications connected and responsive in today's fast-paced digital world.
+What makes this interaction seamless in .NET is the enhanced support for HTTP communication and payload handling. With the refined capabilities of `HttpClient` for senders and ASP.NET Core's robust middleware for receivers, crafting efficient WebHook interactions becomes straightforward. The beauty of this conversation is its flexibility—whether you're sending notifications across microservices, integrating with third-party APIs, or enabling user-defined workflows, WebHooks adapts to your needs. By mastering how they work, you unlock a powerful tool to keep your applications connected and responsive in today's fast-paced digital world.
 
 ### WebHooks in the Wild: Use Cases and Examples
 
@@ -58,7 +58,7 @@ Even social media platforms have recognized the power of WebHooks. Imagine a mes
 
 ## Creating a WebHook Receiver in ASP.NET Core
 
-ASP.NET Core serves as an excellent foundation for the transformation of theory into functionality, particularly in the creation of a WebHook receiver. This receiver, essentially an endpoint for event notifications from external systems, is more than just a door. It’s a gatekeeper that validates, processes, and responds to incoming requests. This section will explore how to set up a robust and secure WebHook receiver in ASP.NET Core, leveraging the latest features of .NET 8 and C# 12 to build a system that's both robust and maintainable.
+ASP.NET Core serves as an excellent foundation for the transformation of theory into functionality, particularly in the creation of a WebHook receiver. This receiver, essentially an endpoint for event notifications from external systems, is more than just a door. It’s a gatekeeper that validates, processes, and responds to incoming requests. This section will explore how to set up a robust and secure WebHook receiver in ASP.NET Core, leveraging the latest features of .NET and C# to build a system that's both robust and maintainable.
 
 While the concept of receiving an HTTP POST request may seem straightforward, the implementation of a reliable WebHook receiver is a complex task that involves addressing key considerations like security, scalability, and error handling. From authenticating senders to parsing payloads and responding appropriately, each step is crucial to ensure your application seamlessly integrates with external systems. By the end of this section, you’ll be well-prepared to confidently handle real-world WebHook scenarios, effectively transforming your ASP.NET Core application into a competent WebHook receiver. Let’s dive in and see how it’s done.
 
@@ -344,7 +344,7 @@ By combining HTTPS enforcement, signature validation, timestamp checks, IP filte
 
 ### From Logs to Actions: Testing and Debugging Your Receiver
 
-Testing and debugging a WebHook receiver is critical to ensure it behaves as expected under different conditions. When building in .NET 8, the combination of robust logging tools and powerful debugging capabilities simplifies the process, allowing you to identify and resolve issues efficiently. Your commitment to this step is crucial before deploying your receiver to handle real-world traffic.
+Testing and debugging a WebHook receiver is critical to ensure it behaves as expected under different conditions. When building in .NET, the combination of robust logging tools and powerful debugging capabilities simplifies the process, allowing you to identify and resolve issues efficiently. Your commitment to this step is crucial before deploying your receiver to handle real-world traffic.
 
 Start by enabling detailed logging in your ASP.NET Core application. Use the built-in logging framework to capture all incoming WebHook requests, their headers, and payloads. This helps diagnose issues like malformed payloads or unexpected headers:
 
@@ -416,13 +416,13 @@ Testing and debugging are iterative processes that ensure your WebHook receiver 
 
 Building a WebHook sender transforms your application from a passive observer to an active real-time participant. As a sender, you are responsible for detecting events, packaging the relevant data, and delivering it to registered receivers with precision and reliability. This proactive approach makes WebHooks such a powerful tool for integrating distributed systems. Whether notifying a payment gateway of a status change or triggering workflows in connected applications, the sender initiates the chain of collaboration.
 
-In this section, we’ll explore how to implement a robust WebHook sender using .NET 8’s advanced networking APIs and C# 12’s expressive features. From detecting events in your application to securely delivering payloads over HTTP, you’ll learn how to build a reliable, scalable, and secure sender. With practical examples and proven patterns, this section sets the stage for making your application a key player in the interconnected web of modern software.
+In this section, we’ll explore how to implement a robust WebHook sender using .NET’s advanced networking APIs and C#’s expressive features. From detecting events in your application to securely delivering payloads over HTTP, you’ll learn how to build a reliable, scalable, and secure sender. With practical examples and proven patterns, this section sets the stage for making your application a key player in the interconnected web of modern software.
 
 ### Setting the Stage: Understanding the Sender’s Role
 
 The sender’s role in a WebHook system is pivotal—the initiator, the source of information that drives downstream processes. A WebHook sender is responsible for detecting significant events within the application, such as a new user registration, a product purchase, or a system error, serializing relevant data into a structured payload, and delivering it to a registered receiver using an HTTP request. While conceptually straightforward, this process requires careful attention to detail to ensure reliability, security, and efficiency.
 
-In .NET 8, detecting events can be seamlessly integrated into your application using event-driven patterns. These patterns, such as the Observer pattern, allow you to define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. For instance, consider an e-commerce application where you want to notify a fulfillment service when an order is placed:
+In .NET, detecting events can be seamlessly integrated into your application using event-driven patterns. These patterns, such as the Observer pattern, allow you to define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. For instance, consider an e-commerce application where you want to notify a fulfillment service when an order is placed:
 
 ```C#
 public class OrderService
@@ -447,7 +447,7 @@ public class OrderEventArgs : EventArgs
 }
 ```
 
-Once the event is detected, the next step is constructing the payload. The payload should be clear, concise, and consistent, typically serialized into JSON. Use `System.Text.Json` for its performance and built-in support in .NET 8:
+Once the event is detected, the next step is constructing the payload. The payload should be clear, concise, and consistent, typically serialized into JSON. Use `System.Text.Json` for its performance and built-in support in .NET:
 
 ```C#
 public string CreatePayload(Order order)
@@ -467,7 +467,7 @@ public string CreatePayload(Order order)
 }
 ```
 
-The sender’s core responsibility is to deliver the payload reliably. With .NET 8’s updated `HttpClient`, this becomes straightforward. You can use dependency injection to configure `HttpClient` and ensure efficient reuse:
+The sender’s core responsibility is to deliver the payload reliably. With .NET’s updated `HttpClient`, this becomes straightforward. You can use dependency injection to configure `HttpClient` and ensure efficient reuse:
 
 ```C#
 public class WebHookSender
@@ -509,7 +509,7 @@ Incorporating these practices ensures your WebHook sender is functional, robust,
 
 Event detection, the core functionality of a WebHook sender, is crucial. It all starts with an event, a significant happening in your application that indicates something important to notify external systems about. Integrating and identifying these events into your WebHook system is a process that demands careful planning and seamless integration into your application’s business logic.
 
-In .NET 8, the power to manage event detection lies in your hands, as you leverage events and delegates. Imagine you’re building an application that tracks user registrations. You have the ability to define a custom event and trigger it whenever a new user registers, putting you at the center of the process:
+In .NET, the power to manage event detection lies in your hands, as you leverage events and delegates. Imagine you’re building an application that tracks user registrations. You have the ability to define a custom event and trigger it whenever a new user registers, putting you at the center of the process:
 
 ```C#
 public class UserService
@@ -610,7 +610,7 @@ public class WebHookPayload
 }
 ```
 
-Use serialization libraries like `System.Text.Json` in .NET 8 for efficient JSON serialization. For example, a simple method to create a payload might look like this:
+Use serialization libraries like `System.Text.Json` in .NET for efficient JSON serialization. For example, a simple method to create a payload might look like this:
 
 ```C#
 public string CreatePayload(string eventType, object data)
@@ -676,7 +676,7 @@ Structuring and customizing payloads ensures that WebHooks are efficient and tai
 
 ### Delivering the Goods: Sending WebHook Requests
 
-After crafting the payload, the next step is delivering it to the receiver with precision and reliability. Sending a WebHook request involves making an HTTP POST call to a pre-configured URL, including the payload in the request body. With .NET 8's updated `HttpClient` and improved networking APIs, this process is efficient and developer-friendly.
+After crafting the payload, the next step is delivering it to the receiver with precision and reliability. Sending a WebHook request involves making an HTTP POST call to a pre-configured URL, including the payload in the request body. With .NET's updated `HttpClient` and improved networking APIs, this process is efficient and developer-friendly.
 
 Start by configuring `HttpClient` using dependency injection for optimal performance. This ensures that your application uses a single `HttpClient` instance, reducing connection overhead:
 
@@ -754,7 +754,7 @@ As the payload is sent, log the request details and monitor the response to ensu
 
 ### Building Resilience: Handling Failures and Retries
 
-Failures are inevitable in any distributed system. Networks experience latency, servers face downtime, and transient issues disrupt connectivity. The ability of a robust WebHook sender to handle these failures gracefully is of utmost importance, ensuring that events are eventually delivered without overwhelming the system or the receiver. In .NET 8, tools like `HttpClient`, Polly, and custom retry logic make implementing resilience straightforward and effective.
+Failures are inevitable in any distributed system. Networks experience latency, servers face downtime, and transient issues disrupt connectivity. The ability of a robust WebHook sender to handle these failures gracefully is of utmost importance, ensuring that events are eventually delivered without overwhelming the system or the receiver. In .NET, tools like `HttpClient`, Polly, and custom retry logic make implementing resilience straightforward and effective.
 
 First, ensure your WebHook sender can detect and respond to transient errors. These errors often include HTTP status codes like `408 Request Timeout`, `429 Too Many Requests`, and `500 Internal Server Error`. The `Polly` library provides an effective solution, allowing you to implement retry policies tailored to these scenarios:
 
@@ -851,7 +851,7 @@ This combination of retry policies, queuing, and background processing ensures t
 
 As powerful as WebHooks are, their open nature prioritizes security. A WebHook endpoint is an open door to your application, receiving incoming HTTP requests from external sources. This door can become a vulnerability without proper safeguards, exposing your system to threats like spoofing, tampering, and replay attacks. However, by securing WebHooks, you ensure that only trusted sources can trigger actions in your application, preserving data integrity and system reliability. This reassures you of the value of this topic and the benefits it can bring to your system.
 
-This section will delve into the critical measures to secure WebHooks, from validating sender authenticity to encrypting sensitive data and mitigating replay attacks. With the powerful tools provided by .NET 8 and C# 12, you’ll be equipped to implement robust defenses that protect your endpoints without compromising performance or flexibility. These tools empower you to make security an integral part of your WebHook strategy, turning that open door into a secure, efficient gateway.
+This section will delve into the critical measures to secure WebHooks, from validating sender authenticity to encrypting sensitive data and mitigating replay attacks. With the powerful tools provided by .NET and C#, you’ll be equipped to implement robust defenses that protect your endpoints without compromising performance or flexibility. These tools empower you to make security an integral part of your WebHook strategy, turning that open door into a secure, efficient gateway.
 
 ### Signed, Sealed, Delivered: Verifying Payloads
 
@@ -983,7 +983,7 @@ By implementing access control mechanisms such as IP whitelisting, API keys, and
 
 ### Safe Hooks in Practice: Building a Secure Workflow
 
-Building a secure WebHook workflow is about protecting your application from unauthorized access, tampered payloads, and replay attacks. It's not just about implementing security measures, but about creating a cohesive workflow that maximizes their effectiveness. This section walks through the process of achieving this goal by creating a comprehensive and secure WebHook receiver using best practices and tools available in .NET 8.
+Building a secure WebHook workflow is about protecting your application from unauthorized access, tampered payloads, and replay attacks. It's not just about implementing security measures, but about creating a cohesive workflow that maximizes their effectiveness. This section walks through the process of achieving this goal by creating a comprehensive and secure WebHook receiver using best practices and tools available in .NET.
 
 The first layer in your workflow is enforcing HTTPS. This ensures that all WebHook communication is encrypted, protecting the payload and headers from being intercepted during transit. You can take control of this security measure by configuring your ASP.NET Core application to require HTTPS:
 
@@ -1038,11 +1038,11 @@ Combine these techniques into a middleware pipeline or controller logic, which a
 
 As your application grows, the demands on your WebHook implementation will inevitably increase. Scaling a WebHook system requires optimizing performance for high traffic and ensuring resilience against failures and outages. A missed WebHook can disrupt workflows, while an overwhelmed receiver might cause delays or crashes. Building a scalable and fault-tolerant WebHook infrastructure ensures that your application can handle the load gracefully and maintain reliability under pressure.
 
-In this section, we’ll explore strategies to enhance the performance and resilience of your WebHook sender and receiver. From load balancing and asynchronous processing to implementing retries and distributed queues, you’ll learn how to design a system that thrives under heavy use. With the power of .NET 8 and modern cloud-native techniques, scaling your WebHook solutions doesn’t have to be daunting—it can become a blueprint for efficiency and reliability.
+In this section, we’ll explore strategies to enhance the performance and resilience of your WebHook sender and receiver. From load balancing and asynchronous processing to implementing retries and distributed queues, you’ll learn how to design a system that thrives under heavy use. With the power of .NET and modern cloud-native techniques, scaling your WebHook solutions doesn’t have to be daunting—it can become a blueprint for efficiency and reliability.
 
 ### Hooked on Speed: Optimizing Performance
 
-Optimizing the performance of your WebHook system ensures that it can handle a high volume of requests without slowing down or bottlenecking. The key is streamlining the sending and receiving processes, minimizing latency and resource consumption while maintaining a high level of reliability. In .NET 8, powerful tools and techniques can help you achieve these goals efficiently, providing a secure and reliable system.
+Optimizing the performance of your WebHook system ensures that it can handle a high volume of requests without slowing down or bottlenecking. The key is streamlining the sending and receiving processes, minimizing latency and resource consumption while maintaining a high level of reliability. In .NET, powerful tools and techniques can help you achieve these goals efficiently, providing a secure and reliable system.
 
 Start by optimizing the sender. Use `HttpClient` effectively by configuring it for reuse through dependency injection. This avoids the overhead of creating and disposing of `HttpClient` instances repeatedly:
 
@@ -1145,7 +1145,7 @@ Building resilience into your WebHook system ensures it can handle the inevitabl
 
 ### Scaling the Web: Handling High Traffic with Grace
 
-Handling high traffic gracefully is critical for scaling your WebHook system. When a sudden spike in events occurs—such as during a flash sale or viral campaign—your system must process requests efficiently without dropping payloads or overwhelming resources. Achieving this involves balancing the load, distributing requests across systems, and optimizing resource utilization. In .NET 8, combining cloud-native strategies with efficient coding practices, such as asynchronous programming and memory management, ensures your WebHook implementation is ready to meet the challenge.
+Handling high traffic gracefully is critical for scaling your WebHook system. When a sudden spike in events occurs—such as during a flash sale or viral campaign—your system must process requests efficiently without dropping payloads or overwhelming resources. Achieving this involves balancing the load, distributing requests across systems, and optimizing resource utilization. In .NET, combining cloud-native strategies with efficient coding practices, such as asynchronous programming and memory management, ensures your WebHook implementation is ready to meet the challenge.
 
 It's crucial to start by introducing load balancing to distribute traffic evenly across multiple instances of your WebHook receiver. This strategy is a key component in handling high-traffic scenarios effectively. If you're hosting in Azure, tools like Azure Application Gateway or Azure Front Door for intelligent routing and automatic failover are essential for your system's resilience:
 
