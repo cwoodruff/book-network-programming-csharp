@@ -8,6 +8,8 @@ visibility: hidden
 ---
 # 15
 
+![](./Images/Chap15-Message_Queuing.png)
+
 # Implementing Message Queuing
 
 Message queuing, a pivotal tool in modern software systems, facilitates reliable, scalable, and resilient communication and coordination among applications. Whether you're managing a high-traffic e-commerce platform or orchestrating microservices in a complex distributed system, message queues are the backbone that ensures smooth operation, even when parts of the system are offline or under heavy load. In this chapter, we'll delve into the intriguing world of message queuing, exploring how .NET 8 and C# 12 empower you to leverage its power with elegance and efficiency.
