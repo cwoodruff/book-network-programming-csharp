@@ -23,7 +23,7 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 10      | [Working with WebSockets](./Chapter10/chapter10.md)                       | ✔️        |
 | 11      | [Working with WebRTC](./Chapter11/chapter11.md)                           | ✔️        |
 | 12      | Working with MQTT for IoT (Internet of Things)                            |           |
-| 13      | Working with GRPC                                                         |           |
+| 13      | Working with gRPC                                                         |           |
 | 14      | Working with WebHooks                                                     |           |
 | 15      | Implementing Message Queuing                                              |           |
 | 16      | Using SignalR                                                             |           |
