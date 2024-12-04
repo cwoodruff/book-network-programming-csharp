@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786570462263">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786633301545">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.786570462263" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.786633301545" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.786570462263" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.786633301545" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.786570462263" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.786570462263" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.786633301545" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.786633301545" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -884,72 +884,6 @@ await processor.StartProcessingAsync();</code></pre>
 </doc-codeblock></div>
 <p>With this setup, Azure Service Bus ensures that messages are completed only after successful processing, a crucial step in avoiding duplicates and guaranteeing reliability.</p>
 <p>Delivery guarantees play a pivotal role in meeting specific application needs. The choice often involves balancing performance, reliability, and complexity. While at-most-once works for low-criticality tasks, at-least-once is often the default for its simplicity and flexibility. However, exactly-once ensures every message is handled precisely for applications with strict reliability requirements. By implementing these guarantees effectively, you can build systems that are flexible and adaptable, meeting your application&#x27;s specific needs without compromising performance or data integrity.</p>
-<doc-anchor-target id="dead-letter-queues-and-error-handling">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#dead-letter-queues-and-error-handling">#</doc-anchor-trigger>
-        <span>Dead-Letter Queues and Error Handling</span>
-    </h3>
-</doc-anchor-target>
-<p>Error handling is a crucial aspect of building resilient message queuing systems. Despite your best efforts, some messages will fail to process due to malformed data, unavailability of downstream systems, or unexpected application errors. Dead-letter queues (DLQs) are not just a feature, but a safety net that you can rely on to prevent these issues from disrupting the entire queue. A DLQ is a dedicated queue where messages that fail to process or exceed retry limits are routed for later inspection and resolution.</p>
-<p>Configuring a DLQ in RabbitMQ is a task that you, as a skilled developer, can easily handle. It&#x27;s straightforward-first, declare the main queue and set the DLQ parameters in its arguments:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">_channel.QueueDeclare(
-    queue: &quot;main-queue&quot;,
-    durable: true,
-    exclusive: false,
-    autoDelete: false,
-    arguments: new Dictionary&lt;string, object&gt;
-    {
-        { &quot;x-dead-letter-exchange&quot;, &quot;&quot; }, // Default exchange
-        { &quot;x-dead-letter-routing-key&quot;, &quot;dead-letter-queue&quot; }
-    }
-);
-
-_channel.QueueDeclare(
-    queue: &quot;dead-letter-queue&quot;,
-    durable: true,
-    exclusive: false,
-    autoDelete: false,
-    arguments: null
-);</code></pre>
-</doc-codeblock></div>
-<p>This configuration routes messages from the <code v-pre>main-queue</code> to the <code v-pre>dead-letter-queue</code> when they are rejected or exceed the maximum delivery attempts. The DLQ serves as a tool to analyze these failed messages and is instrumental in identifying and addressing their root causes.</p>
-<p>Error handling in the consumer complements this setup. Update the consumer to reject messages gracefully if processing fails:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">consumer.Received += (model, eventArgs) =&gt;
-{
-    var body = eventArgs.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-
-    try
-    {
-        ProcessMessage(message);
-        _channel.BasicAck(deliveryTag: eventArgs.DeliveryTag, multiple: false);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($&quot;Error processing message: {ex.Message}&quot;);
-        _channel.BasicReject(deliveryTag: eventArgs.DeliveryTag, requeue: false);
-    }
-};</code></pre>
-</doc-codeblock></div>
-<p>The <code v-pre>BasicReject</code> method plays a crucial role in managing faulty messages. In this example, it moves the message to the DLQ when <code v-pre>requeue</code> is set to <code v-pre>false</code>, preventing the main queue from repeatedly attempting to process the same message.</p>
-<p>Azure Service Bus simplifies DLQ configuration with built-in support. The DLQ, or Dead-Letter Queue, is where messages that fail to process or reach the maximum delivery count are moved to. You can access these messages using the Service Bus Explorer or programmatically:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var client = new ServiceBusClient(&quot;&lt;connection-string&gt;&quot;);
-var receiver = client.CreateReceiver(&quot;queue-name/$DeadLetterQueue&quot;);
-
-var messages = await receiver.ReceiveMessagesAsync(maxMessages: 10);
-
-foreach (var message in messages)
-{
-    Console.WriteLine($&quot;Dead-lettered message: {message.Body}&quot;);
-    await receiver.CompleteMessageAsync(message);
-}</code></pre>
-</doc-codeblock></div>
-<p>This approach empowers you to review and resolve failed messages without disrupting the main queue, giving you a sense of control and predictability.</p>
-<p>Monitoring and alerting, when integrated with tools like Prometheus, Grafana, or cloud-based monitoring solutions, proactively track the number of messages in the DLQ and alert your team when thresholds are exceeded, ensuring you&#x27;re always prepared to handle any situation.</p>
-<p>By implementing DLQs and robust error-handling practices, you can confidently prevent system failures, reduce downtime, and improve the reliability of your message queuing system. These strategies ensure that your application processes messages efficiently and gracefully handles unexpected issues.</p>
 <doc-anchor-target id="optimizing-performance-and-scalability">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#optimizing-performance-and-scalability">#</doc-anchor-trigger>
@@ -1159,87 +1093,6 @@ await client.CreateQueueAsync(new CreateQueueOptions(&quot;partitioned-queue&quo
 <p>Dynamic scaling, a pivotal aspect, is crucial for managing growing workloads. Use monitoring tools to track metrics like queue depth and message latency and automatically scale consumers or adjust queue configurations as needed. For example, you can define Horizontal Pod Autoscaler (HPA) rules with Kubernetes to scale consumers based on CPU usage or queue length. This feature is not just beneficial, but urgent for your system&#x27;s performance.</p>
 <p>Load balancing, a key feature, ensures that messages are evenly distributed across consumers, thereby optimizing your system&#x27;s performance. RabbitMQ handles this automatically for queues, but you’ll need to manage consumer groups in systems like Kafka. Each consumer in a group processes a distinct partition, ensuring parallelism without duplication.</p>
 <p>Effectively scaling your message queuing system requires a combination of horizontal scaling, queue partitioning, and load balancing strategies tailored to your specific application needs. These needs could include high message throughput, low latency, or specific resource constraints. By implementing these techniques, your system will remain responsive, efficient, and ready to handle even the most demanding workloads.</p>
-<doc-anchor-target id="best-practices-for-message-queues">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#best-practices-for-message-queues">#</doc-anchor-trigger>
-        <span>Best Practices for Message Queues</span>
-    </h3>
-</doc-anchor-target>
-<p>Designing a robust message queuing system is a complex task, but by following best practices, you can ensure reliability, maintainability, and scalability. These practices are the key to creating systems that are efficient and easy to manage in production. Let’s explore the key strategies that will take your message queue implementation to the next level, and rest assured that by following these best practices, you are on the right path.</p>
-<doc-anchor-target id="design-idempotent-consumers">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#design-idempotent-consumers">#</doc-anchor-trigger>
-        <span>Design idempotent consumers</span>
-    </h4>
-</doc-anchor-target>
-<p>Message duplication is always possible in a distributed system, especially when using at-least-once delivery guarantees. An idempotent consumer processes duplicate messages without adverse effects. For example, if processing involves updating a database, ensure the operation checks for existing entries before inserting new data:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">void ProcessMessage(string messageId, string payload)
-{
-    if (!Database.Contains(messageId))
-    {
-        Database.Insert(messageId, payload);
-        Console.WriteLine(&quot;Message processed.&quot;);
-    }
-    else
-    {
-        Console.WriteLine(&quot;Duplicate message ignored.&quot;);
-    }
-}</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="use-message-time-to-live-ttl">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#use-message-time-to-live-ttl">#</doc-anchor-trigger>
-        <span>Use message time-to-live (TTL)</span>
-    </h4>
-</doc-anchor-target>
-<p>Not all messages need to live indefinitely. For messages that become irrelevant after a certain time (e.g., notifications or expired offers), configure a TTL to remove them from the queue automatically. In RabbitMQ, you can set this per queue:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">_channel.QueueDeclare(
-    queue: &quot;ttl-queue&quot;,
-    durable: true,
-    exclusive: false,
-    autoDelete: false,
-    arguments: new Dictionary&lt;string, object&gt;
-    {
-        { &quot;x-message-ttl&quot;, 60000 } // TTL in milliseconds
-    }
-);</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="implement-dead-letter-queues">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#implement-dead-letter-queues">#</doc-anchor-trigger>
-        <span>Implement dead-letter queues</span>
-    </h4>
-</doc-anchor-target>
-<p>DLQs are essential for handling messages that fail processing after multiple retries. Route these problematic messages to a separate queue for later analysis, ensuring they don’t block normal operations. Pair DLQs with monitoring tools to alert you when thresholds are exceeded, signaling potential issues upstream.</p>
-<doc-anchor-target id="monitor-and-scale-dynamically">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#monitor-and-scale-dynamically">#</doc-anchor-trigger>
-        <span>Monitor and scale dynamically</span>
-    </h4>
-</doc-anchor-target>
-<p>Use monitoring metrics such as queue depth and message latency to decide when to scale consumers or optimize workflows. For example, with Azure Service Bus, you can configure auto-scaling policies based on these metrics to add or remove consumer instances automatically.</p>
-<doc-anchor-target id="secure-your-queues">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#secure-your-queues">#</doc-anchor-trigger>
-        <span>Secure your queues</span>
-    </h4>
-</doc-anchor-target>
-<p>Always use TLS to encrypt messages in transit and implement robust authentication to prevent unauthorized access. For example, use Azure Active Directory or SAS tokens with specific permissions in Azure Service Bus:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var client = new ServiceBusClient(&quot;&lt;connection-string&gt;&quot;);
-var sender = client.CreateSender(&quot;secure-queue&quot;);
-await sender.SendMessageAsync(new ServiceBusMessage(&quot;Secure message&quot;));</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="document-your-system">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#document-your-system">#</doc-anchor-trigger>
-        <span>Document your system</span>
-    </h4>
-</doc-anchor-target>
-<p>Maintaining clear documentation of your queues, their purpose, and related processes is crucial for troubleshooting and onboarding new team members. It&#x27;s not just a task, it&#x27;s a necessity. Include information about queue naming conventions, message schemas, and retry policies.</p>
-<p>By following these practices, your message queuing system will remain robust, efficient, and secure, capable of meeting the demands of both current and future workloads. These strategies ensure your system isn’t just functional but also an asset in delivering reliable and scalable applications, instilling confidence in its capabilities.</p>
 
                                 
                                 <!-- Required only on API pages -->
