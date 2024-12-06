@@ -1410,14 +1410,14 @@ This model benefits from the .NET thread pool, reusing threads when possible, an
 When handling multiple clients, maintaining a list of connected clients can be beneficial. The System.Collections.Concurrent namespace provides thread-safe collections:
 
 ```csharp
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
 class Program
 {
-    private static readonly List<Socket> ClientSockets = new List<Socket>();
-    private static readonly object LockObject = new object();
+    private static readonly ConcurrentBag<Socket> ClientSockets = new ConcurrentBag<Socket>();
 
     static void Main()
     {
@@ -1439,10 +1439,9 @@ class Program
             while (true)
             {
                 Socket clientSocket = serverSocket.Accept(); // Accept a new client
-                lock (LockObject) // Ensure thread safety when adding to the list
-                {
-                    ClientSockets.Add(clientSocket);
-                }
+                ClientSockets.Add(clientSocket); // Add to the ConcurrentBag (thread-safe)
+
+                // Handle client in a new thread
                 Thread clientThread = new Thread(HandleClient);
                 clientThread.Start(clientSocket); // Handle client in new thread
             }
@@ -1481,13 +1480,35 @@ class Program
         }
         finally
         {
-            // Remove the socket from the list and close it when done
-            lock (LockObject)
-            {
-                ClientSockets.Remove(clientSocket);
-            }
+            // Remove the socket from the ConcurrentBag
+            RemoveClientSocket(clientSocket);
+
             clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
+        }
+    }
+
+    private static void RemoveClientSocket(Socket clientSocket)
+    {
+        // ConcurrentBag doesn't have a Remove method, so create a new bag and copy all except the specified socket
+        var updatedClientSockets = new ConcurrentBag<Socket>();
+        foreach (var socket in ClientSockets)
+        {
+            if (socket != clientSocket)
+            {
+                updatedClientSockets.Add(socket);
+            }
+        }
+
+        // Swap the updated bag back to the original
+        while (!ClientSockets.IsEmpty)
+        {
+            ClientSockets.TryTake(out _);
+        }
+
+        foreach (var socket in updatedClientSockets)
+        {
+            ClientSockets.Add(socket);
         }
     }
 }
