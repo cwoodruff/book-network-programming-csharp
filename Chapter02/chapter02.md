@@ -375,10 +375,6 @@ In the vast expanse of networked systems, a tapestry of indispensable services w
 - **Secure Shell (SSH)**: In the world of remote access, SSH emerges as the guardian of secure connections. It allows users to remotely access systems, execute commands, and even transfer files, all within the protective cloak of encryption.
 - **Telnet** : While its security is often questioned in the age of encryption, Telnet's historical significance is undeniable. It paved the way for remote access to systems, making it possible to log in and operate a remote computer as if you were physically present.
 
-![](Images/Chapter02-05.jpg)
-
-<figcaption align = "center"><b>Common Protocols and Ports</b></figcaption>
-
 These are but a few threads in the intricate tapestry of network services that enable our digital lives. Each service weaves its unique functionality into the collective experience, fostering connectivity, collaboration, and communication across the networked landscape.
 
 ## Ports and port numbers
@@ -403,7 +399,9 @@ In the digital landscape, port numbers function like gateways, ensuring that dat
 - **Port 53 (DNS)**: The Domain Name System (DNS) translates human-readable domain names into IP addresses. Port 53 is the pathway for DNS queries and responses, making web browsing much smoother.
 - **Port 21 (FTP)**: File Transfer Protocol (FTP) relies on port 21 for transferring files between a client and a server. It's a common method for uploading and downloading files to and from websites.
 
-**\*\*\*\*\*\* DiagramFigure 2.7 -**
+![](Images/Chapter02-05.jpg)
+
+<figcaption align = "center"><b>Common Protocols and Ports</b></figcaption>
 
 These common port numbers serve as essential signposts in the vast network landscape, ensuring that data finds its way to the right services efficiently and securely.
 
