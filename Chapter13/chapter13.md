@@ -4,7 +4,6 @@ icon: stack
 label: Chap 13 - Working with gRPC
 meta:
 title: "Working with gRPC"
-visibility: hidden
 ---
 # 13
 

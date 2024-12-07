@@ -4,7 +4,6 @@ icon: stack
 label: Chap 12 - Working with MQTT for IoT (Internet of Things)
 meta:
 title: "Working with MQTT for IoT (Internet of Things)"
-visibility: hidden
 ---
 # 12
 

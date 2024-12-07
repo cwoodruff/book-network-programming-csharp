@@ -4,7 +4,6 @@ icon: stack
 label: Chap 15
 meta:
 title: "Implementing Message Queuing"
-visibility: hidden
 ---
 # 15
 
