@@ -1,7 +1,7 @@
 ---
 order: 5
 icon: stack
-label: Chap 15
+label: Chap 15 - Implementing Message Queuing
 meta:
 title: "Implementing Message Queuing"
 ---
