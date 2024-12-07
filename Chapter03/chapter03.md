@@ -1026,7 +1026,7 @@ The Accept method, when invoked on a server socket, blocks the current thread of
 ```csharp
 Socket clientSocket = serverSocket.Accept();
 
-Console.WriteLine("Client connected from clientSocket.RemoteEndPoint.ToString());
+Console.WriteLine($"Client connected from {clientSocket.RemoteEndPoint.ToString()}");
 ```
 
 This new socket (clientSocket in the example) serves as the communication channel between the server and the specific client.
