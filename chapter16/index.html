@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786898811558">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786922095796">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -15,6 +15,7 @@
     <!-- Primary Meta Tags -->
     <title>Using SignalR</title>
     <meta name="title" content="Using SignalR">
+    <meta name="description" content="In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/">
@@ -23,20 +24,23 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/">
     <meta property="og:title" content="Using SignalR">
+    <meta property="og:description" content="In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/">
     <meta property="twitter:title" content="Using SignalR">
+    <meta property="twitter:description" content="In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications.">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.786898811558" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.786922095796" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.786898811558" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.786922095796" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.786898811558" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.786922095796" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.786922095796" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -235,6 +239,1445 @@
         <span>Using SignalR</span>
     </h1>
 </doc-anchor-target>
+<p>In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications. From live chat systems to collaborative editing tools, users increasingly expect updates and interactions to occur instantly, without the need for constant page refreshes or clunky polling mechanisms. <strong>SignalR</strong>, a powerful library in .NET 8, simplifies the complexities of real-time communication, enabling developers to create seamless and responsive user experiences. By bridging the gap between server and client with a dynamic, bidirectional communication channel, SignalR not only offers flexibility and performance across various transport protocols but also puts the power of a great user experience in your hands.</p>
+<p>But SignalR is more than just a library—it&#x27;s a gateway to a world of possibilities in building interactive, scalable, resilient network applications. This chapter will take you on a journey through the intricacies of SignalR, starting with an overview of its core concepts and moving into practical implementation for servers and clients. Along the way, we&#x27;ll explore advanced features like group messaging and connection management, ensuring that by the end of this journey, you&#x27;ll be ready to confidently add SignalR to your developer arsenal. Let&#x27;s embark on this exciting journey and see how SignalR can transform your real-time application development.</p>
+<doc-anchor-target id="real-time-all-the-time-introducing-signalr">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#real-time-all-the-time-introducing-signalr">#</doc-anchor-trigger>
+        <span>Real-Time, All the Time: Introducing SignalR</span>
+    </h2>
+</doc-anchor-target>
+<p>In the previous chapter, we delved into the role of WebHooks in event-driven communication in loosely coupled systems. While WebHooks are effective in this context, they lack the persistent, bidirectional interaction necessary for real-time applications. This is where SignalR steps in, not just as a solution, but as an empowering tool for developers. With its elegant abstraction over underlying transport protocols, SignalR gives developers the power to create applications that respond to user actions or external events with almost magical immediacy.</p>
+<p>SignalR is not just a tool—it&#x27;s a paradigm shift in how we think about application responsiveness. By establishing persistent connections between clients and servers, SignalR opens doors to features that were once the domain of only the most complex and resource-intensive systems. Imagine live sports scores updating as games unfold, collaborative editing tools where changes appear instantly, or real-time dashboards that reflect business-critical metrics as they happen. SignalR makes these scenarios not just possible, but surprisingly straightforward to implement, thanks to its integration with the .NET ecosystem and its ability to gracefully handle fallback protocols like Server-Sent Events and Long Polling.</p>
+<p>This section will introduce you to the key concepts that make SignalR tick, demystifying how it achieves its real-time magic. You&#x27;ll gain a clear understanding of SignalR&#x27;s architecture and how it leverages WebSockets for optimal performance. More importantly, you&#x27;ll learn how SignalR maintains fallback support for environments where WebSockets may not be available, ensuring that you&#x27;re prepared for any scenario. Whether you&#x27;re new to SignalR or seeking to deepen your expertise, this section lays the groundwork for building interactive, real-time applications with confidence and creativity.</p>
+<doc-anchor-target id="the-pulse-of-real-time-understanding-the-problem-space">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-pulse-of-real-time-understanding-the-problem-space">#</doc-anchor-trigger>
+        <span>The Pulse of Real-Time: Understanding the Problem Space</span>
+    </h3>
+</doc-anchor-target>
+<p>The allure of real-time applications lies in their immediacy—data appears as events unfold, interactions feel instantaneous, and users are immersed in a dynamic, responsive experience. However, achieving this level of responsiveness presents a unique set of challenges. Traditional request-response models, while dependable, introduce latency and inefficiency for real-time scenarios. Repeated polling or manual refreshes burden both servers and clients, creating a bottleneck that undermines the seamless experience users demand. To design genuinely real-time systems, we need tools and techniques that bypass these inefficiencies and maintain a steady, uninterrupted &quot;pulse&quot; of updates.</p>
+<p>At its core, the challenge lies in maintaining persistent communication between the client and server. Without a mechanism for servers to push updates, applications are left blind to changes outside the user&#x27;s actions. For example, a stock trading app needs to reflect real-time market updates, not when a user clicks &quot;refresh.&quot; Traditional HTTP was never designed for such interactions, but the advent of protocols like WebSockets has shifted the landscape, enabling persistent, low-latency connections that underpin modern real-time systems.</p>
+<p>SignalR addresses this problem with a developer-friendly abstraction over WebSockets and other transport protocols. It automates the complexities of connection management, protocol negotiation, and scaling, so you can focus on delivering real-time features rather than wrestling with infrastructure. In this subsection, we&#x27;ll explore why real-time communication is critical for many applications, the inherent challenges it introduces, and how SignalR elegantly resolves these pain points. With SignalR, creating real-time systems is less about overcoming hurdles and more about unleashing possibilities.</p>
+<doc-anchor-target id="what-makes-signalr-shine-key-features-and-architecture">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#what-makes-signalr-shine-key-features-and-architecture">#</doc-anchor-trigger>
+        <span>What Makes SignalR Shine: Key Features and Architecture</span>
+    </h3>
+</doc-anchor-target>
+<p>SignalR isn&#x27;t just another library in the vast .NET ecosystem—it&#x27;s a masterstroke of engineering designed to simplify real-time communication while maximizing flexibility and performance. At its heart, SignalR provides an abstraction over multiple transport protocols, including <strong>WebSockets</strong>, <strong>Server-Sent Events (SSE)</strong>, and <strong>Long Polling</strong>. This intelligent fallback mechanism ensures that your applications deliver a seamless real-time experience, regardless of the client&#x27;s environment or browser capabilities. Whether you&#x27;re connecting users on modern browsers with WebSockets or supporting legacy systems with Long Polling, SignalR has you covered.</p>
+<p>One of SignalR&#x27;s standout features is its ability to handle <strong>persistent connections</strong>, a key differentiator from traditional HTTP request-response models. These persistent connections enable bidirectional communication, allowing servers to push client updates without waiting for a request. This architecture unlocks robust use cases such as live notifications, collaborative document editing, and dynamic dashboards. SignalR also supports <strong>connection grouping</strong>, enabling granular control over who receives updates, whether broadcasting to all connected clients or targeting specific users or groups.</p>
+<p>Behind the scenes, SignalR integrates tightly with the .NET platform, offering out-of-the-box scalability and compatibility with Azure SignalR Service for handling high-traffic loads. Its use of <strong>Hubs</strong> as a central communication point simplifies development, allowing you to focus on defining the methods and data structures that power your real-time interactions. Whether you&#x27;re new to real-time development or an experienced developer seeking a robust solution, SignalR&#x27;s combination of features and thoughtful architecture makes it a shining example of how .NET 8 continues to push boundaries in network programming.</p>
+<doc-anchor-target id="the-signalr-edge-real-world-applications-and-scenarios">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-signalr-edge-real-world-applications-and-scenarios">#</doc-anchor-trigger>
+        <span>The SignalR Edge: Real-World Applications and Scenarios</span>
+    </h3>
+</doc-anchor-target>
+<p>SignalR&#x27;s versatility and power truly shine when used in real-world applications. One of the most common use cases is live notifications—whether it&#x27;s delivering instant updates for social media feeds, informing users of changes in collaborative environments, or providing status alerts in enterprise applications. With SignalR, these notifications become effortless, leveraging its bidirectional communication to keep users informed when an event occurs. Forget the days of manual refreshes or clunky polling; SignalR, with its user-friendly interface, makes &#x27;always connected&#x27; more than just a buzzword, empowering developers to implement it with confidence.</p>
+<p>Another transformative application of SignalR is in collaborative tools. Imagine multiple users editing a document simultaneously, seeing changes reflected in real-time. Platforms like code-sharing tools, whiteboard applications, and customer service chat systems rely heavily on SignalR&#x27;s ability to synchronize updates across clients instantly. By managing connection groups and handling complex event routing behind the scenes, SignalR provides developers with a robust foundation for creating seamless, interactive experiences.</p>
+<p>SignalR is also a game-changer for real-time dashboards. Whether tracking stock market data, monitoring server health, or visualizing IoT sensor metrics, SignalR enables you to push updates directly to the dashboard without user intervention. Its low-latency communication ensures these metrics remain accurate and up-to-date, empowering users to make timely decisions. And with SignalR&#x27;s scalability—enhanced by Azure SignalR Service—these applications can handle thousands of concurrent connections without breaking a sweat, giving developers the confidence that their applications can handle any load.</p>
+<p>Finally, SignalR&#x27;s utility extends into industries like gaming, where real-time multiplayer experiences demand the utmost performance and responsiveness. From managing player movements to broadcasting game states, SignalR, with its real-time capabilities, reduces the complexity of building interactive games that connect players across the globe. Regardless of the domain, SignalR&#x27;s adaptability and ease of use make it a cornerstone for any application where immediacy isn&#x27;t just a luxury—it&#x27;s a necessity, giving users a sense of real-time control and responsiveness.</p>
+<doc-anchor-target id="the-signalr-toolkit-hubs-connections-and-protocols">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-signalr-toolkit-hubs-connections-and-protocols">#</doc-anchor-trigger>
+        <span>The SignalR Toolkit: Hubs, Connections, and Protocols</span>
+    </h2>
+</doc-anchor-target>
+<p>If SignalR were a symphony, its toolkit would be the instruments that bring its real-time magic to life. At the core of this toolkit are Hubs, the maestros orchestrating communication between clients and servers. Hubs simplify the process of calling server-side methods from clients (and vice versa) by abstracting away the complexities of underlying protocols. They allow you to focus on the logic of your application rather than the minutiae of data transport, making real-time communication as seamless and natural as calling a method in your code.</p>
+<p>But SignalR doesn’t stop at simplicity—it’s designed for versatility. Whether managing persistent connections, handling reconnections gracefully, or dynamically switching between protocols like WebSockets, Server-Sent Events, and Long Polling, SignalR ensures your application delivers a robust, real-time experience no matter the scenario. In this section, we’ll dive into these building blocks of SignalR, exploring how they work together to create the robust, responsive systems we began envisioning in the previous chapter. With Hubs, connections, and protocols in your toolkit, you’re armed with everything you need to bring your real-time applications to life.</p>
+<doc-anchor-target id="the-heart-of-the-hub-managing-real-time-communication">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-heart-of-the-hub-managing-real-time-communication">#</doc-anchor-trigger>
+        <span>The Heart of the Hub: Managing Real-Time Communication</span>
+    </h3>
+</doc-anchor-target>
+<p>At the heart of every SignalR application, the Hub stands as a testament to efficiency, managing all real-time interactions between clients and the server. It&#x27;s like a virtual concierge, adept at fielding requests, routing messages, and ensuring seamless communication among all connected clients. Its straightforward API for calling server-side methods from clients (and vice versa) eliminates the need for much of the boilerplate code traditionally required for real-time communication, showcasing its power in simplifying complex tasks.</p>
+<p>The magic of the Hub lies in its bidirectional nature. Clients can invoke methods on the server, while the server can broadcast messages to one, some, or all connected clients. For example, in a live chat application, a client can send a message to the server through the Hub, relaying the message to other connected users in real-time. SignalR&#x27;s seamless management of connections, automatic tracking of active connections, graceful handling of disconnections, and support for reconnection logic when a client is temporarily offline, all contribute to a reliable and enjoyable real-time communication experience.</p>
+<p>More than just a router, the Hub is a platform for personalization and scalability. It allows developers to organize clients into groups, enabling targeted communication—imagine broadcasting to specific rooms in a chat app or delivering notifications only to users following a particular topic. The Hub&#x27;s support for pluggable protocols like JSON and MessagePack ensures it can adapt to your application&#x27;s unique needs, balancing performance and ease of use. With the Hub at the heart of your SignalR implementation, managing real-time communication becomes not just achievable, but also adaptable and enjoyable.</p>
+<doc-anchor-target id="protocols-in-motion-understanding-the-communication-pipeline">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#protocols-in-motion-understanding-the-communication-pipeline">#</doc-anchor-trigger>
+        <span>Protocols in Motion: Understanding the Communication Pipeline</span>
+    </h3>
+</doc-anchor-target>
+<p>SignalR&#x27;s ability to deliver real-time communication hinges on its dynamic use of transport protocols, creating a resilient and efficient communication pipeline. At the forefront is WebSockets, the gold standard for low-latency, bidirectional connections. WebSockets enable the server and client to maintain an open line of communication, eliminating the overhead of constant HTTP requests. However, SignalR&#x27;s brilliance lies in its adaptability. If WebSockets aren&#x27;t available, SignalR seamlessly falls back to Server-Sent Events (SSE) or Long Polling, ensuring real-time functionality persists regardless of the environment.</p>
+<p>This protocol negotiation is entirely automated, freeing you to focus on building features rather than debugging connection issues. SignalR even allows you to customize the pipeline, offering support for efficient serialization formats like MessagePack, which minimizes bandwidth usage compared to traditional JSON. Understanding how SignalR leverages protocols to optimize performance and reliability gives you a deeper appreciation for the robust architecture that powers your real-time applications. With SignalR, the communication pipeline isn&#x27;t just a path—it&#x27;s a superhighway for delivering data at the speed of modern expectations.</p>
+<doc-anchor-target id="building-the-backbone-setting-up-your-signalr-server">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#building-the-backbone-setting-up-your-signalr-server">#</doc-anchor-trigger>
+        <span>Building the Backbone: Setting Up Your SignalR Server</span>
+    </h2>
+</doc-anchor-target>
+<p>With a solid understanding of SignalR’s capabilities and architecture from the previous section, it’s time for us to roll up our sleeves and bring theory into practice. You, as a developer, play a crucial role in this process. At the core of every real-time application lies a SignalR server—a backbone that manages connections, routes messages, and ensures seamless client communication. Setting up this server isn’t just a technical task; it’s the first step toward creating applications that feel alive, instantly responsive, and endlessly engaging.</p>
+<p>In this section, we’ll guide you through configuring your SignalR server in .NET 8, from installing dependencies to defining Hubs and mapping endpoints. This task, while challenging, is incredibly rewarding. Along the way, you’ll see how to customize your server to suit the unique needs of your application. Whether you’re building a live chat system, a collaborative tool, or a real-time dashboard, this foundational setup will prepare you to unlock SignalR’s full potential and start crafting remarkable user experiences. Let’s build your real-time backbone!</p>
+<doc-anchor-target id="laying-the-foundation-installing-and-configuring-signalr">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#laying-the-foundation-installing-and-configuring-signalr">#</doc-anchor-trigger>
+        <span>Laying the Foundation: Installing and Configuring SignalR</span>
+    </h3>
+</doc-anchor-target>
+<p>To kickstart your journey into SignalR, setting up your server as the hub of real-time communication is the first step. Thankfully, SignalR&#x27;s integration with ASP.NET Core makes this process straightforward yet flexible, providing all the tools you need to define and manage server-side functionality. By the end of this section, you&#x27;ll have a fully functional SignalR server ready to handle real-time connections.</p>
+<doc-anchor-target id="setting-up-the-project">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#setting-up-the-project">#</doc-anchor-trigger>
+        <span>Setting Up the Project</span>
+    </h4>
+</doc-anchor-target>
+<p>Start by creating a new ASP.NET Core project. Use the following command in the terminal to create a web application project:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet new web -n SignalRServerExample
+cd SignalRServerExample</code></pre>
+</doc-codeblock></div>
+<p>Once the project is created, add the SignalR NuGet package to your solution:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.AspNetCore.SignalR</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="creating-the-hub">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#creating-the-hub">#</doc-anchor-trigger>
+        <span>Creating the Hub</span>
+    </h4>
+</doc-anchor-target>
+<p>The heart of SignalR communication is the Hub, a class that facilitates the interaction between clients and the server. Create a new Hub class in your project:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Microsoft.AspNetCore.SignalR;
+
+public class ChatHub : Hub
+{
+    public async Task SendMessage(string user, string message)
+    {
+        await Clients.All.SendAsync(&quot;ReceiveMessage&quot;, user, message);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Here, the <code v-pre>SendMessage</code> method allows connected clients to send messages to all other clients by invoking the <code v-pre>ReceiveMessage</code> method. This example is simple, but Hubs can handle more complex logic and interactions as needed.</p>
+<doc-anchor-target id="configuring-the-server">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#configuring-the-server">#</doc-anchor-trigger>
+        <span>Configuring the Server</span>
+    </h4>
+</doc-anchor-target>
+<p>Next, configure the SignalR middleware in your ASP.NET Core application. Open the Program.cs file and modify the code to include the necessary setup:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.UseRouting();
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>In this configuration, the <code v-pre>MapHub</code> method maps the <code v-pre>ChatHub</code> class to the <code v-pre>/chathub</code> endpoint, allowing clients to connect.</p>
+<doc-anchor-target id="testing-the-setup">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#testing-the-setup">#</doc-anchor-trigger>
+        <span>Testing the Setup</span>
+    </h4>
+</doc-anchor-target>
+<p>You&#x27;ll need at least one client to connect to test your server. For simplicity, we can use a JavaScript-based client to verify communication. Add an HTML file to your project’s <code v-pre>wwwroot</code> folder for testing:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre class="language-none"><code v-pre class="language-none">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;SignalR Test&lt;/title&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.0/signalr.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;input type=&quot;text&quot; id=&quot;user&quot; placeholder=&quot;Enter your name&quot;&gt;
+    &lt;input type=&quot;text&quot; id=&quot;message&quot; placeholder=&quot;Enter a message&quot;&gt;
+    &lt;button onclick=&quot;sendMessage()&quot;&gt;Send&lt;/button&gt;
+
+    &lt;ul id=&quot;messagesList&quot;&gt;&lt;/ul&gt;
+
+    &lt;script&gt;
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl(&quot;/chathub&quot;)
+            .build();
+
+        connection.on(&quot;ReceiveMessage&quot;, (user, message) =&gt; {
+            const li = document.createElement(&quot;li&quot;);
+            li.textContent = `${user}: ${message}`;
+            document.getElementById(&quot;messagesList&quot;).appendChild(li);
+        });
+
+        connection.start().catch(err =&gt; console.error(err.toString()));
+
+        function sendMessage() {
+            const user = document.getElementById(&quot;user&quot;).value;
+            const message = document.getElementById(&quot;message&quot;).value;
+            connection.invoke(&quot;SendMessage&quot;, user, message)
+                .catch(err =&gt; console.error(err.toString()));
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</doc-codeblock></div>
+<p>Run your application and navigate to the HTML file in your browser. Open multiple browser tabs, enter a name and message and watch as the messages appear across all tabs in real-time, keeping you engaged and excited about the power of SignalR.</p>
+<doc-anchor-target id="wrapping-up">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#wrapping-up">#</doc-anchor-trigger>
+        <span>Wrapping Up</span>
+    </h4>
+</doc-anchor-target>
+<p>With these steps, you&#x27;ve laid the foundation for a SignalR server capable of handling real-time communication. This basic implementation is just the beginning—SignalR&#x27;s flexibility is a vast playground waiting for you to explore and customize your server to fit a wide range of use cases. From here, you can dive deeper into features like group communication, authentication, and scaling to meet the demands of production-grade applications.</p>
+<doc-anchor-target id="routing-real-time-traffic-mapping-endpoints">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#routing-real-time-traffic-mapping-endpoints">#</doc-anchor-trigger>
+        <span>Routing Real-Time Traffic: Mapping Endpoints</span>
+    </h3>
+</doc-anchor-target>
+<p>Once your SignalR server is set up and a Hub is ready to handle communication, the next step is to define how clients connect and interact with your server. This process, when done correctly, enables seamless real-time traffic routing, ensuring that your application can handle multiple communication streams efficiently and securely. The benefits of this are numerous, and it&#x27;s exciting to see the potential of your application unfold.</p>
+<doc-anchor-target id="basic-endpoint-mapping">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#basic-endpoint-mapping">#</doc-anchor-trigger>
+        <span>Basic Endpoint Mapping</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR leverages ASP.NET Core&#x27;s routing system to define endpoints for Hubs. Start by modifying your <code v-pre>Program.cs</code> file to include the necessary routing middleware:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.UseRouting();
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>The <code v-pre>MapHub&lt;T&gt;</code> method maps the <code v-pre>ChatHub</code> to the <code v-pre>/chathub</code> endpoint. Any client connecting to this endpoint can now interact with the <code v-pre>ChatHub</code>. The route acts as the entry point for all real-time traffic handled by this Hub.</p>
+<doc-anchor-target id="adding-multiple-hubs">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#adding-multiple-hubs">#</doc-anchor-trigger>
+        <span>Adding Multiple Hubs</span>
+    </h4>
+</doc-anchor-target>
+<p>If your application requires multiple Hubs, each can be mapped to its unique endpoint. For instance, imagine an application with separate Hubs for chat and notifications:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+app.MapHub&lt;NotificationHub&gt;(&quot;/notifications&quot;);</code></pre>
+</doc-codeblock></div>
+<p>This approach allows you to segment traffic based on functionality, keeping communication channels organized and manageable. Each Hub operates independently, making adding or modifying functionality easier without impacting other parts of the system.</p>
+<doc-anchor-target id="configuring-custom-endpoints">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#configuring-custom-endpoints">#</doc-anchor-trigger>
+        <span>Configuring Custom Endpoints</span>
+    </h4>
+</doc-anchor-target>
+<p>Sometimes, you might need to customize your Hub routes to meet specific requirements. For example, you can add route constraints or use dynamic segments to create more flexible endpoints:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">app.MapHub&lt;ChatHub&gt;(&quot;/chat/{roomName}&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Here, the <code v-pre>{roomName}</code> placeholder allows clients to dynamically specify the chat room they want to join. The server can then use this parameter within the Hub to manage communication, such as broadcasting messages only to clients in the specified room.</p>
+<doc-anchor-target id="securing-routes">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#securing-routes">#</doc-anchor-trigger>
+        <span>Securing Routes</span>
+    </h4>
+</doc-anchor-target>
+<p>When mapping routes, it&#x27;s crucial to consider security. You can apply middleware like authentication or authorization to ensure that only authorized clients can connect to specific Hubs. For instance, you might require users to be authenticated before accessing a Hub:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;).RequireAuthorization();</code></pre>
+</doc-codeblock></div>
+<p>The <code v-pre>RequireAuthorization</code> method serves a crucial role in ensuring the security of your application. It enforces that only authenticated users can connect to the <code v-pre>ChatHub</code>, a feature particularly important for applications handling sensitive data or user-specific communication.</p>
+<doc-anchor-target id="adding-middleware-for-enhanced-routing">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#adding-middleware-for-enhanced-routing">#</doc-anchor-trigger>
+        <span>Adding Middleware for Enhanced Routing</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR endpoints can also be augmented with additional middleware to customize their behavior. For example, you might log connection attempts or handle specific headers:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+{
+    Console.WriteLine($&quot;Incoming connection: {context.Request.Path}&quot;);
+    await next();
+});
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);</code></pre>
+</doc-codeblock></div>
+<p>In this example, the middleware logs each incoming connection to the console. This can be extended for tasks like analytics, rate limiting, or custom request validation.</p>
+<doc-anchor-target id="handling-fallbacks">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-fallbacks">#</doc-anchor-trigger>
+        <span>Handling Fallbacks</span>
+    </h4>
+</doc-anchor-target>
+<p>Defining fallback routes or error-handling mechanisms is good practice in scenarios where real-time traffic might not always follow the intended path. For example:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">app.UseEndpoints(endpoints =&gt;
+{
+    endpoints.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+    endpoints.MapFallback(context =&gt;
+    {
+        context.Response.StatusCode = 404;
+        return context.Response.WriteAsync(&quot;Endpoint not found.&quot;);
+    });
+});</code></pre>
+</doc-codeblock></div>
+<p>This ensures that any requests to undefined routes are handled gracefully, providing better feedback to clients and simplifying debugging.</p>
+<p>Properly mapping endpoints is a fundamental step in building a robust SignalR server. Organizing routes, securing access, and leveraging middleware create a flexible and reliable backbone for your application. With the endpoints in place, you can explore advanced features like scaling, groups, and connection management to take your real-time application to the next level.</p>
+<doc-anchor-target id="customizing-the-experience-hub-lifetime-events-and-logging">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#customizing-the-experience-hub-lifetime-events-and-logging">#</doc-anchor-trigger>
+        <span>Customizing the Experience: Hub Lifetime Events and Logging</span>
+    </h3>
+</doc-anchor-target>
+<p>Once your SignalR server is up and running, fine-tuning its behavior to fit your application’s specific needs can elevate the user experience. SignalR provides hooks for Hub lifetime events, enabling you to track client connections, disconnections, and other key lifecycle moments. Combined with robust logging, these events allow you to monitor, debug, and customize your application’s real-time behavior effectively.</p>
+<doc-anchor-target id="handling-client-connections">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-client-connections">#</doc-anchor-trigger>
+        <span>Handling Client Connections</span>
+    </h4>
+</doc-anchor-target>
+<p>Every time a client connects to your Hub, you can capture and react to the event by overriding the <code v-pre>OnConnectedAsync</code> method in your Hub class:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Microsoft.AspNetCore.SignalR;
+
+public class ChatHub : Hub
+{
+    public override async Task OnConnectedAsync()
+    {
+        var connectionId = Context.ConnectionId;
+        Console.WriteLine($&quot;Client connected: {connectionId}&quot;);
+        await base.OnConnectedAsync();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code v-pre>Context.ConnectionId</code> property, a valuable tool in managing client connections, provides a unique identifier for each client’s connection. This identifier is key in managing user-specific data, logging connection attempts, and triggering initialization logic, enhancing the efficiency of your work.</p>
+<doc-anchor-target id="handling-disconnections">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-disconnections">#</doc-anchor-trigger>
+        <span>Handling Disconnections</span>
+    </h4>
+</doc-anchor-target>
+<p>Equally versatile is the <code v-pre>OnDisconnectedAsync</code> method, which allows you to handle a variety of client disconnection scenarios. This method can clean up resources or perform actions like notifying other clients about the disconnection. This allows you to clean up resources or perform actions like notifying other clients about the disconnection:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public override async Task OnDisconnectedAsync(Exception? exception)
+{
+    var connectionId = Context.ConnectionId;
+    Console.WriteLine($&quot;Client disconnected: {connectionId}&quot;);
+    if (exception != null)
+    {
+        Console.WriteLine($&quot;Reason: {exception.Message}&quot;);
+    }
+    await base.OnDisconnectedAsync(exception);
+}</code></pre>
+</doc-codeblock></div>
+<p>By capturing and optionally logging the exception, you not only gain insight into unexpected disconnections or errors, but also significantly improve your ability to troubleshoot issues, enhancing the overall performance of your application.</p>
+<doc-anchor-target id="integrating-application-specific-logic">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#integrating-application-specific-logic">#</doc-anchor-trigger>
+        <span>Integrating Application-Specific Logic</span>
+    </h4>
+</doc-anchor-target>
+<p>These lifetime events play a crucial role in implementing custom application logic. For instance, you might maintain an in-memory list of active users and notify other clients when someone joins or leaves, thereby enhancing the user experience of your application.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">private static readonly HashSet&lt;string&gt; ConnectedUsers = new();
+
+public override async Task OnConnectedAsync()
+{
+    ConnectedUsers.Add(Context.ConnectionId);
+    await Clients.All.SendAsync(&quot;UserConnected&quot;, Context.ConnectionId);
+    await base.OnConnectedAsync();
+}
+
+public override async Task OnDisconnectedAsync(Exception? exception)
+{
+    ConnectedUsers.Remove(Context.ConnectionId);
+    await Clients.All.SendAsync(&quot;UserDisconnected&quot;, Context.ConnectionId);
+    await base.OnDisconnectedAsync(exception);
+}</code></pre>
+</doc-codeblock></div>
+<p>This example keeps a simple record of connected users and broadcasts changes to all clients in real time.</p>
+<doc-anchor-target id="adding-logging-for-insights">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#adding-logging-for-insights">#</doc-anchor-trigger>
+        <span>Adding Logging for Insights</span>
+    </h4>
+</doc-anchor-target>
+<p>Robust logging is crucial for understanding your server’s behavior and diagnosing issues. By injecting a logger into your Hub class, you can log key events and interactions:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Microsoft.Extensions.Logging;
+
+public class ChatHub : Hub
+{
+    private readonly ILogger&lt;ChatHub&gt; _logger;
+
+    public ChatHub(ILogger&lt;ChatHub&gt; logger)
+    {
+        _logger = logger;
+    }
+
+    public override async Task OnConnectedAsync()
+    {
+        _logger.LogInformation($&quot;Client connected: {Context.ConnectionId}&quot;);
+        await base.OnConnectedAsync();
+    }
+
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        _logger.LogInformation($&quot;Client disconnected: {Context.ConnectionId}&quot;);
+        if (exception != null)
+        {
+            _logger.LogError($&quot;Disconnection error: {exception.Message}&quot;);
+        }
+        await base.OnDisconnectedAsync(exception);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This integration ensures that critical events, such as connection establishment, disconnection, and message broadcasting, are captured in your application’s logging pipeline, making them accessible for monitoring or troubleshooting.</p>
+<p>By leveraging Hub lifetime events and logging, you gain deeper visibility and control over your SignalR server. These capabilities help you monitor your application&#x27;s health and provide hooks for crafting a tailored, responsive user experience. With your server now equipped to handle lifecycle events and log critical activities, you’re not just ready, but excited to dive into advanced SignalR features like connection groups and scalability.</p>
+<doc-anchor-target id="talking-the-talk-creating-a-signalr-client">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#talking-the-talk-creating-a-signalr-client">#</doc-anchor-trigger>
+        <span>Talking the Talk: Creating a SignalR Client</span>
+    </h2>
+</doc-anchor-target>
+<p>With your SignalR server set up and ready to handle connections, the next step is to bring your clients into the conversation. A SignalR client isn’t just a passive participant; it’s an active communicator, capable of invoking server-side methods and responding to real-time updates quickly and precisely. Whether your client is a web application, a mobile app, or a .NET desktop application, creating a SignalR client is your gateway to unlocking your application&#x27;s interactive potential, and the thrill of real-time communication.</p>
+<p>In this section, we’ll delve into the practical aspects of crafting a SignalR client that seamlessly connects to your server, subscribes to events, and easily sends data back. From establishing connections to handling reconnections and customizing client behavior, you’ll gain the practical tools to ensure your applications stay engaged and responsive. By the end, your SignalR client will be fully equipped to deliver the real-time magic your users expect.</p>
+<doc-anchor-target id="the-clients-perspective-how-signalr-bridges-the-gap">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-clients-perspective-how-signalr-bridges-the-gap">#</doc-anchor-trigger>
+        <span>The Client’s Perspective: How SignalR Bridges the Gap</span>
+    </h3>
+</doc-anchor-target>
+<p>From the client’s perspective, SignalR liberates you from the daunting task of managing real-time communication, transforming it into a seamless experience. SignalR, at its core, is the bridge that enables clients to establish a persistent connection with the server and communicate through bidirectional messaging. This means your application can send data to the server and receive updates in near real-time, relieving you from the complexities of manual polling or custom socket implementations. With SignalR, you can focus more on delivering features that delight users, rather than getting lost in the plumbing.</p>
+<p>SignalR clients are designed to adapt to the same transport protocols as the server—starting with WebSockets for maximum performance and gracefully falling back to alternatives like Server-Sent Events or Long Polling when necessary. This automatic and invisible negotiation ensures your application works smoothly across various environments, providing a reassurance that your application will perform well regardless of the user&#x27;s browser or network conditions. With SignalR handling the heavy lifting, you can focus on building rich, interactive experiences.</p>
+<p>Beyond connection management, SignalR clients empower you with seamless interaction with server-side Hubs. Clients can call Hub methods as if they were local functions, simplifying the logic needed for tasks like broadcasting messages, requesting updates, or triggering server-side workflows. At the same time, clients can listen for and respond to server-initiated calls, enabling features like real-time notifications, live updates, or collaborative editing. By bridging the gap between client and server, SignalR empowers you to create applications where real-time communication feels effortless and natural, making you feel capable of delivering such experiences.</p>
+<doc-anchor-target id="starting-the-conversation-setting-up-a-signalr-client">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#starting-the-conversation-setting-up-a-signalr-client">#</doc-anchor-trigger>
+        <span>Starting the Conversation: Setting Up a SignalR Client</span>
+    </h3>
+</doc-anchor-target>
+<p>The first step in getting your SignalR client up and running is to establish a connection to the server. SignalR’s client library simplifies this process by providing a rich API for handling connections, sending data, and receiving updates. Whether your client is a web app, desktop application, or mobile app, SignalR&#x27;s versatility ensures that the setup process is straightforward, empowering you to integrate with your SignalR server seamlessly.</p>
+<doc-anchor-target id="installing-the-client-library">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#installing-the-client-library">#</doc-anchor-trigger>
+        <span>Installing the Client Library</span>
+    </h4>
+</doc-anchor-target>
+<p>For a .NET-based client, add the SignalR client package to your project:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.AspNetCore.SignalR.Client</code></pre>
+</doc-codeblock></div>
+<p>This package includes everything you need to connect to a SignalR Hub and interact with it programmatically. Once installed, you can start building the client logic.</p>
+<doc-anchor-target id="creating-the-connection">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#creating-the-connection">#</doc-anchor-trigger>
+        <span>Creating the Connection</span>
+    </h4>
+</doc-anchor-target>
+<p>Begin by creating a connection to your server’s Hub. Use the <code v-pre>HubConnectionBuilder</code> to configure the connection and specify the server’s endpoint:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Microsoft.AspNetCore.SignalR.Client;
+
+var connection = new HubConnectionBuilder()
+    .WithUrl(&quot;https://localhost:5001/chathub&quot;)
+    .Build();</code></pre>
+</doc-codeblock></div>
+<p>The <code v-pre>WithUrl</code> method specifies the server’s URL and the endpoint mapped to your Hub. Replace the URL with the appropriate value for your server configuration.</p>
+<doc-anchor-target id="starting-the-connection">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#starting-the-connection">#</doc-anchor-trigger>
+        <span>Starting the Connection</span>
+    </h4>
+</doc-anchor-target>
+<p>Once the connection is defined, you can start it asynchronously. This step establishes communication with the server:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">await connection.StartAsync();
+Console.WriteLine(&quot;Connection started successfully.&quot;);</code></pre>
+</doc-codeblock></div>
+<p>If the connection fails, SignalR will throw an exception, so consider wrapping the StartAsync call in a try-catch block to handle errors gracefully:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">try
+{
+    await connection.StartAsync();
+    Console.WriteLine(&quot;Connection started successfully.&quot;);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($&quot;Connection failed: {ex.Message}&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="listening-for-server-messages">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#listening-for-server-messages">#</doc-anchor-trigger>
+        <span>Listening for Server Messages</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR allows the client to register handlers for server-to-client calls. Use the <code v-pre>On</code> method to define these handlers:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.On&lt;string, string&gt;(&quot;ReceiveMessage&quot;, (user, message) =&gt;
+{
+    Console.WriteLine($&quot;{user}: {message}&quot;);
+});</code></pre>
+</doc-codeblock></div>
+<p>In this example, the client listens for the <code v-pre>ReceiveMessage</code> event and logs the user and message to the console. This method mirrors that defined in the server-side Hub.</p>
+<doc-anchor-target id="sending-messages-to-the-server">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#sending-messages-to-the-server">#</doc-anchor-trigger>
+        <span>Sending Messages to the Server</span>
+    </h4>
+</doc-anchor-target>
+<p>To send data to the server, invoke Hub methods using the InvokeAsync method:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;Hello, SignalR!&quot;);</code></pre>
+</doc-codeblock></div>
+<p>The method name must match the name of the server-side Hub method, and the parameters should align with its signature.</p>
+<doc-anchor-target id="managing-connection-lifecycle">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#managing-connection-lifecycle">#</doc-anchor-trigger>
+        <span>Managing Connection Lifecycle</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR clients support lifecycle events, such as handling disconnections or reconnections. For instance, you can handle a closed connection and attempt a reconnect:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.Closed += async (error) =&gt;
+{
+    Console.WriteLine($&quot;Connection closed: {error?.Message}&quot;);
+    await Task.Delay(5000); // Wait before retrying
+    await connection.StartAsync();
+};</code></pre>
+</doc-codeblock></div>
+<p>This ensures your client remains resilient, automatically recovering from interruptions like network disconnections, server restarts, or even client-side browser crashes.</p>
+<p>With your SignalR client configured, you can now interact with the server in real-time. From listening for updates to sending data, the client API is designed for simplicity and reliability. In the next sections, we’ll explore advanced client capabilities, such as handling reconnection logic (which ensures seamless user experience even in the face of network disruptions) and customizing client behavior (which allows you to tailor the client to your specific application needs), to enhance your application’s responsiveness and user experience.</p>
+<doc-anchor-target id="listening-and-speaking-handling-methods-and-events">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#listening-and-speaking-handling-methods-and-events">#</doc-anchor-trigger>
+        <span>Listening and Speaking: Handling Methods and Events</span>
+    </h3>
+</doc-anchor-target>
+<p>Once your SignalR client is connected to the server, the real magic begins: handling real-time interactions through methods and events. SignalR’s design makes it simple for clients to listen for server-initiated messages and invoke server-side methods. This two-way communication brings your applications to life, enabling dynamic updates and responsive interactions, which are key benefits of using SignalR.</p>
+<doc-anchor-target id="listening-for-server-messages-1">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#listening-for-server-messages-1">#</doc-anchor-trigger>
+        <span>Listening for Server Messages</span>
+    </h4>
+</doc-anchor-target>
+<p>To handle messages from the server, you’ll use the <code v-pre>On</code> method. This registers a handler that listens for a specific event and executes a callback when that event occurs:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.On&lt;string, string&gt;(&quot;ReceiveMessage&quot;, (user, message) =&gt;
+{
+    Console.WriteLine($&quot;{user}: {message}&quot;);
+});</code></pre>
+</doc-codeblock></div>
+<p>In this example, the client, with its ability to listen for the <code v-pre>ReceiveMessage</code> event defined in the server-side Hub, demonstrates its adaptability. When the event is triggered, the handler processes the <code v-pre>user</code> and <code v-pre>message</code> parameters, logging them to the console. This adaptability allows the client to handle multiple server-initiated calls with confidence.</p>
+<doc-anchor-target id="invoking-server-methods">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#invoking-server-methods">#</doc-anchor-trigger>
+        <span>Invoking Server Methods</span>
+    </h4>
+</doc-anchor-target>
+<p>For client-to-server communication, the <code v-pre>InvokeAsync</code> method is a direct and efficient way to call Hub methods. This is perfect for scenarios where the client needs to send data or trigger server-side logic, allowing for swift and effective communication.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;Hello, world!&quot;);</code></pre>
+</doc-codeblock></div>
+<p>The method name, SendMessage, is not just a name, it&#x27;s a crucial part of the server-client communication. It must match a method defined in the server-side Hub. The arguments passed to InvokeAsync align with the parameters expected by the Hub method. This approach ensures seamless communication with minimal boilerplate.</p>
+<doc-anchor-target id="broadcasting-messages-to-other-clients">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#broadcasting-messages-to-other-clients">#</doc-anchor-trigger>
+        <span>Broadcasting Messages to Other Clients</span>
+    </h4>
+</doc-anchor-target>
+<p>You&#x27;ll often pair server and client methods if your application includes features like chat or notifications. For instance, when a client invokes <code v-pre>SendMessage</code> on the server, the server can broadcast the message back to all connected clients:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.On&lt;string, string&gt;(&quot;ReceiveMessage&quot;, (user, message) =&gt;
+{
+    Console.WriteLine($&quot;{user} says: {message}&quot;);
+});
+
+// Sending a message
+await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;This is a broadcast!&quot;);</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="supporting-streaming-data">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#supporting-streaming-data">#</doc-anchor-trigger>
+        <span>Supporting Streaming Data</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR also supports streaming scenarios, where clients can receive continuous data streams from the server. For example, you can listen to a stream of updates like this:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var stream = connection.StreamAsync&lt;int&gt;(&quot;CounterStream&quot;);
+
+await foreach (var value in stream)
+{
+    Console.WriteLine($&quot;Received value: {value}&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>Streaming is not just ideal, but the best choice for applications that display incremental updates, such as stock prices, live scores, or sensor data. Its efficiency and real-time nature make it a confident choice for your application.</p>
+<doc-anchor-target id="unsubscribing-from-events">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#unsubscribing-from-events">#</doc-anchor-trigger>
+        <span>Unsubscribing from Events</span>
+    </h4>
+</doc-anchor-target>
+<p>It&#x27;s crucial for clients to take responsibility and unsubscribe from events when they are no longer needed. This proactive step is key to avoiding memory leaks or unintended behavior. You can do this by disposing of the connection or explicitly removing handlers:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.Remove(&quot;ReceiveMessage&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Unsubscribing ensures that your application runs efficiently, particularly in scenarios where event listeners are dynamic or short-lived.</p>
+<p>By effectively handling methods and events, your SignalR client becomes a fully interactive component of your real-time application. SignalR&#x27;s flexibility empowers you to create rich, dynamic user experiences, whether listening for updates, sending data, or streaming content. In the following sections, we&#x27;ll explore advanced topics like reconnection strategies and performance optimizations to ensure your client operates smoothly, even under challenging conditions.</p>
+<doc-anchor-target id="signalr-everywhere-javascript-and-beyond">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#signalr-everywhere-javascript-and-beyond">#</doc-anchor-trigger>
+        <span>SignalR Everywhere: JavaScript and Beyond</span>
+    </h3>
+</doc-anchor-target>
+<p>SignalR’s versatility extends beyond .NET clients, making it a powerful tool for building real-time functionality across diverse platforms and languages. Whether developing a web application with JavaScript, a mobile app with Xamarin or MAUI or even integrating with Python or Java, SignalR provides the tools you need to keep your applications connected in real-time. In this section, we’ll explore how to bring SignalR to life across different environments, starting with JavaScript and expanding to other platforms.</p>
+<doc-anchor-target id="javascript-clients">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#javascript-clients">#</doc-anchor-trigger>
+        <span>JavaScript Clients</span>
+    </h4>
+</doc-anchor-target>
+<p>For web applications, the SignalR JavaScript client is a crucial component. It enables real-time interactions directly in the browser, making it an ideal choice for chat apps, dashboards, and collaborative tools. To begin, you need to add the SignalR client library to your project using a CDN or npm:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-markup"><code v-pre class="language-markup">&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.0/signalr.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+</doc-codeblock></div>
+<p>With the library included, you can establish a connection to your SignalR server:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">const connection = new signalR.HubConnectionBuilder()
+    .withUrl(&quot;https://localhost:5001/chathub&quot;)
+    .build();
+
+connection.start()
+    .then(() =&gt; console.log(&quot;Connection established&quot;))
+    .catch(err =&gt; console.error(&quot;Connection failed: &quot;, err));</code></pre>
+</doc-codeblock></div>
+<p>Once connected, you can listen for events and invoke server-side methods just like in the .NET client:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">connection.on(&quot;ReceiveMessage&quot;, (user, message) =&gt; {
+    console.log(`${user}: ${message}`);
+});
+
+connection.invoke(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;Hello from JavaScript!&quot;)
+    .catch(err =&gt; console.error(err));</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="mobile-and-cross-platform-apps">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#mobile-and-cross-platform-apps">#</doc-anchor-trigger>
+        <span>Mobile and Cross-Platform Apps</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR integrates seamlessly with .NET-based frameworks like Xamarin and .NET MAUI for mobile or cross-platform applications. Use the same <code v-pre>Microsoft.AspNetCore.SignalR.Client</code> package to build real-time functionality into your app:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Microsoft.AspNetCore.SignalR.Client;
+
+var connection = new HubConnectionBuilder()
+    .WithUrl(&quot;https://localhost:5001/chathub&quot;)
+    .Build();
+
+await connection.StartAsync();
+await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;MobileUser&quot;, &quot;Hello from Xamarin!&quot;);</code></pre>
+</doc-codeblock></div>
+<p>SignalR’s API is consistent across platforms, making it easy to share logic between your web, desktop, and mobile clients.</p>
+<doc-anchor-target id="python">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#python">#</doc-anchor-trigger>
+        <span>Python</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR’s reach doesn’t stop with Microsoft-centric ecosystems. The community-driven SignalR protocol allows developers to create clients in other languages. For example, Python developers can use libraries like signalrcore to connect to SignalR servers:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-python"><code v-pre class="language-python">from signalrcore.hub_connection_builder import HubConnectionBuilder
+
+hub_connection = HubConnectionBuilder()\
+    .with_url(&quot;https://localhost:5001/chathub&quot;)\
+    .build()
+
+hub_connection.on(&quot;ReceiveMessage&quot;, lambda args: print(f&quot;{args[0]}: {args[1]}&quot;))
+hub_connection.start()
+
+hub_connection.send(&quot;SendMessage&quot;, [&quot;PythonUser&quot;, &quot;Hello from Python!&quot;])</code></pre>
+</doc-codeblock></div>
+<doc-anchor-target id="rust">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#rust">#</doc-anchor-trigger>
+        <span>Rust</span>
+    </h4>
+</doc-anchor-target>
+<p>Expanding SignalR&#x27;s reach to Rust allows you to create high-performance, cross-platform clients for systems where speed and efficiency are paramount. Rust, with its low-level control over memory and modern tooling, is not just an excellent choice, but the perfect fit for real-time communication applications, such as game clients, IoT devices, or high-throughput systems. Although SignalR doesn&#x27;t provide an official Rust client, community-driven libraries enable seamless integration with SignalR servers.</p>
+<p>First, use a Rust HTTP client library like <code v-pre>reqwest</code> or <code v-pre>hyper</code> to manage the WebSocket connections that SignalR requires. Libraries such as <code v-pre>tokio</code> and <code v-pre>async-tungstenite</code> work well for asynchronous tasks and WebSocket communication. Here&#x27;s a simplified example of a Rust client connecting to a SignalR server using WebSockets:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-rust"><code v-pre class="language-rust">use tokio_tungstenite::connect_async;
+use tokio_tungstenite::tungstenite::protocol::Message;
+use url::Url;
+
+#[tokio::main]
+async fn main() {
+    let url = Url::parse(&quot;ws://localhost:5001/chathub&quot;).unwrap();
+    let (mut socket, _) = connect_async(url).await.expect(&quot;Failed to connect&quot;);
+
+    socket.send(Message::Text(&quot;Hello from Rust!&quot;.into())).await.unwrap();
+
+    while let Some(msg) = socket.next().await {
+        match msg {
+            Ok(Message::Text(text)) =&gt; println!(&quot;Received: {}&quot;, text),
+            _ =&gt; break,
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This example demonstrates how to establish a WebSocket connection, send a message, and listen for responses. With more development, you can implement SignalR-specific features like invoking Hub methods and handling server events.</p>
+<p>Integrating Rust clients with SignalR expands the ecosystem for real-time communication, allowing developers to build lightweight, efficient applications for scenarios where performance and low resource usage are critical. Whether you’re working on game engines, embedded systems, or distributed computing platforms, Rust&#x27;s efficiency provides a solid foundation for pushing SignalR into new and exciting territories.</p>
+<p>SignalR&#x27;s integrations are designed to make it a highly practical choice for multi-language ecosystems, a feature that is particularly relevant to this book&#x27;s audience.</p>
+<doc-anchor-target id="securing-cross-platform-clients">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#securing-cross-platform-clients">#</doc-anchor-trigger>
+        <span>Securing Cross-Platform Clients</span>
+    </h4>
+</doc-anchor-target>
+<p>Regardless of the client platform, one of the crucial steps in securing your SignalR connections is the use of authentication middleware on the server. This, along with including access tokens or cookies in your client’s requests, is essential. For JavaScript, you can pass an authorization header during connection setup:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-javascript"><code v-pre class="language-javascript">const connection = new signalR.HubConnectionBuilder()
+    .withUrl(&quot;https://localhost:5001/chathub&quot;, {
+        accessTokenFactory: () =&gt; &quot;your-access-token&quot;
+    })
+    .build();</code></pre>
+</doc-codeblock></div>
+<p>This ensures that only authenticated clients can interact with your SignalR server, maintaining the integrity of your application.</p>
+<doc-anchor-target id="managing-compatibility">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#managing-compatibility">#</doc-anchor-trigger>
+        <span>Managing Compatibility</span>
+    </h4>
+</doc-anchor-target>
+<p>While SignalR offers broad support, it&#x27;s crucial to be mindful of differences in platform capabilities. For example, older browsers may require fallback protocols like Long Polling, while modern platforms can leverage WebSockets for optimal performance. SignalR handles these fallbacks automatically, but it&#x27;s your responsibility to test your client on target environments. This practice ensures a smooth experience for your users and demonstrates your commitment to delivering a high-quality application.</p>
+<p>SignalR’s cross-platform capabilities allow you to deliver real-time functionality wherever your users are, from web browsers to mobile devices. By combining the flexibility of JavaScript clients, the consistency of .NET APIs, and the extensibility of community-driven libraries, which are third-party tools developed by the SignalR community to enhance its functionality, you can create connected applications that transcend platforms. In the following sections, we’ll dive deeper into optimizing these clients for scalability and handling edge cases like disconnections, ensuring your real-time application runs smoothly in every scenario.</p>
+<doc-anchor-target id="dealing-with-the-unexpected-reconnection-and-error-handling">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#dealing-with-the-unexpected-reconnection-and-error-handling">#</doc-anchor-trigger>
+        <span>Dealing with the Unexpected: Reconnection and Error Handling</span>
+    </h3>
+</doc-anchor-target>
+<p>Real-time applications thrive on continuous, uninterrupted connections, but the reality of network programming often involves handling disconnections, timeouts, and unexpected errors. SignalR simplifies managing these challenges, allowing you to build robust clients that recover gracefully from disruptions. By implementing reconnection logic and handling errors effectively, you play a crucial role in ensuring your applications provide a seamless experience even when the unexpected occurs.</p>
+<doc-anchor-target id="managing-disconnections">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#managing-disconnections">#</doc-anchor-trigger>
+        <span>Managing Disconnections</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR clients can detect when the connection to the server is lost and attempt to reconnect automatically. The <code v-pre>HubConnection</code> class, a key component in managing disconnections, provides an event, <code v-pre>Closed</code>, triggered whenever the connection is terminated. You can use this event to log the disconnection or initiate a reconnection:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.Closed += async (error) =&gt;
+{
+    Console.WriteLine($&quot;Connection closed. Error: {error?.Message}&quot;);
+    await Task.Delay(5000); // Wait before attempting to reconnect
+    try
+    {
+        await connection.StartAsync();
+        Console.WriteLine(&quot;Reconnection successful.&quot;);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($&quot;Reconnection failed: {ex.Message}&quot;);
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>Adding a delay and wrapping the reconnection logic in a try-catch block is crucial. It ensures your application doesn’t overwhelm the server with reconnection attempts, thereby enhancing its stability.</p>
+<doc-anchor-target id="implementing-automatic-reconnection">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-automatic-reconnection">#</doc-anchor-trigger>
+        <span>Implementing Automatic Reconnection</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR&#x27;s automatic reconnection feature is client-centric. By enabling it during the connection setup, the client takes the lead in attempting to reconnect when the connection is lost. This proactive approach ensures a seamless user experience.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var connection = new HubConnectionBuilder()
+    .WithUrl(&quot;https://localhost:5001/chathub&quot;)
+    .WithAutomaticReconnect()
+    .Build();</code></pre>
+</doc-codeblock></div>
+<p>The default configuration retries after increasing delays (0 seconds, 2 seconds, 10 seconds, and 30 seconds) but can be customized for specific requirements. For instance, you can define a custom retry strategy:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection = new HubConnectionBuilder()
+    .WithUrl(&quot;https://localhost:5001/chathub&quot;)
+    .WithAutomaticReconnect(new[] { TimeSpan.Zero, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10) })
+    .Build();</code></pre>
+</doc-codeblock></div>
+<p>This ensures the client remains persistent while giving the server breathing room between retries.</p>
+<doc-anchor-target id="handling-errors-in-invocations">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-errors-in-invocations">#</doc-anchor-trigger>
+        <span>Handling Errors in Invocations</span>
+    </h4>
+</doc-anchor-target>
+<p>When invoking server methods, errors can occur due to network issues, invalid input, or server-side exceptions. To handle these gracefully, use try-catch blocks around the <code v-pre>InvokeAsync</code> calls:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">try
+{
+    await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;Hello, world!&quot;);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($&quot;Error during invocation: {ex.Message}&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>This approach ensures that the client can notify the user of the issue or retry the operation if needed.</p>
+<doc-anchor-target id="monitoring-reconnection-status">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#monitoring-reconnection-status">#</doc-anchor-trigger>
+        <span>Monitoring Reconnection Status</span>
+    </h4>
+</doc-anchor-target>
+<p>For better user feedback, you can monitor the client’s reconnection process using the <code v-pre>Reconnecting</code> and <code v-pre>Reconnected</code> events:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.Reconnecting += (error) =&gt;
+{
+    Console.WriteLine($&quot;Attempting to reconnect: {error?.Message}&quot;);
+    return Task.CompletedTask;
+};
+
+connection.Reconnected += (connectionId) =&gt;
+{
+    Console.WriteLine($&quot;Reconnected successfully. Connection ID: {connectionId}&quot;);
+    return Task.CompletedTask;
+};</code></pre>
+</doc-codeblock></div>
+<p>These events allow you to provide real-time updates to users, such as displaying a “Reconnecting…” message during the process. This message is a crucial part of the user experience, as it informs users that the application is still active and attempting to restore the connection.</p>
+<p>Handling disconnections and errors is critical to building reliable real-time applications. SignalR’s built-in reconnection features are not just a feature, they are a lifeline. By leveraging these features and implementing custom error-handling logic, you can create resilient clients to network disruptions. In the next sections, we’ll explore strategies for scaling SignalR applications and optimizing their performance, ensuring that your real-time solutions are robust and capable of handling high-demand scenarios.</p>
+<doc-anchor-target id="from-broadcasts-to-groups-advanced-signalr-features">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#from-broadcasts-to-groups-advanced-signalr-features">#</doc-anchor-trigger>
+        <span>From Broadcasts to Groups: Advanced SignalR Features</span>
+    </h2>
+</doc-anchor-target>
+<p>SignalR&#x27;s simplicity in enabling real-time communication is just the beginning. Beyond basic broadcasting, it offers advanced features that allow you to fine-tune how data is shared and consumed across your application. From grouping connections for targeted messaging to seamlessly managing user identities and authentication, these features unlock new possibilities for creating dynamic and highly interactive experiences. They spark your creativity and inspire you to push the boundaries of real-time applications, opening up a world of innovation and new ideas.</p>
+<p>In this section, we&#x27;ll explore SignalR&#x27;s more sophisticated capabilities and how to structure communication with precision and scalability. Whether you&#x27;re building a multi-room chat application, delivering tailored notifications, or managing complex collaboration scenarios, these advanced tools will help you design real-time solutions that are not just efficient, but also incredibly powerful. Get ready to elevate your SignalR skills and discover how to make your applications real-time and smart-time.</p>
+<doc-anchor-target id="the-power-of-many-mastering-broadcast-messaging">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#the-power-of-many-mastering-broadcast-messaging">#</doc-anchor-trigger>
+        <span>The Power of Many: Mastering Broadcast Messaging</span>
+    </h3>
+</doc-anchor-target>
+<p>Broadcast messaging is one of SignalR&#x27;s core strengths, enabling your server to send messages to multiple connected clients simultaneously. Whether updating all users on the latest data or broadcasting a notification to every participant in an application, SignalR ensures this process is not only seamless but also highly efficient. With a few lines of code, you can be confident that your real-time application speaks to all its users simultaneously.</p>
+<doc-anchor-target id="sending-a-message-to-all-clients">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#sending-a-message-to-all-clients">#</doc-anchor-trigger>
+        <span>Sending a Message to All Clients</span>
+    </h4>
+</doc-anchor-target>
+<p>Broadcasting to all connected clients is straightforward. By using the <code v-pre>Clients.All</code>. For all property in your Hub, a central communication point in SignalR, you can send a message that reaches every client:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class NotificationHub : Hub
+{
+    public async Task SendNotification(string message)
+    {
+        await Clients.All.SendAsync(&quot;ReceiveNotification&quot;, message);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, whenever the <code v-pre>SendNotification</code> method is called, the <code v-pre>ReceiveNotification</code> event is triggered on all clients connected to the Hub. This is ideal for use cases like global announcements or status updates.</p>
+<doc-anchor-target id="customizing-broadcast-data">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#customizing-broadcast-data">#</doc-anchor-trigger>
+        <span>Customizing Broadcast Data</span>
+    </h4>
+</doc-anchor-target>
+<p>Broadcasting isn’t limited to simple strings—you can send complex objects to clients as well. For instance, broadcasting a structured notification with additional details is just as easy:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public async Task BroadcastUpdate(UpdateInfo update)
+{
+    await Clients.All.SendAsync(&quot;ReceiveUpdate&quot;, update);
+}
+
+public class UpdateInfo
+{
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime Timestamp { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>On the client side, you’d handle this object in the same way as any other event, processing its properties as needed.</p>
+<doc-anchor-target id="excluding-specific-clients">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#excluding-specific-clients">#</doc-anchor-trigger>
+        <span>Excluding Specific Clients</span>
+    </h4>
+</doc-anchor-target>
+<p>Sometimes, you might want to broadcast a message to everyone except a specific client—for instance, the one who triggered the message. SignalR makes this simple with the Clients.AllExcept method:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public async Task NotifyOthers(string message)
+{
+    await Clients.AllExcept(Context.ConnectionId).SendAsync(&quot;ReceiveNotification&quot;, message);
+}</code></pre>
+</doc-codeblock></div>
+<p>By excluding the triggering client, you can avoid redundant updates while still keeping everyone else informed.</p>
+<doc-anchor-target id="grouped-broadcasting">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#grouped-broadcasting">#</doc-anchor-trigger>
+        <span>Grouped Broadcasting</span>
+    </h4>
+</doc-anchor-target>
+<p>Grouped broadcasting allows you to organize clients into logical groups and send messages only to clients within those groups. This is particularly useful for chat rooms, user roles, or feature-specific updates.</p>
+<p>Use the <code v-pre>Groups.AddToGroupAsync</code> method to assign a client to a group:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class ChatHub : Hub
+{
+    public async Task JoinGroup(string groupName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        await Clients.Group(groupName).SendAsync(&quot;ReceiveMessage&quot;, $&quot;{Context.ConnectionId} has joined the group {groupName}.&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the client is added to the specified group and all members of the group are notified.</p>
+<p>To send a message to all clients in a group, use the <code v-pre>Clients.Group</code> method:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public async Task SendMessageToGroup(string groupName, string message)
+{
+    await Clients.Group(groupName).SendAsync(&quot;ReceiveMessage&quot;, message);
+}</code></pre>
+</doc-codeblock></div>
+<p>This ensures only clients in the specified group receive the broadcast.</p>
+<p>Use the <code v-pre>Groups.RemoveFromGroupAsync</code> method to remove a client from a group:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public async Task LeaveGroup(string groupName)
+{
+    await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+    await Clients.Group(groupName).SendAsync(&quot;ReceiveMessage&quot;, $&quot;{Context.ConnectionId} has left the group {groupName}.&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>This ensures the client no longer receives messages intended for the group.</p>
+<doc-anchor-target id="scaling-broadcasts">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#scaling-broadcasts">#</doc-anchor-trigger>
+        <span>Scaling Broadcasts</span>
+    </h4>
+</doc-anchor-target>
+<p>For large-scale applications with thousands of clients, broadcasting to all connections can significantly load the server. SignalR supports scaling using the Azure SignalR Service, which offloads the connection handling and message distribution to a cloud service.</p>
+<p>Add the Azure SignalR Service NuGet package to your project:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.Azure.SignalR</code></pre>
+</doc-codeblock></div>
+<p>Modify your Program.cs to configure SignalR with Azure SignalR Service:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR()
+    .AddAzureSignalR(&quot;YourConnectionString&quot;); // Replace with your Azure SignalR Service connection string
+
+var app = builder.Build();
+
+app.UseRouting();
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>With this configuration, the Azure SignalR Service handles client connections and scales automatically based on demand.</p>
+<p>The broadcasting code remains the same. For example:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class NotificationHub : Hub
+{
+    public async Task BroadcastMessage(string message)
+    {
+        await Clients.All.SendAsync(&quot;ReceiveNotification&quot;, message);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>The difference lies in how Azure SignalR Service handles the message distribution, ensuring high performance and reliability across thousands of connections.</p>
+<doc-anchor-target id="combining-grouping-and-scaling">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#combining-grouping-and-scaling">#</doc-anchor-trigger>
+        <span>Combining Grouping and Scaling</span>
+    </h4>
+</doc-anchor-target>
+<p>You can combine grouping with Azure SignalR Service for targeted messaging at scale. For example:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class ChatHub : Hub
+{
+    public async Task SendMessageToGroup(string groupName, string message)
+    {
+        await Clients.Group(groupName).SendAsync(&quot;ReceiveMessage&quot;, message);
+    }
+
+    public async Task JoinGroup(string groupName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+    }
+
+    public async Task LeaveGroup(string groupName)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>With Azure SignalR Service, even if your application handles tens of thousands of clients across multiple groups, the service efficiently manages connection scaling and message delivery.</p>
+<doc-anchor-target id="client-identity-unveiled-user-based-communication">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#client-identity-unveiled-user-based-communication">#</doc-anchor-trigger>
+        <span>Client Identity Unveiled: User-Based Communication</span>
+    </h3>
+</doc-anchor-target>
+<p>In scenarios where communication needs to be tailored to individual users, SignalR provides robust support for user-based messaging. This allows you to target specific users regardless of the number of devices they’re using or where they’re connected. By leveraging user identities, your application can send personalized updates, private notifications, or user-specific messages in a seamless manner, ensuring a smooth user experience.</p>
+<doc-anchor-target id="associating-connections-with-users">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#associating-connections-with-users">#</doc-anchor-trigger>
+        <span>Associating Connections with Users</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR identifies users based on the <code v-pre>UserIdentifier</code>, which is derived from the authentication system in your application. To ensure each user’s connection is correctly identified, you’ll typically integrate SignalR with ASP.NET Core’s authentication middleware:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(&quot;YourScheme&quot;)
+    .AddCookie(&quot;YourScheme&quot;); // Or any authentication mechanism
+
+builder.Services.AddSignalR();
+
+var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapHub&lt;NotificationHub&gt;(&quot;/notificationHub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>The <code v-pre>UserIdentifier</code> is automatically populated based on the authenticated user’s claims, specifically the <code v-pre>NameIdentifier</code> claim by default. You can customize this behavior if needed.</p>
+<doc-anchor-target id="sending-messages-to-a-specific-user">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#sending-messages-to-a-specific-user">#</doc-anchor-trigger>
+        <span>Sending Messages to a Specific User</span>
+    </h4>
+</doc-anchor-target>
+<p>Once users are authenticated and their connections are associated, you can send messages to a specific user using the <code v-pre>Clients.User</code> method:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class NotificationHub : Hub
+{
+    public async Task NotifyUser(string userId, string message)
+    {
+        await Clients.User(userId).SendAsync(&quot;ReceiveNotification&quot;, message);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the <code v-pre>NotifyUser</code> method sends a notification to the specified user, ensuring only the intended recipient receives the message.</p>
+<doc-anchor-target id="handling-multiple-connections-per-user">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#handling-multiple-connections-per-user">#</doc-anchor-trigger>
+        <span>Handling Multiple Connections per User</span>
+    </h4>
+</doc-anchor-target>
+<p>Users often connect from multiple devices simultaneously. SignalR handles this gracefully by routing messages to all active connections associated with a user. For example, if a user is logged in on a phone and a laptop, the message will be delivered to both devices.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public async Task BroadcastToUserDevices(string userId, string message)
+{
+    await Clients.User(userId).SendAsync(&quot;ReceiveMessage&quot;, message);
+}</code></pre>
+</doc-codeblock></div>
+<p>This behavior benefits applications where users interact across multiple platforms, ensuring a consistent experience.</p>
+<doc-anchor-target id="customizing-user-identifiers">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#customizing-user-identifiers">#</doc-anchor-trigger>
+        <span>Customizing User Identifiers</span>
+    </h4>
+</doc-anchor-target>
+<p>Sometimes, the default <code v-pre>UserIdentifier</code> may not align with your application’s needs. You can customize this by overriding the <code v-pre>GetUserIdentifier</code> method in a custom implementation of <code v-pre>IUserIdProvider</code>:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class CustomUserIdProvider : IUserIdProvider
+{
+    public string GetUserId(HubConnectionContext connection)
+    {
+        return connection.User?.FindFirst(&quot;custom-claim&quot;)?.Value;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Register this provider in your service configuration:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSingleton&lt;IUserIdProvider, CustomUserIdProvider&gt;();</code></pre>
+</doc-codeblock></div>
+<p>With this setup, SignalR will use your custom logic to determine the user identifier for each connection.</p>
+<p>User-based communication in SignalR opens up endless possibilities for creating personalized, responsive applications. Whether you’re building private chat systems, delivering individualized notifications, or synchronizing user-specific data, SignalR’s user-based messaging ensures every message reaches its intended destination. In the following sections, we’ll delve deeper into scaling strategies and considerations, ensuring your real-time applications remain robust and unwavering.</p>
+<doc-anchor-target id="scaling-up-signalr-with-distributed-backplanes">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#scaling-up-signalr-with-distributed-backplanes">#</doc-anchor-trigger>
+        <span>Scaling Up: SignalR with Distributed Backplanes</span>
+    </h3>
+</doc-anchor-target>
+<p>As your SignalR application grows to handle hundreds or thousands of clients, the limitations of a single server become increasingly apparent. It&#x27;s crucial to implement a distributed backplane to coordinate message delivery and scale effectively across multiple servers. A backplane is the key to ensuring that messages from one server reach all connected clients, regardless of their server connection.</p>
+<doc-anchor-target id="introducing-distributed-backplanes">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#introducing-distributed-backplanes">#</doc-anchor-trigger>
+        <span>Introducing Distributed Backplanes</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR&#x27;s flexibility shines through in its support for several backplane options, including Redis, SQL Server, and the Azure SignalR Service. These backplanes serve as a shared messaging infrastructure, empowering you to publish messages from servers to a centralized system that distributes them to all clients. Your choice of backplane is entirely dependent on your infrastructure and scalability requirements.</p>
+<doc-anchor-target id="setting-up-redis-as-a-backplane">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#setting-up-redis-as-a-backplane">#</doc-anchor-trigger>
+        <span>Setting Up Redis as a Backplane</span>
+    </h4>
+</doc-anchor-target>
+<p>Redis is a lightweight, high-performance, in-memory data store commonly used as a SignalR backplane. To configure Redis, install the required NuGet package:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.AspNetCore.SignalR.StackExchangeRedis</code></pre>
+</doc-codeblock></div>
+<p>Modify your <code v-pre>Program.cs</code> to enable Redis as the backplane:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR().AddStackExchangeRedis(&quot;localhost:6379&quot;);
+
+var app = builder.Build();
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chatHub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>Replace <code v-pre>localhost:6379</code> with your Redis server’s connection string. This setup ensures that all SignalR servers share a common messaging layer through Redis.</p>
+<doc-anchor-target id="scaling-with-sql-server">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#scaling-with-sql-server">#</doc-anchor-trigger>
+        <span>Scaling with SQL Server</span>
+    </h4>
+</doc-anchor-target>
+<p>For environments already leveraging SQL Server, it can double as a backplane. Install the SQL Server backplane package:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.AspNetCore.SignalR.SqlServer</code></pre>
+</doc-codeblock></div>
+<p>Configure the backplane in <code v-pre>Program.cs</code> by providing your database connection string:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSignalR().AddSqlServer(&quot;YourConnectionString&quot;);</code></pre>
+</doc-codeblock></div>
+<p>SignalR will use a SQL Server table to store and distribute messages across servers.</p>
+<doc-anchor-target id="using-azure-signalr-service">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-azure-signalr-service">#</doc-anchor-trigger>
+        <span>Using Azure SignalR Service</span>
+    </h4>
+</doc-anchor-target>
+<p>The Azure SignalR Service provides a fully managed, cloud-based backplane that simplifies scaling for large applications. To use it, install the Azure SignalR Service package:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.Azure.SignalR</code></pre>
+</doc-codeblock></div>
+<p>Update your <code v-pre>Program.cs</code> to include the service:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSignalR().AddAzureSignalR(&quot;YourAzureSignalRConnectionString&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Azure SignalR Service handles connection management and scaling automatically, making it an excellent choice for cloud-based applications.</p>
+<p>By integrating a distributed backplane, your SignalR application becomes resilient to scaling challenges, ensuring you can serve thousands—or even millions—of clients with a reliable real-time application. Whether using Redis for high-speed messaging, SQL Server for integrated solutions, or Azure SignalR Service for effortless cloud scaling, these backplanes provide the infrastructure to keep your real-time applications fast and reliable. In the next sections, we’ll explore techniques for optimizing performance and securing these scaled systems.</p>
+<doc-anchor-target id="keeping-it-smooth-debugging-and-scaling-signalr-applications">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#keeping-it-smooth-debugging-and-scaling-signalr-applications">#</doc-anchor-trigger>
+        <span>Keeping It Smooth: Debugging and Scaling SignalR Applications</span>
+    </h2>
+</doc-anchor-target>
+<p>Ensuring smooth operation becomes a critical challenge as your SignalR applications grow in complexity and scale. Debugging real-time communication, managing thousands of concurrent connections, and optimizing performance for distributed systems require a keen eye and the right tools, such as Visual Studio&#x27;s built-in diagnostics and Azure&#x27;s scaling strategies. SignalR provides these and other tools, along with extensibility points, that empower you to tackle these challenges head-on.</p>
+<p>In this section, our goal is to equip you with the techniques and best practices for debugging and scaling SignalR applications. From tracing connection issues to configuring distributed backplanes and leveraging cloud services, we aim to guide you in keeping your real-time applications running smoothly under pressure. Let’s explore how to fine-tune your SignalR systems to deliver seamless, reliable performance at any scale.</p>
+<doc-anchor-target id="a-real-time-litmus-test-testing-your-server-and-client">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#a-real-time-litmus-test-testing-your-server-and-client">#</doc-anchor-trigger>
+        <span>A Real-Time Litmus Test: Testing Your Server and Client</span>
+    </h3>
+</doc-anchor-target>
+<p>Thorough testing is critical to ensure your SignalR server and clients operate smoothly under real-world conditions. SignalR’s real-time nature presents unique challenges, requiring you to validate functionality, performance, scalability, and resilience. By setting up robust testing workflows, you can catch issues early, providing reassurance and confidence that your application can handle the demands of production environments.</p>
+<doc-anchor-target id="setting-up-unit-tests-for-hub-methods">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#setting-up-unit-tests-for-hub-methods">#</doc-anchor-trigger>
+        <span>Setting Up Unit Tests for Hub Methods</span>
+    </h4>
+</doc-anchor-target>
+<p>Start by unit testing your server-side Hub methods. This is a crucial step that puts the responsibility in your hands, ensuring the reliability of your application. Since Hubs rely on the <code v-pre>IHubCallerClients</code> interface to communicate with clients, you can mock it using a library like Moq:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Moq;
+using Microsoft.AspNetCore.SignalR;
+using Xunit;
+
+public class ChatHubTests
+{
+    [Fact]
+    public async Task SendMessage_ShouldBroadcastMessage()
+    {
+        // Arrange
+        var mockClients = new Mock&lt;IHubCallerClients&gt;();
+        var mockClientProxy = new Mock&lt;IClientProxy&gt;();
+        mockClients.Setup(clients =&gt; clients.All).Returns(mockClientProxy.Object);
+
+        var hub = new ChatHub
+        {
+            Clients = mockClients.Object
+        };
+
+        // Act
+        await hub.SendMessage(&quot;User1&quot;, &quot;Hello!&quot;);
+
+        // Assert
+        mockClientProxy.Verify(
+            client =&gt; client.SendCoreAsync(&quot;ReceiveMessage&quot;, 
+                It.Is&lt;object[]&gt;(o =&gt; o[0].ToString() == &quot;User1&quot; &amp;&amp; o[1].ToString() == &quot;Hello!&quot;),
+                default),
+            Times.Once
+        );
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This test verifies that the <code v-pre>SendMessage</code> method broadcasts the correct message to all clients.</p>
+<doc-anchor-target id="integration-testing-with-signalr-clients">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#integration-testing-with-signalr-clients">#</doc-anchor-trigger>
+        <span>Integration Testing with SignalR Clients</span>
+    </h4>
+</doc-anchor-target>
+<p>For integration testing, simulate client-server interactions using the SignalR client library. Create a test application that connects to your server and verifies real-time behavior:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using Microsoft.AspNetCore.SignalR.Client;
+using Xunit;
+
+public class SignalRIntegrationTests
+{
+    [Fact]
+    public async Task Client_ShouldReceiveBroadcastedMessage()
+    {
+        // Arrange
+        var connection = new HubConnectionBuilder()
+            .WithUrl(&quot;http://localhost:5000/chathub&quot;)
+            .Build();
+
+        string receivedMessage = null;
+        connection.On&lt;string, string&gt;(&quot;ReceiveMessage&quot;, (user, message) =&gt;
+        {
+            receivedMessage = $&quot;{user}: {message}&quot;;
+        });
+
+        await connection.StartAsync();
+
+        // Act
+        await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;TestUser&quot;, &quot;Integration Test Message&quot;);
+
+        // Allow time for the message to be received
+        await Task.Delay(500);
+
+        // Assert
+        Assert.Equal(&quot;TestUser: Integration Test Message&quot;, receivedMessage);
+
+        await connection.StopAsync();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This test ensures that the server correctly handles and broadcasts a client’s message to connected clients.</p>
+<doc-anchor-target id="load-testing-your-signalr-application">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#load-testing-your-signalr-application">#</doc-anchor-trigger>
+        <span>Load Testing Your SignalR Application</span>
+    </h4>
+</doc-anchor-target>
+<p>To simulate high traffic and validate scalability, use tools like SignalR LoadTest or Azure Load Testing. Write a script that connects hundreds of clients to your server and triggers Hub methods simultaneously. For example, using a loop in a test harness:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var tasks = Enumerable.Range(0, 100).Select(async i =&gt;
+{
+    var connection = new HubConnectionBuilder()
+        .WithUrl(&quot;http://localhost:5000/chathub&quot;)
+        .Build();
+
+    await connection.StartAsync();
+    await connection.InvokeAsync(&quot;SendMessage&quot;, $&quot;User{i}&quot;, $&quot;Message from User{i}&quot;);
+    await connection.StopAsync();
+});
+
+await Task.WhenAll(tasks);</code></pre>
+</doc-codeblock></div>
+<p>Monitor server performance during the test and analyze metrics like CPU usage, memory consumption, and message delivery latency.</p>
+<doc-anchor-target id="testing-resilience">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#testing-resilience">#</doc-anchor-trigger>
+        <span>Testing Resilience</span>
+    </h4>
+</doc-anchor-target>
+<p>Validate how your application handles disconnections and reconnections. Simulate network interruptions by forcibly stopping a client connection and ensuring it recovers automatically:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">await connection.StopAsync();
+Console.WriteLine(&quot;Connection stopped.&quot;);
+
+await connection.StartAsync();
+Console.WriteLine(&quot;Reconnected successfully.&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Emphasize the critical role of server-side reconnection logic in SignalR applications, especially in scenarios where clients rejoin groups or recover from dropped messages. This ensures the expected behavior and enhances the overall performance and user experience.</p>
+<p>Testing SignalR applications is not just a routine task; it’s a crucial step in building confidence in your application’s ability to handle real-time workloads under various conditions. By combining unit, integration, load, and resilience testing, you can ensure that your SignalR server and clients are fully prepared for production. In the following sections, we’ll delve into optimization strategies and diagnostic tools to further enhance the performance and reliability of your SignalR applications, giving you the reassurance you need.</p>
+<doc-anchor-target id="spotting-the-snags-debugging-signalr-applications">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#spotting-the-snags-debugging-signalr-applications">#</doc-anchor-trigger>
+        <span>Spotting the Snags: Debugging SignalR Applications</span>
+    </h3>
+</doc-anchor-target>
+<p>Debugging SignalR requires a keen eye for detail and an understanding of how real-time communication flows between clients and servers. Unlike traditional HTTP request-response debugging, SignalR’s persistent connections and asynchronous nature introduce unique challenges. Fortunately, SignalR provides built-in tools and extensibility points to help you identify and resolve issues effectively.</p>
+<doc-anchor-target id="enabling-signalr-logging">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#enabling-signalr-logging">#</doc-anchor-trigger>
+        <span>Enabling SignalR Logging</span>
+    </h4>
+</doc-anchor-target>
+<p>The first step in debugging SignalR is enabling detailed logging. SignalR’s client and server libraries support configurable logging levels to capture connection events, method calls, and errors. On the server, configure logging in <code v-pre>Program.cs</code>:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddConsole();
+
+builder.Services.AddSignalR();
+
+var app = builder.Build();
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>On the client, enable logging using the <code v-pre>configureLogging</code> method:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">var connection = new HubConnectionBuilder()
+    .WithUrl(&quot;http://localhost:5000/chathub&quot;)
+    .ConfigureLogging(logging =&gt;
+    {
+        logging.SetMinimumLevel(LogLevel.Debug);
+        logging.AddConsole();
+    })
+    .Build();
+
+await connection.StartAsync();</code></pre>
+</doc-codeblock></div>
+<p>This setup logs detailed events to the console, helping you track the flow of messages and diagnose connection issues.</p>
+<doc-anchor-target id="inspecting-hub-exceptions">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#inspecting-hub-exceptions">#</doc-anchor-trigger>
+        <span>Inspecting Hub Exceptions</span>
+    </h4>
+</doc-anchor-target>
+<p>When a server-side Hub method fails, exceptions may not be immediately visible. SignalR automatically captures these errors, but you can log them for further investigation:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">public class ChatHub : Hub
+{
+    public async Task SendMessage(string user, string message)
+    {
+        try
+        {
+            await Clients.All.SendAsync(&quot;ReceiveMessage&quot;, user, message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($&quot;Error in SendMessage: {ex.Message}&quot;);
+            throw;
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This approach ensures you capture and log server-side errors while allowing SignalR to propagate exceptions to the client for additional handling.</p>
+<doc-anchor-target id="debugging-connection-issues">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#debugging-connection-issues">#</doc-anchor-trigger>
+        <span>Debugging Connection Issues</span>
+    </h4>
+</doc-anchor-target>
+<p>Connection failures often result from misconfigured endpoints, authentication problems, or network interruptions. Use the client’s Closed and Reconnecting events to capture and debug connection issues:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.Closed += async (error) =&gt;
+{
+    Console.WriteLine($&quot;Connection closed: {error?.Message}&quot;);
+    await Task.Delay(5000);
+    await connection.StartAsync();
+};
+
+connection.Reconnecting += (error) =&gt;
+{
+    Console.WriteLine($&quot;Attempting to reconnect: {error?.Message}&quot;);
+    return Task.CompletedTask;
+};</code></pre>
+</doc-codeblock></div>
+<p>This setup logs disconnection events and attempts reconnections, giving you insight into network reliability.</p>
+<doc-anchor-target id="monitoring-transport-protocols">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#monitoring-transport-protocols">#</doc-anchor-trigger>
+        <span>Monitoring Transport Protocols</span>
+    </h4>
+</doc-anchor-target>
+<p>SignalR’s fallback mechanism switches between transport protocols like WebSockets, Server-Sent Events, and Long Polling. Identifying which protocol is in use can help debug performance or compatibility issues. Enable protocol logging on the client:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">connection.On(&quot;TransportUsed&quot;, (transport) =&gt;
+{
+    Console.WriteLine($&quot;Using transport: {transport}&quot;);
+});</code></pre>
+</doc-codeblock></div>
+<p>You can also inspect the protocol used by checking the server logs or debugging network traffic using tools like Fiddler or browser developer tools.</p>
+<p>Debugging SignalR applications requires a mix of server-side logging, client-side monitoring, and proactive exception handling. By being proactive in your approach, you can spot snags and resolve them efficiently, leveraging SignalR’s built-in diagnostics and integrating tools like Visual Studio and browser developer tools. In the following sections, we’ll explore optimization techniques to ensure your applications run smoothly and perform reliably under load.</p>
+<doc-anchor-target id="scaling-the-peaks-preparing-for-high-demand">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#scaling-the-peaks-preparing-for-high-demand">#</doc-anchor-trigger>
+        <span>Scaling the Peaks: Preparing for High Demand</span>
+    </h3>
+</doc-anchor-target>
+<p>Proper preparation is key to handling high demand and scaling SignalR applications, especially as the number of connected clients increases. Without it, high traffic can easily overwhelm your server, leading to dropped connections and degraded performance. SignalR provides several strategies to scale effectively, ensuring your application remains responsive even under heavy load.</p>
+<doc-anchor-target id="leveraging-azure-signalr-service">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#leveraging-azure-signalr-service">#</doc-anchor-trigger>
+        <span>Leveraging Azure SignalR Service</span>
+    </h4>
+</doc-anchor-target>
+<p>The Azure SignalR Service is a managed backplane specifically designed to handle high-demand scenarios with ease. It takes over the tasks of connection management and message distribution, allowing your application to concentrate on its core business logic. To set it up, the first step is to add the Azure SignalR Service package:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">dotnet add package Microsoft.Azure.SignalR</code></pre>
+</doc-codeblock></div>
+<p>Update your <code v-pre>Program.cs</code> to use Azure SignalR:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSignalR().AddAzureSignalR(&quot;YourAzureSignalRConnectionString&quot;);</code></pre>
+</doc-codeblock></div>
+<p>This setup ensures that client connections are distributed across Azure’s infrastructure, enabling horizontal scaling without additional server configuration.</p>
+<doc-anchor-target id="using-distributed-backplanes">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#using-distributed-backplanes">#</doc-anchor-trigger>
+        <span>Using Distributed Backplanes</span>
+    </h4>
+</doc-anchor-target>
+<p>If you’re hosting your application on-premises or need a custom scaling solution, distributed backplanes like Redis or SQL Server can synchronize messages across multiple servers. For example, configure Redis as your backplane:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSignalR().AddStackExchangeRedis(&quot;localhost:6379&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Redis, with its scalable message distribution, empowers your servers to expand horizontally and manage numerous simultaneous connections with ease.</p>
+<doc-anchor-target id="load-balancing-across-servers">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#load-balancing-across-servers">#</doc-anchor-trigger>
+        <span>Load Balancing Across Servers</span>
+    </h4>
+</doc-anchor-target>
+<p>Load balancing is not just important, it&#x27;s a necessity for distributing client connections evenly across multiple servers. A robust load balancer like Azure Application Gateway, AWS Elastic Load Balancer, or Nginx is a must to route traffic. Ensure sticky sessions (also known as session affinity) are disabled when using a distributed backplane so clients can reconnect to any server.</p>
+<p>Here’s an example of a typical setup using Nginx:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-nginx"><code v-pre class="language-nginx">upstream signalr {
+    server server1:5000;
+    server server2:5000;
+}
+
+server {
+    listen 80;
+
+    location /chathub {
+        proxy_pass http://signalr;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &quot;Upgrade&quot;;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This configuration ensures WebSocket compatibility and distributes connections across servers.</p>
+<doc-anchor-target id="managing-connection-limits">
+    <h4>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#managing-connection-limits">#</doc-anchor-trigger>
+        <span>Managing Connection Limits</span>
+    </h4>
+</doc-anchor-target>
+<p>By default, SignalR servers can handle thousands of concurrent connections, but you may need to adjust resource limits. For example, increase the number of allowed concurrent WebSocket connections in Kestrel:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.Limits.MaxConcurrentConnections = 10000;
+});</code></pre>
+</doc-codeblock></div>
+<p>Establish a robust monitoring system for your server’s CPU and memory usage, as this is the cornerstone for ensuring it can handle the increased load.</p>
+<p>Autoscaling policies play a pivotal role in managing peak demand. Utilize tools like Azure Monitor, Prometheus, or custom dashboards to track metrics such as connection counts, message rates, and resource usage. These policies, when implemented in the cloud, automatically add resources during peak demand. For instance, Azure’s autoscaling rules can be set to increase server instances when CPU usage exceeds 80%.</p>
+<p>Efficient load balancing is a critical component in scaling SignalR applications to handle high demand. This, combined with cloud services and distributed backplanes, is essential for preparing your infrastructure and monitoring performance. It ensures your application meets user expectations, even under extreme loads.</p>
 
                                 
                                 <!-- Required only on API pages -->
@@ -306,6 +1749,6 @@
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 16", level: 1, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 16", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
