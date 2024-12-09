@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.786922095796">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787061115013">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -15,7 +15,7 @@
     <!-- Primary Meta Tags -->
     <title>Working with WebRTC</title>
     <meta name="title" content="Working with WebRTC">
-    <meta name="description" content="WebRTC ( Web Real-Time Communication) brings an exciting dimension to network programming by enabling real-time peer-to-peer communication directly...">
+    <meta name="description" content="WebRTC ( Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or...">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/">
@@ -24,25 +24,25 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/">
     <meta property="og:title" content="Working with WebRTC">
-    <meta property="og:description" content="WebRTC ( Web Real-Time Communication) brings an exciting dimension to network programming by enabling real-time peer-to-peer communication directly...">
+    <meta property="og:description" content="WebRTC ( Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or...">
     <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/images/chap11-webrtc.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/">
     <meta property="twitter:title" content="Working with WebRTC">
-    <meta property="twitter:description" content="WebRTC ( Web Real-Time Communication) brings an exciting dimension to network programming by enabling real-time peer-to-peer communication directly...">
+    <meta property="twitter:description" content="WebRTC ( Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or...">
     <meta property="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/images/chap11-webrtc.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.786922095796" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787061115013" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.786922095796" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787061115013" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.786922095796" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.786922095796" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787061115013" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787061115013" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -246,8 +246,7 @@
         <span>Working with WebRTC</span>
     </h1>
 </doc-anchor-target>
-<p>WebRTC (<strong>Web Real-Time Communication</strong>) brings an exciting dimension to network programming by enabling real-time peer-to-peer communication directly from browsers or native applications. Whether for video conferencing, voice calls, or instant data sharing, WebRTC delivers the magic of direct connectivity without requiring additional plugins or complicated setups. This makes it a powerful tool for building highly interactive applications. Its ability to provide low latency and high-quality media transmission is particularly valuable, enhancing user experience and making it a perfect fit for your C# and .NET environment. The practical benefits of WebRTC for real-time communication are truly exciting and should motivate you to explore its potential.</p>
-<p>In the context of .NET 8 and C#, integrating WebRTC is about combining the best of both worlds—leveraging the efficiency and reliability of .NET on the server side while tapping into WebRTC&#x27;s real-time capabilities for peer-to-peer interaction. You&#x27;ll find that working with WebRTC involves understanding key components like <code v-pre>RTCPeerConnection</code>, managing signaling between peers, and handling real-time media streams and data channels—all of which open up various possibilities for communication-focused applications. The beauty of it is that you can take the power of WebRTC and create rich, interactive experiences that users love directly from your existing .NET architecture. This should inspire you to think creatively and push the boundaries of what&#x27;s possible with WebRTC.</p>
+<p>WebRTC (<strong>Web Real-Time Communication</strong>) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or native applications. It is ideal for video conferencing, voice calls, and instant data sharing without plugins or complex setups. Its low latency and high-quality media transmission capabilities make it a natural fit for creating highly interactive applications in the .NET 8 and C# ecosystem. By integrating WebRTC with .NET, developers can combine the reliability of .NET&#x27;s server-side efficiency with WebRTC&#x27;s real-time features, such as RTCPeerConnection, signaling management, and media stream handling, to deliver rich, interactive user experiences. This seamless integration not only empowers developers to deliver enhanced applications but also inspires them to explore innovative possibilities and elevate their applications to new heights.</p>
 <p>This chapter will guide you through the delicacies of working with WebRTC in C#. We&#x27;ll cover everything from understanding the basic architecture to setting up a signaling server, managing media streams, and debugging the peer-to-peer connections. By the end of this journey, you&#x27;ll be armed with the skills to bring real-time communication to your .NET applications. You can use these skills to create rich, interactive experiences such as video conferencing, live streaming, or collaborative document editing, and maybe even a few new tricks to impress your peers.</p>
 <doc-anchor-target id="introduction-to-webrtc">
     <h2>
@@ -255,10 +254,8 @@
         <span>Introduction to WebRTC</span>
     </h2>
 </doc-anchor-target>
-<p>WebRTC is a transformative technology that takes real-time communication to a new level, enabling direct peer-to-peer audio, video, and data connections. Imagine creating an interactive video chat, collaborative tools, or even a multiplayer game without having to set up complicated media servers for every communication route. With WebRTC, you get the magic of low-latency, high-bandwidth interactions—all handled seamlessly between the client devices. In this section, we will go beyond the initial high-level overview and dive deeper into how WebRTC operates, focusing on the components that make it so powerful.</p>
-<p>At the core of WebRTC lies its ability to establish a direct communication line between peers, which fundamentally changes how we think about real-time data exchange. Traditionally, real-time communication required dedicated infrastructure to handle media routing, increasing cost and complexity. However, WebRTC uses peer-to-peer connections to bypass much of that complexity. It leverages sophisticated technologies like STUN, TURN, and ICE for NAT traversal, allowing clients to find and communicate with each other even when on different networks or behind firewalls. This direct connectivity is what makes WebRTC so efficient for latency-sensitive use cases.</p>
-<p>Another exciting aspect of WebRTC is its flexibility. It supports both media streams and arbitrary data transfer, so you&#x27;re not limited to just video or audio. You can create data channels from text messaging to file-sharing or even syncing gameplay in real time. Components like <code v-pre>RTCPeerConnection</code> and <code v-pre>RTCDataChannel</code> offer powerful abstractions that let you focus on building great user experiences rather than worrying about the intricacies of network protocols and data transmission.</p>
-<p>WebRTC also requires a bit of orchestration, known as signaling, to initiate and maintain these peer-to-peer connections. Unlike traditional client-server communication, establishing a WebRTC connection involves the exchange of metadata, connection candidates, and security information. This may sound complex, but signaling can be easily managed through protocols like WebSockets, making the entire process quite manageable in a .NET context. As we journey through the nuts and bolts of WebRTC, you&#x27;ll see how it all comes together to create robust and interactive real-time applications—no magic wand required, just some well-crafted code and a bit of network wizardry.</p>
+<p>WebRTC is a transformative technology that enables direct peer-to-peer audio, video, and data connections, revolutionizing real-time communication by eliminating the need for complex media servers. Its low-latency, high-bandwidth interactions make it ideal for applications like video chats, collaborative tools, and multiplayer games. By leveraging technologies such as <strong>STUN</strong> (<strong>Session Traversal Utilities for NAT</strong>), <strong>TURN</strong> (<strong>Traversal Using Relays around NAT</strong>), and <strong>ICE</strong> (<strong>Interactive Connectivity Establishment</strong>) for <strong>NAT</strong> (<strong>Network Address Translation</strong>) traversal, WebRTC efficiently and reliably establishes connections between peers, even across different networks or firewalls, significantly reducing cost and complexity compared to traditional infrastructure-dependent approaches. This efficiency instills confidence in its performance, making it a preferred choice for developers.</p>
+<p>What sets WebRTC apart is its flexibility in supporting both media streams and arbitrary data transfer through components like RTCPeerConnection and RTCDataChannel. These abstractions allow developers to focus on creating seamless user experiences without delving into protocol intricacies. Establishing and maintaining peer-to-peer connections requires signaling, which involves exchanging metadata, connection candidates, and security information. While this process may sound complex, protocols like WebSockets make it straightforward in a .NET context. By understanding these components and processes, developers can unlock the full potential of WebRTC&#x27;s powerful capabilities, inspiring them to create robust, interactive, real-time applications.</p>
 <doc-anchor-target id="key-features-of-webrtc">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#key-features-of-webrtc">#</doc-anchor-trigger>
@@ -289,14 +286,6 @@
 <p>Another standout feature of this technology is its versatility in combining media streams and data channels. This adaptability allows for more than just voice and video calls; it also enables real-time data transmission between peers. Consider the possibilities of building a live collaborative whiteboard application where users can see and hear each other and share drawings and annotations instantly. This capability to create hybrid, interactive experiences sets the technology apart from traditional methods and opens up a myriad of possibilities for developers to explore.</p>
 <p>However, as with any powerful technology, there are challenges to overcome. One of the most common difficulties is network traversal. Establishing a peer-to-peer connection can be complex, especially when peers are behind different types of NATs or firewalls. This is where the ICE framework, along with STUN and TURN servers, becomes crucial. While these components add complexity to the development and deployment process, they are essential for overcoming network traversal challenges and ensuring reliable communication across diverse network environments.</p>
 <p>Another challenge is ensuring privacy and security. Although the protocol has built-in encryption mechanisms to secure data, managing signaling securely is up to the developer. An application could be vulnerable to attacks without proper authentication and encrypted signaling channels. Ensuring that signaling is robust and protected, managing permissions for media access, and protecting the data flow requires careful planning and implementation. Despite these challenges, the rewards of creating engaging, real-time communication experiences are well worth the effort. Successfully navigating these challenges will not only enhance your skills but also boost your confidence as a developer. In the next sections, we will address these challenges and show how to effectively navigate them while leveraging the benefits of this powerful technology to your .NET applications.</p>
-<doc-anchor-target id="webrtc-architecture-and-components">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#webrtc-architecture-and-components">#</doc-anchor-trigger>
-        <span>WebRTC Architecture and Components</span>
-    </h2>
-</doc-anchor-target>
-<p>To truly harness the power of this technology, it&#x27;s essential to understand its underlying architecture and the components that make it tick. The architecture is designed to simplify real-time communication by providing the building blocks needed to connect peers directly, manage media, and facilitate secure data exchange. By understanding how these pieces fit together, you&#x27;ll gain a deeper appreciation for how peer-to-peer communication works under the hood and, more importantly, how to leverage these components effectively in your projects.</p>
-<p>This section will take you through the essentials of each architectural component, exploring how they interact and work together to provide reliable and efficient communication. By diving into the details of signaling, ICE candidates, media handling, and data channels, you&#x27;ll be ready to build robust WebRTC-enabled applications in .NET. So, let&#x27;s pull back the curtain and explore the architecture that makes seamless, real-time communication possible.</p>
 <doc-anchor-target id="overview-of-webrtc-architecture">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-webrtc-architecture">#</doc-anchor-trigger>
@@ -331,10 +320,8 @@
         <span>Setting Up a WebRTC Peer-to-Peer Connection</span>
     </h2>
 </doc-anchor-target>
-<p>Understanding the fundamentals of WebRTC is crucial as it forms the basis for setting up a peer-to-peer connection using WebRTC in .NET and C#. This knowledge is where theory meets practice, and the magic of real-time communication starts to take shape. You&#x27;ve learned about the architecture, key components, and the process of signaling to establish connections between peers. Now, it&#x27;s time to put all those concepts to work and see how you can make it happen in a .NET environment. This chapter will guide you through each step, helping you harness the power of WebRTC to create truly interactive, real-time applications.</p>
-<p>Setting up a WebRTC connection is a straightforward process. It&#x27;s about guiding two peers—whether browsers or native applications—to find each other, establish communication, and maintain a stable connection. This process involves signaling, exchanging ICE candidates, and configuring the peer-to-peer communication to handle media streams or data channels. Although it sounds like orchestrating a network dance, once you break it down, each piece has a clear purpose and fits naturally into establishing a connection.</p>
-<p>.NET and C# provide powerful tools to handle the signaling server and the backend operations needed to manage WebRTC connections. Whether using ASP.NET Core to facilitate the signaling or integrating WebRTC clients through JavaScript interop in a Blazor application, the process is straightforward once you understand how to handle each component effectively. This section will walk you through setting up your signaling server, managing peer connections, and ensuring your application is ready to support real-time interactions, making the task feel manageable and the goal achievable.</p>
-<p>The beauty of using WebRTC in a .NET environment is that it allows you to combine the robustness of .NET backend services with the interactive capabilities of WebRTC. This powerful combination enables you to leverage existing infrastructure, seamlessly integrate with other .NET services, and build scalable, modern, responsive, real-time solutions. Let&#x27;s dive into the practicalities of getting your peers connected and ready for real-time action.</p>
+<p>Mastering the fundamentals of WebRTC is a crucial step in establishing peer-to-peer connections in .NET and C#. This knowledge forms the bridge between theory and practice, empowering the development of real-time communication solutions. By delving into WebRTC&#x27;s architecture, key components, and signaling processes, this section paves the way for you to implement these concepts in a .NET environment. Once you&#x27;ve grasped these elements, you&#x27;ll be well-equipped to leverage the power of WebRTC for creating interactive, real-time applications.</p>
+<p>Setting up a WebRTC connection involves guiding peers to establish communication through signaling, exchanging ICE candidates, and configuring peer-to-peer interactions for media streams or data channels. .NET and C# offer robust tools, such as ASP.NET Core for signaling servers and JavaScript interop in Blazor for WebRTC client integration, making these processes straightforward and manageable. The combination of .NET&#x27;s backend services and WebRTC&#x27;s real-time capabilities allows for scalable, modern, and responsive solutions. This section provides step-by-step guidance to ensure your application is equipped for seamless real-time interactions, so you can feel forward-thinking and innovative in your development approach.</p>
 <doc-anchor-target id="overview-of-peer-to-peer-connections-in-webrtc">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-peer-to-peer-connections-in-webrtc">#</doc-anchor-trigger>
@@ -362,25 +349,14 @@
 <p><strong>Session Description Protocol</strong> (<strong>SDP</strong>) is like the cheat sheet each peer shares during the signaling phase to ensure they&#x27;re on the same page. When two peers want to connect, they need to understand each other&#x27;s capabilities—what kind of media they support, what codecs can be used, and how the streams should be formatted. SDP is a structured way of conveying all these details, ensuring both sides can establish a compatible, high-quality connection.</p>
 <p>An SDP message contains various pieces of information, like which media formats are available, the supported codecs for audio and video, and even metadata about network transport. For instance, one peer might declare, &quot;I can send video in H.264 or VP8, and I prefer VP8,&quot; while the other side says, &quot;I support VP8 too—let&#x27;s go with that!&quot; This negotiation helps both peers decide on a standard format, preventing scenarios where each side speaks a different &quot;language&quot; and the communication breaks down. In other words, SDP ensures everyone is set up for success before any real media or data starts flowing.</p>
 <p>It might look a bit intimidating at first—filled with lines of seemingly cryptic information—but once you get the hang of it, it becomes straightforward. For us developers, the meaningful part is that most of the heavy lifting is done by the WebRTC APIs; you generally pass the SDP between peers via your signaling channel, and the browsers or clients handle the rest. Understanding what&#x27;s in the SDP can be crucial, though, especially when debugging connection issues or optimizing media quality. In the following sections, we&#x27;ll continue putting all these pieces together to establish a smooth peer-to-peer connection in your .NET applications.</p>
-<doc-anchor-target id="interactive-connectivity-establishment-ice">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#interactive-connectivity-establishment-ice">#</doc-anchor-trigger>
-        <span>Interactive Connectivity Establishment (ICE)</span>
-    </h3>
-</doc-anchor-target>
-<p>Once signaling has introduced the peers and they&#x27;ve exchanged their SDPs, it&#x27;s time to figure out how they will connect across the complex networks that separate them. This is where ICE (Interactive Connectivity Establishment) comes in. ICE, the matchmaker, helps find the best possible path between the peers, guiding them through the network complexities. Think of it like a travel planner for network traffic, trying out different routes until it finds the one that works best, whether that&#x27;s a direct connection or one that needs a little help from a relay server.</p>
-<p>ICE works by gathering all the possible connection candidates from each peer—these could be local IP addresses, public IP addresses obtained through a STUN server, or relay addresses provided by a TURN server. Once the candidates are shared via the signaling process, ICE tests them to see which one offers the most reliable and quickest connection. Sometimes, peers can connect directly with the public IP addresses, but other times, they might need a TURN server&#x27;s assistance to navigate strict NATs or firewalls. ICE is persistent and keeps trying until it finds a workable solution or exhausts all options, ensuring a reliable and efficient connection.</p>
-<p>The beauty of ICE is that it abstracts away much of the complexity for you. As developers, your role is to understand how to gather and exchange these candidates effectively and when and how to use STUN and TURN servers. You don&#x27;t have to determine which route will work best between two devices manually—ICE does that heavy lifting. In the following sections, we&#x27;ll walk through configuring these servers and integrating ICE properly to ensure our peer-to-peer connections stay stable and efficient, even when faced with challenging network conditions.</p>
 <doc-anchor-target id="integrating-webrtc-in-a-net-application">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#integrating-webrtc-in-a-net-application">#</doc-anchor-trigger>
         <span>Integrating WebRTC in a .NET Application</span>
     </h2>
 </doc-anchor-target>
-<p>Integrating this technology into a .NET application is where things get exciting. Until now, we&#x27;ve talked about the architecture, the components, and the steps involved in setting up a peer-to-peer connection. Now, it&#x27;s time to bring everything together into a practical implementation. This section is about turning theory into action as we explore how to make a .NET backend work harmoniously with WebRTC clients for real-time, low-latency communication.</p>
-<p>One key part of integrating this technology in .NET is managing the signaling process, which involves handling the exchange of session descriptions and ICE candidates between peers. We&#x27;ll be looking at how to set up a signaling server using ASP.NET Core, utilizing WebSockets to ensure that the signaling happens quickly and efficiently. By implementing a signaling server in C#, you have full control over how your peers are introduced and how they agree on the rules of their connection.</p>
-<p>But signaling is only part of the story. You&#x27;ll also need to ensure that the media and data exchange works smoothly, where .NET can support media negotiation, session management, and maintaining connection quality. We&#x27;ll explore how to leverage JavaScript interop in Blazor applications to control the WebRTC API on the client side, creating a bridge between the .NET backend and the browser-based WebRTC implementation. This approach lets you use the strengths of C# for server logic while providing seamless, interactive experiences in the browser.</p>
-<p>This integration isn&#x27;t just about connecting peers—it&#x27;s about delivering a real-time, responsive experience that makes users feel genuinely connected. From setting up your backend and handling signaling to managing media and custom data exchange, integrating WebRTC in a .NET environment offers immense possibilities. So, let&#x27;s dive in and see how to make your .NET application a hub for real-time, peer-to-peer communication.</p>
+<p>Integrating WebRTC into a .NET application brings the architecture, components, and peer-to-peer connection setup to life. This section focuses on practical implementation, exploring how to harmonize a .NET backend with WebRTC clients for real-time, low-latency communication. A key element of this integration is managing the signaling process, which involves the exchange of session descriptions and ICE candidates between peers. To facilitate this, a signaling server is set up in ASP.NET Core using WebSockets. This server ensures efficient communication and allows developers to maintain complete control over how peers connect and negotiate their interaction rules.</p>
+<p>Beyond signaling, the integration must support smooth media and data exchange, where .NET facilitates media negotiation, session management, and connection quality maintenance. Leveraging JavaScript interop in Blazor applications seamlessly bridges the .NET backend with the WebRTC client-side API, creating a unified and harmonious development environment. This approach combines the strengths of C# for backend processes with WebRTC&#x27;s real-time capabilities, delivering responsive, engaging user experiences and unlocking immense possibilities for real-time peer-to-peer communication in .NET applications.</p>
 <doc-anchor-target id="implementing-a-signaling-server-in-net">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#implementing-a-signaling-server-in-net">#</doc-anchor-trigger>
@@ -1067,49 +1043,6 @@ window.webRTCInterop = {
 <p>When it comes to real-time communication, security is not an afterthought, but a fundamental requirement. In WebRTC, security considerations are ingrained in the protocol from the ground up, ensuring private and secure exchange of audio, video, and data between peers. However, while WebRTC handles many aspects of encryption and data protection by default, there are crucial elements that developers must understand and manage to ensure a truly secure implementation. From securing signaling channels to managing permissions for media access, a comprehensive understanding of the full scope of security is vital when integrating WebRTC into your .NET applications.</p>
 <p>WebRTC encrypts all media and data streams by design, using DTLS to secure data channels and SRTP to secure media. However, the security of your application is not solely dependent on encryption. The vulnerability of other aspects, such as the signaling server, can be exploited by attackers to hijack the session. Therefore, securing signaling channels, often through HTTPS and WebSockets with proper authentication, is a critical aspect of WebRTC security. This measure is essential to prevent attacks and ensure that only trusted peers can connect.</p>
 <p>Another crucial consideration in WebRTC security is the control of access to communication resources such as cameras, microphones, and shared data channels. Users need to be confident that their devices are being accessed appropriately and that sensitive data is only shared with authorized peers. In this section, we will delve into how to leverage both built-in WebRTC security features and additional techniques in .NET to secure your application end-to-end. This approach ensures a safe and reliable experience for all users, enhancing their confidence in the security of your application.</p>
-<doc-anchor-target id="encryption-in-webrtc-dtls-and-srtp">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#encryption-in-webrtc-dtls-and-srtp">#</doc-anchor-trigger>
-        <span>Encryption in WebRTC: DTLS and SRTP</span>
-    </h3>
-</doc-anchor-target>
-<p>Encryption in WebRTC is built-in to ensure that all communication between peers remains private and secure, utilizing two key protocols: DTLS and SRTP. DTLS handles the encryption of data channels, while SRTP encrypts the audio and video streams. Together, these protocols make sure that any data being transmitted remains protected from prying eyes, even if someone were to intercept the packets in transit.</p>
-<p>DTLS encrypts and secures the signaling data, including any messages sent through data channels. The handshake process for DTLS is automatically handled by WebRTC, meaning you don&#x27;t need to write any unique encryption code—it&#x27;s all taken care of under the hood. However, you must ensure your signaling server, which facilitates the setup of peer connections, is configured to use secure channels. In your .NET application, this means always using HTTPS and securing WebSocket connections using WSS (WebSocket Secure). Here&#x27;s an example of modifying your <code v-pre>Program.cs</code> to enforce HTTPS:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.ConfigureKestrel(options =&gt;
-{
-    options.ConfigureHttpsDefaults(config =&gt;
-    {
-        config.SslProtocols = System.Security.Authentication.SslProtocols.Tls13;
-    });
-});
-
-var app = builder.Build();
-app.UseHttpsRedirection();
-app.UseWebSockets();
-app.UseRouting();
-
-app.UseEndpoints(endpoints =&gt;
-{
-    endpoints.MapGet(&quot;/signal&quot;, async context =&gt;
-    {
-        if (context.WebSockets.IsWebSocketRequest)
-        {
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            await HandleSignaling(webSocket);
-        }
-        else
-        {
-            context.Response.StatusCode = 400;
-        }
-    });
-});
-
-app.Run();</code></pre>
-</doc-codeblock></div>
-<p>In this snippet, we’ve empowered you to enforce HTTPS for your signaling server, ensuring all communication is encrypted, including any signaling messages exchanged between peers. For SRTP, which secures media streams, WebRTC handles the encryption without additional developer input. However, verifying that both peers exchange encrypted SDP (Session Description Protocol) during the handshake would be best to confirm that encryption is in place.</p>
-<p>DTLS and SRTP are the cornerstone of WebRTC security. With the secure signaling setup from your .NET backend, you can be confident that your data and media are safe from unauthorized access. The goal is to maintain privacy from the moment signaling begins until the very last media packet is transmitted. Leveraging these protocols correctly in combination with secure infrastructure is how you make that happen. In the following sections, we will look at additional strategies for securing signaling channels and managing peer access to ensure a comprehensive security approach in your WebRTC-enabled .NET applications.</p>
 <doc-anchor-target id="securing-the-signaling-process">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#securing-the-signaling-process">#</doc-anchor-trigger>
