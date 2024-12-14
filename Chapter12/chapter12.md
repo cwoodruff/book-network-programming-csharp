@@ -45,6 +45,10 @@ Then there’s AMQP, a heavyweight protocol designed for enterprise messaging. W
 
 The publish/subscribe model is at the heart of MQTT's brilliance, offering a refreshing alternative to the traditional request/response communication pattern. This design decouples message producers (publishers) from message consumers (subscribers), allowing devices to interact without knowing anything about each other. Instead, communication flows through a central hub known as the broker, which routes messages based on their associated topics. It's like a well-oiled messaging system where the broker acts as the post office, ensuring every message reaches its intended audience.
 
+![](Images/MQTT-Publish-Subscribe-Model-Diagram.png)
+
+<figcaption align = "center"><b>MQTT Publish/Subscribe Model Diagram</b></figcaption>
+
 In this model, publishers send data to a topic—a string-based identifier that organizes messages into categories. Think of a topic like a mailbox label. For instance, a temperature sensor might publish updates on the topic of `home/livingroom/temperature`. Subscribers interested in this data don't interact directly with the sensor. Instead, they subscribe to the topic, and the broker delivers the messages. This design not only decouples publishers and subscribers but also makes the system incredibly flexible and scalable. It liberates you from the need to maintain direct connections, empowering you to focus on your specific tasks.
 
 One of the key advantages of this model is its ability to support dynamic, real-time communication. A single topic can have multiple subscribers, allowing many devices or applications to simultaneously react to the same message. This real-time aspect of the model is not just a feature, it's an exciting potential that can be harnessed. For instance, a topic like `smartbuilding/alerts` could be used to notify a control panel, a mobile app, and an emergency system when an alarm is triggered. Similarly, a single subscriber can listen to multiple topics, enabling it to gather data from different sources without the overhead of managing individual connections.
@@ -69,7 +73,9 @@ Quality of Service (QoS) levels are one of MQTT's most powerful features, provid
 
 MQTT defines three QoS levels: 0, 1, and 2. At QoS 0, also known as "at most once," the message is delivered without guarantees. The publisher sends the message, and if it's received by the subscriber, great—but if it's lost in transit, the publisher won't retry. This is the lightest and fastest option, making it ideal for use cases like periodic sensor updates where missing a single reading isn't critical.
 
-// Graph
+![](Images/QoS-Level-Workflow-Diagram.png)
+
+<figcaption align = "center"><b>QoS Level Workflow Diagram</b></figcaption>
 
 QoS 1, or "at least once," introduces a handshake mechanism to ensure the message is delivered to the subscriber. The publisher retains the message until it receives an acknowledgment (ACK) from the broker. If no ACK is received, the message is resent. While this ensures every message is delivered, duplicates can occur if a message is resent before the original is processed. This level is perfect for scenarios where message delivery is essential but duplication is challenging, such as sending alerts or status updates.
 
