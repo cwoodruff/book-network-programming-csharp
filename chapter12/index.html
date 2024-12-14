@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787449009654">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787451230690">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.787449009654" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787451230690" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787449009654" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787451230690" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787449009654" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787449009654" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787451230690" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787451230690" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -278,6 +278,12 @@
     </h3>
 </doc-anchor-target>
 <p>The publish/subscribe model is at the heart of MQTT&#x27;s brilliance, offering a refreshing alternative to the traditional request/response communication pattern. This design decouples message producers (publishers) from message consumers (subscribers), allowing devices to interact without knowing anything about each other. Instead, communication flows through a central hub known as the broker, which routes messages based on their associated topics. It&#x27;s like a well-oiled messaging system where the broker acts as the post office, ensuring every message reaches its intended audience.</p>
+<p><figure class="content-center">
+    <img src="images/mqtt-publish-subscribe-model-diagram.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>MQTT Publish/Subscribe Model Diagram</b></figcaption>
 <p>In this model, publishers send data to a topic—a string-based identifier that organizes messages into categories. Think of a topic like a mailbox label. For instance, a temperature sensor might publish updates on the topic of <code v-pre>home/livingroom/temperature</code>. Subscribers interested in this data don&#x27;t interact directly with the sensor. Instead, they subscribe to the topic, and the broker delivers the messages. This design not only decouples publishers and subscribers but also makes the system incredibly flexible and scalable. It liberates you from the need to maintain direct connections, empowering you to focus on your specific tasks.</p>
 <p>One of the key advantages of this model is its ability to support dynamic, real-time communication. A single topic can have multiple subscribers, allowing many devices or applications to simultaneously react to the same message. This real-time aspect of the model is not just a feature, it&#x27;s an exciting potential that can be harnessed. For instance, a topic like <code v-pre>smartbuilding/alerts</code> could be used to notify a control panel, a mobile app, and an emergency system when an alarm is triggered. Similarly, a single subscriber can listen to multiple topics, enabling it to gather data from different sources without the overhead of managing individual connections.</p>
 <p>As the model&#x27;s central player, the broker adds another layer of reliability. It manages connections, handles message routing, and ensures QoS levels are respected. This reliability is not just a feature, it&#x27;s a reassurance that your system is in good hands. Devices can stay lightweight by offloading these responsibilities to the broker, focusing solely on publishing or consuming data. This is especially important in IoT environments, where devices are often constrained by limited power or processing capabilities.</p>
@@ -300,7 +306,12 @@
 </doc-anchor-target>
 <p>Quality of Service (QoS) levels are one of MQTT&#x27;s most powerful features, providing developers with fine-grained control over how messages are delivered between publishers and subscribers. QoS ensures that each message transmission aligns with your application&#x27;s reliability needs, whether it&#x27;s low-priority telemetry data or critical commands that must never be missed. By selecting the right QoS level for each scenario, you play a crucial role in balancing performance, network efficiency, and reliability to suit your IoT system&#x27;s requirements.</p>
 <p>MQTT defines three QoS levels: 0, 1, and 2. At QoS 0, also known as &quot;at most once,&quot; the message is delivered without guarantees. The publisher sends the message, and if it&#x27;s received by the subscriber, great—but if it&#x27;s lost in transit, the publisher won&#x27;t retry. This is the lightest and fastest option, making it ideal for use cases like periodic sensor updates where missing a single reading isn&#x27;t critical.</p>
-<p>// Graph</p>
+<p><figure class="content-center">
+    <img src="images/qos-level-workflow-diagram.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>QoS Level Workflow Diagram</b></figcaption>
 <p>QoS 1, or &quot;at least once,&quot; introduces a handshake mechanism to ensure the message is delivered to the subscriber. The publisher retains the message until it receives an acknowledgment (ACK) from the broker. If no ACK is received, the message is resent. While this ensures every message is delivered, duplicates can occur if a message is resent before the original is processed. This level is perfect for scenarios where message delivery is essential but duplication is challenging, such as sending alerts or status updates.</p>
 <p>QoS 2, &#x27;exactly once,&#x27; is the gold standard for maximum reliability. It uses a four-step handshake to guarantee that the message is delivered to the subscriber precisely once. The four steps involve the publisher sending the message, the broker acknowledging the message, the subscriber acknowledging the receipt of the message, and the broker acknowledging the subscriber&#x27;s acknowledgment. This process ensures that the message is delivered exactly once, eliminating duplicates and ensuring high reliability. However, this level of reliability comes with a tradeoff in complexity and overhead. QoS 2 is ideal for high-stakes operations, such as executing commands in industrial automation systems, where duplicate execution could lead to errors or safety issues.</p>
 <p>Understanding the implications of each QoS level is not just a technical knowledge, it&#x27;s a strategic advantage. Each level has implications for network bandwidth, device processing, and system reliability. By understanding these tradeoffs, you can design MQTT communication patterns tailored to your application&#x27;s needs. As you implement these QoS levels in .NET, you&#x27;ll see how they provide a robust foundation for reliable, efficient, and scalable IoT solutions, showcasing your knowledge and expertise in the field.</p>
