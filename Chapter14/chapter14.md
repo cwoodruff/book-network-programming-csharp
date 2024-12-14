@@ -43,6 +43,10 @@ On the flip side, receivers are the reactive heroes of the ecosystem. A receiver
 
 At its heart, a WebHook is a simple yet powerful conversation between two systems. The sender initiates this conversation when a specific event occurs—think of it as saying, _'Hey, something just happened!'_ This is done by sending an HTTP POST request to a designated URL provided by the receiver. The payload of this request contains all the details the receiver needs to understand the event and decide what to do next. This proactive approach eliminates the need for constant polling, making WebHooks a highly efficient mechanism for real-time communication.
 
+![](Images/WebHook-Lifecycle-Diagram.png)
+
+<figcaption align = "center"><b>WebHook Lifecycle Diagram</b></figcaption>
+
 The WebHook lifecycle begins with the sender detecting an event, such as a new user signing up, placing an order, or uploading a file. The sender then compiles the relevant event data into a structured payload, typically formatted in JSON for maximum interoperability. This payload and additional headers for identification and security are sent to the receiver's WebHook endpoint. Upon receiving the request, the receiver processes the payload and executes any necessary actions, such as updating a database, sending a notification, or triggering a downstream API call.
 
 What makes this interaction seamless in .NET is the enhanced support for HTTP communication and payload handling. With the refined capabilities of `HttpClient` for senders and ASP.NET Core's robust middleware for receivers, crafting efficient WebHook interactions becomes straightforward. The beauty of this conversation is its flexibility—whether you're sending notifications across microservices, integrating with third-party APIs, or enabling user-defined workflows, WebHooks adapts to your needs. By mastering how they work, you unlock a powerful tool to keep your applications connected and responsive in today's fast-paced digital world.
