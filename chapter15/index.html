@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787454605347">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787455375340">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.787454605347" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787455375340" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787454605347" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787455375340" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787454605347" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787454605347" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787455375340" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787455375340" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -263,6 +263,12 @@
     </h3>
 </doc-anchor-target>
 <p>At the heart of message queuing lies a simple yet powerful concept: <strong>producers</strong> create messages, <strong>queues</strong> store them temporarily, and <strong>consumers</strong> retrieve and process them. This straightforward model allows systems to communicate asynchronously, ensuring that producers and consumers operate independently. Message queues decouple system components by separating the creation of messages from their consumption, reducing complexity and increasing reliability. This subsection will break down these fundamental concepts to understand how message queuing works behind the scenes.</p>
+<p><figure class="content-center">
+    <img src="images/message-queue-architecture-overview.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>Message Queue Architecture Overview</b></figcaption>
 <p>A <strong>message</strong> is the fundamental unit of transmitted data, often formatted as JSON, XML, or binary. It can represent anything from a user&#x27;s order in an e-commerce system to a notification about a completed task. Queues, on the other hand, serve as the holding area where messages wait to be processed. In many implementations, these queues operate on a first-in, first-out (FIFO) basis, ensuring messages are processed in the order they were sent. However, advanced patterns allow for flexibility, such as prioritizing or distributing specific messages across multiple consumers.</p>
 <p>The interaction between producers and consumers defines the behavior of a message queue. A <strong>point-to-point</strong> model pairs a single producer with a single consumer, ideal for tasks like job processing. In contrast, a <strong>publish-subscribe</strong> model enables one producer to broadcast messages to multiple subscribers, perfect for scenarios like sending real-time notifications to users. These core patterns empower developers to design robust communication systems tailored to their application&#x27;s needs. By mastering these foundational concepts, you&#x27;ll be ready to tackle more advanced topics and see how message queues bring order to the chaos of modern distributed systems.</p>
 <doc-anchor-target id="the-role-of-message-queues-in-modern-applications">
