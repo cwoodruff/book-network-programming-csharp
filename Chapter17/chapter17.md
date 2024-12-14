@@ -30,6 +30,21 @@ QUIC introduces several groundbreaking features that set it apart from tradition
 
 Another critical feature is connection migration. QUIC connections are identified by unique connection IDs rather than the traditional IP address and port pairing. This enables seamless transitions between networks, such as moving from Wi-Fi to cellular data, without disrupting the connection. Additionally, QUIC integrates encryption at the transport layer using TLS 1.3, providing a high level of security by default.
 
+| Feature                  | QUIC                              | TCP/IP                            |
+|--------------------------|------------------------------------|------------------------------------|
+| **Protocol Base**        | Built on UDP                      | Built on IP with TCP layer         |
+| **Connection Setup**     | Single handshake with TLS 1.3     | Multi-step handshake (TCP + TLS)  |
+| **Multiplexing**         | Supports multiple streams in one connection, avoiding head-of-line blocking | Single stream per connection; prone to head-of-line blocking |
+| **Connection Migration** | Uses connection IDs, allowing seamless migration between networks | Tied to IP address and port; migration disrupts connection    |
+| **Encryption**           | Enforced end-to-end encryption with TLS 1.3 | Encryption optional and separate (requires TLS)              |
+| **Performance**          | Low latency, optimized for real-time applications | Higher latency due to connection setup and retransmissions   |
+| **Packet Loss Handling** | Retransmissions occur at the stream level, maintaining other streams | Retransmissions block all streams due to single-stream design |
+| **Resource Usage**       | Lightweight due to UDP base and multiplexing | Higher resource usage due to connection overhead             |
+| **Use Cases**            | Ideal for real-time apps, gaming, video streaming, and mobile use cases | Best for applications prioritizing reliability over speed    |
+| **Adoption**             | Emerging, with growing adoption via HTTP/3 | Mature, widely implemented and supported                    |
+
+<figcaption align = "center"><b>Comparing QUIC vs TCP/IP</b></figcaption>
+
 ### Why QUIC Matters for Developers
 
 For developers, QUIC represents a significant step forward in building responsive, secure, and reliable applications. Its low-latency design is particularly beneficial for applications that require real-time communication, such as VoIP services, multiplayer games, and live video streaming. The protocol’s ability to reduce connection setup time and mitigate packet loss ensures a smoother user experience, even under less-than-ideal network conditions.
