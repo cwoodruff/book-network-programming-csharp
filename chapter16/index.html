@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787455375340">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787457001062">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -25,22 +25,24 @@
     <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/">
     <meta property="og:title" content="Using SignalR">
     <meta property="og:description" content="In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications.">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/images/chap16-signalr.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/">
     <meta property="twitter:title" content="Using SignalR">
     <meta property="twitter:description" content="In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications.">
+    <meta property="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter16/images/chap16-signalr.png">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.787455375340" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787457001062" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787455375340" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787457001062" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787455375340" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787455375340" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787457001062" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787457001062" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -233,6 +235,11 @@
         <span>16</span>
     </h1>
 </doc-anchor-target>
+<p><figure class="content-center">
+    <img src="images/chap16-signalr.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
 <doc-anchor-target id="using-signalr">
     <h1>
         <doc-anchor-trigger class="header-anchor-trigger" to="#using-signalr">#</doc-anchor-trigger>
@@ -266,6 +273,12 @@
     </h3>
 </doc-anchor-target>
 <p>SignalR isn&#x27;t just another library in the vast .NET ecosystem—it&#x27;s a masterstroke of engineering designed to simplify real-time communication while maximizing flexibility and performance. At its heart, SignalR provides an abstraction over multiple transport protocols, including <strong>WebSockets</strong>, <strong>Server-Sent Events (SSE)</strong>, and <strong>Long Polling</strong>. This intelligent fallback mechanism ensures that your applications deliver a seamless real-time experience, regardless of the client&#x27;s environment or browser capabilities. Whether you&#x27;re connecting users on modern browsers with WebSockets or supporting legacy systems with Long Polling, SignalR has you covered.</p>
+<p><figure class="content-center">
+    <img src="images/signalr-architecture-overview.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>SignalR Architecture Overview</b></figcaption>
 <p>One of SignalR&#x27;s standout features is its ability to handle <strong>persistent connections</strong>, a key differentiator from traditional HTTP request-response models. These persistent connections enable bidirectional communication, allowing servers to push client updates without waiting for a request. This architecture unlocks robust use cases such as live notifications, collaborative document editing, and dynamic dashboards. SignalR also supports <strong>connection grouping</strong>, enabling granular control over who receives updates, whether broadcasting to all connected clients or targeting specific users or groups.</p>
 <p>Behind the scenes, SignalR integrates tightly with the .NET platform, offering out-of-the-box scalability and compatibility with Azure SignalR Service for handling high-traffic loads. Its use of <strong>Hubs</strong> as a central communication point simplifies development, allowing you to focus on defining the methods and data structures that power your real-time interactions. Whether you&#x27;re new to real-time development or an experienced developer seeking a robust solution, SignalR&#x27;s combination of features and thoughtful architecture makes it a shining example of how .NET 8 continues to push boundaries in network programming.</p>
 <doc-anchor-target id="the-signalr-edge-real-world-applications-and-scenarios">
