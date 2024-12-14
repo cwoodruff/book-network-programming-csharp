@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787503900976">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787519904255">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.787503900976" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787519904255" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787503900976" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787519904255" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787503900976" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787503900976" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787519904255" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787519904255" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -373,8 +373,15 @@ public class ChatHub : Hub
 </doc-anchor-target>
 <p>Next, configure the SignalR middleware in your ASP.NET Core application. Open the Program.cs file and modify the code to include the necessary setup:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+<pre class="language-csharp"><code v-pre class="language-csharp">using SignalRServerExample;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
+
+app.UseHttpsRedirection();
 
 app.UseRouting();
 
@@ -389,7 +396,7 @@ app.Run();</code></pre>
         <span>Testing the Setup</span>
     </h4>
 </doc-anchor-target>
-<p>You&#x27;ll need at least one client to connect to test your server. For simplicity, we can use a JavaScript-based client to verify communication. Add an HTML file to your project’s <code v-pre>wwwroot</code> folder for testing:</p>
+<p>You&#x27;ll need at least one client to connect to test your server. For simplicity, we can use a JavaScript-based client to verify communication. Add an HTML file (<code v-pre>Index.html</code>) to your project’s <code v-pre>wwwroot</code> folder for testing:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
 <pre class="language-none"><code v-pre class="language-none">&lt;!DOCTYPE html&gt;
@@ -428,7 +435,29 @@ app.Run();</code></pre>
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 </doc-codeblock></div>
-<p>Run your application and navigate to the HTML file in your browser. Open multiple browser tabs, enter a name and message and watch as the messages appear across all tabs in real-time, keeping you engaged and excited about the power of SignalR.</p>
+<p>Add code to Program.cs to allow for static HTML files to render.</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-csharp"><code v-pre class="language-csharp">using SignalRServerExample;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+
+var app = builder.Build();
+
+app.UseHttpsRedirection();
+
+app.UseDefaultFiles();
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>Run your application and the app will navigate to the Index.html file in your browser. Open multiple browser tabs, enter a name and message and watch as the messages appear across all tabs in real-time, keeping you engaged and excited about the power of SignalR.</p>
 <doc-anchor-target id="wrapping-up">
     <h4>
         <doc-anchor-trigger class="header-anchor-trigger" to="#wrapping-up">#</doc-anchor-trigger>
@@ -443,24 +472,6 @@ app.Run();</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Once your SignalR server is set up and a Hub is ready to handle communication, the next step is to define how clients connect and interact with your server. This process, when done correctly, enables seamless real-time traffic routing, ensuring that your application can handle multiple communication streams efficiently and securely. The benefits of this are numerous, and it&#x27;s exciting to see the potential of your application unfold.</p>
-<doc-anchor-target id="basic-endpoint-mapping">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#basic-endpoint-mapping">#</doc-anchor-trigger>
-        <span>Basic Endpoint Mapping</span>
-    </h4>
-</doc-anchor-target>
-<p>SignalR leverages ASP.NET Core&#x27;s routing system to define endpoints for Hubs. Start by modifying your <code v-pre>Program.cs</code> file to include the necessary routing middleware:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.UseRouting();
-
-app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;);
-
-app.Run();</code></pre>
-</doc-codeblock></div>
-<p>The <code v-pre>MapHub&lt;T&gt;</code> method maps the <code v-pre>ChatHub</code> to the <code v-pre>/chathub</code> endpoint. Any client connecting to this endpoint can now interact with the <code v-pre>ChatHub</code>. The route acts as the entry point for all real-time traffic handled by this Hub.</p>
 <doc-anchor-target id="adding-multiple-hubs">
     <h4>
         <doc-anchor-trigger class="header-anchor-trigger" to="#adding-multiple-hubs">#</doc-anchor-trigger>
@@ -492,7 +503,11 @@ app.MapHub&lt;NotificationHub&gt;(&quot;/notifications&quot;);</code></pre>
 </doc-anchor-target>
 <p>When mapping routes, it&#x27;s crucial to consider security. You can apply middleware like authentication or authorization to ensure that only authorized clients can connect to specific Hubs. For instance, you might require users to be authenticated before accessing a Hub:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">app.UseAuthentication();
+<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddAuthentication();
+
+var app = builder.Build();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub&lt;ChatHub&gt;(&quot;/chathub&quot;).RequireAuthorization();</code></pre>
@@ -768,47 +783,6 @@ catch (Exception ex)
     </h3>
 </doc-anchor-target>
 <p>Once your SignalR client is connected to the server, the real magic begins: handling real-time interactions through methods and events. SignalR’s design makes it simple for clients to listen for server-initiated messages and invoke server-side methods. This two-way communication brings your applications to life, enabling dynamic updates and responsive interactions, which are key benefits of using SignalR.</p>
-<doc-anchor-target id="listening-for-server-messages-1">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#listening-for-server-messages-1">#</doc-anchor-trigger>
-        <span>Listening for Server Messages</span>
-    </h4>
-</doc-anchor-target>
-<p>To handle messages from the server, you’ll use the <code v-pre>On</code> method. This registers a handler that listens for a specific event and executes a callback when that event occurs:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">connection.On&lt;string, string&gt;(&quot;ReceiveMessage&quot;, (user, message) =&gt;
-{
-    Console.WriteLine($&quot;{user}: {message}&quot;);
-});</code></pre>
-</doc-codeblock></div>
-<p>In this example, the client, with its ability to listen for the <code v-pre>ReceiveMessage</code> event defined in the server-side Hub, demonstrates its adaptability. When the event is triggered, the handler processes the <code v-pre>user</code> and <code v-pre>message</code> parameters, logging them to the console. This adaptability allows the client to handle multiple server-initiated calls with confidence.</p>
-<doc-anchor-target id="invoking-server-methods">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#invoking-server-methods">#</doc-anchor-trigger>
-        <span>Invoking Server Methods</span>
-    </h4>
-</doc-anchor-target>
-<p>For client-to-server communication, the <code v-pre>InvokeAsync</code> method is a direct and efficient way to call Hub methods. This is perfect for scenarios where the client needs to send data or trigger server-side logic, allowing for swift and effective communication.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;Hello, world!&quot;);</code></pre>
-</doc-codeblock></div>
-<p>The method name, SendMessage, is not just a name, it&#x27;s a crucial part of the server-client communication. It must match a method defined in the server-side Hub. The arguments passed to InvokeAsync align with the parameters expected by the Hub method. This approach ensures seamless communication with minimal boilerplate.</p>
-<doc-anchor-target id="broadcasting-messages-to-other-clients">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#broadcasting-messages-to-other-clients">#</doc-anchor-trigger>
-        <span>Broadcasting Messages to Other Clients</span>
-    </h4>
-</doc-anchor-target>
-<p>You&#x27;ll often pair server and client methods if your application includes features like chat or notifications. For instance, when a client invokes <code v-pre>SendMessage</code> on the server, the server can broadcast the message back to all connected clients:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">connection.On&lt;string, string&gt;(&quot;ReceiveMessage&quot;, (user, message) =&gt;
-{
-    Console.WriteLine($&quot;{user} says: {message}&quot;);
-});
-
-// Sending a message
-await connection.InvokeAsync(&quot;SendMessage&quot;, &quot;User1&quot;, &quot;This is a broadcast!&quot;);</code></pre>
-</doc-codeblock></div>
 <doc-anchor-target id="supporting-streaming-data">
     <h4>
         <doc-anchor-trigger class="header-anchor-trigger" to="#supporting-streaming-data">#</doc-anchor-trigger>
@@ -1012,7 +986,7 @@ async fn main() {
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-csharp"><code v-pre class="language-csharp">connection = new HubConnectionBuilder()
     .WithUrl(&quot;https://localhost:5001/chathub&quot;)
-    .WithAutomaticReconnect(new[] { TimeSpan.Zero, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10) })
+    .WithAutomaticReconnect([TimeSpan.Zero, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10)])
     .Build();</code></pre>
 </doc-codeblock></div>
 <p>This ensures the client remains persistent while giving the server breathing room between retries.</p>
@@ -1638,43 +1612,6 @@ connection.Reconnecting += (error) =&gt;
 <pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSignalR().AddAzureSignalR(&quot;YourAzureSignalRConnectionString&quot;);</code></pre>
 </doc-codeblock></div>
 <p>This setup ensures that client connections are distributed across Azure’s infrastructure, enabling horizontal scaling without additional server configuration.</p>
-<doc-anchor-target id="using-distributed-backplanes">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#using-distributed-backplanes">#</doc-anchor-trigger>
-        <span>Using Distributed Backplanes</span>
-    </h4>
-</doc-anchor-target>
-<p>If you’re hosting your application on-premises or need a custom scaling solution, distributed backplanes like Redis or SQL Server can synchronize messages across multiple servers. For example, configure Redis as your backplane:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddSignalR().AddStackExchangeRedis(&quot;localhost:6379&quot;);</code></pre>
-</doc-codeblock></div>
-<p>Redis, with its scalable message distribution, empowers your servers to expand horizontally and manage numerous simultaneous connections with ease.</p>
-<doc-anchor-target id="load-balancing-across-servers">
-    <h4>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#load-balancing-across-servers">#</doc-anchor-trigger>
-        <span>Load Balancing Across Servers</span>
-    </h4>
-</doc-anchor-target>
-<p>Load balancing is not just important, it&#x27;s a necessity for distributing client connections evenly across multiple servers. A robust load balancer like Azure Application Gateway, AWS Elastic Load Balancer, or Nginx is a must to route traffic. Ensure sticky sessions (also known as session affinity) are disabled when using a distributed backplane so clients can reconnect to any server.</p>
-<p>Here’s an example of a typical setup using Nginx:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-nginx"><code v-pre class="language-nginx">upstream signalr {
-    server server1:5000;
-    server server2:5000;
-}
-
-server {
-    listen 80;
-
-    location /chathub {
-        proxy_pass http://signalr;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection &quot;Upgrade&quot;;
-    }
-}</code></pre>
-</doc-codeblock></div>
-<p>This configuration ensures WebSocket compatibility and distributes connections across servers.</p>
 <doc-anchor-target id="managing-connection-limits">
     <h4>
         <doc-anchor-trigger class="header-anchor-trigger" to="#managing-connection-limits">#</doc-anchor-trigger>
