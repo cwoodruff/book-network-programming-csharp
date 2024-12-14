@@ -8,6 +8,8 @@ visibility: hidden
 ---
 # 16
 
+![](./Images/Chap16-SignalR.png)
+
 # Using SignalR
 
 In the world of modern network programming, the need for real-time communication has become a cornerstone of many applications. From live chat systems to collaborative editing tools, users increasingly expect updates and interactions to occur instantly, without the need for constant page refreshes or clunky polling mechanisms. **SignalR**, a powerful library in .NET 8, simplifies the complexities of real-time communication, enabling developers to create seamless and responsive user experiences. By bridging the gap between server and client with a dynamic, bidirectional communication channel, SignalR not only offers flexibility and performance across various transport protocols but also puts the power of a great user experience in your hands.
@@ -33,6 +35,10 @@ SignalR addresses this problem with a developer-friendly abstraction over WebSoc
 ### What Makes SignalR Shine: Key Features and Architecture
 
 SignalR isn't just another library in the vast .NET ecosystem—it's a masterstroke of engineering designed to simplify real-time communication while maximizing flexibility and performance. At its heart, SignalR provides an abstraction over multiple transport protocols, including **WebSockets**, **Server-Sent Events (SSE)**, and **Long Polling**. This intelligent fallback mechanism ensures that your applications deliver a seamless real-time experience, regardless of the client's environment or browser capabilities. Whether you're connecting users on modern browsers with WebSockets or supporting legacy systems with Long Polling, SignalR has you covered.
+
+![](Images/SignalR-Architecture-Overview.png)
+
+<figcaption align = "center"><b>SignalR Architecture Overview</b></figcaption>
 
 One of SignalR's standout features is its ability to handle **persistent connections**, a key differentiator from traditional HTTP request-response models. These persistent connections enable bidirectional communication, allowing servers to push client updates without waiting for a request. This architecture unlocks robust use cases such as live notifications, collaborative document editing, and dynamic dashboards. SignalR also supports **connection grouping**, enabling granular control over who receives updates, whether broadcasting to all connected clients or targeting specific users or groups.
 
