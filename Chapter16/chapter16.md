@@ -122,8 +122,15 @@ Here, the `SendMessage` method allows connected clients to send messages to all 
 Next, configure the SignalR middleware in your ASP.NET Core application. Open the Program.cs file and modify the code to include the necessary setup:
 
 ```C#
+using SignalRServerExample;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
+
+app.UseHttpsRedirection();
 
 app.UseRouting();
 
@@ -136,7 +143,7 @@ In this configuration, the `MapHub` method maps the `ChatHub` class to the `/cha
 
 #### Testing the Setup
 
-You'll need at least one client to connect to test your server. For simplicity, we can use a JavaScript-based client to verify communication. Add an HTML file to your project’s `wwwroot` folder for testing:
+You'll need at least one client to connect to test your server. For simplicity, we can use a JavaScript-based client to verify communication. Add an HTML file (`Index.html`) to your project’s `wwwroot` folder for testing:
 
 ```ASP.NET (C#)
 <!DOCTYPE html>
@@ -176,23 +183,22 @@ You'll need at least one client to connect to test your server. For simplicity, 
 </html>
 ```
 
-Run your application and navigate to the HTML file in your browser. Open multiple browser tabs, enter a name and message and watch as the messages appear across all tabs in real-time, keeping you engaged and excited about the power of SignalR.
-
-#### Wrapping Up
-
-With these steps, you've laid the foundation for a SignalR server capable of handling real-time communication. This basic implementation is just the beginning—SignalR's flexibility is a vast playground waiting for you to explore and customize your server to fit a wide range of use cases. From here, you can dive deeper into features like group communication, authentication, and scaling to meet the demands of production-grade applications.
-
-### Routing Real-Time Traffic: Mapping Endpoints
-
-Once your SignalR server is set up and a Hub is ready to handle communication, the next step is to define how clients connect and interact with your server. This process, when done correctly, enables seamless real-time traffic routing, ensuring that your application can handle multiple communication streams efficiently and securely. The benefits of this are numerous, and it's exciting to see the potential of your application unfold.
-
-#### Basic Endpoint Mapping
-
-SignalR leverages ASP.NET Core's routing system to define endpoints for Hubs. Start by modifying your `Program.cs` file to include the necessary routing middleware:
+Add code to Program.cs to allow for static HTML files to render.
 
 ```C#
+using SignalRServerExample;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+
+app.UseDefaultFiles();
+
+app.UseStaticFiles();
 
 app.UseRouting();
 
@@ -201,7 +207,15 @@ app.MapHub<ChatHub>("/chathub");
 app.Run();
 ```
 
-The `MapHub<T>` method maps the `ChatHub` to the `/chathub` endpoint. Any client connecting to this endpoint can now interact with the `ChatHub`. The route acts as the entry point for all real-time traffic handled by this Hub.
+Run your application and the app will navigate to the Index.html file in your browser. Open multiple browser tabs, enter a name and message and watch as the messages appear across all tabs in real-time, keeping you engaged and excited about the power of SignalR.
+
+#### Wrapping Up
+
+With these steps, you've laid the foundation for a SignalR server capable of handling real-time communication. This basic implementation is just the beginning—SignalR's flexibility is a vast playground waiting for you to explore and customize your server to fit a wide range of use cases. From here, you can dive deeper into features like group communication, authentication, and scaling to meet the demands of production-grade applications.
+
+### Routing Real-Time Traffic: Mapping Endpoints
+
+Once your SignalR server is set up and a Hub is ready to handle communication, the next step is to define how clients connect and interact with your server. This process, when done correctly, enables seamless real-time traffic routing, ensuring that your application can handle multiple communication streams efficiently and securely. The benefits of this are numerous, and it's exciting to see the potential of your application unfold.
 
 #### Adding Multiple Hubs
 
@@ -229,6 +243,10 @@ Here, the `{roomName}` placeholder allows clients to dynamically specify the cha
 When mapping routes, it's crucial to consider security. You can apply middleware like authentication or authorization to ensure that only authorized clients can connect to specific Hubs. For instance, you might require users to be authenticated before accessing a Hub:
 
 ```C#
+builder.Services.AddAuthentication();
+
+var app = builder.Build();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -487,43 +505,6 @@ With your SignalR client configured, you can now interact with the server in rea
 
 Once your SignalR client is connected to the server, the real magic begins: handling real-time interactions through methods and events. SignalR’s design makes it simple for clients to listen for server-initiated messages and invoke server-side methods. This two-way communication brings your applications to life, enabling dynamic updates and responsive interactions, which are key benefits of using SignalR.
 
-#### Listening for Server Messages
-
-To handle messages from the server, you’ll use the `On` method. This registers a handler that listens for a specific event and executes a callback when that event occurs:
-
-```C#
-connection.On<string, string>("ReceiveMessage", (user, message) =>
-{
-    Console.WriteLine($"{user}: {message}");
-});
-```
-
-In this example, the client, with its ability to listen for the `ReceiveMessage` event defined in the server-side Hub, demonstrates its adaptability. When the event is triggered, the handler processes the `user` and `message` parameters, logging them to the console. This adaptability allows the client to handle multiple server-initiated calls with confidence.
-
-#### Invoking Server Methods
-
-For client-to-server communication, the `InvokeAsync` method is a direct and efficient way to call Hub methods. This is perfect for scenarios where the client needs to send data or trigger server-side logic, allowing for swift and effective communication.
-
-```C#
-await connection.InvokeAsync("SendMessage", "User1", "Hello, world!");
-```
-
-The method name, SendMessage, is not just a name, it's a crucial part of the server-client communication. It must match a method defined in the server-side Hub. The arguments passed to InvokeAsync align with the parameters expected by the Hub method. This approach ensures seamless communication with minimal boilerplate.
-
-#### Broadcasting Messages to Other Clients
-
-You'll often pair server and client methods if your application includes features like chat or notifications. For instance, when a client invokes `SendMessage` on the server, the server can broadcast the message back to all connected clients:
-
-```C#
-connection.On<string, string>("ReceiveMessage", (user, message) =>
-{
-    Console.WriteLine($"{user} says: {message}");
-});
-
-// Sending a message
-await connection.InvokeAsync("SendMessage", "User1", "This is a broadcast!");
-```
-
 #### Supporting Streaming Data
 
 SignalR also supports streaming scenarios, where clients can receive continuous data streams from the server. For example, you can listen to a stream of updates like this:
@@ -716,7 +697,7 @@ The default configuration retries after increasing delays (0 seconds, 2 seconds,
 ```C#
 connection = new HubConnectionBuilder()
     .WithUrl("https://localhost:5001/chathub")
-    .WithAutomaticReconnect(new[] { TimeSpan.Zero, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10) })
+    .WithAutomaticReconnect([TimeSpan.Zero, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10)])
     .Build();
 ```
 
@@ -1325,42 +1306,6 @@ builder.Services.AddSignalR().AddAzureSignalR("YourAzureSignalRConnectionString"
 ```
 
 This setup ensures that client connections are distributed across Azure’s infrastructure, enabling horizontal scaling without additional server configuration.
-
-#### Using Distributed Backplanes
-
-If you’re hosting your application on-premises or need a custom scaling solution, distributed backplanes like Redis or SQL Server can synchronize messages across multiple servers. For example, configure Redis as your backplane:
-
-```C#
-builder.Services.AddSignalR().AddStackExchangeRedis("localhost:6379");
-```
-
-Redis, with its scalable message distribution, empowers your servers to expand horizontally and manage numerous simultaneous connections with ease.
-
-#### Load Balancing Across Servers
-
-Load balancing is not just important, it's a necessity for distributing client connections evenly across multiple servers. A robust load balancer like Azure Application Gateway, AWS Elastic Load Balancer, or Nginx is a must to route traffic. Ensure sticky sessions (also known as session affinity) are disabled when using a distributed backplane so clients can reconnect to any server.
-
-Here’s an example of a typical setup using Nginx:
-
-```nginx
-upstream signalr {
-    server server1:5000;
-    server server2:5000;
-}
-
-server {
-    listen 80;
-
-    location /chathub {
-        proxy_pass http://signalr;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-    }
-}
-```
-
-This configuration ensures WebSocket compatibility and distributes connections across servers.
 
 #### Managing Connection Limits
 
