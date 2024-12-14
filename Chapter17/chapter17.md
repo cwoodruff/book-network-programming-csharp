@@ -8,6 +8,8 @@ visibility: hidden
 ---
 # 17
 
+![](./Images/Chap17-QUIC.png)
+
 # Looking to the Future with QUIC
 
 The evolution of network protocols has always been driven by the need to address new challenges and leverage emerging opportunities. As the internet has become more central to daily life, traditional protocols like TCP have shown their age, struggling to meet the demands of modern applications. Enter QUIC, a next-generation protocol designed to tackle these limitations head-on. By combining the best aspects of existing technologies with forward-looking innovations, QUIC is poised to redefine how data is transmitted across the web.
