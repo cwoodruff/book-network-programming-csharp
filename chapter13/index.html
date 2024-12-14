@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787451230690">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787453557045">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.787451230690" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787453557045" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787451230690" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787453557045" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787451230690" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787451230690" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787453557045" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787453557045" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -265,6 +265,12 @@
     </h3>
 </doc-anchor-target>
 <p>Comparing gRPC to REST and other communication protocols highlights its strengths in scenarios requiring high performance, low latency, and modern features. REST, one of the most widely used protocols, operates over HTTP and typically uses JSON for data exchange. At the same time, REST’s simplicity and universality have made it a standard for web APIs. Its reliance on text-based serialization, lack of native streaming, and statelessness can introduce inefficiencies, especially in resource-constrained or high-demand environments.</p>
+<p><figure class="content-center">
+    <img src="images/comparison-grpc-rest.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>Comparison of gRPC vs REST</b></figcaption>
 <p>gRPC efficiently overcomes these limitations with a binary serialization format (Protobuf) that is significantly more compact and faster to process than JSON. This leads to reduced payload sizes, faster serialization and deserialization, and overall lower network overhead. Furthermore, gRPC’s use of HTTP/2 enables advanced features like multiplexing, where multiple streams can share a single connection, and full-duplex communication, allowing clients and servers to send data simultaneously. These features are highly efficient in real-time applications like live data streaming or bidirectional messaging..</p>
 <p>Another critical advantage of gRPC is its built-in support for strongly typed contracts, defined in .proto files. This ensures consistency between clients and servers, as the Protobuf definitions are used to generate language-specific classes. In contrast, REST APIs often rely on ad-hoc documentation or tools like Swagger/OpenAPI to define contracts, which can introduce ambiguity and require manual updates. gRPC’s approach, on the other hand, reduces errors and accelerates development by automating the generation of code that strictly adheres to the service definition, relieving developers from manual tasks.</p>
 <p>While gRPC outperforms REST in many technical dimensions, it is not a universal replacement. REST remains a strong choice for public-facing APIs due to its simplicity, compatibility with web technologies, and human-readable payloads. Similarly, protocols like WebSockets or GraphQL excel in specific domains such as event-driven applications or flexible querying. Using gRPC, REST, or another protocol or framework should align with the application’s requirements, factoring in performance needs, developer experience, and ecosystem compatibility. Understanding these trade-offs is crucial as it empowers you to select the most effective communication protocol or framework for your .NET applications.</p>
@@ -293,6 +299,12 @@
     </h2>
 </doc-anchor-target>
 <p>Understanding its architecture and underlying protocols is crucial to fully leveraging gRPC&#x27;s power. At its core, gRPC is a RPC framework designed for high-performance communication. It operates on a client-server model, where clients call methods on remote servers as if they were local. This abstraction is achieved through strongly typed service definitions, enabled by Protobuf. Protobuf, a language-agnostic data serialization format, handles message serialization and deserialization seamlessly, providing efficient and compact data transfer.</p>
+<p><figure class="content-center">
+    <img src="images/grpc-architecture-overview.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>gRPC Architecture Overview</b></figcaption>
 <p>gRPC&#x27;s architecture is tightly coupled with HTTP/2, a modern transport protocol with multiplexing, bidirectional streaming, and header compression features. Unlike the stateless nature of traditional HTTP/1.1, HTTP/2 allows for persistent connections, enabling multiple streams to operate concurrently without the overhead of opening new connections. This design significantly reduces latency and improves throughput, making gRPC well-suited for real-time data exchange scenarios and low-latency interactions. For example, in a stock trading application, gRPC&#x27;s bidirectional streaming can be used to continuously update stock prices for multiple users in real time.</p>
 <p>Another defining aspect of gRPC is its adaptability in communication patterns. It supports four types of RPCs—unary (one request, one response), server streaming (one request, multiple responses), client streaming (multiple requests, one response), and bidirectional streaming (multiple requests and responses). These patterns allow gRPC to adapt to various application needs, from simple request-response APIs to complex, real-time communication workflows, providing reassurance in its versatility.</p>
 <p>By combining Protobuf&#x27;s compact serialization, HTTP/2&#x27;s advanced transport capabilities, and flexible communication patterns, gRPC provides a robust framework for building efficient, scalable, and maintainable applications. In the following sections, we&#x27;ll delve deeper into these architectural components, exploring how they work together to deliver the performance and versatility that have made gRPC a cornerstone of modern network programming.</p>
