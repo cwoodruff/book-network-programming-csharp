@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787453557045">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.787454605347">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.787453557045" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.787454605347" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787453557045" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.787454605347" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787453557045" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787453557045" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.787454605347" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.787454605347" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -282,6 +282,12 @@
     </h3>
 </doc-anchor-target>
 <p>At its heart, a WebHook is a simple yet powerful conversation between two systems. The sender initiates this conversation when a specific event occurs—think of it as saying, <em>&#x27;Hey, something just happened!&#x27;</em> This is done by sending an HTTP POST request to a designated URL provided by the receiver. The payload of this request contains all the details the receiver needs to understand the event and decide what to do next. This proactive approach eliminates the need for constant polling, making WebHooks a highly efficient mechanism for real-time communication.</p>
+<p><figure class="content-center">
+    <img src="images/webhook-lifecycle-diagram.png" alt="">
+    <figcaption class="caption"></figcaption>
+</figure>
+</p>
+<figcaption align = "center"><b>WebHook Lifecycle Diagram</b></figcaption>
 <p>The WebHook lifecycle begins with the sender detecting an event, such as a new user signing up, placing an order, or uploading a file. The sender then compiles the relevant event data into a structured payload, typically formatted in JSON for maximum interoperability. This payload and additional headers for identification and security are sent to the receiver&#x27;s WebHook endpoint. Upon receiving the request, the receiver processes the payload and executes any necessary actions, such as updating a database, sending a notification, or triggering a downstream API call.</p>
 <p>What makes this interaction seamless in .NET is the enhanced support for HTTP communication and payload handling. With the refined capabilities of <code v-pre>HttpClient</code> for senders and ASP.NET Core&#x27;s robust middleware for receivers, crafting efficient WebHook interactions becomes straightforward. The beauty of this conversation is its flexibility—whether you&#x27;re sending notifications across microservices, integrating with third-party APIs, or enabling user-defined workflows, WebHooks adapts to your needs. By mastering how they work, you unlock a powerful tool to keep your applications connected and responsive in today&#x27;s fast-paced digital world.</p>
 <doc-anchor-target id="webhooks-in-the-wild-use-cases-and-examples">
