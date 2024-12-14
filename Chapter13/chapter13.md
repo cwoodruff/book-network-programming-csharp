@@ -29,6 +29,10 @@ This section will explore how gRPC fits into today’s software ecosystem and wh
 
 Comparing gRPC to REST and other communication protocols highlights its strengths in scenarios requiring high performance, low latency, and modern features. REST, one of the most widely used protocols, operates over HTTP and typically uses JSON for data exchange. At the same time, REST’s simplicity and universality have made it a standard for web APIs. Its reliance on text-based serialization, lack of native streaming, and statelessness can introduce inefficiencies, especially in resource-constrained or high-demand environments.
 
+![](Images/Comparison-gRPC-REST.png)
+
+<figcaption align = "center"><b>Comparison of gRPC vs REST</b></figcaption>
+
 gRPC efficiently overcomes these limitations with a binary serialization format (Protobuf) that is significantly more compact and faster to process than JSON. This leads to reduced payload sizes, faster serialization and deserialization, and overall lower network overhead. Furthermore, gRPC’s use of HTTP/2 enables advanced features like multiplexing, where multiple streams can share a single connection, and full-duplex communication, allowing clients and servers to send data simultaneously. These features are highly efficient in real-time applications like live data streaming or bidirectional messaging..
 
 Another critical advantage of gRPC is its built-in support for strongly typed contracts, defined in .proto files. This ensures consistency between clients and servers, as the Protobuf definitions are used to generate language-specific classes. In contrast, REST APIs often rely on ad-hoc documentation or tools like Swagger/OpenAPI to define contracts, which can introduce ambiguity and require manual updates. gRPC’s approach, on the other hand, reduces errors and accelerates development by automating the generation of code that strictly adheres to the service definition, relieving developers from manual tasks.
@@ -43,7 +47,6 @@ Another common use case for gRPC is real-time data streaming. Applications such 
 
 Mobile and edge computing applications also benefit from gRPC's lightweight and efficient communication. With its reduced payload sizes and ability to work over constrained networks, gRPC is well-suited for mobile apps communicating with backend services or edge devices exchanging data with centralized systems. These capabilities make gRPC a powerful tool, inspiring the creation of responsive, scalable, and resource-efficient systems across many modern application domains.
 
-
 ### How gRPC Fits in Modern Application Architectures
 
 gRPC is a robust solution that plays a pivotal role in modern application architectures. It effectively addresses the challenges of efficient, reliable communication in distributed systems, particularly in microservices-based architectures. In scenarios where services often need to interact with each other in low-latency, high-throughput situations, gRPC's use of HTTP/2 and Protobuf provides performance benefits, such as reduced payload sizes, multiplexing, and bidirectional streaming. These features are essential for maintaining scalability and responsiveness in complex systems.
@@ -55,6 +58,10 @@ gRPC is a highly efficient tool that enhances client-server interactions in edge
 ## Understanding gRPC Architecture and Protocols
 
 Understanding its architecture and underlying protocols is crucial to fully leveraging gRPC's power. At its core, gRPC is a RPC framework designed for high-performance communication. It operates on a client-server model, where clients call methods on remote servers as if they were local. This abstraction is achieved through strongly typed service definitions, enabled by Protobuf. Protobuf, a language-agnostic data serialization format, handles message serialization and deserialization seamlessly, providing efficient and compact data transfer.
+
+![](Images/gRPC-Architecture-Overview.png)
+
+<figcaption align = "center"><b>gRPC Architecture Overview</b></figcaption>
 
 gRPC's architecture is tightly coupled with HTTP/2, a modern transport protocol with multiplexing, bidirectional streaming, and header compression features. Unlike the stateless nature of traditional HTTP/1.1, HTTP/2 allows for persistent connections, enabling multiple streams to operate concurrently without the overhead of opening new connections. This design significantly reduces latency and improves throughput, making gRPC well-suited for real-time data exchange scenarios and low-latency interactions. For example, in a stock trading application, gRPC's bidirectional streaming can be used to continuously update stock prices for multiple users in real time.
 
