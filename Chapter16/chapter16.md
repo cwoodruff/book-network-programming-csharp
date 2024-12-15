@@ -8,7 +8,7 @@ visibility: hidden
 ---
 # 16
 
-![](./Images/Chap16-SignalR.png)
+![](Images/Chap16-SignalR.png)
 
 # Using SignalR
 
