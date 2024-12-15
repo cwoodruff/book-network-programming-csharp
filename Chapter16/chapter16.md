@@ -68,12 +68,6 @@ The magic of the Hub lies in its bidirectional nature. Clients can invoke method
 
 More than just a router, the Hub is a platform for personalization and scalability. It allows developers to organize clients into groups, enabling targeted communication—imagine broadcasting to specific rooms in a chat app or delivering notifications only to users following a particular topic. The Hub's support for pluggable protocols like JSON and MessagePack ensures it can adapt to your application's unique needs, balancing performance and ease of use. With the Hub at the heart of your SignalR implementation, managing real-time communication becomes not just achievable, but also adaptable and enjoyable.
 
-### Protocols in Motion: Understanding the Communication Pipeline
-
-SignalR's ability to deliver real-time communication hinges on its dynamic use of transport protocols, creating a resilient and efficient communication pipeline. At the forefront is WebSockets, the gold standard for low-latency, bidirectional connections. WebSockets enable the server and client to maintain an open line of communication, eliminating the overhead of constant HTTP requests. However, SignalR's brilliance lies in its adaptability. If WebSockets aren't available, SignalR seamlessly falls back to Server-Sent Events (SSE) or Long Polling, ensuring real-time functionality persists regardless of the environment.
-
-This protocol negotiation is entirely automated, freeing you to focus on building features rather than debugging connection issues. SignalR even allows you to customize the pipeline, offering support for efficient serialization formats like MessagePack, which minimizes bandwidth usage compared to traditional JSON. Understanding how SignalR leverages protocols to optimize performance and reliability gives you a deeper appreciation for the robust architecture that powers your real-time applications. With SignalR, the communication pipeline isn't just a path—it's a superhighway for delivering data at the speed of modern expectations.
-
 ## Building the Backbone: Setting Up Your SignalR Server
 
 With a solid understanding of SignalR’s capabilities and architecture from the previous section, it’s time for us to roll up our sleeves and bring theory into practice. You, as a developer, play a crucial role in this process. At the core of every real-time application lies a SignalR server—a backbone that manages connections, routes messages, and ensures seamless client communication. Setting up this server isn’t just a technical task; it’s the first step toward creating applications that feel alive, instantly responsive, and endlessly engaging.
@@ -885,32 +879,6 @@ public class NotificationHub : Hub
 
 The difference lies in how Azure SignalR Service handles the message distribution, ensuring high performance and reliability across thousands of connections.
 
-#### Combining Grouping and Scaling
-
-You can combine grouping with Azure SignalR Service for targeted messaging at scale. For example:
-
-```C#
-public class ChatHub : Hub
-{
-    public async Task SendMessageToGroup(string groupName, string message)
-    {
-        await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
-    }
-
-    public async Task JoinGroup(string groupName)
-    {
-        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-    }
-
-    public async Task LeaveGroup(string groupName)
-    {
-        await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-    }
-}
-```
-
-With Azure SignalR Service, even if your application handles tens of thousands of clients across multiple groups, the service efficiently manages connection scaling and message delivery.
-
 ### Client Identity Unveiled: User-Based Communication
 
 In scenarios where communication needs to be tailored to individual users, SignalR provides robust support for user-based messaging. This allows you to target specific users regardless of the number of devices they’re using or where they’re connected. By leveraging user identities, your application can send personalized updates, private notifications, or user-specific messages in a seamless manner, ensuring a smooth user experience.
@@ -1057,6 +1025,17 @@ builder.Services.AddSignalR().AddAzureSignalR("YourAzureSignalRConnectionString"
 Azure SignalR Service handles connection management and scaling automatically, making it an excellent choice for cloud-based applications.
 
 By integrating a distributed backplane, your SignalR application becomes resilient to scaling challenges, ensuring you can serve thousands—or even millions—of clients with a reliable real-time application. Whether using Redis for high-speed messaging, SQL Server for integrated solutions, or Azure SignalR Service for effortless cloud scaling, these backplanes provide the infrastructure to keep your real-time applications fast and reliable. In the next sections, we’ll explore techniques for optimizing performance and securing these scaled systems.
+
+#### Managing Connection Limits
+
+By default, SignalR servers can handle thousands of concurrent connections, but you may need to adjust resource limits. For example, increase the number of allowed concurrent WebSocket connections in Kestrel:
+
+```C#
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxConcurrentConnections = 10000;
+});
+```
 
 ## Keeping It Smooth: Debugging and Scaling SignalR Applications
 
@@ -1286,40 +1265,3 @@ connection.On("TransportUsed", (transport) =>
 You can also inspect the protocol used by checking the server logs or debugging network traffic using tools like Fiddler or browser developer tools.
 
 Debugging SignalR applications requires a mix of server-side logging, client-side monitoring, and proactive exception handling. By being proactive in your approach, you can spot snags and resolve them efficiently, leveraging SignalR’s built-in diagnostics and integrating tools like Visual Studio and browser developer tools. In the following sections, we’ll explore optimization techniques to ensure your applications run smoothly and perform reliably under load.
-
-### Scaling the Peaks: Preparing for High Demand
-
-Proper preparation is key to handling high demand and scaling SignalR applications, especially as the number of connected clients increases. Without it, high traffic can easily overwhelm your server, leading to dropped connections and degraded performance. SignalR provides several strategies to scale effectively, ensuring your application remains responsive even under heavy load.
-
-#### Leveraging Azure SignalR Service
-
-The Azure SignalR Service is a managed backplane specifically designed to handle high-demand scenarios with ease. It takes over the tasks of connection management and message distribution, allowing your application to concentrate on its core business logic. To set it up, the first step is to add the Azure SignalR Service package:
-
-```Bash
-dotnet add package Microsoft.Azure.SignalR
-```
-
-Update your `Program.cs` to use Azure SignalR:
-
-```C#
-builder.Services.AddSignalR().AddAzureSignalR("YourAzureSignalRConnectionString");
-```
-
-This setup ensures that client connections are distributed across Azure’s infrastructure, enabling horizontal scaling without additional server configuration.
-
-#### Managing Connection Limits
-
-By default, SignalR servers can handle thousands of concurrent connections, but you may need to adjust resource limits. For example, increase the number of allowed concurrent WebSocket connections in Kestrel:
-
-```C#
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxConcurrentConnections = 10000;
-});
-```
-
-Establish a robust monitoring system for your server’s CPU and memory usage, as this is the cornerstone for ensuring it can handle the increased load.
-
-Autoscaling policies play a pivotal role in managing peak demand. Utilize tools like Azure Monitor, Prometheus, or custom dashboards to track metrics such as connection counts, message rates, and resource usage. These policies, when implemented in the cloud, automatically add resources during peak demand. For instance, Azure’s autoscaling rules can be set to increase server instances when CPU usage exceeds 80%.
-
-Efficient load balancing is a critical component in scaling SignalR applications to handle high demand. This, combined with cloud services and distributed backplanes, is essential for preparing your infrastructure and monitoring performance. It ensures your application meets user expectations, even under extreme loads.
