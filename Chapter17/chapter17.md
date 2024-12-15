@@ -22,15 +22,17 @@ As we delve deeper into the world of QUIC, this chapter will explore its foundat
 
 As the internet has evolved, so too have the demands placed on its underlying infrastructure. Traditional protocols like TCP, which were designed decades ago, struggle to keep pace with the requirements of today’s applications. Whether it’s delivering high-definition video streams, enabling seamless online gaming, or ensuring real-time responsiveness in collaboration tools, the limitations of older technologies are becoming increasingly apparent. QUIC (Quick UDP Internet Connections) was developed as a direct response to these challenges, offering a modern approach to network communication that prioritizes speed, reliability, and security.
 
-Unlike TCP, which requires additional layers like TLS for security, QUIC integrates encryption and authentication directly into its design. This combination results in faster connection establishment and enhanced protection against cyber threats. Furthermore, QUIC eliminates head-of-line blocking by utilizing multiplexed streams, ensuring that delays in one stream don’t stall others. These innovations make QUIC particularly suited for applications where performance and user experience are paramount.
+Unlike TCP, which requires additional layers like TLS for security, QUIC integrates encryption and authentication directly into its design. This not only results in faster connection establishment but also provides enhanced protection against cyber threats, giving you a sense of security. Furthermore, QUIC eliminates head-of-line blocking by utilizing multiplexed streams, ensuring that delays in one stream don't stall others. The key difference from HTTP/2 is that QUIC overcomes the "head-of-line blocking" issue in TCP, meaning that if one data stream experiences packet loss in QUIC, it won't affect the other streams. In contrast, in HTTP/2 on TCP, a single packet loss can block all streams on that connection. These innovations have made QUIC the foundation of HTTP/3, the latest iteration of the HTTP protocol, enabling it to deliver superior performance and reliability for modern web applications.
 
 QUIC also addresses the mobility of modern internet users. As devices move between networks—such as switching from home Wi-Fi to cellular data—traditional connections are often disrupted, requiring a complete re-establishment of the session. QUIC’s use of connection IDs instead of fixed IP and port pairs allows for seamless connection migration, maintaining continuity without additional overhead. In the sections ahead, we will explore these features in greater detail, uncovering how QUIC redefines the way data flows across the web.
 
 ### Key Features of QUIC: A Technical Overview
 
-QUIC introduces several groundbreaking features that set it apart from traditional protocols. One of its most notable capabilities is its use of multiplexing, which allows multiple streams of data to coexist within a single connection. This eliminates head-of-line blocking, a common issue in TCP where the delay of one packet can hold up an entire stream. By handling data streams independently, QUIC ensures smoother and faster transmission.
+QUIC introduces several groundbreaking features that set it apart from traditional protocols. One of its most notable capabilities is its use of multiplexing, which allows multiple data streams to coexist within a single connection. This eliminates head-of-line blocking, a common issue in TCP where the delay of one packet can hold up an entire stream. By handling data streams independently, QUIC ensures smoother and faster transmission.
 
-Another critical feature is connection migration. QUIC connections are identified by unique connection IDs rather than the traditional IP address and port pairing. This enables seamless transitions between networks, such as moving from Wi-Fi to cellular data, without disrupting the connection. Additionally, QUIC integrates encryption at the transport layer using TLS 1.3, providing a high level of security by default.
+Another critical feature is connection migration. QUIC connections are identified by unique connection IDs rather than the traditional IP address and port pairing. This enables seamless transitions between networks, such as moving from Wi-Fi to cellular data, without disrupting the connection. Additionally, QUIC natively integrates encryption at the transport layer using TLS 1.3, providing high security by default.
+
+However, not all environments or networks fully support HTTP/3 and QUIC yet. In such cases, applications using HTTP/3 can gracefully fall back to HTTP/2, which relies on TCP as its underlying protocol. This fallback mechanism ensures compatibility and continuity for users on networks or devices that do not yet support QUIC. While HTTP/2 lacks some of QUIC’s advanced features, such as seamless connection migration and independent streams, it remains a robust alternative for maintaining reliable communication in less modernized environments. This adaptability highlights QUIC’s role as a standalone protocol and part of an evolving ecosystem of transport technologies.
 
 | Feature                  | QUIC                              | TCP/IP                            |
 |--------------------------|------------------------------------|------------------------------------|
@@ -61,7 +63,7 @@ What sets QUIC apart is its holistic approach to tackling network inefficiencies
 
 ### The Foundation of QUIC: UDP with Modern Enhancements
 
-QUIC is fundamentally built on UDP, a lightweight and connectionless protocol that provides a solid foundation for fast data transmission. While UDP itself is minimalistic, QUIC enhances it with features traditionally associated with TCP, such as reliable data delivery and flow control. These enhancements transform UDP into a robust transport mechanism capable of supporting the complex requirements of modern applications.
+QUIC is fundamentally built on UDP, a lightweight and connectionless protocol that provides a solid foundation for fast data transmission. While UDP itself is minimalistic, QUIC enhances it with features traditionally associated with TCP, such as reliable data delivery and flow control. By having these features at a higher level on the stack than TCP and UDP, QUIC will have more flexibility in the future to adapt to changes. These enhancements transform UDP into a robust transport mechanism capable of supporting the complex requirements of modern applications.
 
 By using UDP as its base, QUIC can circumvent many of the challenges associated with TCP, such as slow connection setups and dependency on specific network paths. This flexibility allows QUIC to provide faster connections and more efficient use of network resources. Its design also makes it more adaptable to evolving networking needs, ensuring it remains relevant as technologies and user expectations continue to advance.
 
@@ -95,19 +97,49 @@ This section bridges the conceptual understanding of QUIC from the previous chap
 
 ### Getting Started with QUIC in .NET
 
-To unlock the power of QUIC in your .NET applications, you’ll begin by leveraging the HTTP/3 protocol, which operates on QUIC and is supported in .NET 8. The crucial step of configuring `Kestrel` in your ASP.NET Core application is what enables your server to communicate over QUIC. This understanding empowers you to handle QUIC’s low-latency and multiplexed streams, setting the stage for high-performance applications like the multiplayer game we explored earlier.
+To unlock the power of QUIC in your .NET applications, you’ll begin by leveraging the HTTP/3 protocol, which operates on QUIC and is supported in .NET 8. Configuring `Kestrel` in your ASP.NET Core application is critical in enabling your server to communicate using QUIC. This setup facilitates QUIC’s low-latency, multiplexed streams, setting the stage for high-performance applications like multiplayer gaming platforms or live-streaming services. With QUIC, developers can build applications that are not only faster but also more resilient to connection disruptions.
 
-Begin by creating a new ASP.NET Core project or modifying an existing one. The next step is to add the necessary QUIC configuration to your `Program.cs` file. This file plays a pivotal role in the QUIC setup, underscoring the significance of your role in the process:
+---
+**NOTE**
+
+The requirements for HTTP/3 can vary depending on your operating system. If Kestrel runs on a platform that doesn't meet all the criteria for HTTP/3, it will simply turn off that feature and switch back to using other HTTP protocols. This ensures that everything continues to run smoothly!
+
+**_Requirements for HTTP/3_**
+
+Windows
+* Windows 11 Build 22000 or later OR Windows Server 2022.
+* TLS 1.3 or later connection.
+
+Linux
+* `libmsquic` package installed.
+* For example, `apt install libmsquic=1.9*` on Ubuntu.
+
+MacOS
+* HTTP/3 isn't currently supported on macOS and may be available in a future release.
+* That is from the MSFT docs for HTTP/3 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/http3?view=aspnetcore-9.0#macos
+---
+
+Start by creating a new ASP.NET Core project or modifying an existing one. Add the necessary QUIC configuration to your `Program.cs` file, which is pivotal in the QUIC setup. Here’s an example:
 
 ```C#
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var cert = CertificateLoader.LoadFromStoreCert("localhost", StoreName.My.ToString(), StoreLocation.CurrentUser, false);
 
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(5001, listenOptions =>
     {
-        listenOptions.Protocols = HttpProtocols.Http3;
-        listenOptions.UseHttps("cert.pfx", "password");
+        listenOptions.UseConnectionLogging();
+        listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.UseHttps(httpsOptions =>
+        {
+            httpsOptions.ServerCertificateSelector = (context, host) => cert;
+        });
     });
 });
 
@@ -118,132 +150,33 @@ app.MapGet("/", () => "Hello, QUIC!");
 app.Run();
 ```
 
-Here, `HttpProtocols.Http3` is specified, signaling Kestrel to use HTTP/3 over QUIC. The certificate file (`cert.pfx`) and its password are required to enable secure communication, a hallmark of QUIC’s design.
+In this configuration, `HttpProtocols.Http1AndHttp2AndHttp3` signals Kestrel to prioritize HTTP/3 but fall back to HTTP/2 or HTTP/1 if necessary, ensuring compatibility across different client and server environments. Additionally, the `UseHttps` method ensures secure communication by specifying a certificate.
 
-Once the server is ready, configuring the client to communicate with it is just as straightforward. Using the `HttpClient` class, enable HTTP/3 by setting the `Http3Support` property in your `SocketsHttpHandler` instance:
-
-```C#
-var handler = new SocketsHttpHandler
-{
-    EnableMultipleHttp2Connections = true
-};
-
-var client = new HttpClient(handler);
-
-var response = await client.GetAsync("https://localhost:5001");
-Console.WriteLine(await response.Content.ReadAsStringAsync());
-```
-
-This configuration enables your client to establish a QUIC-based connection with the server. The interplay between client and server showcases how QUIC simplifies communication, while delivering robust performance and resilience, instilling confidence in its capabilities. As we move into advanced patterns and optimizations, these foundational steps provide the groundwork for unleashing QUIC's full potential in .NET applications.
-
-### Building a QUIC-Based Server in .NET
-
-Building on the foundational setup from the previous section, implementing a server with QUIC in .NET involves enhancing Kestrel to leverage HTTP/3’s advanced capabilities. This configuration unlocks high performance and adaptability, making it ideal for demanding applications like multiplayer gaming platforms or live streaming services. By extending the initial setup, you can create a robust and fully-featured server that handles QUIC’s unique characteristics seamlessly and takes full advantage of its multiplexing, low latency, and connection migration features. This results in a superior user experience, giving you and your users reasons to be optimistic about the future of web server technologies.
-
-To enhance the server for high-demand scenarios, you can use QUIC’s multiplexing capabilities. For example, the server can handle multiple independent streams for different players or game states without waiting for other streams to complete. Here’s how you might process multiple concurrent updates:
+On the client side, configuring `HttpClient` for QUIC is equally straightforward. Here’s how to enable HTTP/3 with fallback support:
 
 ```C#
-app.MapPost("/game/batch", async context =>
-{
-    var tasks = new List<Task>();
-    using (var reader = new StreamReader(context.Request.Body))
-    {
-        while (!reader.EndOfStream)
-        {
-            var line = await reader.ReadLineAsync();
-            tasks.Add(Task.Run(() => ProcessGameData(line)));
-        }
-    }
-    await Task.WhenAll(tasks);
-    await context.Response.WriteAsync("Batch processing completed.");
-});
+using System.Net;
 
-Task ProcessGameData(string data)
-{
-    Console.WriteLine($"Processing: {data}");
-    return Task.CompletedTask;
-}
+using var client = new HttpClient();
+client.DefaultRequestVersion = HttpVersion.Version30;
+
+Console.WriteLine("--- localhost:5001 ---");
+
+// The client falls back to HTTP2 or HTTP1 if HTTP3 is not supported
+client.DefaultVersionPolicy = HttpVersionPolicy.RequestVersionExact;
+
+// Will use HTTP3 if the server supports it
+var resp = await client.GetAsync("https://localhost:5001/");
+string body = await resp.Content.ReadAsStringAsync();
+
+Console.WriteLine(
+    $"status: {resp.StatusCode}, version: {resp.Version}, " +
+    $"body: {body.Substring(0, Math.Min(100, body.Length))}");
 ```
 
-This route accepts a batch of updates in the request body, processes them concurrently, and responds when all updates are complete. These updates could include changes to user profiles, product information, or any other data that needs to be updated in bulk. It demonstrates how QUIC's architecture efficiently handles simultaneous streams without bottlenecks.
+In this client configuration, `DefaultRequestVersion` specifies HTTP/3, and `DefaultVersionPolicy` ensures fallback to earlier versions if necessary. The response details, including HTTP version and status, allow you to verify that the client-server communication utilizes QUIC when supported.
 
-As you refine the server, remember that your role is crucial. Consider adding connection monitoring and metrics collection features. For instance, Kestrel's logging and diagnostic tools can help identify bottlenecks or monitor active connections:
-
-```C#
-builder.Logging.AddConsole();
-builder.WebHost.UseKestrel(options =>
-{
-    options.Limits.MaxConcurrentStreams = 100;
-});
-```
-
-This configuration limits the number of concurrent streams, balancing performance with resource constraints. By carefully tuning these settings, you can optimize your server for scalability while ensuring responsiveness.
-
-The journey doesn’t stop here. The server you’ve built is now ready to take full advantage of QUIC’s unique capabilities, providing a robust and adaptable foundation for the demanding needs of modern applications. In subsequent sections, you’ll explore how to connect clients, implement advanced features, and scale the solution to meet real-world challenges.
-
-### Creating a QUIC Client in .NET
-
-To fully leverage the power of QUIC in a .NET application, you’ll need a client capable of establishing secure, high-performance connections with a QUIC-enabled server. This client, whether your application is a multiplayer game exchanging player state updates or a real-time analytics dashboard fetching data streams, is the crucial gateway to unlock the benefits of low-latency, multiplexed communication. Let’s dive into how to set up a robust QUIC client using .NET 8.
-
-Start by configuring the `HttpClient` in your .NET application to use HTTP/3, which operates over QUIC. This requires a properly configured `SocketsHttpHandler` instance, a key component that manages the underlying network connections. Here’s an example of initializing the client:
-
-```C#
-var handler = new SocketsHttpHandler
-{
-    EnableMultipleHttp2Connections = true // Enables efficient use of streams
-};
-
-var client = new HttpClient(handler)
-{
-    DefaultRequestVersion = new Version(3, 0), // Use HTTP/3
-    DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
-};
-
-var response = await client.GetAsync("https://localhost:5001/status");
-Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");
-```
-
-In this code, the client is configured to prefer HTTP/3 for requests. The `SocketsHttpHandler` ensures that multiple streams can operate concurrently, reflecting QUIC’s ability to handle multiplexed connections efficiently. This setup is ideal for sending lightweight requests like status checks (e.g., checking if a user is online) or fetching configurations (e.g., retrieving game settings).
-
-For more complex interactions, such as submitting data, you can use the `HttpClient`, a class that provides a base class for sending HTTP requests and receiving HTTP responses, to send `POST` requests with serialized payloads. Let’s consider a scenario where the game client sends player actions to the server:
-
-```C#
-var playerAction = new
-{
-    PlayerId = "Player123",
-    Action = "Move",
-    Coordinates = new { X = 100, Y = 200 }
-};
-
-var jsonContent = new StringContent(JsonSerializer.Serialize(playerAction), Encoding.UTF8, "application/json");
-var postResponse = await client.PostAsync("https://localhost:5001/game/update", jsonContent);
-
-Console.WriteLine($"Server response: {await postResponse.Content.ReadAsStringAsync()}");
-```
-
-This example demonstrates how to serialize a C# object into JSON and send it over a QUIC-enabled connection. The server’s low-latency, multiplexed handling ensures that these updates are processed efficiently, even during high traffic.
-
-QUIC’s design, with its efficient support for streaming scenarios, ensures that the client can send or receive large amounts of data incrementally with high performance. Here’s how you could stream a file upload to the server:
-
-```C#
-await using var fileStream = File.OpenRead("player_data.log");
-var streamContent = new StreamContent(fileStream);
-
-var uploadResponse = await client.PostAsync("https://localhost:5001/game/upload", streamContent);
-Console.WriteLine($"Upload status: {uploadResponse.StatusCode}");
-```
-
-The client optimizes memory usage by streaming directly from a file. This is made possible by QUIC, a technology known for its efficient data flow handling. The client's use of QUIC is particularly beneficial when uploading game logs, user-generated content, or other large datasets.
-
-To monitor and debug client connections, enable logging and diagnostics. Adding a logging provider to your application ensures visibility into connection states and performance:
-
-```C#
-var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-var logger = loggerFactory.CreateLogger("QUICClient");
-logger.LogInformation("Starting QUIC client...");
-```
-
-The client’s setup is now ready to handle the complexities of real-world scenarios. Whether it’s lightweight requests, batch updates, or streaming, your QUIC client in .NET ensures a seamless, secure, high-performance interaction with the server. The following steps will explore scaling and optimizing these interactions for greater efficiency.
+These steps establish the foundation for implementing QUIC in .NET applications. Combining Kestrel’s flexibility with robust client configuration lets you build modern, high-performance solutions that capitalize on QUIC’s advanced capabilities. As we move into advanced patterns and optimizations, this setup ensures your applications are ready to fully embrace QUIC's potential in .NET.
 
 ### Practical Use Cases for QUIC in .NET Applications
 
@@ -305,115 +238,80 @@ This section delves into the dual-edged nature of QUIC's performance profile. Wh
 
 ### Real-World Challenges in Implementing QUIC
 
-Implementing QUIC in real-world scenarios offers substantial benefits but also introduces challenges that developers are uniquely positioned to address. Their expertise is crucial to ensure reliable and efficient applications. One significant hurdle is debugging. Unlike traditional protocols, QUIC encrypts its payloads and most of its metadata, making packet inspection tools like Wireshark less effective. This can make troubleshooting connection issues or performance bottlenecks more difficult, especially in complex applications. Developers can use .NET's built-in logging features to capture relevant connection details:
+Implementing QUIC in real-world scenarios offers substantial benefits but also introduces challenges that developers are uniquely positioned to address. Their expertise is crucial in the process, as they are responsible for ensuring reliable and efficient applications. One notable challenge is that most browsers restrict HTTP/3 usage on `localhost` addresses, making local testing less straightforward. However, you can validate HTTP/3 functionality by examining the response headers in browser developer tools. A response header containing the `alt-svc` entry with the value `h3` confirms that HTTP/3 is being used:
 
-```C#
-builder.WebHost.ConfigureLogging(logging =>
+![](Images/Show-HTTP3-Response-Headers.png)
+
+<figcaption align = "center"><b>Show HTTP3 in Browser DevTools</b></figcaption>
+
+Beyond browser validation, server-side logging is critical to ensure that QUIC operates as intended. You can enable detailed logging in `.NET` by modifying `appsettings.json` or `appsettings.Development.json` to include configurations for detailed error output and logging levels:
+
+```json
 {
-    logging.AddConsole();
-    logging.SetMinimumLevel(LogLevel.Debug);
-});
+  "DetailedErrors": true,
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.AspNetCore.Hosting.Diagnostics":  "Information"
+    }
+  }
+}
 ```
 
-This logging configuration allows you to capture detailed diagnostic information about connection behavior and server interactions. For example, you can log the time taken for a connection to be established, the sequence of server interactions, and the response times. This detailed information is critical for pinpointing issues during development and testing.
+Once configured, server logs will provide insights into HTTP/3 activity. For example, console logs might confirm that HTTP/3 is being utilized, showcasing important protocol interactions:
 
-Another challenge arises from managing the connection state in applications that require high availability. QUIC’s reliance on connection IDs instead of IP-port pairs makes it more resilient to network changes, but it also shifts the responsibility for tracking state to the server. The server plays a crucial role in this, ensuring it can gracefully handle transitions like a user switching networks mid-session. In .NET, you can use middleware to track active connections and ensure continuity:
+![](Images/Debug-Console-HTTP3.png)
+
+<figcaption align = "center"><b>Show HTTP3 in IDE Console</b></figcaption>
+
+W3C logging can be integrated into your application to verify client-server communication and protocol details further. This logging method captures comprehensive request data, including the protocol version, and can be particularly useful for identifying bottlenecks or debugging issues. Here’s how to enable W3C logging in a Kestrel-based server:
 
 ```C#
-app.Use(async (context, next) =>
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddW3CLogging(logging =>
 {
-    var connectionId = context.Connection.Id;
-    Console.WriteLine($"Handling request for connection: {connectionId}");
-    await next.Invoke();
-    Console.WriteLine($"Request completed for connection: {connectionId}");
+    logging.LoggingFields = W3CLoggingFields.All;
+    logging.LogDirectory = @"C:\logs";
+    logging.FlushInterval = TimeSpan.FromSeconds(2);
 });
-```
 
-This middleware provides a simple way to log and manage connection lifecycles, helping you maintain stability in dynamic network environments.
+var cert = CertificateLoader.LoadFromStoreCert("localhost", StoreName.My.ToString(), StoreLocation.CurrentUser, false);
 
-Resource allocation is another critical consideration. QUIC’s ability to handle multiple streams within a single connection is powerful but can lead to resource contention if not managed carefully. For example, a poorly designed application might allow too many concurrent streams and overwhelm server resources. To mitigate this, you can rely on.NET’s Kestrel server, which provides options to limit the number of streams and control resource usage, offering a sense of control and reassurance:
-
-```C#
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.Limits.MaxConcurrentStreams = 100;
-});
-```
-
-Setting sensible limits allows you to optimize performance without risking resource exhaustion, a situation where a system's resources are fully utilized, leading to degraded performance or system failure, especially during peak traffic.
-
-Finally, interoperability can pose challenges when integrating with systems that only partially support QUIC or use custom implementations. Ensuring compatibility often requires additional testing, which is crucial in preparing for these challenges. Fallback mechanisms, such as gracefully downgrading to HTTP/2 when HTTP/3 is unavailable, are also important. The following example demonstrates a client configuration that supports such fallbacks:
-
-```C#
-var handler = new SocketsHttpHandler
-{
-    EnableMultipleHttp2Connections = true
-};
-
-var client = new HttpClient(handler)
-{
-    DefaultRequestVersion = new Version(3, 0),
-    DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower
-};
-```
-
-This setup offers developers a reassuring level of flexibility. It allows the client to prioritize HTTP/3 but gracefully revert to earlier versions if necessary, ensuring compatibility while leveraging QUIC’s benefits when available.
-
-Confronting these challenges is an exciting journey that involves a delicate balance of technical strategies and thoughtful design. By unraveling the intricacies of QUIC and harnessing the tools provided by .NET, developers can overcome these hurdles and deliver performant, resilient applications that fully exploit the potential of this next-generation protocol. In the following sections, we’ll explore advanced patterns and optimizations to further refine your QUIC-enabled applications.
-
-### Optimizing QUIC for .NET Applications
-
-Optimizing the use of QUIC in .NET applications involves fine-tuning server and client configurations to ensure maximum performance, scalability, and resilience. The protocol’s unique features, such as multiplexing and connection migration, shine with thoughtful resource management (e.g., prioritizing critical data streams) and efficient application design (e.g., using asynchronous programming for better performance). One critical area of optimization is managing connection limits and stream concurrency. Kestrel provides options to configure these parameters for optimal server performance:
-
-```C#
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxConcurrentStreams = 200; // Allow more concurrent streams
-    options.Limits.Http3.InitialStreamWindowSize = 1 * 1024 * 1024; // 1 MB per stream
-});
-```
-
-This configuration increases the maximum number of streams and adjusts the window size for better throughput, particularly for data-intensive applications like video streaming or real-time analytics.
-
-Another way to optimize performance is by leveraging QUIC’s support for early data transfer. This feature allows clients to send data during the handshake phase, reducing latency for frequently accessed endpoints. For instance, a game client connecting to a matchmaking server can benefit from preloading key data. In .NET, this can be configured on the client side:
-
-```C#
-var handler = new SocketsHttpHandler
-{
-    EnableMultipleHttp2Connections = true
-};
-
-var client = new HttpClient(handler)
-{
-    DefaultRequestVersion = new Version(3, 0),
-    DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrHigher
-};
-
-var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:5001/game/match")
-{
-    Content = new StringContent("Preload data", Encoding.UTF8, "application/json")
-};
-var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");
-```
-
-By combining HTTP/3’s early data capabilities with a thoughtful and creative application design, you can further reduce response times and improve user experience.
-
-Monitoring and diagnostics play a crucial role in optimization. Tools like .NET Metrics and Kestrel’s diagnostic events can provide insights into QUIC performance, including connection health and stream utilization. You can incorporate these tools to engage in a continuous process of assessment and refinement for your application:
-
-```C#
-builder.WebHost.ConfigureLogging(logging =>
-{
-    logging.AddConsole();
-    logging.SetMinimumLevel(LogLevel.Information);
+    options.ListenAnyIP(5001, listenOptions =>
+    {
+        listenOptions.UseConnectionLogging();
+        listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.UseHttps(httpsOptions =>
+        {
+            httpsOptions.ServerCertificateSelector = (context, host) => cert;
+        });
+    });
 });
 
-builder.Services.AddHealthChecks().AddCheck<QuicHealthCheck>("QUIC Health");
+var app = builder.Build();
+
+app.UseW3CLogging();
+
+app.MapGet("/", () => "Hello, QUIC!");
+
+app.Run();
 ```
 
-These logs and health checks allow you to spot bottlenecks or connection anomalies in real-time, ensuring your application performs consistently under varying loads.
+This configuration captures HTTP/3-specific details in W3C log files, enabling deeper analysis. Viewing these logs provides protocol versions and connection details:
 
-Finally, consider integrating adaptive strategies to dynamically adjust QUIC configurations based on traffic patterns or resource availability. For instance, scaling the MaxConcurrentStreams value during peak usage is crucial to maintaining smooth operations. These strategies ensure your .NET application makes the most of QUIC’s capabilities while remaining resilient to changes in demand, setting the stage for scalable and efficient network communication. In the following sections, we’ll explore scaling QUIC-enabled applications and implementing advanced patterns to harness the protocol’s potential fully.
+![Detailed-Logs-HTTP3.png](Images/Detailed-Logs-HTTP3.png)
+
+<figcaption align = "center"><b>Show HTTP3 in Log Files from W3C Logging</b></figcaption>
+
+Overcoming these challenges is a rewarding process that requires a balanced combination of technical strategies and thoughtful design. By leveraging tools like detailed logging and browser headers, developers can gain a deep understanding of QUIC, putting them in control of their applications' performance and resilience. In the following sections, advanced patterns and optimizations will further enhance your QUIC-enabled solutions, enabling you to exploit this next-generation protocol fully.
 
 ## Future Trends and the Role of QUIC in Networking
 
