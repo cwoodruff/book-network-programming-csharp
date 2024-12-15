@@ -1,8 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QUICServer", "QUICServer\QUICServer.csproj", "{86A3638C-CB35-4EA5-A21D-DC7A6A17E8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QUICConsole", "QUICConsole\QUICConsole.csproj", "{86478148-88AB-4C71-A0DE-42BAB0BF2BB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86A3638C-CB35-4EA5-A21D-DC7A6A17E8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86A3638C-CB35-4EA5-A21D-DC7A6A17E8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86A3638C-CB35-4EA5-A21D-DC7A6A17E8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86A3638C-CB35-4EA5-A21D-DC7A6A17E8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86478148-88AB-4C71-A0DE-42BAB0BF2BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86478148-88AB-4C71-A0DE-42BAB0BF2BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86478148-88AB-4C71-A0DE-42BAB0BF2BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86478148-88AB-4C71-A0DE-42BAB0BF2BB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
