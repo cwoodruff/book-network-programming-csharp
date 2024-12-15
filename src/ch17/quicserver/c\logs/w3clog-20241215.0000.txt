@@ -1,6 +1,0 @@
-#Version: 1.0
-#Start-Date: 2024-12-15 19:52:19
-#Fields: date time c-ip cs-username s-computername s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status time-taken cs-version cs-host cs(User-Agent) cs(Cookie) cs(Referer)
-2024-12-15 19:52:18 ::1 - Chriss-Mac-Studio ::1 5001 GET / - 200 6.6914 HTTP/2 localhost:5001 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/131.0.0.0+Safari/537.36 _ga=GA1.1.576880434.1730288122;+_ga_VJEMRLLXJN=GS1.1.1730410342.6.1.1730410458.0.0.0 -
-2024-12-15 19:52:18 ::1 - Chriss-Mac-Studio ::1 5001 GET /favicon.ico - 404 0.1531 HTTP/2 localhost:5001 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/131.0.0.0+Safari/537.36 _ga=GA1.1.576880434.1730288122;+_ga_VJEMRLLXJN=GS1.1.1730410342.6.1.1730410458.0.0.0 https://localhost:5001/
-2024-12-15 19:52:29 ::1 - Chriss-Mac-Studio ::1 5001 GET / - 200 0.1208 HTTP/2 localhost:5001 Mozilla/5.0+(Macintosh;+Intel+Mac+OS+X+10_15_7)+AppleWebKit/537.36+(KHTML,+like+Gecko)+Chrome/131.0.0.0+Safari/537.36 _ga=GA1.1.576880434.1730288122;+_ga_VJEMRLLXJN=GS1.1.1730410342.6.1.1730410458.0.0.0 -
