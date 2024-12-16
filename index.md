@@ -26,5 +26,5 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 13      | [Working with gRPC](./Chapter13/chapter13.md)                              | ✔️        |
 | 14      | [Working with WebHooks](./Chapter14/chapter14.md)                          | ✔️        |
 | 15      | [Implementing Message Queuing](./Chapter15/chapter15.md)                   | ✔️        |
-| 16      | Using SignalR                                                              |           |
+| 16      | [Using SignalR](./Chapter16/chapter16.md)                                  | ✔️        |
 | 17      | Looking to the Future with QUIC                                            |           |
