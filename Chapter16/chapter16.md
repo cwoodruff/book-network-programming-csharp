@@ -1,7 +1,7 @@
 ---
 order: 4
 icon: stack
-label: Chap 16
+label: Chap 16 - Using SignalR
 meta:
 title: "Using SignalR"
 ---
