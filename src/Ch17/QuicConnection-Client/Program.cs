@@ -23,5 +23,3 @@ var bytesRead = await stream.ReadAsync(buffer);
 Console.WriteLine($"Server response: {Encoding.UTF8.GetString(buffer, 0, bytesRead)}");
 
 await connection.CloseAsync(0);
-
-
