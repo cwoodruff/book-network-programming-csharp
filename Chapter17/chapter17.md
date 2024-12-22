@@ -202,7 +202,7 @@ var serverConnectionOptions = new QuicServerConnectionOptions
     DefaultCloseErrorCode = 0x0B, // Protocol-dependent error code.
     ServerAuthenticationOptions = new SslServerAuthenticationOptions
     {
-        ApplicationProtocols = new List<SslApplicationProtocol> { SslApplicationProtocol.Http3 },
+        ApplicationProtocols = [new SslApplicationProtocol("protocol1")],
         ServerCertificate = cert
     }
 };
@@ -210,7 +210,7 @@ var serverConnectionOptions = new QuicServerConnectionOptions
 var listenerOptions = new QuicListenerOptions
 {
     ListenEndPoint = new IPEndPoint(IPAddress.Any, 5001),
-    ApplicationProtocols = new List<SslApplicationProtocol> { SslApplicationProtocol.Http3 },
+    ApplicationProtocols = [new SslApplicationProtocol("protocol1")],
     ConnectionOptionsCallback = (_, _, _) => ValueTask.FromResult(serverConnectionOptions)
 };
 
@@ -287,7 +287,7 @@ var clientConnectionOptions = new QuicClientConnectionOptions
 
     ClientAuthenticationOptions = new SslClientAuthenticationOptions
     {
-        ApplicationProtocols = [new SslApplicationProtocol("protocol-name")],
+        ApplicationProtocols = [new SslApplicationProtocol("protocol1")],
         TargetHost = ""
     }
 };
@@ -341,7 +341,7 @@ var connectionOptions = new QuicClientConnectionOptions
     RemoteEndPoint = new IPEndPoint(IPAddress.Loopback, 5001),
     ClientAuthenticationOptions = new SslClientAuthenticationOptions
     {
-        ApplicationProtocols = new List<SslApplicationProtocol> { SslApplicationProtocol.Http3 }
+        ApplicationProtocols = [new SslApplicationProtocol("protocol1")],
     }
 };
 
@@ -488,7 +488,7 @@ The `QuicListener` class, which corresponds to the server-side listening require
 var listenerOptions = new QuicListenerOptions
 {
     ListenEndPoint = new IPEndPoint(IPAddress.Any, 5001),
-    ApplicationProtocols = new List<SslApplicationProtocol> { SslApplicationProtocol.Http3 },
+    ApplicationProtocols = [new SslApplicationProtocol("protocol1")],
     CertificateFilePath = "certificate.pfx",
     CertificatePassword = "password"
 };
@@ -504,7 +504,7 @@ The `QuicConnection` class, a strategic component in our network communication p
 using var connection = new QuicConnection(new QuicClientConnectionOptions
 {
     RemoteEndPoint = new IPEndPoint(IPAddress.Loopback, 5001),
-    ApplicationProtocols = new List<SslApplicationProtocol> { SslApplicationProtocol.Http3 }
+    ApplicationProtocols = [new SslApplicationProtocol("protocol1")],
 });
 
 await connection.ConnectAsync();
