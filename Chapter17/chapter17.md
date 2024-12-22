@@ -4,7 +4,6 @@ icon: stack
 label: Chap 17 - Looking to the Future with QUIC
 meta:
 title: "Looking to the Future with QUIC"
-visibility: hidden
 ---
 # 17
 
