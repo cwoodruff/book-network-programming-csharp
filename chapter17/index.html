@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788215479936">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788215908769">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.788215479936" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.788215908769" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788215479936" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788215908769" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788215479936" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788215479936" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788215908769" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788215908769" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -507,7 +507,7 @@ var serverConnectionOptions = new QuicServerConnectionOptions
     DefaultCloseErrorCode = 0x0B, // Protocol-dependent error code.
     ServerAuthenticationOptions = new SslServerAuthenticationOptions
     {
-        ApplicationProtocols = new List&lt;SslApplicationProtocol&gt; { SslApplicationProtocol.Http3 },
+        ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol1&quot;)],
         ServerCertificate = cert
     }
 };
@@ -515,7 +515,7 @@ var serverConnectionOptions = new QuicServerConnectionOptions
 var listenerOptions = new QuicListenerOptions
 {
     ListenEndPoint = new IPEndPoint(IPAddress.Any, 5001),
-    ApplicationProtocols = new List&lt;SslApplicationProtocol&gt; { SslApplicationProtocol.Http3 },
+    ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol1&quot;)],
     ConnectionOptionsCallback = (_, _, _) =&gt; ValueTask.FromResult(serverConnectionOptions)
 };
 
@@ -585,7 +585,7 @@ var clientConnectionOptions = new QuicClientConnectionOptions
 
     ClientAuthenticationOptions = new SslClientAuthenticationOptions
     {
-        ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol-name&quot;)],
+        ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol1&quot;)],
         TargetHost = &quot;&quot;
     }
 };
@@ -637,7 +637,7 @@ static async Task HandleConnectionAsync(QuicConnection connection)
     RemoteEndPoint = new IPEndPoint(IPAddress.Loopback, 5001),
     ClientAuthenticationOptions = new SslClientAuthenticationOptions
     {
-        ApplicationProtocols = new List&lt;SslApplicationProtocol&gt; { SslApplicationProtocol.Http3 }
+        ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol1&quot;)],
     }
 };
 
@@ -768,7 +768,7 @@ Console.WriteLine($&quot;Response version: {response.Version}, Status: {response
 <pre class="language-csharp"><code v-pre class="language-csharp">var listenerOptions = new QuicListenerOptions
 {
     ListenEndPoint = new IPEndPoint(IPAddress.Any, 5001),
-    ApplicationProtocols = new List&lt;SslApplicationProtocol&gt; { SslApplicationProtocol.Http3 },
+    ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol1&quot;)],
     CertificateFilePath = &quot;certificate.pfx&quot;,
     CertificatePassword = &quot;password&quot;
 };
@@ -782,7 +782,7 @@ Console.WriteLine(&quot;Server is ready for connections.&quot;);</code></pre>
 <pre class="language-csharp"><code v-pre class="language-csharp">using var connection = new QuicConnection(new QuicClientConnectionOptions
 {
     RemoteEndPoint = new IPEndPoint(IPAddress.Loopback, 5001),
-    ApplicationProtocols = new List&lt;SslApplicationProtocol&gt; { SslApplicationProtocol.Http3 }
+    ApplicationProtocols = [new SslApplicationProtocol(&quot;protocol1&quot;)],
 });
 
 await connection.ConnectAsync();
