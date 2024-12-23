@@ -8,7 +8,7 @@ title: "Working with REST APIs"
 
 # 9
 
-![](./Images/Chap08-HTTP-REST-Web-APIs.png)
+![](./Images/Chap09-HTTP-REST-Web-APIs.png)
 
 # Working with REST APIs
 
