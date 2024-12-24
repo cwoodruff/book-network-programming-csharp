@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788313410151">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788382051391">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.788313410151" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.788382051391" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788313410151" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788382051391" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788313410151" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788313410151" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788382051391" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788382051391" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -250,10 +250,10 @@
 <p>Understanding and implementing effective error handling in C# and .NET is crucial. We&#x27;re not just catching exceptions anymore; we&#x27;re strategizing around them. From leveraging the nuanced improvements in exception filtering to designing custom exception classes that carry meaningful error information, this chapter will refine how you perceive and manipulate errors. Moreover, with the introduction of asynchronous programming models and more complex threading scenarios, handling errors in multi-threaded environments has never been more critical.</p>
 <p>As we design our network applications, fault tolerance becomes not just a feature, but a guiding principle. This chapter will walk you through the implementation of resilient patterns such as retries, circuit breakers, and fallback mechanisms. We&#x27;ll demonstrate how to leverage <strong>Polly</strong>, a .NET resilience framework, to elegantly apply these patterns. Additionally, we&#x27;ll delve into practical strategies for timeout management and load balancing that ensure your applications are not just enduring, but also sturdy under diverse and high-load conditions. Get ready to equip yourself with the knowledge to craft network applications that stand strong, delivering uninterrupted service even in the face of challenging digital conditions.</p>
 <doc-anchor-target id="introduction-to-error-handling-in-net">
-    <h3>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#introduction-to-error-handling-in-net">#</doc-anchor-trigger>
         <span>Introduction to Error Handling in .NET</span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>Error handling in .NET is fundamentally centered around exceptions, which are conditions that change a program&#x27;s normal flow. In C# and .NET, exceptions provide a powerful mechanism for signaling and responding to unexpected situations, such as network timeouts or data format errors. For example, an exception might be thrown when a networking API fails to connect to a server or when an unexpected response is received.</p>
 <p>The cornerstone of exception handling in C# is the try-catch-finally statement. A try block encapsulates code that might throw an exception, while catch blocks handle exceptions if one or more are thrown. The finally block, which is optional, executes code after the try and catch blocks, regardless of whether an exception was thrown or not, making it ideal for cleaning up resources, such as closing network streams or database connections.</p>

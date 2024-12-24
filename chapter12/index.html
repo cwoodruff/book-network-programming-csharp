@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788313410151">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788382051391">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.788313410151" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.788382051391" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788313410151" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788382051391" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788313410151" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788313410151" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788382051391" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788382051391" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -250,10 +250,10 @@
 <p>In this chapter, we’ll dive into the specifics of using MQTT in .NET to build IoT applications that are reliable, scalable, and secure. We’ll explore MQTT’s publish/subscribe model, its key components like brokers and topics, and advanced features such as <strong>Quality of Service</strong> (<strong>QoS</strong>) levels and retained messages. With practical examples and code demonstrations that you can follow along with, you’ll learn how to set up an MQTT broker, implement clients for IoT devices, and optimize communication for real-world scenarios.</p>
 <p>As we progress, we’ll also address critical considerations like securing MQTT connections with TLS, handling authentication and authorization, and testing your application to ensure it performs well under various conditions. These conditions could include intermittent network connectivity, high message volumes, or diverse device types. By the end of this chapter, you’ll have the tools and knowledge to confidently use MQTT in your IoT solutions, bridging the gap between connected devices and actionable insights in your .NET applications.</p>
 <doc-anchor-target id="overview-of-mqtt-and-its-role-in-iot">
-    <h3>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#overview-of-mqtt-and-its-role-in-iot">#</doc-anchor-trigger>
         <span>Overview of MQTT and its Role in IoT</span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>MQTT, with its elegantly simple design, has emerged as a go-to protocol for enabling seamless communication between devices in the vast ecosystem of IoT technologies. Its design, which prioritizes simplicity, efficiency, and reliability, makes it ideally suited for environments where resources like bandwidth, power, and processing capability are limited. Whether it&#x27;s a fleet of sensors transmitting environmental data or a network of smart home devices synchronizing commands, MQTT offers a lightweight solution to the complex challenges of real-time IoT communication.</p>
 <p>At its heart, MQTT operates on a publish/subscribe model. Instead of devices communicating directly, they exchange information through a central broker. Publishers send messages to specific &quot;topics,&quot; and subscribers listen to those topics, receiving messages as they arrive. This decoupled architecture simplifies the communication process and, importantly, makes it highly scalable, allowing thousands—or even millions—of devices to interact without creating bottlenecks.</p>
@@ -262,20 +262,20 @@
 <p>Beyond its technical features, MQTT&#x27;s adaptability shines in real-world applications. It&#x27;s used in diverse domains, from smart cities and connected cars to agricultural systems and energy management. The protocol&#x27;s support for retained messages (which are stored by the broker and delivered to new subscribers), <strong>Last Will and Testament</strong> (<strong>LWT</strong>) notifications (which are pre-defined messages that are sent when a device disconnects unexpectedly), and persistent sessions ensures that IoT systems remain robust, even when devices connect and disconnect intermittently.</p>
 <p>As we delve deeper into MQTT in this chapter, you&#x27;ll see how this protocol empowers IoT systems to function seamlessly and reliably. By understanding its architecture, components, and unique features, you&#x27;ll gain the foundation to implement MQTT in your .NET applications, bringing the power of connected devices to life in your projects.</p>
 <doc-anchor-target id="comparing-mqtt-with-other-iot-protocols">
-    <h3>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#comparing-mqtt-with-other-iot-protocols">#</doc-anchor-trigger>
         <span>Comparing MQTT with Other IoT Protocols</span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>When developing IoT applications, the choice of communication protocol is crucial, much like selecting the perfect tool for a specific job—it can make a significant difference. While MQTT is known for its simplicity and efficiency, it’s not the only option. Protocols like HTTP, CoAP, and <strong>AMQP</strong> (<strong>Advanced Message Queuing Protocol</strong>) each have unique strengths and are better suited for certain scenarios. Understanding how MQTT compares to these alternatives is vital for making informed architectural decisions in your IoT solutions.</p>
 <p>HTTP, the backbone of traditional web communication, is often used in IoT due to its ubiquity and familiarity. Its widespread use in the web world reassures its applicability in IoT. It fits straightforward request-response interactions, such as fetching configuration data or posting sensor readings. However, HTTP’s verbose headers and connection overhead can make it a poor choice for real-time or resource-constrained IoT systems. Compared to HTTP, MQTT’s lightweight publish/subscribe model shines, particularly when devices require continuous communication or need to minimize power and bandwidth usage.</p>
 <p>CoAP, on the other hand, is tailored for constrained devices and networks, much like MQTT. Built on the RESTful paradigm, CoAP uses UDP instead of TCP, making it faster in some scenarios but less reliable when packet delivery needs guarantees. MQTT’s use of TCP and its support for <strong>Quality of Service</strong> (<strong>QoS</strong>) levels give it a significant edge in environments where reliability is critical, such as industrial automation or medical devices.</p>
 <p>Then there’s AMQP, a heavyweight protocol designed for enterprise messaging. While AMQP offers advanced features like transactions and message queues, it’s overkill for many IoT applications, particularly those involving simple sensors and actuators. In contrast, MQTT’s lean design focuses on doing one thing exceptionally well: providing reliable, low-overhead communication for devices that must interact seamlessly. This simplicity in design should put you at ease with its implementation. As we delve into this comparison, you’ll see why MQTT’s balance of simplicity, efficiency, and flexibility has made it the backbone of many IoT ecosystems.</p>
 <doc-anchor-target id="the-publishsubscribe-model">
-    <h3>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#the-publishsubscribe-model">#</doc-anchor-trigger>
         <span>The Publish/Subscribe Model</span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>The publish/subscribe model is at the heart of MQTT&#x27;s brilliance, offering a refreshing alternative to the traditional request/response communication pattern. This design decouples message producers (publishers) from message consumers (subscribers), allowing devices to interact without knowing anything about each other. Instead, communication flows through a central hub known as the broker, which routes messages based on their associated topics. It&#x27;s like a well-oiled messaging system where the broker acts as the post office, ensuring every message reaches its intended audience.</p>
 <p><figure class="content-center">
@@ -289,10 +289,10 @@
 <p>As the model&#x27;s central player, the broker adds another layer of reliability. It manages connections, handles message routing, and ensures QoS levels are respected. This reliability is not just a feature, it&#x27;s a reassurance that your system is in good hands. Devices can stay lightweight by offloading these responsibilities to the broker, focusing solely on publishing or consuming data. This is especially important in IoT environments, where devices are often constrained by limited power or processing capabilities.</p>
 <p>As we further explore MQTT&#x27;s publish/subscribe model, you&#x27;ll see how its simplicity hides incredible power. It allows you to build robust, scalable IoT systems that adapt quickly to changing requirements. Whether you&#x27;re handling a handful of devices or orchestrating a fleet of thousands, the publish/subscribe model provides a foundation for creating seamless, responsive communication networks. It&#x27;s a model designed not just for today&#x27;s IoT needs but also for future demands. For instance, it can be used in smart home systems, industrial automation, or even in healthcare for patient monitoring.</p>
 <doc-anchor-target id="the-role-of-the-mqtt-broker">
-    <h3>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#the-role-of-the-mqtt-broker">#</doc-anchor-trigger>
         <span>The Role of the MQTT Broker</span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>The MQTT broker is the cornerstone of the publish/subscribe model, acting as the central hub where all communication flows. It’s like the air traffic controller for IoT systems, ensuring that every message from a publisher reaches the right subscribers while maintaining order and efficiency. Without the broker, MQTT’s elegant architecture wouldn’t function. It handles the heavy lifting, allowing IoT devices to stay lightweight and focused on their tasks.</p>
 <p>At its core, the broker excels in managing topics and routing messages. When a publisher sends a message to a topic, the broker&#x27;s robust system determines which subscribers have expressed interest and forwards the message to them. This decoupling means publishers don’t need to worry about who is listening, and subscribers don’t need to know who is sending. The broker takes care of it all, creating a scalable and efficient messaging ecosystem.</p>
