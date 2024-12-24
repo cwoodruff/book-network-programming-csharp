@@ -18,7 +18,7 @@ Understanding and implementing effective error handling in C# and .NET is crucia
 
 As we design our network applications, fault tolerance becomes not just a feature, but a guiding principle. This chapter will walk you through the implementation of resilient patterns such as retries, circuit breakers, and fallback mechanisms. We'll demonstrate how to leverage **Polly**, a .NET resilience framework, to elegantly apply these patterns. Additionally, we'll delve into practical strategies for timeout management and load balancing that ensure your applications are not just enduring, but also sturdy under diverse and high-load conditions. Get ready to equip yourself with the knowledge to craft network applications that stand strong, delivering uninterrupted service even in the face of challenging digital conditions.
 
-### Introduction to Error Handling in .NET
+## Introduction to Error Handling in .NET
 
 Error handling in .NET is fundamentally centered around exceptions, which are conditions that change a program's normal flow. In C# and .NET, exceptions provide a powerful mechanism for signaling and responding to unexpected situations, such as network timeouts or data format errors. For example, an exception might be thrown when a networking API fails to connect to a server or when an unexpected response is received.
 
