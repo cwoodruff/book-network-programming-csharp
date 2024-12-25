@@ -245,7 +245,7 @@ Within network programming, C# 12 and .NET 8 stand as pillars of development, of
 
 C# 12, a modern and versatile programming language, is the cornerstone of network programming in the .NET 8 universe. Its concise syntax, object-oriented paradigm, and seamless integration with the .NET make it a natural choice for developing network applications. .NET is a powerhouse of libraries, classes, and tools designed to simplify network programming tasks. Together, C# and .NET form a harmonious pair, facilitating the creation of applications that communicate across networks with finesse.
 
-## Network libraries in .net that we will use
+## Network libraries in .NET that we will use
 
 .NET houses an array of specialized libraries tailored to different network programming scenarios. The System.Net.Sockets library lays the foundation for low-level socket programming, enabling precise control over data transmission. For those seeking higher-level abstractions, the System.Net library offers a more user-friendly interface for network interactions. Further, the System.Net.Http library caters to the world of HTTP communication, which is vital for web-based applications. Each library equips developers with the tools to sculpt network-enabled applications easily.
 
