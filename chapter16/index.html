@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788382051391">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.788435964859">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.6.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.788382051391" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.6.0.788435964859" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788382051391" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.788435964859" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788382051391" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788382051391" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.788435964859" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.788435964859" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -280,7 +280,7 @@
 </p>
 <figcaption align = "center"><b>SignalR Architecture Overview</b></figcaption>
 <p>One of SignalR&#x27;s standout features is its ability to handle <strong>persistent connections</strong>, a key differentiator from traditional HTTP request-response models. These persistent connections enable bidirectional communication, allowing servers to push client updates without waiting for a request. This architecture unlocks robust use cases such as live notifications, collaborative document editing, and dynamic dashboards. SignalR also supports <strong>connection grouping</strong>, enabling granular control over who receives updates, whether broadcasting to all connected clients or targeting specific users or groups.</p>
-<p>Behind the scenes, SignalR integrates tightly with the .NET platform, offering out-of-the-box scalability and compatibility with Azure SignalR Service for handling high-traffic loads. Its use of <strong>Hubs</strong> as a central communication point simplifies development, allowing you to focus on defining the methods and data structures that power your real-time interactions. Whether you&#x27;re new to real-time development or an experienced developer seeking a robust solution, SignalR&#x27;s combination of features and thoughtful architecture makes it a shining example of how .NET 8 continues to push boundaries in network programming.</p>
+<p>Behind the scenes, SignalR integrates tightly with the .NET platform, offering out-of-the-box scalability and compatibility with Azure SignalR Service for handling high-traffic loads. Its use of <strong>Hubs</strong> as a central communication point simplifies development, allowing you to focus on defining the methods and data structures that power your real-time interactions. Whether you&#x27;re new to real-time development or an experienced developer seeking a robust solution, SignalR&#x27;s combination of features and thoughtful architecture makes it a shining example of how .NET continues to push boundaries in network programming.</p>
 <doc-anchor-target id="the-signalr-edge-real-world-applications-and-scenarios">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#the-signalr-edge-real-world-applications-and-scenarios">#</doc-anchor-trigger>
@@ -315,7 +315,7 @@
     </h2>
 </doc-anchor-target>
 <p>With a solid understanding of SignalR’s capabilities and architecture from the previous section, it’s time for us to roll up our sleeves and bring theory into practice. You, as a developer, play a crucial role in this process. At the core of every real-time application lies a SignalR server—a backbone that manages connections, routes messages, and ensures seamless client communication. Setting up this server isn’t just a technical task; it’s the first step toward creating applications that feel alive, instantly responsive, and endlessly engaging.</p>
-<p>In this section, we’ll guide you through configuring your SignalR server in .NET 8, from installing dependencies to defining Hubs and mapping endpoints. This task, while challenging, is incredibly rewarding. Along the way, you’ll see how to customize your server to suit the unique needs of your application. Whether you’re building a live chat system, a collaborative tool, or a real-time dashboard, this foundational setup will prepare you to unlock SignalR’s full potential and start crafting remarkable user experiences. Let’s build your real-time backbone!</p>
+<p>In this section, we’ll guide you through configuring your SignalR server in .NET, from installing dependencies to defining Hubs and mapping endpoints. This task, while challenging, is incredibly rewarding. Along the way, you’ll see how to customize your server to suit the unique needs of your application. Whether you’re building a live chat system, a collaborative tool, or a real-time dashboard, this foundational setup will prepare you to unlock SignalR’s full potential and start crafting remarkable user experiences. Let’s build your real-time backbone!</p>
 <doc-anchor-target id="laying-the-foundation-installing-and-configuring-signalr">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#laying-the-foundation-installing-and-configuring-signalr">#</doc-anchor-trigger>
