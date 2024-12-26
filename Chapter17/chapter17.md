@@ -189,7 +189,7 @@ Setting up a basic server is a straightforward process that begins with configur
 ```C#
 if (!QuicListener.IsSupported)
 {
-    Console.WriteLine("QUIC is not supported, check for presence of libmsquic and support of TLS 1.3.");
+    Console.WriteLine("QUIC is not supported");
     return;
 }
 
