@@ -2,6 +2,8 @@
 
 ![](http://woodruff.dev/wp-content/uploads/2024/03/networkheader.png)
 
+**NEWS!!** Now you can get the book in PDF or EPub formats! [Leanpub Book Page](https://leanpub.com/csharp-networking)
+
 Have questions or feedback about the book? My email is [cwoodruff@live.com](mailto:cwoodruff@live.com).
 
 For the source code for the book, visit the book's GitHub repo. [book-network-programming-csharp
