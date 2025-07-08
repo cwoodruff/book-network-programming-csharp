@@ -537,7 +537,7 @@ For production deployment, ensure that your message queue infrastructure is robu
 
 #### Monitoring and Logging
 
-Integrate monitoring tools to keep track of queue health. Tools like Prometheus and Grafana or built-in cloud service dashboards help detect anomalies early. Moreover, structured logging for message processing ensures transparency and confidence in the system's operations:
+Integrate [monitoring](https://go.particular.net/observability) tools to keep track of queue health. Tools like Prometheus and Grafana or built-in cloud service dashboards help detect anomalies early. Moreover, structured logging for message processing ensures transparency and confidence in the system's operations:
 
 ```C#
 _logger.LogInformation("Message processed: {MessageId}", message.Id);
