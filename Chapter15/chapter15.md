@@ -101,7 +101,7 @@ Regarding scalability, Apache Kafka is the heavyweight champion, designed to han
 
 Integration is a crucial aspect to consider when selecting a message queue, as it can significantly impact its suitability. RabbitMQ and Apache Kafka offer strong open-source ecosystems and seamless .NET libraries, making them flexible for diverse environments. Azure Service Bus integrates tightly with the Azure ecosystem, offering first-class support for hybrid cloud scenarios and enterprise solutions. Amazon SQS stands out for its effortless connection to AWS services, which is ideal for building cloud-native applications with minimal setup. For .NET developers, all platforms provide robust SDKs, enabling smooth integration into your applications. Understanding the importance of integration will ensure you make an informed decision when choosing a message queue platform.
 
-Choosing a message queue is about finding the right balance of features for your specific needs. Whether you need Kafka’s raw power, RabbitMQ’s versatility, Azure Service Bus’s enterprise-grade reliability, or Amazon SQS’s simplicity at scale, the .NET ecosystem ensures you can implement your choice confidently and precisely.
+[Choosing a message queue](https://go.particular.net/choose-transport) is about finding the right balance of features for your specific needs. Whether you need Kafka’s raw power, RabbitMQ’s versatility, Azure Service Bus’s enterprise-grade reliability, or Amazon SQS’s simplicity at scale, the .NET ecosystem ensures you can implement your choice confidently and precisely.
 
 ## Implementing a Message Queue in C#
 
