@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.805320762384">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.805320783964">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.11.0.805320762384" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.11.0.805320783964" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.11.0.805320762384" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.11.0.805320783964" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.11.0.805320762384" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.11.0.805320762384" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.11.0.805320783964" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.11.0.805320783964" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -639,7 +639,7 @@ class Program
         <span>Handling Acknowledgments and Errors</span>
     </h3>
 </doc-anchor-target>
-<p>Processing messages reliably requires more than retrieving and acting on them; it also involves managing acknowledgments and handling errors effectively. Proper acknowledgment handling can prevent your system from losing critical messages or processing them multiple times. Likewise, a robust error-handling strategy, such as implementing retry mechanisms or dead-letter queues, ensures that failures don’t disrupt the entire pipeline.</p>
+<p>Processing messages reliably requires more than retrieving and acting on them; it also involves managing acknowledgments and <a href="https://go.particular.net/recoverability">handling errors</a> effectively. Proper acknowledgment handling can prevent your system from losing critical messages or processing them multiple times. Likewise, a robust error-handling strategy, such as implementing retry mechanisms or dead-letter queues, ensures that failures don’t disrupt the entire pipeline.</p>
 <p>By default, some message queues, like RabbitMQ, use an <strong>auto-acknowledge</strong> mode where messages are marked as processed as soon as they are delivered to the consumer. While simple, this mode is risky because a consumer crash before completing the processing could result in lost messages. To address this, consider the benefits of switching to manual acknowledgments. This approach ensures that messages are only marked as processed after successful handling, providing a higher level of control and reducing the risk of lost messages.</p>
 <p>Your role in this process is crucial. Start by modifying the consumer to enable manual acknowledgments. Update the <code v-pre>BasicConsume</code> method in your <code v-pre>MessageConsumer</code> class:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
