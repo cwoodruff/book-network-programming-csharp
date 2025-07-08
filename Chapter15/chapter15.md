@@ -365,7 +365,7 @@ With your consumer in place, you now have a complete pipeline: a producer sends 
 
 ### Handling Acknowledgments and Errors
 
-Processing messages reliably requires more than retrieving and acting on them; it also involves managing acknowledgments and handling errors effectively. Proper acknowledgment handling can prevent your system from losing critical messages or processing them multiple times. Likewise, a robust error-handling strategy, such as implementing retry mechanisms or dead-letter queues, ensures that failures don’t disrupt the entire pipeline.
+Processing messages reliably requires more than retrieving and acting on them; it also involves managing acknowledgments and [handling errors](https://go.particular.net/recoverability) effectively. Proper acknowledgment handling can prevent your system from losing critical messages or processing them multiple times. Likewise, a robust error-handling strategy, such as implementing retry mechanisms or dead-letter queues, ensures that failures don’t disrupt the entire pipeline.
 
 By default, some message queues, like RabbitMQ, use an **auto-acknowledge** mode where messages are marked as processed as soon as they are delivered to the consumer. While simple, this mode is risky because a consumer crash before completing the processing could result in lost messages. To address this, consider the benefits of switching to manual acknowledgments. This approach ensures that messages are only marked as processed after successful handling, providing a higher level of control and reducing the risk of lost messages.
 
