@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.6.0.792866627264">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.805320717815">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 3.6.0">
+    <meta name="generator" content="Retype 3.11.0">
 
     <!-- Primary Meta Tags -->
     <title>Working with WebRTC</title>
@@ -34,47 +34,47 @@
     <meta property="twitter:description" content="WebRTC ( Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or...">
     <meta property="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/images/chap11-webrtc.png">
 
-    <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.6.0.792866627264" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.11.0.805320717815" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.6.0.792866627264" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../resources/js/retype.js?v=3.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.6.0.792866627264" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.6.0.792866627264" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.11.0.805320717815" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.11.0.805320717815" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.11.0.805320717815" defer></script>
 </head>
 <body>
-    <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
-        <div class="absolute bottom-0 left-0 bg-gray-100 dark:bg-dark-800" style="top: 5rem; right: 50%"></div>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+        <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
     
-        <header id="docs-site-header" class="sticky top-0 z-30 flex w-full h-16 bg-white border-b border-gray-200 md:h-20 dark:bg-dark-850 dark:border-dark-650">
+        <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
             <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
                 <!-- Mobile menu button skeleton -->
-                <button v-cloak class="skeleton docs-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
-                <div v-cloak id="docs-sidebar-toggle"></div>
+                <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-none rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+                <div v-cloak id="retype-sidebar-left-toggle-button"></div>
         
                 <!-- Logo -->
                 <div class="flex items-center justify-between h-full py-2 md:w-75">
                     <div class="flex items-center px-2 md:px-6">
-                        <a id="docs-site-logo" href="../" class="flex items-center leading-snug text-xl">
+                        <a id="retype-branding-logo" href="../" class="flex items-center leading-snug text-xl">
                             <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
                                 <img class="max-h-10 dark:hidden md:inline-block" src="../images/network200.png">
                                 <img class="max-h-10 hidden dark:inline-block" src="../images/network200.png">
                             </span>
-                            <span class="dark:text-white font-semibold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
-                        </a><span class="hidden px-2 py-1 ml-4 text-sm font-semibold leading-none text-root-logo-label-text bg-root-logo-label-bg rounded-sm md:inline-block">v1</span>
+                            <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
+                        </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1</span>
                     </div>
         
-                    <span class="hidden h-8 border-r md:inline-block dark:border-dark-650"></span>
+                    <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
                 </div>
         
                 <div class="flex justify-between md:grow">
                     <!-- Top Nav -->
-                    <nav class="hidden md:flex">
+                    <nav id="retype-header-nav" class="hidden md:flex">
                         <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
                             <li class="mr-6">
-                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="../">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                         <g fill="currentColor">
                                             <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li class="mr-6">
-                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                         <g fill="currentColor">
                                             <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
@@ -94,7 +94,7 @@
                                 </a>
                             </li>
                             <li class="mr-6">
-                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                         <g fill="currentColor">
                                             <path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path>
@@ -104,7 +104,7 @@
                                 </a>
                             </li>
                             <li class="mr-6">
-                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                         <g fill="currentColor">
                                             <path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/>
@@ -125,7 +125,7 @@
                             <div class="absolute flex items-center justify-center h-full pl-3 dark:text-dark-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon-base" width="16" height="16" viewBox="0 0 24 24" aria-labelledby="icon" role="presentation" style="margin-bottom: 1px;"><g fill="currentColor" ><path d="M21.71 20.29l-3.68-3.68A8.963 8.963 0 0020 11c0-4.96-4.04-9-9-9s-9 4.04-9 9 4.04 9 9 9c2.12 0 4.07-.74 5.61-1.97l3.68 3.68c.2.19.45.29.71.29s.51-.1.71-.29c.39-.39.39-1.03 0-1.42zM4 11c0-3.86 3.14-7 7-7s7 3.14 7 7c0 1.92-.78 3.66-2.04 4.93-.01.01-.02.01-.02.01-.01.01-.01.01-.01.02A6.98 6.98 0 0111 18c-3.86 0-7-3.14-7-7z" ></path></g></svg>
                             </div>
-                            <input class="w-full h-10 placeholder-gray-400 transition-colors duration-200 ease-in bg-gray-200 border border-transparent rounded md:text-sm hover:bg-white hover:border-gray-300 focus:outline-none focus:bg-white focus:border-gray-500 dark:bg-dark-600 dark:border-dark-600 dark:placeholder-dark-400" style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search">
+                            <input class="w-full h-10 placeholder-search-placeholder transition-colors duration-200 ease-in bg-search-bg border border-transparent rounded md:text-sm hover:border-search-border-hover focus:outline-none focus:border-search-border-focus" style="padding: 0.625rem 0.75rem 0.625rem 2rem" type="text" placeholder="Search">
                         </div>
         
                         <!-- Mobile search button -->
@@ -143,7 +143,7 @@
                     </div>
         
                     <div v-cloak class="flex justify-end grow">
-                        <div id="docs-mobile-search-button"></div>
+                        <div id="retype-mobile-search-button"></div>
                         <doc-search-desktop></doc-search-desktop>
         
                         <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
@@ -153,26 +153,26 @@
             </div>
         </header>
     
-        <div class="container relative flex bg-white">
+    
+        <div id="retype-container" class="container relative flex bg-white">
             <!-- Sidebar Skeleton -->
-            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-gray-100 border-gray-200 sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton dark:bg-dark-800 dark:border-dark-650">
+            <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
             
-                <!-- Render this div, if config.showSidebarFilter is `true` -->
                 <div class="flex items-center h-16 px-6">
-                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-white border border-gray-200 rounded shadow-none text-sm focus:outline-none focus:border-gray-600 dark:bg-dark-600 dark:border-dark-600" type="text" placeholder="Filter">
+                    <input class="w-full h-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded shadow-none text-sm focus:outline-none focus:border-filter-border-focus" type="text" placeholder="Filter">
                 </div>
             
                 <div class="pl-6 mt-1 mb-4">
-                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
-                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
-                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
-                    <div class="w-32 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
-                    <div class="w-48 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
-                    <div class="w-40 h-3 mb-4 bg-gray-200 rounded-full loading dark:bg-dark-600"></div>
+                    <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                    <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                    <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                    <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                    <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                    <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
                 </div>
             
-                <div class="shrink-0 mt-auto bg-transparent dark:border-dark-650">
-                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
                         <span class="text-xs whitespace-nowrap">Powered by</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
                     </a>
@@ -182,13 +182,13 @@
             <!-- Sidebar component -->
             <doc-sidebar v-cloak>
                 <template #sidebar-footer>
-                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-dark-650">
+                    <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
             
-                        <div class="py-3 px-6 md:hidden border-b dark:border-dark-650">
+                        <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
                             <nav>
                                 <ul class="flex flex-wrap justify-center items-center">
                                     <li class="mr-6">
-                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="../">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="../">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                                 <g fill="currentColor">
                                                     <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
@@ -198,7 +198,7 @@
                                         </a>
                                     </li>
                                     <li class="mr-6">
-                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                                 <g fill="currentColor">
                                                     <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
@@ -208,7 +208,7 @@
                                         </a>
                                     </li>
                                     <li class="mr-6">
-                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                                 <g fill="currentColor">
                                                     <path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path>
@@ -218,7 +218,7 @@
                                         </a>
                                     </li>
                                     <li class="mr-6">
-                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                        <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text-weight hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                                 <g fill="currentColor">
                                                     <path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/>
@@ -232,7 +232,7 @@
                             </nav>
                         </div>
             
-                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-400 dark:text-dark-400 hover:text-gray-700 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
                             <span class="text-xs whitespace-nowrap">Powered by</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
                         </a>
@@ -240,14 +240,14 @@
                 </template>
             </doc-sidebar>
     
-            <div class="grow min-w-0 dark:bg-dark-850">
+            <div class="grow min-w-0 bg-body-bg">
                 <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
                 <div class="flex">
-                    <div class="min-w-0 p-4 grow md:px-16">
+                    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
                         <main class="relative pb-12 lg:pt-2">
-                            <div class="docs-markdown" id="docs-content">
+                            <div class="retype-markdown" id="retype-content">
                                 <!-- Rendered if sidebar right is enabled -->
-                                <div id="docs-sidebar-right-toggle"></div>
+                                <div id="retype-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
 <doc-anchor-target id="11" class="break-words">
     <h1>
@@ -256,7 +256,7 @@
     </h1>
 </doc-anchor-target>
 <p><figure class="content-center">
-    <img src="images/chap11-webrtc.png" alt="">
+    <img src="images/chap11-webrtc.png" alt="" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
@@ -277,7 +277,7 @@
 <p>WebRTC transforms real-time communication by enabling direct peer-to-peer connections for audio, video, and data exchange, eliminating the need for complex media servers. Its low-latency, high-bandwidth interactions make it ideal for video chats, collaborative tools, and multiplayer games. By leveraging technologies like <strong>STUN</strong> (<strong>Session Traversal Utilities for NAT</strong>), <strong>TURN</strong> (<strong>Traversal Using Relays around NAT</strong>), and <strong>ICE</strong> (<strong>Interactive Connectivity Establishment</strong>) for <strong>NAT</strong>, WebRTC ensures reliable connections across different networks or firewalls, reducing cost and complexity compared to traditional infrastructure-dependent approaches.</p>
 <p>WebRTC&#x27;s flexibility allows it to support both media streams and arbitrary data transfer via <code v-pre>RTCPeerConnection</code> and <code v-pre>RTCDataChannel</code>. While signaling orchestrates metadata and connection candidates, tools like WebSockets simplify this process in a .NET context. Understanding these components equips developers to create robust, interactive, real-time applications.</p>
 <p><figure class="content-center">
-    <img src="images/webrtc-architecture-overview.png" alt="">
+    <img src="images/webrtc-architecture-overview.png" alt="" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
@@ -333,7 +333,7 @@
 <p>The <code v-pre>MediaStream</code> component is integral to handling audio and video streams, which are the backbone of many WebRTC applications, such as video conferencing and live streaming. By encapsulating media tracks, <code v-pre>MediaStream</code> abstracts the complexity of capturing, encoding, and transmitting multimedia content. This abstraction ensures developers can manage streams efficiently, whether transmitting a single video track or multiple synchronized audio and video streams. Furthermore, <code v-pre>MediaStream</code> integrates seamlessly with the <code v-pre>RTCPeerConnection</code> API, enabling a smooth flow of media between peers.</p>
 <p>In addition to media, WebRTC supports arbitrary data transfer through <code v-pre>RTCDataChannel</code>. This component allows for low-latency, bi-directional communication, making it an essential tool for applications that require real-time data sharing. Whether used for transmitting game state information, enabling collaborative text editing, or sharing files during a call, <code v-pre>RTCDataChannel</code> provides a flexible mechanism for exchanging custom data. Its seamless integration with the peer-to-peer connection managed by <code v-pre>RTCPeerConnection</code> ensures that data transfer remains efficient and synchronized with other communication elements.</p>
 <p><figure class="content-center">
-    <img src="images/webrtc-signaling-flow-diagram.png" alt="">
+    <img src="images/webrtc-signaling-flow-diagram.png" alt="" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
 </p>
@@ -406,11 +406,11 @@
 <p>Setting up a signaling server is a critical part of making WebRTC work, and with .NET, you have all the tools you need to get it done effectively. The purpose of the signaling server is to facilitate the exchange of session descriptions and ICE candidates between peers. Essentially, the matchmaker gets two devices talking, and once they&#x27;re connected, it steps back to let the magic happen peer-to-peer. Let&#x27;s build this with ASP.NET Core and WebSockets, ensuring our setup is ready for real-time interactions.</p>
 <p>First, we start by creating an ASP.NET Core project that will serve as our signaling server. Use the following command to create a Web API project:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">dotnet new webapi -n WebRTCSignalingServer</code></pre>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet new webapi -n WebRTCSignalingServer</code></pre>
 </doc-codeblock></div>
 <p>After creating the project, navigate to the Program.cs file and modify it to include WebSocket support. The goal is to enable incoming WebSocket requests, which will allow our server to receive and forward signaling messages from clients. Here’s how we add WebSocket support and set up a simple endpoint:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 app.UseWebSockets();
@@ -429,7 +429,7 @@ app.Run();</code></pre>
 <p>In the code above, we’ve defined an endpoint /signal that serves as the entry point for WebSocket communication. This is where clients will connect to exchange their signaling messages. If a request isn’t a WebSocket request, we return a 400 status code to indicate an invalid request type.</p>
 <p>Now, let’s implement HandleSignaling to deal with incoming WebSocket messages. The logic here will involve maintaining a list of connected clients, relaying messages between them, and processing different types of signaling messages like SDP offers and ICE candidates:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">const int BufferSize = 1024 * 4;
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">const int BufferSize = 1024 * 4;
 
 List&lt;WebSocket&gt; connectedClients = new List&lt;WebSocket&gt;();
 
@@ -496,11 +496,11 @@ async Task HandleWebSocketSignaling(WebSocket webSocket)
 <p>One of the most practical approaches to integrating this technology with Blazor is leveraging JavaScript interop. Blazor is a fantastic tool for creating modern web applications in C#, but WebRTC is primarily JavaScript territory. Thankfully, Blazor&#x27;s interop capabilities allow us to seamlessly bridge the gap, letting you use C# to control JavaScript and ultimately bring WebRTC functionality into your Blazor applications without reinventing the wheel.</p>
 <p>To start, let&#x27;s create a Blazor application that will allow us to establish a WebRTC connection. Begin by creating a new Blazor Server or Blazor WebAssembly project in .NET:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">dotnet new blazorserver -n BlazorWebRTC</code></pre>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet new blazorserver -n BlazorWebRTC</code></pre>
 </doc-codeblock></div>
 <p>Once the Blazor project is set up, the next step is to add JavaScript functionality to handle WebRTC. We will write a JavaScript file to manage all WebRTC operations, including creating <code v-pre>RTCPeerConnection</code>, handling ICE candidates, and exchanging SDP. Add a new JavaScript file called <code v-pre>webrtc.js</code> in the <code v-pre>wwwroot</code> directory:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
 
 let localConnection = null;
 let remoteConnection = null;
@@ -550,13 +550,13 @@ window.webRTCInterop = {
 <p>In your _Host.cshtml file, add a reference to the JavaScript file within the <head> tag:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">&lt;script src=&quot;~/webrtc.js&quot;&gt;&lt;/script&gt;</code></pre>
+<pre translate="no" class="language-none"><code v-pre class="language-none">&lt;script src=&quot;~/webrtc.js&quot;&gt;&lt;/script&gt;</code></pre>
 </doc-codeblock></div>
 <p>In this JavaScript code, we set up two peer connections (<code v-pre>localConnection</code> and <code v-pre>remoteConnection</code>) for demonstration purposes, simulating two different users connecting. This will handle media streams, SDP offers, and ICE candidates. The goal is to initiate and manage the connection purely through JavaScript while invoking this behavior from C#.</p>
 <p>Next, integrate this JavaScript into the Blazor application using JavaScript interop. Open a Blazor component, such as <code v-pre>Index.razor</code>, and set up the necessary user interface for video calls:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;WebRTC Video Chat&lt;/h3&gt;
 
@@ -581,7 +581,7 @@ window.webRTCInterop = {
 <p>In this Blazor component, we have two <code v-pre>&lt;video&gt;</code> elements to display the local and remote video streams and two buttons to initialize the connection and start the call. The C# code-behind uses JavaScript interop to call the functions defined in <code v-pre>webrtc.js</code>, which is necessary for integrating the Blazor component with JavaScript for video streaming.</p>
 <p>To connect the Blazor component with the JavaScript file, inject the JavaScript runtime in the @code block:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">@inject IJSRuntime JS</code></pre>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">@inject IJSRuntime JS</code></pre>
 </doc-codeblock></div>
 <p>This allows us to use <code v-pre>JS.InvokeVoidAsync()</code> to call JavaScript functions from the C# side. When the user clicks &quot;Initialize Connection,&quot; it will set up the peer connections and ICE candidate handling, and when &quot;Start Call&quot; is clicked, it will begin the media exchange process.</p>
 <p>This JavaScript and C# integration approach gives you the best of both worlds—leveraging WebRTC&#x27;s native support in browsers via JavaScript while managing the application&#x27;s logic and UI using Blazor and C#. The key here is to offload the WebRTC operations to JavaScript, which already has well-supported APIs. Use Blazor for everything else, ensuring you maintain a structured and easy-to-manage codebase.</p>
@@ -596,7 +596,7 @@ window.webRTCInterop = {
 <p>First, on the JavaScript side, we already have the logic to capture the user&#x27;s media stream using <code v-pre>getUserMedia()</code> in our <code v-pre>webrtc.js</code> file. This function captures video and audio from the local device and adds it to the peer connection. The next task is to set up the backend signaling to ensure that media streams are correctly set up between peers. This includes communicating SDP offers, answers, and ICE candidates to the .NET backend, which then relays the messages between clients.</p>
 <p>On the .NET server side, we must manage signaling messages to set up these media streams. Suppose you have the signaling server implemented as in our earlier example. Let&#x27;s add a way to differentiate between signaling messages when setting up media. You might want to implement different types of messages like &quot;offer,&quot; &quot;answer,&quot; and &quot;candidate&quot; to handle the SDP and ICE candidate exchanges. Here&#x27;s a simplified example:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">async Task HandleWebSocketSignaling(WebSocket webSocket)
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">async Task HandleWebSocketSignaling(WebSocket webSocket)
 {
     connectedClients.Add(webSocket);
     var buffer = new byte[1024 * 4];
@@ -656,7 +656,7 @@ public class SignalingMessage
 <p>In this example, we handle different signaling message types to manage SDP offers, answers, and ICE candidates, which are essential for setting up media streams. The <code v-pre>ForwardSignalingMessage</code> method ensures that each client receives the relevant signaling data to establish the peer-to-peer connection.</p>
 <p>On the Blazor frontend, the captured media is displayed in the local video element, while the remote video is displayed once the other peer&#x27;s stream has been received. The media streams can be manipulated through JavaScript, but it&#x27;s also possible to control the flow from the .NET side by adjusting how and when media tracks are added. For example, if you wanted to add or remove tracks dynamically, you could extend your JavaScript interop to include functions like <code v-pre>addTrack</code> or <code v-pre>removeTrack</code> and then call those functions from C# based on the user&#x27;s actions:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public async Task AddTrack()
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task AddTrack()
 {
     await JS.InvokeVoidAsync(&quot;webRTCInterop.addTrack&quot;);
 }
@@ -691,7 +691,7 @@ It’s not just about establishing a connection; it’s about designing an exper
 <p>Data channels, a powerful feature of WebRTC, enable the direct transfer of arbitrary data between peers. Unlike media streams, which are used for audio and video, data channels allow you to send text, files, game states, or any custom data with low latency. Integrating data channels into a .NET application is a complex task that involves setting up signaling, but more importantly, it requires the effective management of data transfer. Your role in ensuring that both the backend and frontend are in sync to handle these messages effectively is crucial. Let’s explore this challenge of managing data channels using Blazor and .NET.</p>
 <p>Our journey to include the data channel in our existing WebRTC setup begins with a crucial step on the JavaScript side. Here, your expertise comes into play as we modify <code v-pre>webrtc.js</code> to create a data channel within the existing peer connection setup. The following JavaScript code, which you will be instrumental in implementing, initializes a data channel and sets up event listeners to handle incoming messages:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
 
 let dataChannel = null;
 
@@ -743,7 +743,7 @@ window.webRTCInterop = {
 <p>Now, let&#x27;s integrate this with Blazor so that users can send messages from the UI. In the <code v-pre>Index.razor</code> component, we can create a simple interface for sending text messages:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;WebRTC Data Channel Demo&lt;/h3&gt;
 
@@ -780,7 +780,7 @@ window.webRTCInterop = {
 <p>One of the critical factors in maintaining a high-quality media experience in WebRTC is the ability to adjust the bitrate and resolution of the video streams dynamically. Network conditions can vary significantly between users, and without proper adjustments, you might end up with a connection that&#x27;s either poor in quality or consuming too much bandwidth. In this section, we&#x27;ll look into how you can use JavaScript interop in Blazor to tweak bitrate and resolution settings for video streams and, in turn, create an adaptive, high-quality experience for users regardless of their network environment.</p>
 <p>Start by adding controls to the JavaScript file that adjust the video bitrate during a call. For this, we&#x27;ll interact with the WebRTC <code v-pre>RTCRtpSender</code> API, which allows fine-tuning parameters such as max bitrate. Here&#x27;s an extension of the <code v-pre>webrtc.js</code> file where we control the bitrate settings:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
 
 window.webRTCInterop = {
     adjustBitrate: function (bitrate) {
@@ -805,7 +805,7 @@ window.webRTCInterop = {
 <p>Now, let&#x27;s integrate this user-centric functionality with the Blazor UI. This will empower users or the application to adjust bitrate based on detected network conditions. We&#x27;ll add an input and button to Index.razor to set the desired bitrate:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;Adjust WebRTC Video Bitrate&lt;/h3&gt;
 
@@ -827,7 +827,7 @@ window.webRTCInterop = {
 <p>Here, the user can specify a new bitrate, and upon clicking the button, the value is sent to JavaScript via interop. This allows the application to adapt video quality based on network analysis, such as bandwidth estimation algorithms you might implement on the server side.</p>
 <p>Resolution adjustment ensures optimal media quality, especially when bandwidth limitations are present. To adjust video resolution dynamically, you would modify how the media is accessed and constrained. When initially capturing the video, you can set constraints based on the current network conditions. Here&#x27;s an example that allows dynamic adjustment of video constraints:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
     updateResolution: async function (width, height) {
         const stream = await navigator.mediaDevices.getUserMedia({
             video: {
@@ -851,7 +851,7 @@ window.webRTCInterop = {
 <p>To integrate this in your Blazor application, you could add controls that allow a user to select a resolution, or automatically adjust it based on network analysis:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">&lt;h3&gt;Adjust Video Resolution&lt;/h3&gt;
+<pre translate="no" class="language-none"><code v-pre class="language-none">&lt;h3&gt;Adjust Video Resolution&lt;/h3&gt;
 
 &lt;input type=&quot;number&quot; @bind=&quot;resolutionWidth&quot; placeholder=&quot;Width (px)&quot; /&gt;
 &lt;input type=&quot;number&quot; @bind=&quot;resolutionHeight&quot; placeholder=&quot;Height (px)&quot; /&gt;
@@ -882,7 +882,7 @@ window.webRTCInterop = {
 <p>In WebRTC, the browser often manages adaptive bitrate control automatically using mechanisms like congestion control and feedback from the network. However, you can enhance this capability in your .NET-based application by utilizing the RTCRtpSender.<code v-pre>getParameters()</code> and <code v-pre>setParameters()</code> methods for manual control, combined with information you gather about the network&#x27;s state. We can start by using JavaScript to get statistics on the current network performance and pass this information back to the server or control logic in your Blazor app.</p>
 <p>Here&#x27;s a JavaScript function that makes use of <code v-pre>getStats()</code> to monitor bandwidth and estimate network conditions:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
     monitorBandwidth: function () {
         localConnection.getStats(null).then(stats =&gt; {
             stats.forEach(report =&gt; {
@@ -898,7 +898,7 @@ window.webRTCInterop = {
 <p>In the <code v-pre>Index.razor</code> file, set up a button to initiate monitoring and adaptive bitrate control:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;Monitor Bandwidth and Adjust Bitrate&lt;/h3&gt;
 
@@ -920,7 +920,7 @@ window.webRTCInterop = {
 <p>To take things a step further, you might implement a continuous feedback loop that monitors network conditions and automatically adapts bitrate without user intervention. This can be done with a recurring timer that continuously monitors and adjusts the bitrate:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@code {
+<pre translate="no" class="language-none"><code v-pre class="language-none">@code {
     private PeriodicTimer? timer;
 
     protected override async Task OnInitializedAsync()
@@ -959,7 +959,7 @@ window.webRTCInterop = {
 <p>In real-time communication, dealing with fluctuating network conditions and packet loss is an inevitable challenge. When network quality degrades, packets can get lost or arrive out of order, leading to degraded media quality—like choppy video or laggy audio. Understanding how to manage these conditions and handle packet loss is essential to delivering a smooth user experience. In this section, we’ll explore the proactive role of developers in implementing strategies in their.NET-based WebRTC solutions to maintain connection quality, even under less-than-ideal circumstances.</p>
 <p>One of the ways WebRTC handles network fluctuations is through mechanisms like Forward Error Correction (FEC) and retransmissions. To support these strategies from the application side, we need to closely monitor network quality. JavaScript, with its ability to provide access to WebRTC statistics, plays a key role in this process. Here’s a JavaScript function that retrieves packet loss statistics using <code v-pre>getStats()</code>:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
     monitorPacketLoss: function () {
         localConnection.getStats(null).then(stats =&gt; {
             stats.forEach(report =&gt; {
@@ -975,7 +975,7 @@ window.webRTCInterop = {
 <p>To integrate this with the .NET application, we can use Blazor to call this JavaScript function regularly and take action based on the results. For example, if we detect a high packet loss, we can adjust the bitrate or even change the codec to one that performs better under constrained conditions:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;Monitor Packet Loss and Adjust Quality&lt;/h3&gt;
 
@@ -995,7 +995,7 @@ window.webRTCInterop = {
 <p>A more sophisticated approach would involve implementing a dynamic feedback loop that continually monitors network conditions and actively responds to packet loss. This engaging process can be achieved by leveraging a periodic timer, as we did in the previous section:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@code {
+<pre translate="no" class="language-none"><code v-pre class="language-none">@code {
     private PeriodicTimer? packetLossTimer;
 
     protected override async Task OnInitializedAsync()
@@ -1034,7 +1034,7 @@ window.webRTCInterop = {
 <p>Optimizing video encoding is one of the most impactful ways to ensure smooth, real-time communication. Efficient encoding helps balance quality, performance, and bandwidth usage, especially in unpredictable network conditions. One powerful way to boost performance and feel empowered is by leveraging hardware acceleration. This technology offloads complex encoding tasks to specialized hardware, thereby reducing the load on the CPU and significantly improving overall application efficiency. This section will explore how you can use encoding settings and hardware acceleration to provide the best user experience.</p>
 <p>Let’s start by adjusting the encoder settings. WebRTC, with its flexible options, gives you the confidence to control encoding parameters, such as setting preferred codecs, adjusting resolution, and limiting frame rates. You can achieve this through JavaScript, using <code v-pre>RTCRtpSender.getParameters()</code> and <code v-pre>setParameters()</code>. For example, let’s modify our <code v-pre>webrtc.js</code> file to add a function that optimizes the encoder’s settings for improved performance:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
     optimizeEncoding: function (bitrate, framerate) {
         const senders = localConnection.getSenders();
         senders.forEach(sender =&gt; {
@@ -1057,7 +1057,7 @@ window.webRTCInterop = {
 <p>In your .razor file, you could add an option for the user to select performance modes:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;Optimize Encoding Settings&lt;/h3&gt;
 
@@ -1092,7 +1092,7 @@ window.webRTCInterop = {
 <p>The signaling process is the backbone of establishing a secure WebRTC connection, as it&#x27;s responsible for exchanging the necessary details for the peer-to-peer setup—such as session descriptions (SDP) and ICE candidates. Because this phase happens before encryption takes over, securing the signaling channel itself is crucial to prevent attackers from hijacking the session or injecting malicious data. In practical terms, this means using HTTPS and secure WebSockets (WSS) for all signaling communications and implementing authentication to ensure that only trusted users can participate.</p>
 <p>To secure your signaling server, start by ensuring all endpoints are accessed via HTTPS. This provides a secure channel for the signaling data and prevents common attacks like man-in-the-middle from intercepting sensitive information. You can use ASP.NET Core to enforce HTTPS redirection in your Program easily.cs file:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpsRedirection(options =&gt;
 {
     options.HttpsPort = 5001; // Ensure you're redirecting all HTTP traffic to HTTPS
@@ -1124,7 +1124,7 @@ app.Run();</code></pre>
 </doc-codeblock></div>
 <p>The above code, when implemented, ensures that all communication with the signaling server happens over HTTPS, and WebSocket requests are upgraded to WSS, providing an encrypted channel for the signaling process. This robust encryption not only secures the communication but also reassures the users about the privacy of their data. Beyond encryption, adding authentication is vital to ensuring only authorized users can participate in signaling. For example, you can require clients to send a token or API key that gets validated before allowing them to connect to the signaling server. This can be done by adding middleware that checks for authentication before establishing the WebSocket connection.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
 {
     if (context.Request.Path == &quot;/signal&quot;)
     {
@@ -1160,7 +1160,7 @@ app.Run();</code></pre>
 <p>Browser developer tools are not just for debugging WebRTC, they also play a key role in optimizing your application&#x27;s performance. They provide deep insights into the inner workings of your WebRTC connections, from the moment signaling starts to the point where media is exchanged between peers. Modern browsers like Chrome, Firefox, and Edge come equipped with robust developer tools that help you track the flow of data, diagnose issues, and ensure your application is performing at its best.</p>
 <p>One of the most valuable features in Chrome is the <code v-pre>chrome://webrtc-internals</code> page, which offers a detailed report on all active WebRTC sessions in the browser. Accessing this tool is as simple as typing <code v-pre>chrome://webrtc-internals</code> into the address bar. This tool allows you to monitor SDP exchanges, track ICE candidates, and observe real-time statistics like bitrate, packet loss, and jitter. For example, if your video stream suddenly drops in quality, WebRTC Internals will help you pinpoint if it&#x27;s due to packet loss or an ICE candidate issue. Use this in conjunction with console logging in your JavaScript code to see how various stages of your signaling process interact with peer connections:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">localConnection.onicecandidate = (event) =&gt; {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">localConnection.onicecandidate = (event) =&gt; {
     if (event.candidate) {
         console.log(&quot;New ICE candidate:&quot;, event.candidate);
         // Send the candidate to the remote peer via your signaling server
@@ -1170,7 +1170,7 @@ app.Run();</code></pre>
 <p>This kind of logging, combined with WebRTC Internals, will help you visualize the ICE negotiation process and ensure that candidates are generated and exchanged correctly.</p>
 <p>Another powerful tool is the browser’s standard DevTools console. The Network tab can monitor WebSocket messages exchanged during the signaling process, making it easy to debug signaling issues. You can use the console to ensure that the SDP offers and answers are properly formatted and delivered to your .NET signaling server without errors. Here’s how you might log the signaling exchange in your .NET application to confirm that SDP messages are received correctly:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">private static async Task HandleSignaling(WebSocket webSocket)
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private static async Task HandleSignaling(WebSocket webSocket)
 {
     var buffer = new byte[1024 * 4];
     WebSocketReceiveResult result;
@@ -1197,7 +1197,7 @@ app.Run();</code></pre>
 <p>Monitoring the performance of your WebRTC connections is crucial for understanding how well your application is holding up, especially under different network conditions. The <code v-pre>getStats()</code> API in WebRTC is a powerful tool that allows you to pull detailed metrics on almost every aspect of a peer connection—from bitrate and packet loss to jitter and codec information. This data helps you identify bottlenecks, diagnose quality issues, and make informed adjustments to improve your application’s performance.</p>
 <p>You can call <code v-pre>getStats()</code> on an <code v-pre>RTCPeerConnection</code> object to get started. The returned statistics provide insights into what’s happening with both incoming and outgoing streams. Here’s an example of a JavaScript function that gathers some key stats and logs them for further analysis:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
     logStats: async function () {
         const stats = await localConnection.getStats();
         stats.forEach(report =&gt; {
@@ -1215,7 +1215,7 @@ app.Run();</code></pre>
 <p>In your Blazor component, the creation of a button is pivotal. This button will serve as the trigger for the <code v-pre>logStats</code> JavaScript function. It&#x27;s this function that allows you to check connection quality during a live session, providing the flexibility to monitor performance as conditions change:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <div class="codeblock-title">ASP.NET (C#)</div>
-<pre class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
 
 &lt;h3&gt;Monitor WebRTC Statistics&lt;/h3&gt;
 
@@ -1239,7 +1239,7 @@ app.Run();</code></pre>
 <p>Debugging signaling and network issues in your WebRTC application can feel like finding a needle in a haystack—a lot happens behind the scenes and isn&#x27;t always visible. However, with a systematic approach, you can focus and determine the root cause of the issue. Whether it&#x27;s a dropped connection, an SDP mismatch, or a failure in ICE negotiation, this understanding can save you a lot of time and headaches. Fortunately, .NET provides a strong foundation for logging, diagnostics, and troubleshooting these complex scenarios.</p>
 <p>A great place to start when debugging signaling issues is to ensure that you have thorough logging in your signaling server. You need to know when an SDP offer or answer is received, when ICE candidates are exchanged, and when something unexpected happens. The insights provided by a simple logging mechanism in your ASP.NET Core signaling server are invaluable:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">private static async Task HandleSignaling(WebSocket webSocket)
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private static async Task HandleSignaling(WebSocket webSocket)
 {
     var buffer = new byte[1024 * 4];
     var clientId = Guid.NewGuid().ToString();
@@ -1270,7 +1270,7 @@ app.Run();</code></pre>
 <p>Logging each significant step—such as receiving messages and errors—will help you trace the flow of signaling data and identify where something might have gone wrong. For instance, if you notice that an SDP answer is missing, it could indicate a problem with how the offer was relayed or processed.</p>
 <p>Another common network issue in WebRTC involves ICE negotiation—specifically, failures in finding a suitable network path between peers. ICE issues are notoriously tricky because they depend on the network environment, which can vary widely. To debug these issues, you can log each ICE candidate as generated and received and ensure they are successfully relayed to the other peer. Here’s a simple way to do that:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public static void LogIceCandidate(string clientId, string candidate)
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public static void LogIceCandidate(string clientId, string candidate)
 {
     Console.WriteLine($&quot;Client {clientId}: ICE candidate: {candidate}&quot;);
 }
@@ -1280,7 +1280,7 @@ app.Run();</code></pre>
 <p>By maintaining a comprehensive log of all ICE candidates, you gain the power to pinpoint missing candidates or candidates not reaching their intended destination. This control over the network can often result from network restrictions or firewalls, which prevent candidates from being usable.</p>
 <p>On the client side, you can implement additional JavaScript logging for ICE candidate states and use C# to analyze these logs in real time. This real-time analysis is crucial, as it allows you to respond immediately to any changes in the ICE connection state.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">localConnection.oniceconnectionstatechange = () =&gt; {
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">localConnection.oniceconnectionstatechange = () =&gt; {
     console.log(&quot;ICE Connection State Changed: &quot;, localConnection.iceConnectionState);
 };</code></pre>
 </doc-codeblock></div>
@@ -1288,7 +1288,7 @@ app.Run();</code></pre>
 <p>Debugging network-related problems often requires recreating the conditions that cause them. If you suspect the issue is related to specific network conditions (e.g., high latency or packet loss), tools like <code v-pre>Netem</code> on Linux or third-party network simulation tools can help you emulate those conditions. Once you can reproduce the problem consistently, you can use your logs and metrics from the server and client to narrow down the root cause.</p>
 <p>Integrating structured logging with a solution like Serilog can be a game-changer for more complex debugging. Serilog allows you to output structured logs that can be queried and analyzed, making it easier to identify patterns or inconsistencies. You can add Serilog to your .NET project and enrich your logs with contextual information:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">Log.Logger = new LoggerConfiguration()
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File(&quot;logs/webrtc_log.txt&quot;)
     .CreateLogger();
@@ -1306,7 +1306,7 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
 <p>Testing WebRTC logic differs from writing unit tests for more traditional client-server applications simply because of the technology&#x27;s real-time and peer-to-peer nature. However, a good strategy is to break down the testing into two parts: unit tests for isolated components like signaling logic and integration tests that verify the entire flow of signaling and media exchange. This section will explore how to write effective unit and integration tests for WebRTC-related logic using xUnit, with a specific focus on your .NET signaling server and its components.</p>
 <p>Unit testing is a key part of the testing process, especially when it comes to the ProcessSignalingMessage method. This method, which handles incoming signaling messages and returns the response to be sent to the peer, is a crucial function in the signaling server. Using xUnit, you can set up a simple test to ensure this logic behaves as expected:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public class SignalingTests
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class SignalingTests
 {
     [Fact]
     public void ProcessSignalingMessage_ValidOffer_ReturnsExpectedAnswer()
@@ -1328,7 +1328,7 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
 <p>Moving on to integration tests, the goal is to validate the entire signaling flow between two or more components. This type of testing requires a bit more setup, but it&#x27;s worth it because you can see how everything interacts in a more real-world scenario. In an integration test, you can simulate two peers connecting through the signaling server and verify that the correct messages are exchanged.</p>
 <p>Here&#x27;s an example of how you could use xUnit to set up a basic integration test that simulates two WebSocket clients connecting to your signaling server:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-csharp"><code v-pre class="language-csharp">public class SignalingIntegrationTests
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class SignalingIntegrationTests
 {
     [Fact]
     public async Task SignalServer_TwoClients_ExchangeMessagesSuccessfully()
@@ -1372,29 +1372,29 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
                                 <!-- Required only on API pages -->
                                 <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
                             </div>
-                            <footer class="clear-both">
+                            <footer id="retype-content-footer" class="clear-both">
                                 <div class="flex flex-wrap items-center justify-between mt-14">
-                                    <a class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-blue-500 dark:text-blue-400 hover:text-blue-700 hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter11/chapter11.md" target="_blank" rel="noopener">
+                                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link-weight hover:text-body-link-hover hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter11/chapter11.md" target="_blank" rel="noopener">
                                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         <span>Edit this page</span>
                                     </a>
                                 </div>
                             
-                                <nav class="flex mt-14">
+                                <nav id="retype-nextprev" class="print:hidden flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter10/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter10/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
-                                                <span class="block text-xs font-normal text-gray-400 dark:text-dark-400">Previous</span>
+                                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
                                                 <span class="block mt-1">Chap 10 - Working with Web​Sockets</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter12/">
+                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter12/">
                                             <span>
-                                                <span class="block text-xs font-normal text-right text-gray-400 dark:text-dark-400">Next</span>
+                                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
                                                 <span class="block mt-1">Chap 12 - Working with MQTT for Io​T (Internet of Things)</span>
                                             </span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
@@ -1404,12 +1404,12 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
                             </footer>
                         </main>
                 
-                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
-                            <footer class="flex flex-wrap items-center justify-between">
-                                <div>
+                        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                                <div id="retype-footer-links" class="print:hidden">
                                     <ul class="flex flex-wrap items-center text-sm">
                                         <li>
-                                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="../copyright/">
+                                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../copyright/">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                                     <g fill="currentColor">
                                                         <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
@@ -1419,7 +1419,7 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 md:mb-0" href="../license/">
+                                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../license/">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="mb-px mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
                                                     <g fill="currentColor">
                                                         <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
@@ -1430,18 +1430,18 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2025. All rights reserved Chris Woodruff.</p></div>
+                                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link-weight text-sm leading-relaxed"><p>© Copyright 2025. All rights reserved Chris Woodruff.</p></div>
                             </footer>
                         </div>
                     </div>
                 
                     <!-- Rendered if sidebar right is enabled -->
                     <!-- Sidebar right skeleton-->
-                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-white border-gray-200 lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton dark:bg-dark-850 dark:border-dark-650">
+                    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:transform-none sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
                         <div class="pl-5">
-                            <div class="w-32 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
-                            <div class="w-48 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
-                            <div class="w-40 h-3 mb-4 bg-gray-200 dark:bg-dark-600 rounded-full loading"></div>
+                            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
                         </div>
                     </div>
                 
@@ -1457,7 +1457,7 @@ Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&q
     </div>
 
 
-    <div id="docs-overlay-target"></div>
+    <div id="retype-overlay-target"></div>
 
     <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 11 - Working with WebRTC", level: 1, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
