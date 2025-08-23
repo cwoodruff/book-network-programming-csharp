@@ -30,3 +30,4 @@ To find translations, please check out the [Translations](./Translations.md) pag
 | 15      | [Implementing Message Queuing](./Chapter15/chapter15.md)                   | ✔️        |
 | 16      | [Using SignalR](./Chapter16/chapter16.md)                                  | ✔️        |
 | 17      | [Looking to the Future with QUIC](./Chapter17/chapter17.md)                | ✔️        |
+| 18      | Extending Applications with the Model Context Protocol (MCP) | ️       |
