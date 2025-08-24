@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="turbo-root" content="/book-network-programming-csharp">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.809284538264">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.809310325437">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -37,12 +37,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link href="../images/favicon.png" rel="icon">
-    <link href="../resources/css/retype.css?v=3.11.0.809284538264" rel="stylesheet">
+    <link href="../resources/css/retype.css?v=3.11.0.809310325437" rel="stylesheet">
 
-    <script data-cfasync="false" src="../resources/js/config.js?v=3.11.0.809284538264" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/config.js?v=3.11.0.809310325437" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.11.0.809284538264" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.11.0.809284538264" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=3.11.0.809310325437" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=3.11.0.809310325437" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -255,7 +255,7 @@
         <span>17</span>
     </h1>
 </doc-anchor-target>
-<p><figure class="content-center">
+<p><figure class="content-center content-center">
     <img src="images/chap17-quic.png" alt="" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
@@ -946,7 +946,7 @@ await MeasurePerformance(HttpVersion.Version30, 50);</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Implementing HTTP/3 in real-world scenarios offers substantial benefits but also introduces challenges that developers are uniquely positioned to address. Their expertise is crucial in the process, as they are responsible for ensuring reliable and efficient applications. One notable challenge is that most browsers restrict HTTP/3 usage on <code v-pre>localhost</code> addresses, making local testing less straightforward. However, you can validate HTTP/3 functionality by examining the response headers in browser developer tools. A response header containing the <code v-pre>alt-svc</code> entry with the value <code v-pre>h3</code> confirms that HTTP/3 is being used:</p>
-<p><figure class="content-center">
+<p><figure class="content-center content-center">
     <img src="images/show-http3-response-headers.png" alt="" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
@@ -966,7 +966,7 @@ await MeasurePerformance(HttpVersion.Version30, 50);</code></pre>
 }</code></pre>
 </doc-codeblock></div>
 <p>Once configured, server logs will provide insights into HTTP/3 activity. For example, console logs might confirm that HTTP/3 is being utilized, showcasing important protocol interactions:</p>
-<p><figure class="content-center">
+<p><figure class="content-center content-center">
     <img src="images/debug-console-http3.png" alt="" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption"></figcaption>
 </figure>
@@ -1011,7 +1011,7 @@ app.MapGet(&quot;/&quot;, () =&gt; &quot;Hello, QUIC!&quot;);
 app.Run();</code></pre>
 </doc-codeblock></div>
 <p>This configuration captures HTTP/3-specific details in W3C log files, enabling deeper analysis. Viewing these logs provides protocol versions and connection details:</p>
-<p><figure class="content-center">
+<p><figure class="content-center content-center">
     <img src="images/detailed-logs-http3.png" alt="Detailed-Logs-HTTP3.png" class="rounded-image-rounded border-image-border border-image-border-width" />
     <figcaption class="caption">Detailed-Logs-HTTP3.png</figcaption>
 </figure>
