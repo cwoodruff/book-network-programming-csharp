@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5P830S5Z3"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-D5P830S5Z3');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/book-network-programming-csharp">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.840767676179">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Network Performance Optimization</title>
+    <meta name="title" content="Network Performance Optimization">
+    <meta name="description" content="Optimizing network performance is pivotal for developing robust and efficient applications in network programming using .NET 8 and C #12. In previous">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter08/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://cwoodruff.github.io/book-network-programming-csharp/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter08/">
+    <meta property="og:title" content="Network Performance Optimization">
+    <meta property="og:description" content="Optimizing network performance is pivotal for developing robust and efficient applications in network programming using .NET 8 and C #12. In previous">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter08/images/chap08-networkperformance.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Network Performance Optimization">
+    <meta property="og:site_name" content="Networking Programming with C/# 12 and /.NET 8">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter08/">
+    <meta name="twitter:title" content="Network Performance Optimization">
+    <meta name="twitter:description" content="Optimizing network performance is pivotal for developing robust and efficient applications in network programming using .NET 8 and C #12. In previous">
+    <meta name="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter08/images/chap08-networkperformance.png">
+    <meta name="twitter:image:alt" content="Network Performance Optimization">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter08/chapter08.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link id="retype-favicon" rel="icon" href="../images/favicon.png" />
+    <link href="../resources/css/retype.css?v=4.6.0.840767676179" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.6.0.840767676179" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://cwoodruff.github.io/book-network-programming-csharp/" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                            <img class="max-h-10 hidden dark:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                </svg>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                </svg>
+                                <span>Issues</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                </svg>
+                                <span>Bluesky</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                </svg>
+                                <span>Mastodon</span>
+                            </a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                        </svg>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                        </svg>
+                                        <span>Issues</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                        </svg>
+                                        <span>Bluesky</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                        </svg>
+                                        <span>Mastodon</span>
+                                    </a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="8">8</h1>
+<figure class="content-center">
+    <img src="images/chap08-networkperformance.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1792" height="1024" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<h1 id="network-performance-optimization">Network Performance Optimization</h1>
+<p>Optimizing network performance is pivotal for developing robust and efficient applications in network programming using .NET 8 and C #12. In previous chapters, we have explored various facets of network communication, emphasizing the importance of effective data management and serialization techniques. As we transition into a focused discussion on network performance optimization, this chapter aims to synthesize these elements and introduce advanced strategies to enhance network operations&#x27; efficiency and responsiveness.</p>
+<p>Optimizing network performance in .NET applications is a complex task that involves a variety of approaches. It&#x27;s about making the most of the features in C#, like the improved asynchronous programming models and span-based memory access, to reduce the time and resources needed for network communications. .NET 8 provides powerful tools for network analysis and diagnostics, which can help you identify and fix performance issues.</p>
+<p>This chapter will delve into practical optimization techniques, including the judicious use of threading and task parallelism, optimization of network protocols, and strategic data compression. We will examine case studies and performance metrics to demonstrate the impact of these optimizations in real-world scenarios. By the end of this chapter, readers should have a comprehensive toolkit of strategies and best practices for enhancing the performance of their networked applications, explicitly tailored to the capabilities and features of .NET and C#.</p>
+<h2 id="understanding-and-analyzing-network-performance-in-net">Understanding and Analyzing Network Performance in .NET</h2>
+<p>As we embark on the journey of understanding and analyzing network performance within .NET, it is crucial to establish a solid foundation of the key concepts and metrics that govern the efficiency of network interactions. This section aims to equip developers with the necessary tools and knowledge to assess their network applications&#x27; performance accurately. By understanding the underlying metrics, such as latency, throughput, and packet loss, developers can gain insights into the operational aspects of their applications and identify areas that may require optimization.</p>
+<p>Network performance analysis begins with the effective use of diagnostic tools and performance monitoring techniques. In the .NET ecosystem, developers have access to a range of tools, such as network profilers, performance counters, and tracing utilities, that provide detailed insights into application network activity. Learning to leverage these tools not only helps pinpoint performance bottlenecks but also helps understand how data flows through network channels and how it is affected by various network conditions.</p>
+<p>Furthermore, this section will guide developers through interpreting the data gathered from these tools, turning raw metrics into actionable insights. We will discuss methods to systematically approach performance issues, from identifying the root cause to evaluating the impact of potential solutions. By the end of this section, developers should be well-prepared to conduct thorough performance analyses and implement effective optimizations in their .NET network applications, ensuring that they meet the high standards of responsiveness and reliability required in today&#x27;s networked environments.</p>
+<h3 id="tools-and-techniques-for-performance-analysis">Tools and Techniques for Performance Analysis</h3>
+<p>Applicable performance analysis is critical for optimizing network applications and systems in C# and .NET. Developers can identify and resolve performance bottlenecks by employing suitable techniques, ensuring their applications run smoothly and efficiently. This section covers critical techniques that provide deep insights into network performance and guide the optimization process.</p>
+<p>One essential technique is the use of asynchronous programming models. Asynchronous programming (see Chapter 4), facilitated by the async and await keywords in C#, helps prevent blocking network calls and allows applications to handle multiple network operations concurrently. This approach reduces latency and improves the overall responsiveness of network applications. Additionally, analyzing the execution of asynchronous methods using tools like JetBrains dotTrace can reveal performance bottlenecks and help optimize asynchronous code paths.</p>
+<p>Another technique that can greatly enhance your network applications involves leveraging performance profiling and diagnostic tools. Tools such as Visual Studio Performance Profiler and Event Tracing for Windows (ETW) provide detailed metrics on network activity, CPU usage, and memory allocation. Profiling is a powerful tool that helps identify inefficient code, excessive network calls, and other performance issues. By systematically analyzing these metrics, developers can optimize data transmission, reduce network overhead, and enhance application performance. Combining these techniques with thorough monitoring and continuous performance testing ensures that network applications remain efficient and scalable.</p>
+<h4 id="visual-studio-performance-profiler">Visual Studio Performance Profiler</h4>
+<p>Optimizing network performance is critical for ensuring responsive and efficient applications. One of the most powerful tools available to .NET developers is the Visual Studio Performance Profiler. This section provides a step-by-step guide on using the Visual Studio Performance Profiler to identify and address performance bottlenecks in your network applications.</p>
+<p><strong>Step 1: Setting Up the Profiler</strong></p>
+<p>To start profiling your application, open your project in Visual Studio. Navigate to Debug &gt; Performance Profiler. You will see a list of available tools. Select the CPU Usage tool to monitor how much CPU time is being spent on various parts of your application. You can also choose tools like Memory Usage or I/O Operations based on your profiling needs.</p>
+<figure class="content-center">
+    <img src="images/2024-06-10_11-28-34.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2316" height="1416" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Setting up Performance Profiler</b></figcaption>
+<p><strong>Step 2: Running the Profiler</strong></p>
+<p>With a single click on Start, you initiate the profiling of your application. Visual Studio will build and run your application with the profiler attached. As your application runs, the profiler collects real-time data on CPU usage, memory allocation, and other metrics. This allows you to perform the network operations you want to analyze while the profiler is running, giving you full control over the process.</p>
+<figure class="content-center">
+    <img src="images/2024-06-10_11-30-04.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2313" height="1416" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Running Performance Profiler</b></figcaption>
+<p><strong>Step 3: Analyzing the Results</strong></p>
+<p>Once you have completed your profiling session, click Stop collection to end the session. Visual Studio will process the collected data and display a detailed report. The CPU Usage report, for instance, will show you which methods are consuming the most CPU time, allowing you to identify potential bottlenecks in your network code.</p>
+<figure class="content-center">
+    <img src="images/2024-06-10_11-32-00.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2313" height="1416" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Results from Performance Profiler</b></figcaption>
+<p><strong>Step 4: Identifying Bottlenecks</strong></p>
+<p>Examine the report to identify methods that take up a significant amount of CPU time during network operations. Look for any unexpected spikes or areas where the CPU usage is disproportionately high. Optimizations will have the most impact in these hotspots. For example, if you see that a particular method related to data processing takes up a lot of time, you may want to optimize or refactor that method.</p>
+<p><strong>Step 5: Optimizing the Code</strong></p>
+<p>Once you&#x27;ve identified the bottlenecks, it&#x27;s time to make the necessary code changes to optimize performance. This is where your expertise and understanding of the code come into play. You might consider optimizing data serialization, reducing the number of network calls, or implementing more efficient algorithms. For instance, you could switch from synchronous to asynchronous calls to improve performance. Your role in this process is crucial and valued.</p>
+<div id="visual-studio-performance-profiler-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">// Before optimization: Synchronous call
+public void FetchData()
+{
+    var client = new HttpClient();
+    var response = client.GetStringAsync(&quot;https://example.com&quot;).Result;
+    ProcessData(response);
+}
+
+// After optimization: Asynchronous call
+public async Task FetchDataAsync()
+{
+    var client = new HttpClient();
+    var response = await client.GetStringAsync(&quot;https://example.com&quot;);
+    ProcessData(response);
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Step 6: Re-Profiling</strong></p>
+<p>After making your optimizations, re-run the profiler to see the impact of your changes. Compare the new profiling results with the previous ones to ensure that the optimizations have effectively reduced the CPU usage and improved the network performance. Continuous profiling and optimization are crucial to maintaining high-performance applications.</p>
+<p>By following these steps and leveraging the Visual Studio Performance Profiler, you can systematically identify and address performance issues in your network applications, ensuring they run efficiently and responsively.</p>
+<h4 id="jetbrains-dottrace">JetBrains dotTrace</h4>
+<p>JetBrains dotTrace is a powerful profiling tool that provides in-depth performance analysis for .NET applications. This section demonstrates how to use dotTrace to identify and resolve performance bottlenecks in network applications, enabling you to optimize your code effectively.</p>
+<p><strong>Step 1: Setting Up dotTrace</strong></p>
+<p>First, ensure you have JetBrains dotTrace installed. Open your project in Visual Studio and launch dotTrace from the JetBrains Rider toolbar or standalone application. To start profiling, click on Run | Profile Startup Project if you are using Rider, or select Run | Attach to Process to profile a running application.</p>
+<figure class="content-center">
+    <img src="images/2024-06-03_08-19-47.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2490" height="1636" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Setting up dotTrace</b></figcaption>
+<p><strong>Step 2: Running the Profiler</strong></p>
+<p>Once the profiler is attached, it&#x27;s time to select the type of profiling that best suits your needs. For network performance optimization, I recommend using Sampling or Tracing modes. These modes offer a wealth of detailed information about method execution times and call stacks, which are crucial for identifying performance issues. Start the profiling session, and observe your application as it goes through its regular operations, with a focus on the network interactions you intend to analyze.</p>
+<p><strong>Step 3: Analyzing the Results</strong></p>
+<p>After you have completed the profiling session, stop the profiler to view the collected data. dotTrace will present a snapshot of the application&#x27;s performance, highlighting the most time-consuming methods. The call tree view is particularly useful for understanding how method calls propagate through your application and where time is being spent.</p>
+<figure class="content-center">
+    <img src="images/2024-06-03_08-20-57.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="3482" height="1670" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Results from dotTrace</b></figcaption>
+<p><strong>Step 4: Identifying Bottlenecks</strong></p>
+<p>In the call tree, look for methods that have high execution times or frequent calls. These are potential bottlenecks. For instance, if you notice that a method responsible for parsing JSON data from network responses takes significant time, it indicates a need for optimization. Here&#x27;s a code example where inefficient JSON parsing could be optimized:</p>
+<div id="jetbrains-dottrace-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">// Before optimization: Inefficient JSON parsing
+public void ParseJsonData(string jsonData)
+{
+    var jsonObject = JsonConvert.DeserializeObject&lt;Dictionary&lt;string, object&gt;&gt;(jsonData);
+    ProcessData(jsonObject);
+}
+
+// After optimization: Using optimized JSON parsing
+public void ParseJsonDataOptimized(string jsonData)
+{
+    var jsonObject = JsonSerializer.Deserialize&lt;Dictionary&lt;string, object&gt;&gt;(jsonData);
+    ProcessData(jsonObject);
+}</code></pre>
+</doc-codeblock></div>
+<p><strong>Step 5: Optimizing the Code</strong></p>
+<p>Make the necessary code changes to optimize the identified bottlenecks. In the example above, switching from JsonConvert to JsonSerializer can improve parsing performance due to better efficiency and lower overhead. After making changes, re-run the profiling session to verify the improvements.</p>
+<p><strong>Step 6: Re-Profiling</strong></p>
+<p>Profile your application again using dotTrace to compare the performance metrics before and after optimization. Ensure that the changes have effectively reduced the execution time and improved overall performance. Continuous profiling is crucial to maintaining optimal performance as your application evolves.</p>
+<p>Emphasize the benefits of using JetBrains dotTrace. It provides valuable insights into your application&#x27;s performance, identifies critical bottlenecks, and enables targeted optimizations. This systematic approach ensures that your network applications in C# and .NET are both efficient and responsive, thereby enhancing the user experience.</p>
+<h4 id="net-trace">.NET Trace</h4>
+<p>The .NET Trace tool is a powerful command-line utility that helps developers capture and analyze performance data for .NET applications. This section demonstrates how to use the .NET Trace tool to identify performance bottlenecks in network applications, offering a practical approach to optimizing your code.</p>
+<p><strong>Step 1: Setting Up .NET Trace</strong></p>
+<p>First, ensure you have the .NET SDK installed on your system. The .NET Trace tool is included in the SDK. To verify the installation, open a command prompt and run the following command:</p>
+<div id="net-trace-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet --version</code></pre>
+</doc-codeblock></div>
+<p><strong>Step 2: Collecting a Trace</strong></p>
+<p>To start tracing your application, use the dotnet trace command. This example demonstrates how to trace a network operation where an application retrieves data from an API and processes it. Here’s the sample code:</p>
+<div id="net-trace-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class NetworkOperation
+{
+    public async Task FetchAndProcessDataAsync()
+    {
+        var httpClient = new HttpClient();
+        var response = await httpClient.GetStringAsync(&quot;https://api.example.com/data&quot;);
+        ProcessData(response);
+    }
+
+    private void ProcessData(string data)
+    {
+        // Simulate data processing
+        System.Threading.Thread.Sleep(200);
+        Console.WriteLine(&quot;Data processed.&quot;);
+    }
+
+    public static async Task Main(string[] args)
+    {
+        var networkOperation = new NetworkOperation();
+        await networkOperation.FetchAndProcessDataAsync();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>To start collecting trace data, run the following command in the directory where your project is located:</p>
+<div id="net-trace-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet trace collect --process-id &lt;process-id&gt;</code></pre>
+</doc-codeblock></div>
+<p>Replace <code translate="no" v-pre>&lt;process-id&gt;</code> with the ID of the running process of your application. You can find the process ID using tools like Task Manager on Windows or <code translate="no" v-pre>ps</code> on Unix-based systems.</p>
+<p><strong>Step 3: Stopping and Saving the Trace</strong></p>
+<p>After collecting sufficient data, stop the trace by pressing Ctrl+C in the command prompt. The tool will save the trace file (e.g., trace.nettrace) in the current directory. This file contains detailed performance data that you can analyze.</p>
+<p><strong>Step 4: Analyzing the Trace</strong></p>
+<p>To analyze the trace, use the dotnet trace tool to convert the collected data into a format that is easier to read, such as speedscope format:</p>
+<div id="net-trace-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet trace convert --format speedscope trace.nettrace</code></pre>
+</doc-codeblock></div>
+<p>Open the converted trace file using a tool like Speedscope (<a href="https://www.speedscope.app/">https://www.speedscope.app/</a>), which provides a visual representation of the performance data, making it easier to identify bottlenecks.</p>
+<figure class="content-center">
+    <img src="images/2024-06-10_09-25-25.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="4592" height="3136" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>.NET Trace results visualized with Speedscope</b></figcaption>
+<p><strong>Step 5: Identifying Bottlenecks</strong></p>
+<p>Examine the visual representation in Speedscope to identify methods with high execution times. In our example, if you see that the ProcessData method takes a significant amount of time, it indicates a bottleneck in data processing.</p>
+<p><strong>Step 6: Optimizing the Code</strong></p>
+<p>After identifying the bottleneck, optimize the code to improve performance. For example, you could replace the synchronous Thread.Sleep with an asynchronous delay to avoid blocking the main thread:</p>
+<div id="net-trace-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private async Task ProcessDataAsync(string data)
+{
+    // Simulate data processing
+    await Task.Delay(200);
+    Console.WriteLine(&quot;Data processed.&quot;);
+}
+
+public async Task FetchAndProcessDataAsync()
+{
+    var httpClient = new HttpClient();
+    var response = await httpClient.GetStringAsync(&quot;https://api.example.com/data&quot;);
+    await ProcessDataAsync(response);
+}</code></pre>
+</doc-codeblock></div>
+<p>By using the .NET Trace tool and analyzing the trace data, developers can gain valuable insights into their application&#x27;s performance, identify bottlenecks, and apply targeted optimizations. This process ensures that network applications in C# and .NET remain efficient, responsive, and capable of handling varying workloads effectively.</p>
+<h4 id="wireshark">WireShark</h4>
+<p>WireShark is a widely used network protocol analyzer that provides detailed insights into network traffic. It is an invaluable tool for diagnosing network issues and optimizing network application performance. This section demonstrates how to use WireShark to identify and resolve performance bottlenecks in your network applications.</p>
+<p><strong>Step 1: Setting Up WireShark</strong></p>
+<p>First, download and install WireShark from the official website (<a href="https://www.wireshark.org/">https://www.wireshark.org/</a>). Once installed, launch WireShark, and you will be presented with a list of available network interfaces. Select your application&#x27;s interface for network communication (e.g., Ethernet or Wi-Fi).</p>
+<p><strong>Step 2: Capturing Network Traffic</strong></p>
+<p>Click the start button next to the selected interface to capture network traffic. WireShark will start capturing all network packets transmitted and received through that interface. Run your network application and perform the operations you wish to analyze. For example, if your application fetches data from an API, initiate that process while WireShark is capturing the traffic.</p>
+<figure class="content-center">
+    <img src="images/2024-06-10_11-23-50.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2480" height="1554" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>WireShark running</b></figcaption>
+<p><strong>Step 3: Filtering the Captured Data</strong></p>
+<p>WireShark captures a large amount of data, so filters are essential to narrow down the relevant packets. For example, if your application communicates with a specific server, you can filter packets by the server&#x27;s IP address:</p>
+<div id="wireshark-text" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">Plain Text</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">ip.addr == 192.168.1.1</code></pre>
+</doc-codeblock></div>
+<p>Or, if you want to filter TCP traffic, you can use:</p>
+<div id="wireshark-text-1" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">Plain Text</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">tcp</code></pre>
+</doc-codeblock></div>
+<figure class="content-center">
+    <img src="images/2024-06-10_21-12-49.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2776" height="1596" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Filtered TCP traffic in WireShark</b></figcaption>
+<p><strong>Step 4: Analyzing the Traffic</strong></p>
+<p>Examine the filtered packets to identify performance issues. Look for high latency in request-response pairs, packet loss, or retransmissions. For instance, high response times for HTTP requests can indicate a performance bottleneck in the server or network path. You can also analyze the TCP stream to see the sequence of packets and pinpoint delays.</p>
+<p><strong>Step 5: Identifying and Resolving Bottlenecks</strong></p>
+<p>Based on the analysis, identify the root causes of performance issues. For example, if you notice delays in server response times, consider optimizing the server-side code. Investigate network stability or bandwidth issues if there is significant packet loss or retransmission. Optimizing data payload sizes, improving server processing times, or switching to a more efficient protocol can mitigate these issues.</p>
+<p><strong>Step 6: Verifying Improvements</strong></p>
+<p>After implementing optimizations, Wireshark will capture and analyze the network traffic again. Compare the new capture with the previous one to verify that the changes have effectively reduced latency, packet loss, or other performance bottlenecks. Continuous monitoring and analysis ensure that your network application remains optimized and efficient.</p>
+<p>By leveraging WireShark for detailed network analysis, developers can gain deep insights into their application&#x27;s network performance, identify critical issues, and apply targeted optimizations. This comprehensive approach ensures that network applications in C# and .NET are robust, efficient, and capable of delivering a high-quality user experience.</p>
+<h3 id="network-performance-metrics">Network Performance Metrics</h3>
+<p>Creating effective network performance metrics is essential for monitoring and optimizing C# and .NET network applications. These metrics provide valuable insights into the behavior and efficiency of network operations, enabling developers to identify and address performance bottlenecks. This section outlines the key metrics to track and how to implement them in .NET applications.</p>
+<h4 id="implementing-network-performance-metrics">Implementing Network Performance Metrics</h4>
+<p>Monitoring key network performance metrics is crucial for ensuring the efficiency and reliability of network applications in C# and .NET. This section outlines three essential metrics: latency, throughput, and packet loss. We&#x27;ll provide a description and a C# code example for each metric to track it using custom performance counters.</p>
+<h5 id="latency">Latency</h5>
+<p>Latency measures the time it takes for data to travel from the source to the destination. It is a critical indicator of the responsiveness of network applications. High latency can negatively impact user experience, especially in real-time applications.</p>
+<div id="latency-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
+
+public class LatencyTracker
+{
+    private readonly PerformanceCounter latencyCounter;
+    public LatencyTracker()
+    {
+        if (!Exists(&quot;NetworkCategory&quot;))
+        {
+            CounterCreationDataCollection counters = new();
+            counters.Capacity = 0;
+
+            CounterCreationData latencyData = new()
+            {
+                CounterType = PerformanceCounterType.NumberOfItems32,
+                CounterHelp = &quot;Network latency in milliseconds&quot;,
+                CounterName = &quot;Latency&quot;
+            };
+            counters.Add(latencyData);
+
+            Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;,
+                PerformanceCounterCategoryType.SingleInstance, counters);
+        }
+
+        latencyCounter = new(&quot;NetworkCategory&quot;, &quot;Latency&quot;, false);
+        latencyCounter.ReadOnly = false;
+    }
+
+    public void RecordLatency(long milliseconds)
+    {
+        latencyCounter.RawValue = milliseconds;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<blockquote>
+<p><strong>Note</strong>: The previous code is only supported on Windows.</p>
+</blockquote>
+<h5 id="throughput">Throughput</h5>
+<p>Throughput represents the data transmitted over the network in a given period. It indicates the network&#x27;s capacity to handle data traffic efficiently. Monitoring throughput helps identify bottlenecks and optimize data transfer.</p>
+<div id="throughput-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
+
+public class ThroughputTracker
+{
+    private readonly PerformanceCounter throughputCounter;
+
+    public ThroughputTracker()
+    {
+        if (!Exists(&quot;NetworkCategory&quot;))
+        {
+            CounterCreationDataCollection counters = new()
+            {
+                Capacity = 0
+            };
+
+            CounterCreationData throughputData = new()
+            {
+                CounterName = &quot;Throughput&quot;,
+                CounterHelp = &quot;Data throughput in bytes per second&quot;,
+                CounterType = PerformanceCounterType.RateOfCountsPerSecond32
+            };
+            counters.Add(throughputData);
+
+            Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;,
+                PerformanceCounterCategoryType.SingleInstance, counters);
+        }
+
+        throughputCounter = new(&quot;NetworkCategory&quot;, &quot;Throughput&quot;, false)
+        {
+            ReadOnly = false
+        };
+    }
+
+    public void RecordThroughput(long bytes)
+    {
+        throughputCounter.IncrementBy(bytes);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<blockquote>
+<p><strong>Note</strong>: The previous code is only supported on Windows.</p>
+</blockquote>
+<h5 id="packet-loss">Packet Loss</h5>
+<p>Packet loss occurs when data packets fail to reach their destination. It can severely impact the reliability and quality of network communications. Tracking packet loss helps diagnose network stability issues and ensure data integrity.</p>
+<div id="packet-loss-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System.Diagnostics;
+using static System.Diagnostics.PerformanceCounterCategory;
+
+public class PacketLossTracker
+{
+    private readonly PerformanceCounter packetLossCounter;
+
+    public PacketLossTracker()
+    {
+        if (!Exists(&quot;NetworkCategory&quot;))
+        {
+            CounterCreationDataCollection counters = [];
+
+            CounterCreationData packetLossData = new()
+            {
+                CounterName = &quot;PacketLoss&quot;,
+                CounterHelp = &quot;Number of lost packets&quot;,
+                CounterType = PerformanceCounterType.NumberOfItems32
+            };
+            counters.Add(packetLossData);
+
+            Create(&quot;NetworkCategory&quot;, &quot;Network performance metrics&quot;,
+                PerformanceCounterCategoryType.SingleInstance, counters);
+        }
+
+        packetLossCounter = new PerformanceCounter(&quot;NetworkCategory&quot;, &quot;PacketLoss&quot;, false)
+        {
+            ReadOnly = false
+        };
+    }
+
+    public void RecordPacketLoss(int packets)
+    {
+        packetLossCounter.IncrementBy(packets);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<blockquote>
+<p><strong>Note</strong>: The previous code is only supported on Windows.</p>
+</blockquote>
+<p>By creating and monitoring these performance metrics, developers can gain valuable insights into the efficiency and reliability of their network applications. This proactive approach allows for timely identification and resolution of performance issues, ensuring that applications remain responsive and robust under varying network conditions.</p>
+<h3 id="identifying-bottlenecks">Identifying Bottlenecks</h3>
+<p>Identifying bottlenecks in network applications is crucial for optimizing performance and ensuring efficient operation. Bottlenecks can occur at various points in the network stack, from inefficient code and resource contention to external factors such as network congestion. This section explores methods to identify and address these bottlenecks in C# and .NET applications.</p>
+<p>The first step in identifying bottlenecks is thorough performance profiling. As we have demonstrated, tools like Visual Studio Performance Profiler, JetBrains dotTrace, and Event Tracing for Windows (ETW) can provide detailed insights into your application&#x27;s performance under different conditions. Analyzing CPU usage, memory allocation, and I/O operations, these tools help pinpoint areas where the application is spending excessive time or resources. For instance, high CPU usage during network operations may indicate inefficient network data processing.</p>
+<p>Another effective approach is to use logging and tracing to monitor network activity. By implementing detailed logging in your network code, you can reveal patterns and anomalies in network traffic. For example, you can log the time taken for each network request and response and then analyze the logs to identify unusually long delays. Similarly, tracing tools like .NET Trace and ETW can capture low-level network events, providing a granular view of network interactions and helping to uncover hidden bottlenecks. These practical methods can be easily integrated into your development process, enhancing your ability to optimize network operations.</p>
+<p>Finally, it is essential to conduct stress testing and load testing to observe how the application behaves under various network conditions. Tools such as Apache JMeter and Microsoft Visual Studio Load Test can simulate high-traffic scenarios and measure the application&#x27;s performance. Observing how the application handles increased load allows you to identify bottlenecks that may not be apparent under normal usage conditions. For example, a sudden spike in response times during peak traffic can indicate that the application struggles to handle concurrent network requests efficiently.</p>
+<p>By combining these methods—profiling, logging, tracing, and testing—developers can systematically identify and address bottlenecks in their network applications. This comprehensive approach not only ensures that network operations are optimized but also leads to improved performance, scalability, and user satisfaction. The value of this approach is evident in its ability to provide a holistic view of the application&#x27;s performance, enabling developers to make targeted improvements and deliver a better user experience.</p>
+<h2 id="strategies-for-network-performance-optimization">Strategies for Network Performance Optimization</h2>
+<p>In the ever-evolving landscape of network application development, optimizing performance is a critical task that directly impacts user experience and operational efficiency. This section, &quot;Strategies for Network Performance Optimization,&quot; aims to provide developers with practical techniques and best practices to enhance the performance of their networked applications in C# and .NET. By leveraging these strategies, developers can ensure that their applications are not only fast and responsive but also scalable and reliable under varying network conditions.</p>
+<p>Optimizing network performance involves a multifaceted approach combining code-level optimizations and architectural enhancements. At the code level, techniques such as asynchronous programming, efficient data serialization, and judicious use of threading can significantly reduce latency and improve throughput. At a broader level, employing caching mechanisms, connection pooling, and load balancing can help manage network resources more effectively and ensure consistent performance.</p>
+<p>This section will detail these strategies, providing clear explanations and code examples to illustrate their implementation. We will explore how to apply asynchronous programming models using the async and await keywords, optimize data transmission with efficient serialization formats, and utilize performance-enhancing patterns such as caching and pooling. By the end of this section, readers will be equipped with a comprehensive toolkit for optimizing network performance in their C# and .NET applications, enabling them to build robust, high-performing network solutions.</p>
+<h3 id="optimizing-data-transmission">Optimizing Data Transmission</h3>
+<p>Optimizing data transmission is crucial for enhancing the performance and efficiency of network applications in C# and .NET. Efficient data transmission reduces latency, minimizes bandwidth usage, and improves application responsiveness. This section explores critical techniques for optimizing data transmission, including compression, efficient serialization formats, and batching requests.</p>
+<p>One effective method for optimizing data transmission is to use data compression. Compression reduces the size of data being transmitted, which can significantly decrease the time required for data transfer and reduce bandwidth consumption. .NET provides built-in support for compression through classes such as GZipStream and BrotliStream.</p>
+<p>The following example is compressing and decompressing using the GZip.</p>
+<div id="optimizing-data-transmission-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System.IO.Compression;
+
+public class GZipDataCompressor
+{
+    public byte[] CompressData(byte[] data)
+    {
+        using var outputStream = new MemoryStream();
+        using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
+        {
+            gzipStream.Write(data, 0, data.Length);
+        }
+        return outputStream.ToArray();
+    }
+
+    public byte[] DecompressData(byte[] compressedData)
+    {
+        using var inputStream = new MemoryStream(compressedData);
+        using var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress);
+        using var outputStream = new MemoryStream();
+        gzipStream.CopyTo(outputStream);
+        return outputStream.ToArray();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Brotli compression is an efficient algorithm that reduces the size of data, which can significantly enhance network performance by minimizing the amount of data transmitted over the network. Below is an example of how to use Brotli compression for network development in C#.</p>
+<p>First, ensure you have the necessary package installed. You can install the Brotli compression package via NuGet:</p>
+<div id="optimizing-data-transmission-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-shell-session"><code v-pre class="language-shell-session">Install-Package System.IO.Compression.Brotli</code></pre>
+</doc-codeblock></div>
+<p>Here&#x27;s a simple example demonstrating how to compress and decompress data using Brotli in a C# network application.</p>
+<div id="optimizing-data-transmission-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System.IO.Compression;
+
+public class BrotliDataCompressor
+{
+    public static byte[] CompressData(byte[] data)
+    {
+        using var outputStream = new MemoryStream();
+        using var brotliStream = new BrotliStream(outputStream, CompressionMode.Compress);
+        brotliStream.Write(data, 0, data.Length);
+        return outputStream.ToArray();
+    }
+
+    public static byte[] DecompressData(byte[] compressedData)
+    {
+        using var inputStream = new MemoryStream(compressedData);
+        using var brotliStream = new BrotliStream(inputStream, CompressionMode.Decompress);
+        using var outputStream = new MemoryStream();
+        brotliStream.CopyTo(outputStream);
+        return outputStream.ToArray();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Another essential technique is to use efficient serialization formats. JSON and XML are commonly used formats, but they can be verbose and inefficient for large data sets. Binary serialization formats, such as Protocol Buffers or MessagePack, offer more compact and faster serialization, making them ideal for performance-critical applications.</p>
+<div id="optimizing-data-transmission-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using MessagePack;
+
+public class DataSerializer
+{
+    public byte[] SerializeData&lt;T&gt;(T data)
+    {
+        return MessagePackSerializer.Serialize(data);
+    }
+
+    public T DeserializeData&lt;T&gt;(byte[] serializedData)
+    {
+        return MessagePackSerializer.Deserialize&lt;T&gt;(serializedData);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Batching requests is another strategy to optimize data transmission. Instead of sending individual requests for each small piece of data, batching combines multiple data items into a single request. This reduces the overhead associated with each network call and can significantly improve throughput.</p>
+<div id="optimizing-data-transmission-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System.Text;
+
+public class DataBatcher
+{
+    private readonly HttpClient _httpClient = new();
+
+    public async Task SendBatchedRequestsAsync(List&lt;string&gt; dataItems)
+    {
+        var batchedData = string.Join(&quot;,&quot;, dataItems);
+        var content = new StringContent(batchedData, Encoding.UTF8, &quot;application/json&quot;);
+        await _httpClient.PostAsync(&quot;https://example.com/api/data&quot;, content);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Developers can optimize data transmission in their network applications by implementing these techniques—data compression, efficient serialization, and request batching. These optimizations lead to reduced latency, lower bandwidth usage, and improved overall performance, ensuring that applications are responsive and efficient even under heavy network loads.</p>
+<h2 id="summary">Summary</h2>
+<p>In the &quot;Network Performance Optimization&quot; chapter of the C# book, we delved into practical strategies and techniques that can be readily applied to enhance the efficiency and responsiveness of networked applications in .NET. This chapter, building upon the foundational concepts discussed in previous chapters, provides developers with the tools they need to identify, analyze, and optimize network performance, empowering them to make a significant impact on their applications.</p>
+<p>Our journey began with understanding and analyzing network performance metrics, which are crucial for diagnosing and addressing performance issues. We introduced key metrics such as latency, throughput, and packet loss, and emphasized the role of tools like Visual Studio Performance Profiler, JetBrains dotTrace, and Event Tracing for Windows (ETW) as invaluable resources for capturing and analyzing these metrics, helping developers pinpoint performance bottlenecks.</p>
+<p>The chapter then delved into practical techniques for optimizing data transmission. We discussed the importance of data compression, efficient serialization formats, and batching requests to minimize latency and reduce bandwidth usage. Simple code examples illustrated how to implement these techniques, clearly demonstrating their significant impact on improving network performance.</p>
+<p>This chapter equipped developers with a comprehensive toolkit for optimizing network performance in C# and .NET applications. By combining thorough performance analysis with targeted optimization techniques and best practices, developers can ensure their applications are efficient, scalable, and responsive. These strategies are vital for delivering high-quality networked applications that meet the demands of today&#x27;s users and environments.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter08/chapter08.md" target="_blank" rel="noopener">
+                        <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        <span>Edit this page</span>
+                    </a>
+                </div>
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter07/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Chap 7 - Data Serialization Techniques</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter09/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Chap 9 - Working with REST AP​Is</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../copyright/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
+                                    </g>
+                                </svg>
+                                <span>Copyright</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../license/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
+                                    </g>
+                                </svg>
+                                <span>License</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved Chris Woodruff.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 8 - Network Performance Optimization", level: 1, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/chapter08/chapter08.md" }</script>
+</body>
+</html>

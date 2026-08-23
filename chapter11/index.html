@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5P830S5Z3"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-D5P830S5Z3');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/book-network-programming-csharp">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.840767676179">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Working with WebRTC</title>
+    <meta name="title" content="Working with WebRTC">
+    <meta name="description" content="WebRTC (Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or native applications.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://cwoodruff.github.io/book-network-programming-csharp/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/">
+    <meta property="og:title" content="Working with WebRTC">
+    <meta property="og:description" content="WebRTC (Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or native applications.">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/images/chap11-webrtc.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Working with WebRTC">
+    <meta property="og:site_name" content="Networking Programming with C/# 12 and /.NET 8">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/">
+    <meta name="twitter:title" content="Working with WebRTC">
+    <meta name="twitter:description" content="WebRTC (Web Real-Time Communication) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or native applications.">
+    <meta name="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/images/chap11-webrtc.png">
+    <meta name="twitter:image:alt" content="Working with WebRTC">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter11/chapter11.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link id="retype-favicon" rel="icon" href="../images/favicon.png" />
+    <link href="../resources/css/retype.css?v=4.6.0.840767676179" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.6.0.840767676179" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://cwoodruff.github.io/book-network-programming-csharp/" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                            <img class="max-h-10 hidden dark:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                </svg>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                </svg>
+                                <span>Issues</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                </svg>
+                                <span>Bluesky</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                </svg>
+                                <span>Mastodon</span>
+                            </a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                        </svg>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                        </svg>
+                                        <span>Issues</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                        </svg>
+                                        <span>Bluesky</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                        </svg>
+                                        <span>Mastodon</span>
+                                    </a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="11">11</h1>
+<figure class="content-center">
+    <img src="images/chap11-webrtc.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1792" height="1024" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<h1 id="working-with-webrtc">Working with WebRTC</h1>
+<p>WebRTC (<strong>Web Real-Time Communication</strong>) revolutionizes network programming by enabling real-time peer-to-peer communication directly from browsers or native applications. It is ideal for video conferencing, voice calls, and instant data sharing without plugins or complex setups. Its low latency and high-quality media transmission capabilities make it a natural fit for creating highly interactive applications in the .NET 8 and C# ecosystem. By integrating WebRTC with .NET, developers can combine the reliability of .NET&#x27;s server-side efficiency with WebRTC&#x27;s real-time features, such as <code translate="no" v-pre>RTCPeerConnection</code>, signaling management, and media stream handling, to deliver rich, interactive user experiences. This integration empowers developers to unlock new possibilities for modern, scalable applications.</p>
+<p>This chapter explores the essential aspects of WebRTC in .NET, including its architecture, signaling, and media handling. By the end, you&#x27;ll have the tools and knowledge to create real-time communication applications that support video conferencing, live streaming, collaborative tools, or other innovative use cases.</p>
+<h2 id="introduction-to-webrtc">Introduction to WebRTC</h2>
+<p>WebRTC transforms real-time communication by enabling direct peer-to-peer connections for audio, video, and data exchange, eliminating the need for complex media servers. Its low-latency, high-bandwidth interactions make it ideal for video chats, collaborative tools, and multiplayer games. By leveraging technologies like <strong>STUN</strong> (<strong>Session Traversal Utilities for NAT</strong>), <strong>TURN</strong> (<strong>Traversal Using Relays around NAT</strong>), and <strong>ICE</strong> (<strong>Interactive Connectivity Establishment</strong>) for <strong>NAT</strong>, WebRTC ensures reliable connections across different networks or firewalls, reducing cost and complexity compared to traditional infrastructure-dependent approaches.</p>
+<p>WebRTC&#x27;s flexibility allows it to support both media streams and arbitrary data transfer via <code translate="no" v-pre>RTCPeerConnection</code> and <code translate="no" v-pre>RTCDataChannel</code>. While signaling orchestrates metadata and connection candidates, tools like WebSockets simplify this process in a .NET context. Understanding these components equips developers to create robust, interactive, real-time applications.</p>
+<figure class="content-center">
+    <img src="images/webrtc-architecture-overview.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2604" height="1524" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>WebRTC Architecture Overview</b></figcaption>
+<h2 id="key-features-of-webrtc">Key Features of WebRTC</h2>
+<p>WebRTC stands out as a transformative technology for real-time communication, offering a suite of features that make it ideal for modern, interactive applications. Its ability to establish direct peer-to-peer connections, support versatile media and data transfer, ensure robust security, and adapt to varying network conditions is a cornerstone for applications requiring low latency and high reliability. Understanding these features provides the foundation for unlocking WebRTC&#x27;s potential in your .NET applications.</p>
+<h3 id="peer-to-peer-communication">Peer-to-Peer Communication</h3>
+<p>One of WebRTC&#x27;s most compelling features is its ability to establish direct peer-to-peer connections, eliminating the need for centralized servers to route data. By creating a direct communication path between devices, WebRTC minimizes latency, which is critical for real-time applications such as video conferencing and multiplayer gaming. This reduction in latency not only enhances user experience but also reduces server costs, as data doesn&#x27;t have to flow through intermediary infrastructure.</p>
+<p>In a peer-to-peer setup, once signaling establishes a connection, WebRTC&#x27;s <code translate="no" v-pre>RTCPeerConnection</code> transmits media and data directly between devices. This approach ensures that interactions like video calls or live collaborative sessions feel immediate and natural. By bypassing server bottlenecks, developers can deliver fast, responsive applications that meet modern demands for immediacy and efficiency.</p>
+<h3 id="versatile-media-and-data-support">Versatile Media and Data Support</h3>
+<p>WebRTC&#x27;s flexibility in handling both media streams and arbitrary data transfer makes it a versatile solution for various use cases. Media streams, comprising audio and video tracks, are central to applications like video conferencing, telehealth, and live streaming. WebRTC&#x27;s efficient handling of these streams ensures high-quality transmission, even under fluctuating network conditions.</p>
+<p>Beyond media streams, WebRTC&#x27;s <code translate="no" v-pre>RTCDataChannel</code> enables low-latency, bi-directional data transfer between peers. This feature is invaluable for in-game state synchronization in multiplayer games, collaborative document editing, or real-time chat. The ability to handle custom data alongside media streams opens up endless possibilities for creating hybrid, interactive experiences. For example, a telehealth application could combine secure video consultations with real-time medical data sharing, enhancing both functionality and user experience.</p>
+<h3 id="built-in-security">Built-in Security</h3>
+<p>Security is a core tenet of WebRTC, with encryption seamlessly integrated into its architecture. All media and data transmissions are protected using <strong>DTLS</strong> (Datagram Transport Layer Security) for signaling and <strong>SRTP</strong> (Secure Real-Time Transport Protocol) for media streams. This ensures that communication remains private and tamper-proof, even over unsecured networks.</p>
+<p>In addition to end-to-end encryption, WebRTC requires user permission to access sensitive resources like cameras and microphones, further enhancing its security posture. Developers can rely on these built-in mechanisms to safeguard user data while focusing on building application features. For instance, in a financial application with video support, WebRTC&#x27;s encryption ensures that sensitive conversations remain confidential, bolstering user trust and regulatory compliance.</p>
+<h3 id="adaptability-to-network-conditions">Adaptability to Network Conditions</h3>
+<p>WebRTC&#x27;s ability to adapt to diverse and unpredictable network conditions makes it a reliable choice for real-time communication. Its dynamic use of <strong>ICE</strong>, <strong>STUN</strong>, and <strong>TURN</strong> ensures that connections remain stable, even in challenging scenarios such as users switching between Wi-Fi and mobile networks.</p>
+<p>ICE orchestrates the connection process by testing multiple paths between peers to find the most efficient route. STUN helps discover public IP addresses for direct peer-to-peer communication, while TURN acts as a fallback, relaying data when direct connections aren&#x27;t possible. This adaptability is especially valuable for applications with global user bases, where network reliability varies widely. For example, a live streaming platform can maintain uninterrupted service by dynamically switching to TURN servers when direct paths fail, ensuring a seamless experience for its users.</p>
+<p>By leveraging these mechanisms, WebRTC minimizes connection drops and interruptions, delivering a consistent and reliable user experience. This resilience, combined with its other features, makes WebRTC a powerful tool for developers building real-time applications that must perform under various conditions.</p>
+<h2 id="webrtc-architecture-overview">WebRTC Architecture Overview</h2>
+<p>WebRTC&#x27;s architecture is built on three primary components that work together to facilitate real-time peer-to-peer communication: <code translate="no" v-pre>RTCPeerConnection</code>, <code translate="no" v-pre>MediaStream</code>, and <code translate="no" v-pre>RTCDataChannel</code>. These components are supported by a signaling process that exchanges necessary metadata, such as Session Description Protocol (SDP) messages and Interactive Connectivity Establishment (ICE) candidates, to establish connections. Each element plays a distinct role in creating a seamless and secure communication experience.</p>
+<p>At the heart of WebRTC is <code translate="no" v-pre>RTCPeerConnection</code>, a robust API that manages the logistics of peer-to-peer connections. Once signaling establishes the initial handshake, <code translate="no" v-pre>RTCPeerConnection</code> takes over to handle media and data exchange between peers. It ensures a secure connection using encryption protocols like Datagram Transport Layer Security (DTLS) for signaling and Secure Real-Time Transport Protocol (SRTP) for media transmission. This secure foundation allows developers to focus on building features without worrying about the intricacies of securing the communication channel. <code translate="no" v-pre>RTCPeerConnection</code> also dynamically adjusts to network conditions, maintaining connection quality even in variable environments.</p>
+<p>The <code translate="no" v-pre>MediaStream</code> component is integral to handling audio and video streams, which are the backbone of many WebRTC applications, such as video conferencing and live streaming. By encapsulating media tracks, <code translate="no" v-pre>MediaStream</code> abstracts the complexity of capturing, encoding, and transmitting multimedia content. This abstraction ensures developers can manage streams efficiently, whether transmitting a single video track or multiple synchronized audio and video streams. Furthermore, <code translate="no" v-pre>MediaStream</code> integrates seamlessly with the <code translate="no" v-pre>RTCPeerConnection</code> API, enabling a smooth flow of media between peers.</p>
+<p>In addition to media, WebRTC supports arbitrary data transfer through <code translate="no" v-pre>RTCDataChannel</code>. This component allows for low-latency, bi-directional communication, making it an essential tool for applications that require real-time data sharing. Whether used for transmitting game state information, enabling collaborative text editing, or sharing files during a call, <code translate="no" v-pre>RTCDataChannel</code> provides a flexible mechanism for exchanging custom data. Its seamless integration with the peer-to-peer connection managed by <code translate="no" v-pre>RTCPeerConnection</code> ensures that data transfer remains efficient and synchronized with other communication elements.</p>
+<figure class="content-center">
+    <img src="images/webrtc-signaling-flow-diagram.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="586" height="451" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>WebRTC Signaling Flow Diagram</b></figcaption>
+<p>The signaling process acts as the bridge that connects these components by facilitating the exchange of metadata required to establish a connection. SDP messages provide details about media capabilities, codecs, and encryption requirements, ensuring both peers agree on the terms of the communication. ICE candidates enable the discovery of optimal network routes, overcoming challenges posed by firewalls and NATs. Once the signaling phase is complete, the direct peer-to-peer connection managed by <code translate="no" v-pre>RTCPeerConnection</code> comes into play, enabling real-time communication.</p>
+<p>WebRTC&#x27;s architecture exemplifies a careful balance between simplicity and power. Abstracting complex processes like encryption, media handling, and network traversal empowers developers to focus on building innovative, real-time applications. This chapter will explore how these components are implemented in .NET to create scalable and efficient solutions. All information presented builds on prior chapters, so concepts previously covered are distinct here.</p>
+<h2 id="setting-up-a-webrtc-peer-to-peer-connection">Setting Up a WebRTC Peer-to-Peer Connection</h2>
+<p>Establishing a peer-to-peer connection in WebRTC involves a series of coordinated steps, bringing together signaling, network traversal, and connection management. While WebRTC simplifies many of the complexities of real-time communication, the initial setup requires careful orchestration to ensure seamless connectivity between peers. This section focuses on two critical aspects: the signaling process, which facilitates the exchange of connection details, and network traversal, which addresses the challenges posed by firewalls and NATs. These steps provide the foundation for creating robust and efficient real-time applications using WebRTC in a .NET environment.</p>
+<h3 id="signaling-and-session-establishment">Signaling and Session Establishment</h3>
+<p>The signaling process acts as the entry point for establishing a WebRTC connection. It facilitates the exchange of critical metadata, such as Session Description Protocol (SDP) messages and Interactive Connectivity Establishment (ICE) candidates, which are necessary for peers to negotiate their communication parameters. Signaling does not occur directly within the WebRTC APIs; developers must implement a signaling mechanism, often using tools like WebSockets or HTTP-based APIs to transmit this information between peers.</p>
+<p>In a typical WebRTC workflow, signaling begins when one peer generates an SDP offer containing details about its media capabilities, supported codecs, and desired communication parameters. This offer is sent to the other peer through the signaling channel, which responds with an SDP answer containing its corresponding parameters. During this exchange, ICE candidates are also shared, allowing peers to identify potential network routes for communication. Once signaling concludes, the peers have all the information needed to establish a direct connection, and the <code translate="no" v-pre>RTCPeerConnection</code> API takes over to manage the actual media and data exchange. In a .NET application, this process is streamlined using ASP.NET Core for signaling, leveraging the framework&#x27;s scalability and flexibility.</p>
+<h3 id="network-traversal-with-ice-stun-and-turn">Network Traversal with ICE, STUN, and TURN</h3>
+<p>Even with signaling successfully completed, establishing a direct connection between peers can be challenging due to network obstacles like firewalls and NATs. This is where the network traversal mechanisms of WebRTC—ICE, STUN , and TURN—come into play. These technologies work together to ensure that peers can discover and establish the most efficient communication path, regardless of their network configurations.</p>
+<p>ICE orchestrates the traversal process by gathering potential connection candidates from each peer. These candidates include public and private IP addresses and ports discovered using STUN servers. STUN enables peers to determine their public-facing IP addresses, which is essential for direct communication when one or both peers are behind a NAT. However, direct connections are only possible in restrictive network environments. TURN servers act as intermediaries in such cases, relaying data between peers to ensure the connection is established and maintained. Although TURN adds some latency due to its relaying nature, it is a critical fallback for ensuring reliable communication.</p>
+<p>The dynamic interplay between ICE, STUN, and TURN allows WebRTC to adapt to various network scenarios, from simple home networks to complex enterprise environments. By integrating these mechanisms into your .NET applications, you can ensure that users experience seamless and consistent connectivity, even in challenging network conditions. The following sections will explore implementing these technologies in a .NET environment, ensuring your application is equipped for reliable real-time communication.</p>
+<h2 id="use-cases-and-challenges">Use Cases and Challenges</h2>
+<p>WebRTC has emerged as a versatile technology that transforms real-time communication across diverse industries. Its low-latency and high-bandwidth capabilities, combined with its ability to handle both media streams and arbitrary data, make it suitable for various applications. However, while its flexibility and performance are compelling, implementing WebRTC comes with challenges, such as ensuring robust security and overcoming network traversal hurdles. This section explores key use cases highlighting WebRTC&#x27;s strengths and addresses the primary challenges developers must navigate when integrating it into their applications.</p>
+<h3 id="use-cases">Use Cases</h3>
+<p>WebRTC has become a cornerstone for modern video conferencing solutions, where its peer-to-peer architecture ensures smooth and high-quality interactions. Enabling direct communication between devices minimizes latency and reduces the need for costly media servers, making it an excellent choice for one-on-one calls and large-scale virtual meetings alike. Organizations leverage this technology to create seamless remote collaboration experiences, allowing participants to share screens, exchange files, and interact in real-time without perceptible delays. These features make it invaluable in business, education, and telehealth, where real-time engagement is critical.</p>
+<p>Beyond video conferencing, WebRTC plays a pivotal role in online gaming. Its low-latency data channels allow game developers to synchronize game states between players in real-time, creating immersive, fast-paced multiplayer experiences. This technology supports not only voice chat but also the instantaneous exchange of game-related data, such as player positions or game events. By ensuring minimal delays, WebRTC enhances gameplay, keeping players engaged and connected in competitive or cooperative scenarios.</p>
+<p>WebRTC is also transforming live streaming and broadcasting applications, particularly those requiring instant updates. Platforms hosting auctions, sports commentaries, or live events use WebRTC to provide real-time streams, ensuring audiences remain engaged without frustrating lags. Additionally, the Internet of Things (IoT) ecosystem benefits significantly from WebRTC&#x27;s efficient peer-to-peer communication. Smart devices can relay data directly to each other or to central systems in real-time, enabling responsive home automation, efficient monitoring systems, and more integrated IoT networks.</p>
+<h3 id="challenges">Challenges</h3>
+<p>While WebRTC&#x27;s capabilities are impressive, implementing it is challenging, particularly in the realm of network traversal. Establishing a peer-to-peer connection between devices often requires navigating obstacles such as NATs (Network Address Translators) and firewalls. WebRTC relies on mechanisms like ICE, STUN, and TURN to overcome these barriers. Although these tools enable connectivity in most scenarios, they introduce complexity during setup and increase the need for careful configuration. Developers must balance the reliance on STUN for discovering public IPs and TURN for relaying data in restrictive environments, ensuring the connection remains efficient and reliable.</p>
+<p>Another significant challenge is ensuring security, especially during the signaling phase. While WebRTC provides built-in encryption for media and data streams, it leaves the implementation of secure signaling to developers. Without proper safeguards, such as HTTPS and robust authentication mechanisms, signaling channels can become vulnerable to attacks, including eavesdropping and spoofing. Managing permissions for accessing sensitive resources, like cameras and microphones, adds another layer of responsibility. Developers must integrate these security measures seamlessly into their applications, ensuring both user privacy and data protection.</p>
+<p>Despite these challenges, the rewards of using WebRTC far outweigh the complexities. Its ability to deliver real-time, high-quality communication experiences is unparalleled, making it a valuable tool for developers willing to invest in mastering its nuances. By addressing network traversal and security concerns early in the development process, WebRTC applications can provide reliable and secure solutions across a range of use cases.</p>
+<h2 id="integrating-webrtc-in-a-net-application">Integrating WebRTC in a .NET Application</h2>
+<p>Integrating WebRTC into a .NET application brings the architecture, components, and peer-to-peer connection setup to life. This section focuses on practical implementation, exploring how to harmonize a .NET backend with WebRTC clients for real-time, low-latency communication. A key element of this integration is managing the signaling process, which involves the exchange of session descriptions and ICE candidates between peers. To facilitate this, a signaling server is set up in ASP.NET Core using WebSockets. This server ensures efficient communication and allows developers to maintain complete control over how peers connect and negotiate their interaction rules.</p>
+<p>Beyond signaling, the integration must support smooth media and data exchange, where .NET facilitates media negotiation, session management, and connection quality maintenance. Leveraging JavaScript interop in Blazor applications seamlessly bridges the .NET backend with the WebRTC client-side API, creating a unified and harmonious development environment. This approach combines the strengths of C# for backend processes with WebRTC&#x27;s real-time capabilities, delivering responsive, engaging user experiences and unlocking immense possibilities for real-time peer-to-peer communication in .NET applications.</p>
+<h3 id="implementing-a-signaling-server-in-net">Implementing a Signaling Server in .NET</h3>
+<p>Setting up a signaling server is a critical part of making WebRTC work, and with .NET, you have all the tools you need to get it done effectively. The purpose of the signaling server is to facilitate the exchange of session descriptions and ICE candidates between peers. Essentially, the matchmaker gets two devices talking, and once they&#x27;re connected, it steps back to let the magic happen peer-to-peer. Let&#x27;s build this with ASP.NET Core and WebSockets, ensuring our setup is ready for real-time interactions.</p>
+<p>First, we start by creating an ASP.NET Core project that will serve as our signaling server. Use the following command to create a Web API project:</p>
+<div id="implementing-a-signaling-server-in-net-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet new webapi -n WebRTCSignalingServer</code></pre>
+</doc-codeblock></div>
+<p>After creating the project, navigate to the Program.cs file and modify it to include WebSocket support. The goal is to enable incoming WebSocket requests, which will allow our server to receive and forward signaling messages from clients. Here’s how we add WebSocket support and set up a simple endpoint:</p>
+<div id="implementing-a-signaling-server-in-net-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.UseWebSockets();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =&gt;
+{
+    endpoints.MapGet(&quot;/signal&quot;, async context =&gt;
+    {
+        await HandleWebSocketRequest(context);
+    });
+});
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>In the code above, we’ve defined an endpoint /signal that serves as the entry point for WebSocket communication. This is where clients will connect to exchange their signaling messages. If a request isn’t a WebSocket request, we return a 400 status code to indicate an invalid request type.</p>
+<p>Now, let’s implement HandleSignaling to deal with incoming WebSocket messages. The logic here will involve maintaining a list of connected clients, relaying messages between them, and processing different types of signaling messages like SDP offers and ICE candidates:</p>
+<div id="implementing-a-signaling-server-in-net-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">const int BufferSize = 1024 * 4;
+
+List&lt;WebSocket&gt; connectedClients = new List&lt;WebSocket&gt;();
+
+async Task HandleWebSocketRequest(HttpContext context)
+{
+    if (context.WebSockets.IsWebSocketRequest)
+    {
+        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+        await HandleWebSocketSignaling(webSocket);
+    }
+    else
+    {
+        context.Response.StatusCode = 400;
+    }
+}
+
+async Task HandleWebSocketSignaling(WebSocket webSocket)
+{
+    connectedClients.Add(webSocket);
+    var buffer = new byte[BufferSize];
+
+    try
+    {
+        while (webSocket.State == WebSocketState.Open)
+        {
+            var result = await webSocket.ReceiveAsync(new ArraySegment&lt;byte&gt;(buffer), CancellationToken.None);
+            var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+            Console.WriteLine($&quot;Received: {message}&quot;);
+
+            // Here you would parse the signaling message (e.g., SDP, ICE) and forward it to the appropriate peer
+            foreach (var client in connectedClients)
+            {
+                if (client != webSocket &amp;&amp; client.State == WebSocketState.Open)
+                {
+                    await client.SendAsync(new ArraySegment&lt;byte&gt;(Encoding.UTF8.GetBytes(message)),
+                        result.MessageType,
+                        result.EndOfMessage,
+                        CancellationToken.None);
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($&quot;Error: {ex.Message}&quot;);
+    }
+    finally
+    {
+        connectedClients.Remove(webSocket);
+        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, &quot;Closing&quot;, CancellationToken.None);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this implementation, we maintain a list of all connected clients, allowing the server to forward incoming messages to other peers. When a message is received, it’s sent to every other connected client except the sender. This is a basic but functional approach to signaling—enough to facilitate the initial exchange of SDP and ICE candidates.</p>
+<p>In a real application, you’d want to improve this logic to support client identification and targeted message delivery. For instance, you could add logic to associate a unique ID with each client and include routing information in the signaling message so that messages only go to the intended recipient. This keeps communication efficient and avoids unnecessary traffic between clients.</p>
+<p>This signaling server sets the stage for establishing peer-to-peer connections in your .NET application. With the signaling logic in place, clients can now exchange the crucial details needed to start their WebRTC sessions. In the next section, we’ll explore how to connect the front end to this signaling server, using JavaScript and WebRTC APIs to initiate and manage peer connections effectively.</p>
+<h3 id="using-javascript-interop-for-webrtc-in-blazor">Using JavaScript Interop for WebRTC in Blazor</h3>
+<p>One of the most practical approaches to integrating this technology with Blazor is leveraging JavaScript interop. Blazor is a fantastic tool for creating modern web applications in C#, but WebRTC is primarily JavaScript territory. Thankfully, Blazor&#x27;s interop capabilities allow us to seamlessly bridge the gap, letting you use C# to control JavaScript and ultimately bring WebRTC functionality into your Blazor applications without reinventing the wheel.</p>
+<p>To start, let&#x27;s create a Blazor application that will allow us to establish a WebRTC connection. Begin by creating a new Blazor Server or Blazor WebAssembly project in .NET:</p>
+<div id="using-javascript-interop-for-webrtc-in-blazor-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet new blazorserver -n BlazorWebRTC</code></pre>
+</doc-codeblock></div>
+<p>Once the Blazor project is set up, the next step is to add JavaScript functionality to handle WebRTC. We will write a JavaScript file to manage all WebRTC operations, including creating <code translate="no" v-pre>RTCPeerConnection</code>, handling ICE candidates, and exchanging SDP. Add a new JavaScript file called <code translate="no" v-pre>webrtc.js</code> in the <code translate="no" v-pre>wwwroot</code> directory:</p>
+<div id="using-javascript-interop-for-webrtc-in-blazor-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
+
+let localConnection = null;
+let remoteConnection = null;
+
+window.webRTCInterop = {
+    initializeConnection: function () {
+        localConnection = new RTCPeerConnection();
+        remoteConnection = new RTCPeerConnection();
+
+        // Handle ICE candidates
+        localConnection.onicecandidate = (event) =&gt; {
+            if (event.candidate) {
+                remoteConnection.addIceCandidate(event.candidate);
+            }
+        };
+        
+        remoteConnection.onicecandidate = (event) =&gt; {
+            if (event.candidate) {
+                localConnection.addIceCandidate(event.candidate);
+            }
+        };
+
+        // Handle remote stream
+        remoteConnection.ontrack = (event) =&gt; {
+            const remoteVideo = document.getElementById(&quot;remoteVideo&quot;);
+            remoteVideo.srcObject = event.streams[0];
+        };
+    },
+
+    startCall: async function () {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const localVideo = document.getElementById(&quot;localVideo&quot;);
+        localVideo.srcObject = stream;
+
+        stream.getTracks().forEach(track =&gt; localConnection.addTrack(track, stream));
+
+        const offer = await localConnection.createOffer();
+        await localConnection.setLocalDescription(offer);
+        await remoteConnection.setRemoteDescription(offer);
+
+        const answer = await remoteConnection.createAnswer();
+        await remoteConnection.setLocalDescription(answer);
+        await localConnection.setRemoteDescription(answer);
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>In your _Host.cshtml file, add a reference to the JavaScript file within the <head> tag:</p>
+<div id="using-javascript-interop-for-webrtc-in-blazor-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">&lt;script src=&quot;~/webrtc.js&quot;&gt;&lt;/script&gt;</code></pre>
+</doc-codeblock></div>
+<p>In this JavaScript code, we set up two peer connections (<code translate="no" v-pre>localConnection</code> and <code translate="no" v-pre>remoteConnection</code>) for demonstration purposes, simulating two different users connecting. This will handle media streams, SDP offers, and ICE candidates. The goal is to initiate and manage the connection purely through JavaScript while invoking this behavior from C#.</p>
+<p>Next, integrate this JavaScript into the Blazor application using JavaScript interop. Open a Blazor component, such as <code translate="no" v-pre>Index.razor</code>, and set up the necessary user interface for video calls:</p>
+<div id="using-javascript-interop-for-webrtc-in-blazor-c-1" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;WebRTC Video Chat&lt;/h3&gt;
+
+&lt;video id=&quot;localVideo&quot; autoplay playsinline&gt;&lt;/video&gt;
+&lt;video id=&quot;remoteVideo&quot; autoplay playsinline&gt;&lt;/video&gt;
+
+&lt;button @onclick=&quot;InitializeConnection&quot;&gt;Initialize Connection&lt;/button&gt;
+&lt;button @onclick=&quot;StartCall&quot;&gt;Start Call&lt;/button&gt;
+
+@code {
+    private async Task InitializeConnection()
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.initializeConnection&quot;);
+    }
+
+    private async Task StartCall()
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.startCall&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this Blazor component, we have two <code translate="no" v-pre>&lt;video&gt;</code> elements to display the local and remote video streams and two buttons to initialize the connection and start the call. The C# code-behind uses JavaScript interop to call the functions defined in <code translate="no" v-pre>webrtc.js</code>, which is necessary for integrating the Blazor component with JavaScript for video streaming.</p>
+<p>To connect the Blazor component with the JavaScript file, inject the JavaScript runtime in the @code block:</p>
+<div id="using-javascript-interop-for-webrtc-in-blazor-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">@inject IJSRuntime JS</code></pre>
+</doc-codeblock></div>
+<p>This allows us to use <code translate="no" v-pre>JS.InvokeVoidAsync()</code> to call JavaScript functions from the C# side. When the user clicks &quot;Initialize Connection,&quot; it will set up the peer connections and ICE candidate handling, and when &quot;Start Call&quot; is clicked, it will begin the media exchange process.</p>
+<p>This JavaScript and C# integration approach gives you the best of both worlds—leveraging WebRTC&#x27;s native support in browsers via JavaScript while managing the application&#x27;s logic and UI using Blazor and C#. The key here is to offload the WebRTC operations to JavaScript, which already has well-supported APIs. Use Blazor for everything else, ensuring you maintain a structured and easy-to-manage codebase.</p>
+<p>This combination makes building real-time web applications a breeze. If you prefer working in C #, you won&#x27;t have to dive too deep into JavaScript. In the next sections, we&#x27;ll explore how to manage media streams and data channels further, making this solution functional, polished, and ready for real-world scenarios.</p>
+<h3 id="handling-media-streams-in-net-applications">Handling Media Streams in .NET Applications</h3>
+<p>Handling media streams is one of the core capabilities that makes WebRTC so powerful, enabling real-time audio and video exchange between peers. In a .NET application, the challenge lies in effectively integrating the front end (where users interact with video and audio) with a backend capable of supporting signaling and handling real-time data exchange. This section will extend our Blazor-based WebRTC setup to capture, manage, and route media streams, highlighting the satisfaction of overcoming this integration challenge.</p>
+<p>First, on the JavaScript side, we already have the logic to capture the user&#x27;s media stream using <code translate="no" v-pre>getUserMedia()</code> in our <code translate="no" v-pre>webrtc.js</code> file. This function captures video and audio from the local device and adds it to the peer connection. The next task is to set up the backend signaling to ensure that media streams are correctly set up between peers. This includes communicating SDP offers, answers, and ICE candidates to the .NET backend, which then relays the messages between clients.</p>
+<p>On the .NET server side, we must manage signaling messages to set up these media streams. Suppose you have the signaling server implemented as in our earlier example. Let&#x27;s add a way to differentiate between signaling messages when setting up media. You might want to implement different types of messages like &quot;offer,&quot; &quot;answer,&quot; and &quot;candidate&quot; to handle the SDP and ICE candidate exchanges. Here&#x27;s a simplified example:</p>
+<div id="handling-media-streams-in-net-applications-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">async Task HandleWebSocketSignaling(WebSocket webSocket)
+{
+    connectedClients.Add(webSocket);
+    var buffer = new byte[1024 * 4];
+
+    try
+    {
+        while (webSocket.State == WebSocketState.Open)
+        {
+            var result = await webSocket.ReceiveAsync(new ArraySegment&lt;byte&gt;(buffer), CancellationToken.None);
+            var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+            
+            // Parsing JSON message to differentiate message types
+            var signalingMessage = JsonSerializer.Deserialize&lt;SignalingMessage&gt;(message);
+            
+            switch (signalingMessage.Type)
+            {
+                case &quot;offer&quot;:
+                case &quot;answer&quot;:
+                case &quot;candidate&quot;:
+                    await ForwardSignalingMessage(signalingMessage, webSocket);
+                    break;
+                default:
+                    Console.WriteLine($&quot;Unknown message type: {signalingMessage.Type}&quot;);
+                    break;
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($&quot;Error: {ex.Message}&quot;);
+    }
+    finally
+    {
+        connectedClients.Remove(webSocket);
+        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, &quot;Closing&quot;, CancellationToken.None);
+    }
+}
+
+async Task ForwardSignalingMessage(SignalingMessage signalingMessage, WebSocket sender)
+{
+    foreach (var client in connectedClients)
+    {
+        if (client != sender &amp;&amp; client.State == WebSocketState.Open)
+        {
+            var messageJson = JsonSerializer.Serialize(signalingMessage);
+            await client.SendAsync(new ArraySegment&lt;byte&gt;(Encoding.UTF8.GetBytes(messageJson)), WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+    }
+}
+
+public class SignalingMessage
+{
+    public string Type { get; set; }
+    public string Payload { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, we handle different signaling message types to manage SDP offers, answers, and ICE candidates, which are essential for setting up media streams. The <code translate="no" v-pre>ForwardSignalingMessage</code> method ensures that each client receives the relevant signaling data to establish the peer-to-peer connection.</p>
+<p>On the Blazor frontend, the captured media is displayed in the local video element, while the remote video is displayed once the other peer&#x27;s stream has been received. The media streams can be manipulated through JavaScript, but it&#x27;s also possible to control the flow from the .NET side by adjusting how and when media tracks are added. For example, if you wanted to add or remove tracks dynamically, you could extend your JavaScript interop to include functions like <code translate="no" v-pre>addTrack</code> or <code translate="no" v-pre>removeTrack</code> and then call those functions from C# based on the user&#x27;s actions:</p>
+<div id="handling-media-streams-in-net-applications-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task AddTrack()
+{
+    await JS.InvokeVoidAsync(&quot;webRTCInterop.addTrack&quot;);
+}
+
+public async Task RemoveTrack()
+{
+    string trackId = &quot;your-track-id&quot;;
+    await JS.InvokeVoidAsync(&quot;webRTCInterop.removeTrack&quot;, trackId);
+}</code></pre>
+</doc-codeblock></div>
+<p>Managing media streams in a WebRTC application isn&#x27;t just about setting up the initial connection—it also means maintaining the connection, monitoring the quality, and potentially adjusting parameters like bitrate, resolution, or even turning specific tracks on/off. This is where combining the flexibility of JavaScript with the control of .NET truly shines, letting you tailor the experience based on the capabilities of the user&#x27;s network or device. These capabilities can be determined through various methods such as network speed tests, device detection, or user input.</p>
+<p>In the following sections, we&#x27;ll explore optimizing these media streams for performance and reliability, ensuring that users have a smooth experience regardless of their network conditions. The idea is to keep things seamless for users, which should resonate with you, the developer, as it&#x27;s all about enhancing the end-user experience.</p>
+<h2 id="data-channels-and-custom-data-exchange">Data Channels and Custom Data Exchange</h2>
+<p>Data channels are a source of boundless inspiration in the WebRTC landscape. They transcend the conventional audio and video streaming, opening up a realm where real-time messages, file sharing, and application state synchronization can occur directly between users, with minimal latency. This potential unleashes a world of creativity for dynamic applications, from multiplayer games that demand instant action sharing to productivity tools that foster seamless user collaboration. Data channels are the key to this world, and in this section, we’ll explore how to infuse this potential into your .NET applications.</p>
+<p>Working with data channels in .NET involves:
+Setting up efficient signaling.
+Using WebRTC’s powerful APIs for creating reliable and secure pathways for data exchange.
+Managing the flow of information between peers.
+It’s not just about establishing a connection; it’s about designing an experience that feels responsive and smooth—whether for chatting, sharing documents, or creating a shared virtual environment. Integrating WebRTC data channels into Blazor applications provides a perfect example of leveraging the best of both worlds—high-level C# capabilities such as asynchronous programming and LINQ combined with real-time data transmission.</p>
+<p>Throughout this section, we’ll guide you through the process of setting up and managing data channels in Blazor, exploring how to handle the different states of the data channel and implement the logic for sending and receiving custom data. By the end, you’ll be equipped to create sophisticated .NET applications where data exchange is as seamless as a chat between friends—immediate, direct, and reliable. Your users can trust in the reliability of your application&#x27;s data exchange, enhancing their overall experience.</p>
+<h3 id="managing-webrtc-data-channels">Managing WebRTC Data Channels</h3>
+<p>Data channels, a powerful feature of WebRTC, enable the direct transfer of arbitrary data between peers. Unlike media streams, which are used for audio and video, data channels allow you to send text, files, game states, or any custom data with low latency. Integrating data channels into a .NET application is a complex task that involves setting up signaling, but more importantly, it requires the effective management of data transfer. Your role in ensuring that both the backend and frontend are in sync to handle these messages effectively is crucial. Let’s explore this challenge of managing data channels using Blazor and .NET.</p>
+<p>Our journey to include the data channel in our existing WebRTC setup begins with a crucial step on the JavaScript side. Here, your expertise comes into play as we modify <code translate="no" v-pre>webrtc.js</code> to create a data channel within the existing peer connection setup. The following JavaScript code, which you will be instrumental in implementing, initializes a data channel and sets up event listeners to handle incoming messages:</p>
+<div id="managing-webrtc-data-channels-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
+
+let dataChannel = null;
+
+window.webRTCInterop = {
+    initializeConnection: function () {
+        localConnection = new RTCPeerConnection();
+        remoteConnection = new RTCPeerConnection();
+
+        // Set up the data channel
+        dataChannel = localConnection.createDataChannel(&quot;chat&quot;);
+        dataChannel.onopen = () =&gt; console.log(&quot;Data channel is open&quot;);
+        dataChannel.onmessage = (event) =&gt; {
+            console.log(&quot;Received message: &quot;, event.data);
+            // Display received message in the UI
+        };
+
+        // Set up event listener for data channel in remote connection
+        remoteConnection.ondatachannel = (event) =&gt; {
+            const receiveChannel = event.channel;
+            receiveChannel.onmessage = (e) =&gt; {
+                console.log(&quot;Received message on remote: &quot;, e.data);
+                // Display received message in the UI
+            };
+        };
+
+        // Handle ICE candidates as before
+        localConnection.onicecandidate = (event) =&gt; {
+            if (event.candidate) {
+                remoteConnection.addIceCandidate(event.candidate);
+            }
+        };
+
+        remoteConnection.onicecandidate = (event) =&gt; {
+            if (event.candidate) {
+                localConnection.addIceCandidate(event.candidate);
+            }
+        };
+    },
+
+    sendMessage: function (message) {
+        if (dataChannel &amp;&amp; dataChannel.readyState === &quot;open&quot;) {
+            dataChannel.send(message);
+            console.log(&quot;Sent message: &quot;, message);
+        }
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>In the JavaScript code above, <code translate="no" v-pre>createDataChannel</code> creates a data channel named &quot;chat.&quot; We also set up event handlers to listen for incoming messages and respond to the channel&#x27;s state changes. Once the data channel is open, the <code translate="no" v-pre>sendMessage</code> function can be called to send data through it.</p>
+<p>Now, let&#x27;s integrate this with Blazor so that users can send messages from the UI. In the <code translate="no" v-pre>Index.razor</code> component, we can create a simple interface for sending text messages:</p>
+<div id="managing-webrtc-data-channels-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;WebRTC Data Channel Demo&lt;/h3&gt;
+
+&lt;input @bind=&quot;message&quot; placeholder=&quot;Type a message&quot; /&gt;
+&lt;button @onclick=&quot;SendMessage&quot;&gt;Send&lt;/button&gt;
+
+@code {
+    private string message = string.Empty;
+
+    private async Task SendMessage()
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.sendMessage&quot;, message);
+        message = string.Empty;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Here, we create an input box where users can type messages and a button that sends those messages via the data channel. Using JavaScript interop (<code translate="no" v-pre>JS.InvokeVoidAsync</code>), we call the <code translate="no" v-pre>sendMessage</code> function in our JavaScript code to send data from the local client to the remote client.</p>
+<p>On the .NET backend, we don&#x27;t need to directly handle the data channel itself, as it&#x27;s managed between peers on the frontend. However, the backend signaling server plays a vital role in facilitating the setup of the peer connection. It ensures that both peers have successfully negotiated the data channel during signaling, acting as a mediator for the initial connection setup and subsequent communication. The existing signaling server from the previous sections can be used as-is, with SDP and ICE candidates exchanged to support both media and data channels.</p>
+<p>A key aspect of managing data channels is monitoring the connection state. You want to ensure the data channel is open before sending messages, which we handle in JavaScript by checking <code translate="no" v-pre>dataChannel.readyState</code>. Additionally, you may want to implement some form of error handling or reconnection logic, especially if the connection is interrupted. This can be done by listening for events like <code translate="no" v-pre>onerror</code> and <code translate="no" v-pre>onclose</code> on the data channel and responding accordingly. For instance, you can display an error message to the user when an error occurs, or automatically attempt to reconnect when the connection is closed.</p>
+<p>Using data channels in .NET applications provides:</p>
+<ul>
+<li>A lot of flexibility.</li>
+<li>Allowing you to create features such as real-time chat.</li>
+<li>File sharing.</li>
+<li>Even collaborative tools like shared whiteboards.</li>
+</ul>
+<p>Combining the power of Blazor and .NET with WebRTC&#x27;s real-time capabilities is a game-changer. It enables you to develop interactive, dynamic web applications that feel responsive and connected. In the following sections, we&#x27;ll continue building on this foundation, covering how to secure these connections and ensure a smooth user experience.</p>
+<h3 id="adjusting-bitrate-and-resolution">Adjusting Bitrate and Resolution</h3>
+<p>One of the critical factors in maintaining a high-quality media experience in WebRTC is the ability to adjust the bitrate and resolution of the video streams dynamically. Network conditions can vary significantly between users, and without proper adjustments, you might end up with a connection that&#x27;s either poor in quality or consuming too much bandwidth. In this section, we&#x27;ll look into how you can use JavaScript interop in Blazor to tweak bitrate and resolution settings for video streams and, in turn, create an adaptive, high-quality experience for users regardless of their network environment.</p>
+<p>Start by adding controls to the JavaScript file that adjust the video bitrate during a call. For this, we&#x27;ll interact with the WebRTC <code translate="no" v-pre>RTCRtpSender</code> API, which allows fine-tuning parameters such as max bitrate. Here&#x27;s an extension of the <code translate="no" v-pre>webrtc.js</code> file where we control the bitrate settings:</p>
+<div id="adjusting-bitrate-and-resolution-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">// wwwroot/webrtc.js
+
+window.webRTCInterop = {
+    adjustBitrate: function (bitrate) {
+        const senders = localConnection.getSenders();
+        senders.forEach(sender =&gt; {
+            if (sender.track &amp;&amp; sender.track.kind === 'video') {
+                const parameters = sender.getParameters();
+                if (!parameters.encodings) {
+                    parameters.encodings = [{}];
+                }
+                parameters.encodings[0].maxBitrate = bitrate * 1000; // Convert kbps to bps
+                sender.setParameters(parameters);
+                console.log(`Adjusted video bitrate to ${bitrate} kbps`);
+            }
+        });
+    },
+
+    // Existing functions like initializeConnection and startCall...
+};</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>adjustBitrate</code> function, a key element in managing bandwidth usage, utilizes the <code translate="no" v-pre>RTCRtpSender</code> to access and modify encoding parameters, including the <code translate="no" v-pre>maxBitrate</code>. This function is crucial as it allows you to cap the bandwidth usage, a practical solution to avoid overwhelming a user&#x27;s connection, especially in environments with limited bandwidth.</p>
+<p>Now, let&#x27;s integrate this user-centric functionality with the Blazor UI. This will empower users or the application to adjust bitrate based on detected network conditions. We&#x27;ll add an input and button to Index.razor to set the desired bitrate:</p>
+<div id="adjusting-bitrate-and-resolution-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;Adjust WebRTC Video Bitrate&lt;/h3&gt;
+
+&lt;input type=&quot;number&quot; @bind=&quot;bitrate&quot; placeholder=&quot;Enter bitrate (kbps)&quot; /&gt;
+&lt;button @onclick=&quot;SetBitrate&quot;&gt;Set Bitrate&lt;/button&gt;
+
+@code {
+    private int bitrate;
+
+    private async Task SetBitrate()
+    {
+        if (bitrate &gt; 0)
+        {
+            await JS.InvokeVoidAsync(&quot;webRTCInterop.adjustBitrate&quot;, bitrate);
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Here, the user can specify a new bitrate, and upon clicking the button, the value is sent to JavaScript via interop. This allows the application to adapt video quality based on network analysis, such as bandwidth estimation algorithms you might implement on the server side.</p>
+<p>Resolution adjustment ensures optimal media quality, especially when bandwidth limitations are present. To adjust video resolution dynamically, you would modify how the media is accessed and constrained. When initially capturing the video, you can set constraints based on the current network conditions. Here&#x27;s an example that allows dynamic adjustment of video constraints:</p>
+<div id="adjusting-bitrate-and-resolution-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+    updateResolution: async function (width, height) {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                width: { ideal: width },
+                height: { ideal: height }
+            },
+            audio: true
+        });
+
+        const videoTracks = localConnection.getSenders().filter(sender =&gt; sender.track.kind === 'video');
+        videoTracks.forEach(track =&gt; {
+            track.replaceTrack(stream.getVideoTracks()[0]);
+            console.log(`Updated resolution to ${width}x${height}`);
+        });
+
+        const localVideo = document.getElementById(&quot;localVideo&quot;);
+        localVideo.srcObject = stream;
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>To integrate this in your Blazor application, you could add controls that allow a user to select a resolution, or automatically adjust it based on network analysis:</p>
+<div id="adjusting-bitrate-and-resolution-c-1" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">&lt;h3&gt;Adjust Video Resolution&lt;/h3&gt;
+
+&lt;input type=&quot;number&quot; @bind=&quot;resolutionWidth&quot; placeholder=&quot;Width (px)&quot; /&gt;
+&lt;input type=&quot;number&quot; @bind=&quot;resolutionHeight&quot; placeholder=&quot;Height (px)&quot; /&gt;
+&lt;button @onclick=&quot;SetResolution&quot;&gt;Set Resolution&lt;/button&gt;
+
+@code {
+    private int resolutionWidth = 1280;
+    private int resolutionHeight = 720;
+
+    private async Task SetResolution()
+    {
+        if (resolutionWidth &gt; 0 &amp;&amp; resolutionHeight &gt; 0)
+        {
+            await JS.InvokeVoidAsync(&quot;webRTCInterop.updateResolution&quot;, resolutionWidth, resolutionHeight);
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>By enabling users or the system to adjust the bitrate and resolution seamlessly, you’re empowering the WebRTC application to balance quality and performance. These adjustments can happen dynamically during a call, responding to network fluctuations or changes in available bandwidth. Integrating these options into your Blazor interface provides a user-friendly way to adapt media streams for the best possible experience.</p>
+<p>In the next sections, we will explore how adaptive bitrate and resolution adjustments can be automated using network analysis techniques. This will make your application smarter and more responsive to real-world conditions without requiring manual user input.</p>
+<h3 id="using-adaptive-bitrate-and-bandwidth-estimation">Using Adaptive Bitrate and Bandwidth Estimation</h3>
+<p>Implementing adaptive bitrate and bandwidth estimation is essential for maintaining high-quality, real-time media experiences in unpredictable network environments. Rather than sticking to a fixed bitrate or resolution that might degrade the experience if conditions change, adaptive bitrate enables your application to adjust the video quality based on current network conditions dynamically. This ensures that, even if bandwidth fluctuates, users experience minimal interruptions and enjoy the best possible media quality their connection can support.</p>
+<p>In WebRTC, the browser often manages adaptive bitrate control automatically using mechanisms like congestion control and feedback from the network. However, you can enhance this capability in your .NET-based application by utilizing the RTCRtpSender.<code translate="no" v-pre>getParameters()</code> and <code translate="no" v-pre>setParameters()</code> methods for manual control, combined with information you gather about the network&#x27;s state. We can start by using JavaScript to get statistics on the current network performance and pass this information back to the server or control logic in your Blazor app.</p>
+<p>Here&#x27;s a JavaScript function that makes use of <code translate="no" v-pre>getStats()</code> to monitor bandwidth and estimate network conditions:</p>
+<div id="using-adaptive-bitrate-and-bandwidth-estimation-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+    monitorBandwidth: function () {
+        localConnection.getStats(null).then(stats =&gt; {
+            stats.forEach(report =&gt; {
+                if (report.type === 'outbound-rtp' &amp;&amp; report.mediaType === 'video') {
+                    console.log(`Bitrate: ${report.bytesSent} bytes sent, Timestamp: ${report.timestamp}`);
+                }
+            });
+        });
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>monitorBandwidth</code> function accesses WebRTC statistics and logs relevant information about the video bitrate. This can be used to diagnose the current network conditions, and based on this information, you can adjust the bitrate in real time. Let’s integrate this monitoring functionality into a Blazor app, where it will play a crucial role in making informed decisions about video streaming.</p>
+<p>In the <code translate="no" v-pre>Index.razor</code> file, set up a button to initiate monitoring and adaptive bitrate control:</p>
+<div id="using-adaptive-bitrate-and-bandwidth-estimation-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;Monitor Bandwidth and Adjust Bitrate&lt;/h3&gt;
+
+&lt;button @onclick=&quot;MonitorAndAdjustBitrate&quot;&gt;Monitor and Adjust Bitrate&lt;/button&gt;
+
+@code {
+    private async Task MonitorAndAdjustBitrate()
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.monitorBandwidth&quot;);
+        // Simulate adaptive logic, you could add a timer or a loop here
+        await Task.Delay(5000); // Delay to simulate monitoring interval
+        // Adjust bitrate based on monitored conditions, assuming you already retrieved a desired value
+        int adjustedBitrate = 500; // Example: adjust bitrate to 500 kbps
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.adjustBitrate&quot;, adjustedBitrate);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, clicking &quot;Monitor and Adjust Bitrate&quot; will run the <code translate="no" v-pre>monitorBandwidth</code> JavaScript function to collect network statistics. Based on these stats, you could adjust the bitrate dynamically by invoking <code translate="no" v-pre>adjustBitrate</code> with a new value. This is where you add your adaptive logic, potentially by analyzing the output and responding to changes in available bandwidth.</p>
+<p>To take things a step further, you might implement a continuous feedback loop that monitors network conditions and automatically adapts bitrate without user intervention. This can be done with a recurring timer that continuously monitors and adjusts the bitrate:</p>
+<div id="using-adaptive-bitrate-and-bandwidth-estimation-c-1" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@code {
+    private PeriodicTimer? timer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+        await MonitorAndAdjustLoop();
+    }
+
+    private async Task MonitorAndAdjustLoop()
+    {
+        while (await timer.WaitForNextTickAsync())
+        {
+            await JS.InvokeVoidAsync(&quot;webRTCInterop.monitorBandwidth&quot;);
+            // Adjust the bitrate based on collected stats
+            int adjustedBitrate = EstimateNewBitrate();
+            await JS.InvokeVoidAsync(&quot;webRTCInterop.adjustBitrate&quot;, adjustedBitrate);
+        }
+    }
+
+    private int EstimateNewBitrate()
+    {
+        // Replace this with logic based on actual bandwidth estimates.
+        return 500; // Example: dynamic calculation can be added here.
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This implementation utilizes a PeriodicTimer that runs every five seconds to monitor the bandwidth and adjust the bitrate. The EstimateNewBitrate method is not just a placeholder, but a powerful tool that empowers you to customize the logic based on the network feedback gathered by monitorBandwidth. This setup provides an automated solution to adjust the media quality in response to changing network conditions, giving you full control over the adaptive bitrate control process.</p>
+<p>With adaptive bitrate control, you&#x27;re making your application much more resilient to the realities of users&#x27; network environments. It keeps the stream quality as high as possible while avoiding poor connectivity, leading to dropped frames or buffering. It&#x27;s particularly beneficial for applications like video conferencing or live streaming, where consistent quality is key to the user experience.</p>
+<p>In the next sections, we&#x27;ll explore how to optimize these adaptive techniques, including managing packet loss and handling network congestion gracefully, ensuring that your application can offer reliable real-time communication, no matter what the network throws at it.</p>
+<h3 id="managing-network-conditions-and-handling-packet-loss">Managing Network Conditions and Handling Packet Loss</h3>
+<p>In real-time communication, dealing with fluctuating network conditions and packet loss is an inevitable challenge. When network quality degrades, packets can get lost or arrive out of order, leading to degraded media quality—like choppy video or laggy audio. Understanding how to manage these conditions and handle packet loss is essential to delivering a smooth user experience. In this section, we’ll explore the proactive role of developers in implementing strategies in their.NET-based WebRTC solutions to maintain connection quality, even under less-than-ideal circumstances.</p>
+<p>One of the ways WebRTC handles network fluctuations is through mechanisms like Forward Error Correction (FEC) and retransmissions. To support these strategies from the application side, we need to closely monitor network quality. JavaScript, with its ability to provide access to WebRTC statistics, plays a key role in this process. Here’s a JavaScript function that retrieves packet loss statistics using <code translate="no" v-pre>getStats()</code>:</p>
+<div id="managing-network-conditions-and-handling-packet-loss-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+    monitorPacketLoss: function () {
+        localConnection.getStats(null).then(stats =&gt; {
+            stats.forEach(report =&gt; {
+                if (report.type === 'inbound-rtp' &amp;&amp; report.mediaType === 'video') {
+                    console.log(`Packets Lost: ${report.packetsLost}`);
+                }
+            });
+        });
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>This function iterates over the statistics reports and logs the number of packets lost for video streams. It’s a good starting point for understanding the quality of the current connection and determining whether further action is needed to mitigate packet loss.</p>
+<p>To integrate this with the .NET application, we can use Blazor to call this JavaScript function regularly and take action based on the results. For example, if we detect a high packet loss, we can adjust the bitrate or even change the codec to one that performs better under constrained conditions:</p>
+<div id="managing-network-conditions-and-handling-packet-loss-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;Monitor Packet Loss and Adjust Quality&lt;/h3&gt;
+
+&lt;button @onclick=&quot;MonitorAndHandlePacketLoss&quot;&gt;Monitor and Handle Packet Loss&lt;/button&gt;
+
+@code {
+    private async Task MonitorAndHandlePacketLoss()
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.monitorPacketLoss&quot;);
+        // Simulate adaptive action, add actual handling logic here
+        int adjustedBitrate = 300; // Lower bitrate if packet loss is detected
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.adjustBitrate&quot;, adjustedBitrate);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In the above example, &#x27;Monitor and Handle Packet Loss&#x27; triggers monitoring. Based on the collected data, you could lower the bitrate. This action helps alleviate network stress, thereby reducing the packet loss rate and significantly improving the overall experience.</p>
+<p>A more sophisticated approach would involve implementing a dynamic feedback loop that continually monitors network conditions and actively responds to packet loss. This engaging process can be achieved by leveraging a periodic timer, as we did in the previous section:</p>
+<div id="managing-network-conditions-and-handling-packet-loss-c-1" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@code {
+    private PeriodicTimer? packetLossTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        packetLossTimer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+        await MonitorPacketLossLoop();
+    }
+
+    private async Task MonitorPacketLossLoop()
+    {
+        while (await packetLossTimer.WaitForNextTickAsync())
+        {
+            await JS.InvokeVoidAsync(&quot;webRTCInterop.monitorPacketLoss&quot;);
+            // Logic to determine how to handle detected packet loss
+            int adjustedBitrate = EstimateBitrateBasedOnPacketLoss();
+            await JS.InvokeVoidAsync(&quot;webRTCInterop.adjustBitrate&quot;, adjustedBitrate);
+        }
+    }
+
+    private int EstimateBitrateBasedOnPacketLoss()
+    {
+        // Add logic to determine new bitrate based on packet loss data
+        return 300; // Example: dynamically adjust this value
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This loop ensures that packet loss is monitored regularly, allowing the application to make timely adjustments. By constantly adapting to changing conditions, you reduce the chance of severe quality degradation, making the experience more resilient.</p>
+<p>In addition to adjusting bitrate, consider switching codecs during the session if packet loss becomes an ongoing issue. Particular codecs, such as VP9 and H.264, have different levels of resilience to packet loss. VP9, for example, has better error resilience, making it more suitable for challenging networks. By dynamizing the SDP (Session Description Protocol) and renegotiating the connection, you can choose a codec that best suits the current conditions.</p>
+<p>While preventing packet loss entirely is impossible, especially on unreliable networks, proactive management is the key to a consistently good experience. By monitoring packet loss, adjusting bitrates, and choosing the appropriate codecs, you can ensure that your WebRTC solution delivers the best possible quality under varying conditions. In the next sections, we will further explore optimizing network performance by utilizing jitter buffers and strategies to maintain a smooth and responsive connection.</p>
+<h3 id="optimizing-encoding-and-hardware-acceleration">Optimizing Encoding and Hardware Acceleration</h3>
+<p>Optimizing video encoding is one of the most impactful ways to ensure smooth, real-time communication. Efficient encoding helps balance quality, performance, and bandwidth usage, especially in unpredictable network conditions. One powerful way to boost performance and feel empowered is by leveraging hardware acceleration. This technology offloads complex encoding tasks to specialized hardware, thereby reducing the load on the CPU and significantly improving overall application efficiency. This section will explore how you can use encoding settings and hardware acceleration to provide the best user experience.</p>
+<p>Let’s start by adjusting the encoder settings. WebRTC, with its flexible options, gives you the confidence to control encoding parameters, such as setting preferred codecs, adjusting resolution, and limiting frame rates. You can achieve this through JavaScript, using <code translate="no" v-pre>RTCRtpSender.getParameters()</code> and <code translate="no" v-pre>setParameters()</code>. For example, let’s modify our <code translate="no" v-pre>webrtc.js</code> file to add a function that optimizes the encoder’s settings for improved performance:</p>
+<div id="optimizing-encoding-and-hardware-acceleration-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+    optimizeEncoding: function (bitrate, framerate) {
+        const senders = localConnection.getSenders();
+        senders.forEach(sender =&gt; {
+            if (sender.track &amp;&amp; sender.track.kind === 'video') {
+                const parameters = sender.getParameters();
+                if (!parameters.encodings) {
+                    parameters.encodings = [{}];
+                }
+                parameters.encodings[0].maxBitrate = bitrate * 1000; // kbps to bps
+                parameters.encodings[0].maxFramerate = framerate;
+                sender.setParameters(parameters);
+                console.log(`Optimized encoding: Bitrate set to ${bitrate} kbps, Frame rate set to ${framerate}`);
+            }
+        });
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>This function sets the maximum bitrate and frame rate for the video stream, helping reduce the load on the network and optimize the quality based on current conditions. Lower frame rates or bitrates are especially helpful in maintaining a stable connection during periods of high packet loss or limited bandwidth.</p>
+<p>To leverage hardware acceleration, it is crucial to configure video encoding so that it takes advantage of the user&#x27;s GPU when available. Most modern browsers already support hardware acceleration by default, but you can ensure this is happening effectively by monitoring the system&#x27;s performance. Your Blazor app plays a crucial role in this optimization process, allowing users to select encoding options or letting the application dynamically adjust based on system feedback.</p>
+<p>In your .razor file, you could add an option for the user to select performance modes:</p>
+<div id="optimizing-encoding-and-hardware-acceleration-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;Optimize Encoding Settings&lt;/h3&gt;
+
+&lt;button @onclick=&quot;() =&gt; OptimizeEncoding(1000, 30)&quot;&gt;Low Quality (1000 kbps, 30 fps)&lt;/button&gt;
+&lt;button @onclick=&quot;() =&gt; OptimizeEncoding(2000, 60)&quot;&gt;High Quality (2000 kbps, 60 fps)&lt;/button&gt;
+
+@code {
+    private async Task OptimizeEncoding(int bitrate, int framerate)
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.optimizeEncoding&quot;, bitrate, framerate);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Here, users can select between different quality options, allowing them to optimize their experience based on their current system performance or network capability. This is particularly useful if your application targets a broad audience with varying levels of hardware, from high-performance desktop machines to lower-powered laptops or tablets.</p>
+<p>Another crucial aspect of optimizing encoding is choosing the accurate codec. Codecs like VP8, VP9, and H.264 have different strengths—VP9 generally provides better compression at similar quality levels than VP8, but it also requires more processing power. With hardware acceleration, H.264 can be highly efficient due to broad device support. During the initial connection setup, you can choose a particular codec by modifying the SDP, which can be obtained using the JavaScript getLocalDescription() function, and by modifying the content to select the codec you want to prioritize.</p>
+<p>By optimizing the encoding settings and ensuring hardware acceleration is in play, you make your application more robust and responsive to different user scenarios. Whether users are on high-end devices or constrained environments, encoding optimization and offloading heavy tasks to the GPU help ensure a high-quality and seamless media experience. In the upcoming sections, we&#x27;ll explore how to continue refining media handling by employing jitter buffers and ensuring smooth audio and video synchronization, even in fluctuating network conditions.</p>
+<h2 id="security-considerations-in-webrtc">Security Considerations in WebRTC</h2>
+<p>When it comes to real-time communication, security is not an afterthought, but a fundamental requirement. In WebRTC, security considerations are ingrained in the protocol from the ground up, ensuring private and secure exchange of audio, video, and data between peers. However, while WebRTC handles many aspects of encryption and data protection by default, there are crucial elements that developers must understand and manage to ensure a truly secure implementation. From securing signaling channels to managing permissions for media access, a comprehensive understanding of the full scope of security is vital when integrating WebRTC into your .NET applications.</p>
+<p>WebRTC encrypts all media and data streams by design, using DTLS to secure data channels and SRTP to secure media. However, the security of your application is not solely dependent on encryption. The vulnerability of other aspects, such as the signaling server, can be exploited by attackers to hijack the session. Therefore, securing signaling channels, often through HTTPS and WebSockets with proper authentication, is a critical aspect of WebRTC security. This measure is essential to prevent attacks and ensure that only trusted peers can connect.</p>
+<p>Another crucial consideration in WebRTC security is the control of access to communication resources such as cameras, microphones, and shared data channels. Users need to be confident that their devices are being accessed appropriately and that sensitive data is only shared with authorized peers. In this section, we will delve into how to leverage both built-in WebRTC security features and additional techniques in .NET to secure your application end-to-end. This approach ensures a safe and reliable experience for all users, enhancing their confidence in the security of your application.</p>
+<h3 id="securing-the-signaling-process">Securing the Signaling Process</h3>
+<p>The signaling process is the backbone of establishing a secure WebRTC connection, as it&#x27;s responsible for exchanging the necessary details for the peer-to-peer setup—such as session descriptions (SDP) and ICE candidates. Because this phase happens before encryption takes over, securing the signaling channel itself is crucial to prevent attackers from hijacking the session or injecting malicious data. In practical terms, this means using HTTPS and secure WebSockets (WSS) for all signaling communications and implementing authentication to ensure that only trusted users can participate.</p>
+<p>To secure your signaling server, start by ensuring all endpoints are accessed via HTTPS. This provides a secure channel for the signaling data and prevents common attacks like man-in-the-middle from intercepting sensitive information. You can use ASP.NET Core to enforce HTTPS redirection in your Program easily.cs file:</p>
+<div id="securing-the-signaling-process-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpsRedirection(options =&gt;
+{
+    options.HttpsPort = 5001; // Ensure you're redirecting all HTTP traffic to HTTPS
+});
+
+var app = builder.Build();
+app.UseHttpsRedirection();
+app.UseWebSockets();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =&gt;
+{
+    endpoints.MapGet(&quot;/signal&quot;, async context =&gt;
+    {
+        if (context.WebSockets.IsWebSocketRequest)
+        {
+            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+            await HandleSignaling(webSocket);
+        }
+        else
+        {
+            context.Response.StatusCode = 400;
+        }
+    });
+});
+
+app.Run();</code></pre>
+</doc-codeblock></div>
+<p>The above code, when implemented, ensures that all communication with the signaling server happens over HTTPS, and WebSocket requests are upgraded to WSS, providing an encrypted channel for the signaling process. This robust encryption not only secures the communication but also reassures the users about the privacy of their data. Beyond encryption, adding authentication is vital to ensuring only authorized users can participate in signaling. For example, you can require clients to send a token or API key that gets validated before allowing them to connect to the signaling server. This can be done by adding middleware that checks for authentication before establishing the WebSocket connection.</p>
+<div id="securing-the-signaling-process-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+{
+    if (context.Request.Path == &quot;/signal&quot;)
+    {
+        var apiKey = context.Request.Headers[&quot;ApiKey&quot;];
+        if (string.IsNullOrEmpty(apiKey) || !IsValidApiKey(apiKey))
+        {
+            context.Response.StatusCode = 401; // Unauthorized
+            await context.Response.WriteAsync(&quot;Unauthorized&quot;);
+            return;
+        }
+    }
+
+    await next();
+});</code></pre>
+</doc-codeblock></div>
+<p>The middleware checks for an API key in the request header in this example. The server responds with a 401 Unauthorized status if the key is missing or invalid. This additional layer of security helps prevent unauthorized access to the signaling process, ensuring that only legitimate clients can participate in setting up a WebRTC session.</p>
+<p>Securing the signaling process is an essential step toward ensuring the overall security of your WebRTC application. You create a robust first line of defense by using encrypted channels like HTTPS and WSS and adding proper authentication measures. As we move forward, we&#x27;ll explore how to further control access, ensuring that only trusted users can share audio, video, and data, thus providing a fully secure real-time communication experience.</p>
+<h2 id="debugging-and-testing-webrtc-applications">Debugging and Testing WebRTC Applications</h2>
+<p>Debugging and testing WebRTC applications can be an adventure, especially considering all the moving parts involved—media streams, signaling, peer-to-peer connections, and network traversal. Unlike traditional web applications, WebRTC adds a layer of complexity with real-time components that can be affected by countless variables, from network conditions to device hardware. That&#x27;s why having a structured approach to debugging and testing is crucial for ensuring your application performs reliably, even when faced with less-than-ideal circumstances.</p>
+<p>From monitoring ICE candidate exchanges to verifying audio and video quality, effective debugging requires the right tools and a deep understanding of how WebRTC works under the hood. Tools like Chrome&#x27;s WebRTC internals, browser console logs, and getStats() API are your best allies in understanding what&#x27;s happening during a WebRTC session and diagnosing any issues that arise. Moreover, testing real-time interactions means thinking outside the box—simulating different network conditions, managing packet loss, and ensuring peer connections are stable even when users are on opposite sides of the globe.</p>
+<p>In this section, we&#x27;ll dive into the best practices and tools for debugging WebRTC applications, with specific guidance on using .NET and Blazor to build test scenarios that uncover potential issues before they affect your users. We&#x27;ll cover strategies for simulating network problems, tools for real-time monitoring, and methods for logging and analyzing the intricate flow of media and signaling data. With these skills, you&#x27;ll be better equipped to handle whatever challenges your WebRTC application might face, ensuring a seamless experience for everyone.</p>
+<h3 id="using-browser-developer-tools-for-webrtc">Using Browser Developer Tools for WebRTC</h3>
+<p>Browser developer tools are not just for debugging WebRTC, they also play a key role in optimizing your application&#x27;s performance. They provide deep insights into the inner workings of your WebRTC connections, from the moment signaling starts to the point where media is exchanged between peers. Modern browsers like Chrome, Firefox, and Edge come equipped with robust developer tools that help you track the flow of data, diagnose issues, and ensure your application is performing at its best.</p>
+<p>One of the most valuable features in Chrome is the <code translate="no" v-pre>chrome://webrtc-internals</code> page, which offers a detailed report on all active WebRTC sessions in the browser. Accessing this tool is as simple as typing <code translate="no" v-pre>chrome://webrtc-internals</code> into the address bar. This tool allows you to monitor SDP exchanges, track ICE candidates, and observe real-time statistics like bitrate, packet loss, and jitter. For example, if your video stream suddenly drops in quality, WebRTC Internals will help you pinpoint if it&#x27;s due to packet loss or an ICE candidate issue. Use this in conjunction with console logging in your JavaScript code to see how various stages of your signaling process interact with peer connections:</p>
+<div id="using-browser-developer-tools-for-webrtc-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">localConnection.onicecandidate = (event) =&gt; {
+    if (event.candidate) {
+        console.log(&quot;New ICE candidate:&quot;, event.candidate);
+        // Send the candidate to the remote peer via your signaling server
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>This kind of logging, combined with WebRTC Internals, will help you visualize the ICE negotiation process and ensure that candidates are generated and exchanged correctly.</p>
+<p>Another powerful tool is the browser’s standard DevTools console. The Network tab can monitor WebSocket messages exchanged during the signaling process, making it easy to debug signaling issues. You can use the console to ensure that the SDP offers and answers are properly formatted and delivered to your .NET signaling server without errors. Here’s how you might log the signaling exchange in your .NET application to confirm that SDP messages are received correctly:</p>
+<div id="using-browser-developer-tools-for-webrtc-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private static async Task HandleSignaling(WebSocket webSocket)
+{
+    var buffer = new byte[1024 * 4];
+    WebSocketReceiveResult result;
+
+    while (webSocket.State == WebSocketState.Open)
+    {
+        result = await webSocket.ReceiveAsync(new ArraySegment&lt;byte&gt;(buffer), CancellationToken.None);
+        var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+        Console.WriteLine($&quot;Signaling message received: {message}&quot;);
+        
+        // Further processing...
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Logging the signaling messages in your .NET backend helps you correlate the information seen in the browser&#x27;s DevTools with what&#x27;s happening on the server side. This can be especially helpful for diagnosing mismatches between SDP offers (proposals for a session) and answers (responses to the proposals), which could result in failed connections.</p>
+<p>Finally, consider the Console tab&#x27;s utility for checking JavaScript errors or warnings. Simple things like incorrect SDP parameters or JavaScript exceptions during the signaling flow can break the connection setup. The Console tab, paired with breakpoints (points in your code where the execution will pause) set in the JavaScript code, lets you step through each connection stage to identify exactly where things go awry. This approach is beneficial for detecting situations where a specific browser setting or device capability is causing issues, allowing you to handle edge cases gracefully in your Blazor and .NET integration.</p>
+<p>Combining <code translate="no" v-pre>chrome://webrtc-internals</code>, the Network tab for monitoring signaling, and the Console for debugging JavaScript gives you a complete picture of your WebRTC application&#x27;s behavior. The Network tab is particularly useful for monitoring signaling, which is crucial for understanding the flow of data in your application. These tools work together to uncover everything from minor glitches to significant errors in your real-time communications, empowering you to deliver a more reliable and optimized user experience. In the following sections, we&#x27;ll cover how to simulate various network conditions and put your WebRTC setup through its paces, ensuring it holds up even when the going gets tough.</p>
+<h3 id="monitoring-webrtc-statistics-with-getstats">Monitoring WebRTC Statistics with getStats()</h3>
+<p>Monitoring the performance of your WebRTC connections is crucial for understanding how well your application is holding up, especially under different network conditions. The <code translate="no" v-pre>getStats()</code> API in WebRTC is a powerful tool that allows you to pull detailed metrics on almost every aspect of a peer connection—from bitrate and packet loss to jitter and codec information. This data helps you identify bottlenecks, diagnose quality issues, and make informed adjustments to improve your application’s performance.</p>
+<p>You can call <code translate="no" v-pre>getStats()</code> on an <code translate="no" v-pre>RTCPeerConnection</code> object to get started. The returned statistics provide insights into what’s happening with both incoming and outgoing streams. Here’s an example of a JavaScript function that gathers some key stats and logs them for further analysis:</p>
+<div id="monitoring-webrtc-statistics-with-getstats-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">window.webRTCInterop = {
+    logStats: async function () {
+        const stats = await localConnection.getStats();
+        stats.forEach(report =&gt; {
+            if (report.type === 'inbound-rtp' &amp;&amp; report.mediaType === 'video') {
+                console.log(`Video Inbound: Bitrate - ${report.bytesReceived}, Packets Lost - ${report.packetsLost}`);
+            }
+            if (report.type === 'outbound-rtp' &amp;&amp; report.mediaType === 'video') {
+                console.log(`Video Outbound: Bitrate - ${report.bytesSent}, Frame Rate - ${report.framesPerSecond}`);
+            }
+        });
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>This script pulls basic inbound and outbound statistics for a video connection, such as bytes received and packets lost. You can use these metrics to determine if there’s significant packet loss on the incoming stream or if the bitrate drops unexpectedly. The next step is to integrate this into your .NET application. This will allow you to initiate the logging process from the Blazor frontend, enabling you to make adjustments accordingly.</p>
+<p>In your Blazor component, the creation of a button is pivotal. This button will serve as the trigger for the <code translate="no" v-pre>logStats</code> JavaScript function. It&#x27;s this function that allows you to check connection quality during a live session, providing the flexibility to monitor performance as conditions change:</p>
+<div id="monitoring-webrtc-statistics-with-getstats-c" class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">ASP.NET (C#)</div>
+<pre translate="no" class="language-none"><code v-pre class="language-none">@page &quot;/&quot;
+
+&lt;h3&gt;Monitor WebRTC Statistics&lt;/h3&gt;
+
+&lt;button @onclick=&quot;LogStats&quot;&gt;Log Statistics&lt;/button&gt;
+
+@code {
+    private async Task LogStats()
+    {
+        await JS.InvokeVoidAsync(&quot;webRTCInterop.logStats&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>When you click the &quot;Log Statistics&quot; button, it will call the JavaScript function, logging the current WebRTC statistics in the console. This is useful for understanding real-time changes and how network fluctuations affect the quality of your media streams. You can also set up a periodic timer in Blazor to continuously call <code translate="no" v-pre>logStats</code> and automatically monitor stats at intervals, which can benefit long-running sessions.</p>
+<p>Using <code translate="no" v-pre>getStats()</code> to monitor WebRTC sessions gives you both a microscope and a dashboard. It shows you what&#x27;s happening in the finer details of your connection, empowering you to make informed decisions. With this data, you can proactively manage network conditions, improve quality, and provide a reliable real-time communication experience. In the following sections, we&#x27;ll explore how to simulate adverse network conditions, push your application to its limits, and ensure it remains robust.</p>
+<h3 id="debugging-signaling-and-network-issues-in-c">Debugging Signaling and Network Issues in C#</h3>
+<p>Debugging signaling and network issues in your WebRTC application can feel like finding a needle in a haystack—a lot happens behind the scenes and isn&#x27;t always visible. However, with a systematic approach, you can focus and determine the root cause of the issue. Whether it&#x27;s a dropped connection, an SDP mismatch, or a failure in ICE negotiation, this understanding can save you a lot of time and headaches. Fortunately, .NET provides a strong foundation for logging, diagnostics, and troubleshooting these complex scenarios.</p>
+<p>A great place to start when debugging signaling issues is to ensure that you have thorough logging in your signaling server. You need to know when an SDP offer or answer is received, when ICE candidates are exchanged, and when something unexpected happens. The insights provided by a simple logging mechanism in your ASP.NET Core signaling server are invaluable:</p>
+<div id="debugging-signaling-and-network-issues-in-c-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private static async Task HandleSignaling(WebSocket webSocket)
+{
+    var buffer = new byte[1024 * 4];
+    var clientId = Guid.NewGuid().ToString();
+    Console.WriteLine($&quot;New client connected: {clientId}&quot;);
+
+    try
+    {
+        while (webSocket.State == WebSocketState.Open)
+        {
+            var result = await webSocket.ReceiveAsync(new ArraySegment&lt;byte&gt;(buffer), CancellationToken.None);
+            var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+            Console.WriteLine($&quot;Client {clientId}: Received message: {message}&quot;);
+
+            // Here you might parse and forward SDP/ICE messages
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($&quot;Error handling signaling for client {clientId}: {ex.Message}&quot;);
+    }
+    finally
+    {
+        Console.WriteLine($&quot;Client disconnected: {clientId}&quot;);
+        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, &quot;Closing&quot;, CancellationToken.None);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Logging each significant step—such as receiving messages and errors—will help you trace the flow of signaling data and identify where something might have gone wrong. For instance, if you notice that an SDP answer is missing, it could indicate a problem with how the offer was relayed or processed.</p>
+<p>Another common network issue in WebRTC involves ICE negotiation—specifically, failures in finding a suitable network path between peers. ICE issues are notoriously tricky because they depend on the network environment, which can vary widely. To debug these issues, you can log each ICE candidate as generated and received and ensure they are successfully relayed to the other peer. Here’s a simple way to do that:</p>
+<div id="debugging-signaling-and-network-issues-in-c-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public static void LogIceCandidate(string clientId, string candidate)
+{
+    Console.WriteLine($&quot;Client {clientId}: ICE candidate: {candidate}&quot;);
+}
+
+// Call this function whenever a new candidate is received or sent</code></pre>
+</doc-codeblock></div>
+<p>By maintaining a comprehensive log of all ICE candidates, you gain the power to pinpoint missing candidates or candidates not reaching their intended destination. This control over the network can often result from network restrictions or firewalls, which prevent candidates from being usable.</p>
+<p>On the client side, you can implement additional JavaScript logging for ICE candidate states and use C# to analyze these logs in real time. This real-time analysis is crucial, as it allows you to respond immediately to any changes in the ICE connection state.</p>
+<div id="debugging-signaling-and-network-issues-in-c-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-javascript"><code v-pre class="language-javascript">localConnection.oniceconnectionstatechange = () =&gt; {
+    console.log(&quot;ICE Connection State Changed: &quot;, localConnection.iceConnectionState);
+};</code></pre>
+</doc-codeblock></div>
+<p>Using this approach, you can get more context on what&#x27;s happening during ICE negotiation, such as whether it gets stuck in &quot;checking&quot; or falls back to &quot;failed.&quot; If you&#x27;re seeing frequent failures, it may be a sign that a TURN server is needed to relay the media.</p>
+<p>Debugging network-related problems often requires recreating the conditions that cause them. If you suspect the issue is related to specific network conditions (e.g., high latency or packet loss), tools like <code translate="no" v-pre>Netem</code> on Linux or third-party network simulation tools can help you emulate those conditions. Once you can reproduce the problem consistently, you can use your logs and metrics from the server and client to narrow down the root cause.</p>
+<p>Integrating structured logging with a solution like Serilog can be a game-changer for more complex debugging. Serilog allows you to output structured logs that can be queried and analyzed, making it easier to identify patterns or inconsistencies. You can add Serilog to your .NET project and enrich your logs with contextual information:</p>
+<div id="debugging-signaling-and-network-issues-in-c-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File(&quot;logs/webrtc_log.txt&quot;)
+    .CreateLogger();
+
+Log.Information(&quot;Client {ClientId}: Received signaling message: {Message}&quot;, clientId, message);</code></pre>
+</doc-codeblock></div>
+<p>With these structured logs, which organize information in a consistent and readable format, you can more easily track events across multiple sessions and identify issues that may only occur under specific conditions, making debugging far more efficient than with regular logs.</p>
+<p>By combining comprehensive logging in both your signaling server and client-side JavaScript and using tools like Serilog for structured insights, you can effectively debug even the trickiest signaling and network issues. This not only saves time but also helps you understand where potential problems lie, giving you the power to improve the reliability and quality of your WebRTC application. The following section will discuss strategies to test your application under different conditions, ensuring robustness and quality across all possible user environments.</p>
+<h3 id="writing-unit-and-integration-tests-for-webrtc-logic">Writing Unit and Integration Tests for WebRTC Logic</h3>
+<p>Testing WebRTC logic differs from writing unit tests for more traditional client-server applications simply because of the technology&#x27;s real-time and peer-to-peer nature. However, a good strategy is to break down the testing into two parts: unit tests for isolated components like signaling logic and integration tests that verify the entire flow of signaling and media exchange. This section will explore how to write effective unit and integration tests for WebRTC-related logic using xUnit, with a specific focus on your .NET signaling server and its components.</p>
+<p>Unit testing is a key part of the testing process, especially when it comes to the ProcessSignalingMessage method. This method, which handles incoming signaling messages and returns the response to be sent to the peer, is a crucial function in the signaling server. Using xUnit, you can set up a simple test to ensure this logic behaves as expected:</p>
+<div id="writing-unit-and-integration-tests-for-webrtc-logic-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class SignalingTests
+{
+    [Fact]
+    public void ProcessSignalingMessage_ValidOffer_ReturnsExpectedAnswer()
+    {
+        // Arrange
+        var signalingHandler = new SignalingHandler();
+        var sdpOffer = &quot;Valid SDP Offer&quot;; // Simplified SDP for the purpose of testing
+
+        // Act
+        var result = signalingHandler.ProcessSignalingMessage(sdpOffer);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Contains(&quot;SDP Answer&quot;, result); // Simplified validation for expected SDP response
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this test, you create an instance of the SignalingHandler and verify that when a valid SDP offer is processed, the response is a valid SDP answer. Testing like this ensures your signaling logic handles the messages correctly before sending them to other peers. Unit tests like this are great for checking edge cases, malformed inputs, and unexpected states that could cause signaling issues.</p>
+<p>Moving on to integration tests, the goal is to validate the entire signaling flow between two or more components. This type of testing requires a bit more setup, but it&#x27;s worth it because you can see how everything interacts in a more real-world scenario. In an integration test, you can simulate two peers connecting through the signaling server and verify that the correct messages are exchanged.</p>
+<p>Here&#x27;s an example of how you could use xUnit to set up a basic integration test that simulates two WebSocket clients connecting to your signaling server:</p>
+<div id="writing-unit-and-integration-tests-for-webrtc-logic-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class SignalingIntegrationTests
+{
+    [Fact]
+    public async Task SignalServer_TwoClients_ExchangeMessagesSuccessfully()
+    {
+        // Arrange
+        var webHost = new WebHostBuilder()
+            .UseKestrel()
+            .UseUrls(&quot;http://localhost:5000&quot;)
+            .UseStartup&lt;Startup&gt;() // Your signaling server startup
+            .Build();
+        
+        await webHost.StartAsync();
+
+        using var client1 = new ClientWebSocket();
+        using var client2 = new ClientWebSocket();
+
+        await client1.ConnectAsync(new Uri(&quot;ws://localhost:5000/signal&quot;), CancellationToken.None);
+        await client2.ConnectAsync(new Uri(&quot;ws://localhost:5000/signal&quot;), CancellationToken.None);
+
+        var sdpOffer = Encoding.UTF8.GetBytes(&quot;SDP Offer from Client 1&quot;);
+        await client1.SendAsync(new ArraySegment&lt;byte&gt;(sdpOffer), WebSocketMessageType.Text, true, CancellationToken.None);
+
+        // Act
+        var buffer = new byte[1024];
+        var result = await client2.ReceiveAsync(new ArraySegment&lt;byte&gt;(buffer), CancellationToken.None);
+        var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+        // Assert
+        Assert.Contains(&quot;SDP Offer from Client 1&quot;, message); // Simplified validation for message relay
+
+        await webHost.StopAsync();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Our integration test is a crucial step in the process. We initiate a local instance of our signaling server and set up two WebSocket clients. The test&#x27;s primary objective is to confirm that the signaling server accurately relays an SDP offer from client1 to client2. This meticulous test is designed to instill confidence in the system&#x27;s reliability, ensuring that the signaling server functions as expected in a natural multi-client environment, with no messages lost or mishandled.</p>
+<p>As a developer, you have the power to anticipate and handle error conditions. You can write integration tests for scenarios like invalid messages or unexpected client disconnections. These tests are not just about identifying problems, but about empowering you to ensure that your signaling server gracefully handles unexpected scenarios, without crashing or leaving connections hanging.</p>
+<p>It&#x27;s important to understand that testing WebRTC, particularly media streams, is a complex task that demands specialized testing environments and tools. For instance, you might need to use automated browsers or headless WebRTC clients to run end-to-end tests that verify the actual audio/video quality or the correctness of the media paths. While these tests are more challenging to set up, they provide a comprehensive assessment of your application&#x27;s stability and quality.</p>
+<p>Writing unit and integration tests for WebRTC logic can be challenging, but it&#x27;s a rewarding process that significantly enhances your application&#x27;s reliability. By thoroughly testing signaling logic and simulating real-world scenarios, you ensure that your .NET-based WebRTC solutions are robust, secure, and ready for any situation. Next, we&#x27;ll delve into testing the user experience itself under different conditions, pushing our WebRTC application to the limits and ensuring it remains stable.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter11/chapter11.md" target="_blank" rel="noopener">
+                        <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        <span>Edit this page</span>
+                    </a>
+                </div>
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter10/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Chap 10 - Working with Web​Sockets</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter12/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Chap 12 - Working with MQTT for Io​T (Internet of Things)</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../copyright/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
+                                    </g>
+                                </svg>
+                                <span>Copyright</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../license/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
+                                    </g>
+                                </svg>
+                                <span>License</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved Chris Woodruff.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 11 - Working with WebRTC", level: 1, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/chapter11/chapter11.md" }</script>
+</body>
+</html>

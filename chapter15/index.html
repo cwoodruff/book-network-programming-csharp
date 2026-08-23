@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5P830S5Z3"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-D5P830S5Z3');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/book-network-programming-csharp">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.840767676179">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Implementing Message Queuing</title>
+    <meta name="title" content="Implementing Message Queuing">
+    <meta name="description" content="Message queuing, a pivotal tool in modern software systems, facilitates reliable, scalable, and resilient communication and coordination among">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter15/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://cwoodruff.github.io/book-network-programming-csharp/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter15/">
+    <meta property="og:title" content="Implementing Message Queuing">
+    <meta property="og:description" content="Message queuing, a pivotal tool in modern software systems, facilitates reliable, scalable, and resilient communication and coordination among">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter15/images/chap15-message_queuing.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Implementing Message Queuing">
+    <meta property="og:site_name" content="Networking Programming with C/# 12 and /.NET 8">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter15/">
+    <meta name="twitter:title" content="Implementing Message Queuing">
+    <meta name="twitter:description" content="Message queuing, a pivotal tool in modern software systems, facilitates reliable, scalable, and resilient communication and coordination among">
+    <meta name="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter15/images/chap15-message_queuing.png">
+    <meta name="twitter:image:alt" content="Implementing Message Queuing">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter15/chapter15.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link id="retype-favicon" rel="icon" href="../images/favicon.png" />
+    <link href="../resources/css/retype.css?v=4.6.0.840767676179" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.6.0.840767676179" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://cwoodruff.github.io/book-network-programming-csharp/" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                            <img class="max-h-10 hidden dark:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                </svg>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                </svg>
+                                <span>Issues</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                </svg>
+                                <span>Bluesky</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                </svg>
+                                <span>Mastodon</span>
+                            </a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                        </svg>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                        </svg>
+                                        <span>Issues</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                        </svg>
+                                        <span>Bluesky</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                        </svg>
+                                        <span>Mastodon</span>
+                                    </a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="15">15</h1>
+<figure class="content-center">
+    <img src="images/chap15-message_queuing.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1792" height="1024" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<h1 id="implementing-message-queuing">Implementing Message Queuing</h1>
+<p>Message queuing, a pivotal tool in modern software systems, facilitates reliable, scalable, and resilient communication and coordination among applications. Whether you&#x27;re managing a high-traffic e-commerce platform or orchestrating microservices in a complex distributed system, message queues are the backbone that ensures smooth operation, even when parts of the system are offline or under heavy load. In this chapter, we&#x27;ll delve into the intriguing world of message queuing, exploring how .NET 8 and C# 12 empower you to leverage its power with elegance and efficiency.</p>
+<p>We&#x27;ll take a hands-on approach to implementing message queues, unraveling the technical magic that allows asynchronous communication between producers and consumers. From writing producers that generate messages to creating robust consumers who process them, you&#x27;ll gain a deep understanding of the tools and techniques involved. Along the way, we&#x27;ll also cover advanced topics such as error handling, acknowledgments, and performance optimization in detail, equipping you with the skills to build scalable, fault-tolerant systems. Let&#x27;s queue up some knowledge and see how message queuing can transform your networked applications!</p>
+<h2 id="introduction-to-message-queuing">Introduction to Message Queuing</h2>
+<p>Imagine a bustling city with delivery services crisscrossing the streets, each carefully routing packages to their destinations. In software systems, message queues play a similar role, acting as data couriers, ensuring messages are delivered reliably and efficiently between components. More than that, they are the guardians of a smooth flow of communication, even when the unexpected happens, like delays or system outages. This approach allows systems to function asynchronously, decoupling producers and consumers. In this section, we&#x27;ll explore the foundational concepts of message queuing and why it has become a cornerstone of modern network programming.</p>
+<p>By diving into the core principles of message queues, you&#x27;ll learn how they facilitate scalable and resilient communication. We&#x27;ll cover key concepts such as message producers and consumers and the different patterns they follow—whether it&#x27;s a simple point-to-point model or a publish-subscribe architecture. Through practical examples that you can relate to in your everyday life, we&#x27;ll set the stage for understanding how message queues empower you to build robust and responsive systems. Let&#x27;s unpack the fundamentals of message queuing and prepare to take the next step into implementation.</p>
+<h3 id="core-concepts-of-message-queuing">Core Concepts of Message Queuing</h3>
+<p>At the heart of message queuing lies a simple yet powerful concept: <strong>producers</strong> create messages, <strong>queues</strong> store them temporarily, and <strong>consumers</strong> retrieve and process them. This straightforward model allows systems to communicate asynchronously, ensuring that producers and consumers operate independently. Message queues decouple system components by separating the creation of messages from their consumption, reducing complexity and increasing reliability. This subsection will break down these fundamental concepts to understand how message queuing works behind the scenes.</p>
+<figure class="content-center">
+    <img src="images/message-queue-architecture-overview.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="781" height="391" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Message Queue Architecture Overview</b></figcaption>
+<p>A <strong>message</strong> is the fundamental unit of transmitted data, often formatted as JSON, XML, or binary. It can represent anything from a user&#x27;s order in an e-commerce system to a notification about a completed task. Queues, on the other hand, serve as the holding area where messages wait to be processed. In many implementations, these queues operate on a first-in, first-out (FIFO) basis, ensuring messages are processed in the order they were sent. However, advanced patterns allow for flexibility, such as prioritizing or distributing specific messages across multiple consumers.</p>
+<p>The interaction between producers and consumers defines the behavior of a message queue. A <a href="https://go.particular.net/point-to-point"><strong>point-to-point</strong></a> model pairs a single producer with a single consumer, ideal for tasks like job processing. In contrast, a <a href="https://go.particular.net/publish-subscribe"><strong>publish-subscribe</strong></a> model enables one producer to broadcast messages to multiple subscribers, perfect for scenarios like sending real-time notifications to users. These core patterns empower developers to design robust communication systems tailored to their application&#x27;s needs. By mastering these foundational concepts, you&#x27;ll be ready to tackle more advanced topics and see how message queues bring order to the chaos of modern distributed systems.</p>
+<h3 id="the-role-of-message-queues-in-modern-applications">The Role of Message Queues in Modern Applications</h3>
+<p>In the dynamic world of modern software, where systems span continents and services operate at massive scales, ensuring reliable and efficient communication is both an art and a science. This is where message queues step in, providing a structured mechanism to handle asynchronous communication between applications. Rather than forcing components to interact in real-time, which can create bottlenecks and fragile dependencies, message queues allow systems to exchange information seamlessly, even when parts of the system are unavailable or under heavy load.</p>
+<p>At their core, message queues act as intermediaries, enabling producers to send messages without worrying about when or how consumers will process them. This decoupling is invaluable in scenarios like processing customer orders in an e-commerce platform, where a sudden spike in traffic could overwhelm synchronous systems. By queuing messages for later processing, systems gain resilience, maintain performance, and handle demand gracefully. Whether used for load balancing, task delegation, or system-to-system communication, message queues ensure that nothing falls through the cracks, even in high-stakes environments.</p>
+<p>Beyond reliability, message queues unlock scalability. Need to handle more messages? Add more consumers. Want to implement a new feature? Introduce another producer or subscriber without disrupting the entire system. This flexibility makes message queues essential for microservices, serverless architectures, and other distributed systems. As we explore the role of message queues in modern applications, you’ll see how they act as the glue binding complex systems together—ensuring they perform smoothly, scale effectively, and stay resilient in the face of challenges.</p>
+<h3 id="exploring-use-cases-for-message-queuing">Exploring Use Cases for Message Queuing</h3>
+<p>Message queues shine brightest in real-world scenarios where asynchronous communication and system decoupling are crucial. Consider an <strong>e-commerce platform</strong> processing thousands of orders during a flash sale. Instead of making the checkout process wait for inventory checks, payment processing, and order fulfillment to complete, the system uses a message queue. Each step generates a message placed in a queue for later processing, ensuring that customers experience a fast and seamless checkout. At the same time, the backend works methodically in the background.</p>
+<p>Another compelling use case is <strong>event-driven systems</strong> like real-time notification services. When a social media user posts a photo, the application generates multiple events: notifying followers, updating feeds, and logging analytics. A publish-subscribe message queue handles this elegantly, allowing one producer (the photo post-event) to notify multiple subscribers (e.g., the feed service, notification system, and analytics processor). This ensures all systems are updated efficiently without overloading the producer.</p>
+<p>Message queues are indispensable in the realm of <strong>IoT devices</strong>. Devices like smart thermostats and sensors continuously generate data at unpredictable rates. A message queue buffers this incoming data, ensuring reliable delivery to analytics services, even during a temporary network outage. This emphasis on reliable delivery ensures smooth operation and allows systems to scale, adding more consumers to process data as demand grows. Message queues demonstrate their versatility and critical role in building robust, scalable, and future-proof systems by enabling such diverse applications.</p>
+<h2 id="exploring-message-queue-technologies">Exploring Message Queue Technologies</h2>
+<p>Message queues are not a one-size-fits-all solution—different applications require different tools, and the ecosystem of message queuing technologies offers a variety of options to meet diverse needs. Each technology brings unique strengths, from lightweight, open-source solutions to enterprise-grade, cloud-native services. Understanding the available technologies is crucial in designing the optimal solution, whether you&#x27;re handling high-throughput data streams, building scalable microservices, or enabling asynchronous workflows in legacy systems.</p>
+<p>In this section, we&#x27;ll explore the leading message queuing platforms, including RabbitMQ, Apache Kafka, Azure Service Bus, and Amazon SQS. By examining their features, strengths, and trade-offs, you&#x27;ll gain insight into which tool best suits specific scenarios. We&#x27;ll also discuss how these technologies integrate with .NET and C#, ensuring you have the knowledge and tools to choose and implement the right message queue for your application&#x27;s needs. Let&#x27;s dive into the technology landscape and discover how these platforms can elevate your network programming projects.</p>
+<h3 id="overview-of-message-queue-technologies">Overview of Message Queue Technologies</h3>
+<p>The world of message queues is remarkably diverse, offering a range of tools that can be tailored to different scales, architectures, and performance requirements. This adaptability is a key feature of every message queuing technology, enabling asynchronous communication at its core. The methods and features they provide may vary widely, but the assurance of adaptability remains constant. Some platforms excel at handling massive, real-time event streams, while others focus on simplicity and reliability for smaller, more predictable workloads. Choosing the right tool starts with understanding the broad categories of message queuing systems and what sets them apart.</p>
+<p>Open-source solutions like <strong>RabbitMQ</strong> and <strong>Apache Kafka</strong> lead the pack for self-managed deployments. RabbitMQ is the Swiss Army knife of message queuing, offering flexibility with AMQP-based communication, support for various exchange types, and plugins for extending functionality. On the other hand, Kafka is a true powerhouse in the world of event streaming. It is designed for ultra-high throughput and durability, often favored in big data and analytics-driven applications. Both platforms integrate seamlessly with .NET, allowing developers to build robust messaging solutions with fine-grained control.</p>
+<p>For those who prefer managed services, cloud-native message queues like <strong>Azure Service Bus</strong> and <strong>Amazon SQS</strong> offer powerful messaging capabilities without the operational overhead. Azure Service Bus, for instance, provides advanced features like dead-letter queues, message sessions, and hybrid cloud connectivity, making it an ideal choice for enterprise applications. Amazon SQS, known for its simplicity, handles large-scale, distributed messaging with minimal setup. Both services come with SDKs for .NET, enabling developers to quickly integrate these tools into their applications. As we delve deeper into these technologies, you’ll see how each can address specific use cases and seamlessly fit into your network programming projects.</p>
+<h3 id="popular-message-queue-platforms">Popular Message Queue Platforms</h3>
+<p>The landscape of popular message queue platforms offers a range of solutions tailored to meet the diverse needs of modern applications. From open-source powerhouses to cloud-native managed services, these platforms provide developers with the tools to build scalable, reliable, and efficient messaging systems. Let’s dive into some of the most widely used options, highlighting their unique features and capabilities and exploring how they can enhance your .NET and C# network programming projects.</p>
+<h4 id="rabbitmq-the-versatile-contender">RabbitMQ: The Versatile Contender</h4>
+<p>RabbitMQ, a standard of flexibility, is one of the most widely adopted open-source message brokers. Its foundation on the AMQP protocol allows it to support a diverse array of messaging patterns, from point-to-point to publish-subscribe and routing-based exchanges. With plugins for monitoring, high availability, and federation, RabbitMQ is a versatile tool that can handle a wide range of workloads. Its seamless integration with .NET, providing a robust, developer-friendly library for producing and consuming messages, further enhances its appeal. The lightweight design of RabbitMQ makes it an ideal choice for applications spanning from microservices to IoT systems.</p>
+<h4 id="apache-kafka-the-event-streaming-powerhouse">Apache Kafka: The Event Streaming Powerhouse</h4>
+<p>If you’re dealing with massive volumes of real-time data, Apache Kafka is the platform of choice. Designed for high throughput and low latency, Kafka shines in event streaming, log aggregation, and big data applications. Unlike traditional message brokers, Kafka treats messages as durable logs, allowing consumers to replay them as needed. Its distributed architecture ensures fault tolerance and scalability. The .NET Kafka client libraries make producing and consuming streams straightforward, giving developers an edge in building analytics-driven systems.</p>
+<h4 id="azure-service-bus-the-enterprise-workhorse">Azure Service Bus: The Enterprise Workhorse</h4>
+<p>For developers building enterprise-grade applications, Azure Service Bus offers a cloud-native messaging solution packed with features. It supports both queues and topics, making it versatile for different messaging patterns. Advanced capabilities like message sessions, dead-letter queues, and transaction support provide reliability and flexibility. With tight integration into the Azure ecosystem and a rich .NET SDK, Service Bus is a top choice for applications requiring high availability, security, and hybrid cloud connectivity.</p>
+<h4 id="amazon-sqs-simplicity-at-scale">Amazon SQS: Simplicity at Scale</h4>
+<p>Amazon SQS, with its minimalist approach, provides a fully managed, scalable queuing service that effortlessly handles millions of messages per second. This scalability, coupled with its seamless integration with AWS services, makes it an attractive option for large-scale distributed systems. While it may lack some advanced features compared to other platforms, its ease of use and the efficiency of incorporating it into your application with the AWS SDK for .NET make it a compelling choice.</p>
+<p>Each platform offers distinct strengths, allowing you to choose the right tool for your specific requirements. Whether your focus is flexibility, event streaming, enterprise integration, or simplicity, the .NET ecosystem provides robust support and seamless integration for these popular message queue platforms, ensuring you have the tools you need to succeed.</p>
+<h3 id="comparison-of-key-features">Comparison of Key Features</h3>
+<p>Empower yourself with a deep understanding of the key features and trade-offs when selecting the right message queue platform for your application. Each platform has its unique strengths and nuances, tailored to specific use cases. We’ll delve into popular message queue technologies like RabbitMQ, Apache Kafka, Azure Service Bus, and Amazon SQS, comparing them based on critical factors such as delivery guarantees, scalability, and integration. By the end, you’ll be equipped with the knowledge to align the right tool with your application’s needs, feeling informed and empowered.</p>
+<h4 id="delivery-guarantees-getting-the-message-across">Delivery Guarantees: Getting the Message Across</h4>
+<p>Message queues are the bedrock of reliable communication, and the delivery guarantees they offer— at-most-once, at-least-once, or exactly-once —can vary. RabbitMQ provides flexibility with acknowledgment modes, allowing you to balance reliability with performance. Apache Kafka offers at-least-once delivery by default but can achieve exactly once semantics for stream processing with careful configuration. Azure Service Bus takes it further with native support for exactly-once delivery in transactional messaging, a boon for enterprise applications. Meanwhile, Amazon SQS provides robust at-least-once guarantees with minimal complexity, making it a reliable choice for high-throughput systems. This reliability should instill a sense of security and confidence in your choice of message queue platform.</p>
+<h4 id="scalability-and-performance-handling-the-heat">Scalability and Performance: Handling the Heat</h4>
+<p>Regarding scalability, Apache Kafka is the heavyweight champion, designed to handle massive data streams across distributed clusters. RabbitMQ, while not as distributed as Kafka, supports horizontal scaling through clustering and federation, making it effective for many workloads. Azure Service Bus simplifies scaling with auto-scaling capabilities in the cloud, while Amazon SQS boasts nearly limitless throughput by dynamically distributing messages across its infrastructure. Each platform handles performance differently, so your choice will depend on whether you prioritize sheer throughput, low latency, or ease of scaling.</p>
+<h4 id="integration-and-ecosystem-plugging-it-all-together">Integration and Ecosystem: Plugging It All Together</h4>
+<p>Integration is a crucial aspect to consider when selecting a message queue, as it can significantly impact its suitability. RabbitMQ and Apache Kafka offer strong open-source ecosystems and seamless .NET libraries, making them flexible for diverse environments. Azure Service Bus integrates tightly with the Azure ecosystem, offering first-class support for hybrid cloud scenarios and enterprise solutions. Amazon SQS stands out for its effortless connection to AWS services, which is ideal for building cloud-native applications with minimal setup. For .NET developers, all platforms provide robust SDKs, enabling smooth integration into your applications. Understanding the importance of integration will ensure you make an informed decision when choosing a message queue platform.</p>
+<p><a href="https://go.particular.net/choose-transport">Choosing a message queue</a> is about finding the right balance of features for your specific needs. Whether you need Kafka’s raw power, RabbitMQ’s versatility, Azure Service Bus’s enterprise-grade reliability, or Amazon SQS’s simplicity at scale, the .NET ecosystem ensures you can implement your choice confidently and precisely.</p>
+<h2 id="implementing-a-message-queue-in-c">Implementing a Message Queue in C#</h2>
+<p>While WebHooks excel at delivering real-time notifications from one service to another, they rely on the availability of both sender and receiver at the exact moment the event occurs. But what happens when the receiver is temporarily offline or overwhelmed by a flood of incoming events? This is where message queues act as the unsung heroes of asynchronous communication, providing a buffer to ensure no event is lost and systems operate smoothly under pressure.</p>
+<p>In this section, we’ll explore how to implement message queuing in .NET using C#, bridging the gap between transient WebHook notifications and durable, scalable processing pipelines. You can decouple these components by introducing a message queue between your WebHook sender and consumer, allowing them to work at their own pace. This ensures that notifications from your WebHooks are reliably captured and processed, even in high-load or failure scenarios.</p>
+<p>From creating a producer to send WebHook data to a queue to building a consumer that processes these messages efficiently, we’ll guide you step-by-step through implementing a robust message queuing solution. Along the way, you’ll learn about handling message acknowledgments, retry mechanisms, and error handling to ensure that your system doesn’t just survive but thrives under real-world conditions. It’s time to level up your WebHook-driven applications by introducing the power and reliability of message queues.</p>
+<h3 id="setting-up-the-environment">Setting Up the Environment</h3>
+<p>To begin working with message queues in .NET, you’ll need a properly configured environment to produce and consume messages seamlessly. Setting up your .NET solution is the first step, whether using RabbitMQ, Azure Service Bus, or another platform. In this example, we’ll focus on RabbitMQ as our queue provider, leveraging its popularity and extensive .NET support.</p>
+<p>First, ensure RabbitMQ is running. You can use Docker to spin up an instance for local development quickly. Open your terminal and run the following command:</p>
+<div id="setting-up-the-environment-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">docker run -d --hostname rabbitmq-host --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management</code></pre>
+</doc-codeblock></div>
+<p>This starts RabbitMQ with the management interface available at <code translate="no" v-pre>http://localhost:15672</code>. Use the default credentials (<code translate="no" v-pre>guest</code>/<code translate="no" v-pre>guest</code>) to log in. Now, let’s set up the .NET solution.</p>
+<p>Create a new .NET console application:</p>
+<div id="setting-up-the-environment-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">dotnet new console -n MessageQueueDemo
+cd MessageQueueDemo
+dotnet add package RabbitMQ.Client</code></pre>
+</doc-codeblock></div>
+<p>Next, initialize the message producer. In your <code translate="no" v-pre>Program.cs</code> file, start by establishing a connection to RabbitMQ and sending a test message:</p>
+<div id="setting-up-the-environment-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using RabbitMQ.Client;
+using System.Text;
+
+var factory = new ConnectionFactory() { HostName = &quot;localhost&quot; };
+using var connection = factory.CreateConnection();
+using var channel = connection.CreateModel();
+
+channel.QueueDeclare(queue: &quot;demo-queue&quot;, durable: false, exclusive: false, autoDelete: false, arguments: null);
+
+string message = &quot;Hello, RabbitMQ!&quot;;
+var body = Encoding.UTF8.GetBytes(message);
+
+channel.BasicPublish(exchange: &quot;&quot;, routingKey: &quot;demo-queue&quot;, basicProperties: null, body: body);
+
+Console.WriteLine($&quot;[x] Sent '{message}'&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Run the application to verify that the message is sent successfully. Now, let’s set up the consumer. Add another console application to your solution, or modify the existing one:</p>
+<div id="setting-up-the-environment-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+var factory = new ConnectionFactory() { HostName = &quot;localhost&quot; };
+using var connection = factory.CreateConnection();
+using var channel = connection.CreateModel();
+
+channel.QueueDeclare(queue: &quot;demo-queue&quot;, durable: false, exclusive: false, autoDelete: false, arguments: null);
+
+var consumer = new EventingBasicConsumer(channel);
+consumer.Received += (model, ea) =&gt;
+{
+    var body = ea.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    Console.WriteLine($&quot;[x] Received '{message}'&quot;);
+};
+
+channel.BasicConsume(queue: &quot;demo-queue&quot;, autoAck: true, consumer: consumer);
+
+Console.WriteLine(&quot;Press [enter] to exit.&quot;);
+Console.ReadLine();</code></pre>
+</doc-codeblock></div>
+<p>This consumer listens for messages on the <code translate="no" v-pre>demo-queue</code> and prints them to the console. Run both applications simultaneously: the producer will send messages, and the consumer will receive them.</p>
+<p>This basic setup gives you a working message queue pipeline in .NET. You’re now ready to build on this foundation by implementing more advanced features such as error handling, acknowledgments, and scaling.</p>
+<h3 id="creating-a-message-producer">Creating a Message Producer</h3>
+<p>With your environment set up, the next step is to design a component responsible for sending messages to the queue. This involves creating a producer that not only establishes a connection to the message queue and prepares the message payload, but also plays a crucial role in ensuring reliable communication within your distributed system. This foundational piece is key to the stability of your system.</p>
+<p>Start by creating a new service class for the producer. This step is not just about encapsulating the logic, but also about making it highly reusable and easily testable. In your project, add a file named <code translate="no" v-pre>MessageProducer.cs</code>:</p>
+<div id="creating-a-message-producer-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using RabbitMQ.Client;
+using System.Text;
+
+public class MessageProducer
+{
+    private readonly string _queueName;
+    private readonly IConnection _connection;
+    private readonly IModel _channel;
+
+    public MessageProducer(string queueName, string hostName = &quot;localhost&quot;)
+    {
+        _queueName = queueName;
+        var factory = new ConnectionFactory { HostName = hostName };
+        _connection = factory.CreateConnection();
+        _channel = _connection.CreateModel();
+
+        _channel.QueueDeclare(
+            queue: _queueName,
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null
+        );
+    }
+
+    public void SendMessage(string message)
+    {
+        var body = Encoding.UTF8.GetBytes(message);
+        _channel.BasicPublish(exchange: &quot;&quot;, routingKey: _queueName, basicProperties: null, body: body);
+        Console.WriteLine($&quot;[x] Sent: {message}&quot;);
+    }
+
+    public void Dispose()
+    {
+        _channel.Close();
+        _connection.Close();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This class encapsulates the connection setup and provides a method for sending messages. The <code translate="no" v-pre>SendMessage</code> method takes a string, converts it to bytes, and publishes it to the queue specified in the constructor.</p>
+<p>Next, use this class in your application to produce messages. Update your <code translate="no" v-pre>Program.cs</code> to include the following:</p>
+<div id="creating-a-message-producer-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        const string queueName = &quot;demo-queue&quot;;
+
+        using var producer = new MessageProducer(queueName);
+        while (true)
+        {
+            Console.Write(&quot;Enter a message to send (or type 'exit' to quit): &quot;);
+            var message = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(message) || message.ToLower() == &quot;exit&quot;)
+                break;
+
+            producer.SendMessage(message);
+        }
+
+        Console.WriteLine(&quot;Producer terminated.&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This implementation offers a flexible interactive message production system, empowering you to test different payloads dynamically. Run the program, type messages into the console, and observe them being sent to the queue.</p>
+<p>Remember, resource management is key. The <code translate="no" v-pre>Dispose</code> method in <code translate="no" v-pre>MessageProducer</code> ensures that connections and channels are closed cleanly, preventing resource leaks. This responsibility is especially important in high-throughput applications where connections may be long-lived or reused.</p>
+<p>This setup provides you with a robust producer, instilling confidence in its ability to handle message publishing in your queueing system. Next, you’ll learn how to design the corresponding component to consume these messages, bringing the entire pipeline to life.</p>
+<h3 id="building-a-message-consumer">Building a Message Consumer</h3>
+<p>With a producer in place to send messages to the queue, the next step is building the counterpart that retrieves and processes those messages. This component is crucial for transforming queued data into actionable outcomes within your application. Designing a robust consumer ensures messages are handled efficiently and reliably, even in high-throughput or error-prone environments.</p>
+<p>Begin by creating a service class to encapsulate the consumer logic. Add a file named <code translate="no" v-pre>MessageConsumer.cs</code> to your project:</p>
+<div id="building-a-message-consumer-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
+public class MessageConsumer
+{
+    private readonly string _queueName;
+    private readonly IConnection _connection;
+    private readonly IModel _channel;
+
+    public MessageConsumer(string queueName, string hostName = &quot;localhost&quot;)
+    {
+        _queueName = queueName;
+        var factory = new ConnectionFactory { HostName = hostName };
+        _connection = factory.CreateConnection();
+        _channel = _connection.CreateModel();
+
+        _channel.QueueDeclare(
+            queue: _queueName,
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null
+        );
+    }
+
+    public void StartListening()
+    {
+        var consumer = new EventingBasicConsumer(_channel);
+        consumer.Received += (model, eventArgs) =&gt;
+        {
+            var body = eventArgs.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
+            Console.WriteLine($&quot;[x] Received: {message}&quot;);
+
+            // Simulate message processing
+            ProcessMessage(message);
+        };
+
+        _channel.BasicConsume(
+            queue: _queueName,
+            autoAck: true,
+            consumer: consumer
+        );
+
+        Console.WriteLine(&quot;Listening for messages. Press [Enter] to exit.&quot;);
+        Console.ReadLine();
+    }
+
+    private void ProcessMessage(string message)
+    {
+        Console.WriteLine($&quot;[✓] Processed: {message}&quot;);
+    }
+
+    public void Dispose()
+    {
+        _channel.Close();
+        _connection.Close();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This class creates a listener for the queue and processes each message as it arrives. The <code translate="no" v-pre>StartListening</code> method, which is responsible for setting up a consumer, attaching an event handler for message reception, and beginning the consumption of messages, plays a crucial role in this process.</p>
+<p>Next, easily integrate this consumer into your application by updating <code translate="no" v-pre>Program.cs</code> or creating a dedicated console application for consuming messages:</p>
+<div id="building-a-message-consumer-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        const string queueName = &quot;demo-queue&quot;;
+
+        using var consumer = new MessageConsumer(queueName);
+        consumer.StartListening();
+
+        Console.WriteLine(&quot;Consumer terminated.&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Run this program, and the consumer will print each received message to the console. Pair it with your producer from the previous section to test the complete message pipeline.</p>
+<p>This implementation includes a placeholder for processing logic inside the ProcessMessage method. It&#x27;s a blank canvas waiting for your application-specific logic, whether it&#x27;s saving data to a database or triggering workflows. The power is in your hands.</p>
+<p>Handling message processing errors is not just important, it&#x27;s a responsibility. If a message fails processing, it&#x27;s crucial to consider logging the error and moving it to a dead-letter queue for later review. The next section will delve deeper into this proactive approach to error handling.</p>
+<p>With your consumer in place, you now have a complete pipeline: a producer sends messages to the queue, and the consumer retrieves and processes them. From here, you can optimize performance by tuning the message processing logic, implementing error handling, and scaling both components by adding more instances or using more powerful hardware to meet your application&#x27;s needs.</p>
+<h3 id="handling-acknowledgments-and-errors">Handling Acknowledgments and Errors</h3>
+<p>Processing messages reliably requires more than retrieving and acting on them; it also involves managing acknowledgments and <a href="https://go.particular.net/recoverability">handling errors</a> effectively. Proper acknowledgment handling can prevent your system from losing critical messages or processing them multiple times. Likewise, a robust error-handling strategy, such as implementing retry mechanisms or dead-letter queues, ensures that failures don’t disrupt the entire pipeline.</p>
+<p>By default, some message queues, like RabbitMQ, use an <strong>auto-acknowledge</strong> mode where messages are marked as processed as soon as they are delivered to the consumer. While simple, this mode is risky because a consumer crash before completing the processing could result in lost messages. To address this, consider the benefits of switching to manual acknowledgments. This approach ensures that messages are only marked as processed after successful handling, providing a higher level of control and reducing the risk of lost messages.</p>
+<p>Your role in this process is crucial. Start by modifying the consumer to enable manual acknowledgments. Update the <code translate="no" v-pre>BasicConsume</code> method in your <code translate="no" v-pre>MessageConsumer</code> class:</p>
+<div id="handling-acknowledgments-and-errors-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_channel.BasicConsume(
+    queue: _queueName,
+    autoAck: false, // Disable automatic acknowledgment
+    consumer: consumer
+);</code></pre>
+</doc-codeblock></div>
+<p>Next, modify the <code translate="no" v-pre>Received</code> event handler to send an acknowledgment after processing a message:</p>
+<div id="handling-acknowledgments-and-errors-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">consumer.Received += (model, eventArgs) =&gt;
+{
+    var body = eventArgs.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+    Console.WriteLine($&quot;[x] Received: {message}&quot;);
+
+    try
+    {
+        ProcessMessage(message);
+
+        // Send acknowledgment only after successful processing
+        _channel.BasicAck(deliveryTag: eventArgs.DeliveryTag, multiple: false);
+        Console.WriteLine($&quot;[✓] Acknowledged: {message}&quot;);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($&quot;[!] Error processing message: {ex.Message}&quot;);
+        
+        // Reject the message and requeue for another attempt
+        _channel.BasicNack(deliveryTag: eventArgs.DeliveryTag, multiple: false, requeue: true);
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>In this implementation, messages are acknowledged only after successful processing. If an error occurs, the <strong>BasicNack</strong> method, a crucial tool in our system, rejects the message and requests a retry. This approach ensures reliability but can lead to repeated failures if a message is inherently problematic.</p>
+<p>To avoid endlessly reprocessing faulty messages, our system is equipped with a <strong>dead-letter queue (DLQ)</strong> to handle problematic messages. Dead-letter queues, a key feature of our system, capture messages that exceed a retry limit or encounter unrecoverable errors, allowing them to be analyzed separately. When declaring your queue, specify DLQ settings in the arguments:</p>
+<div id="handling-acknowledgments-and-errors-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_channel.QueueDeclare(
+    queue: _queueName,
+    durable: false,
+    exclusive: false,
+    autoDelete: false,
+    arguments: new Dictionary&lt;string, object&gt;
+    {
+        { &quot;x-dead-letter-exchange&quot;, &quot;&quot; },
+        { &quot;x-dead-letter-routing-key&quot;, &quot;dead-letter-queue&quot; }
+    }
+);
+
+_channel.QueueDeclare(
+    queue: &quot;dead-letter-queue&quot;,
+    durable: false,
+    exclusive: false,
+    autoDelete: false,
+    arguments: null
+);</code></pre>
+</doc-codeblock></div>
+<p>Now, any message that fails multiple times will automatically be routed to the <code translate="no" v-pre>dead-letter-queue</code>, a special queue where such messages are stored for further analysis, preventing further disruption to your main queue.</p>
+<p>Finally, ensure that error handling includes appropriate logging and monitoring. For example, you can log errors to a file, database, or external service for tracking and analysis. This practice not only helps identify patterns in failures but also empowers you with knowledge to improve your system&#x27;s resilience over time.</p>
+<p>By implementing manual acknowledgments, dead-letter queues, and error logging, you ensure your message queue can handle failures gracefully while maintaining data integrity. These strategies are crucial in preparing your application for real-world scenarios, where reliability and resilience are non-negotiable. This preparation should make you feel more secure and confident in your system&#x27;s capabilities.</p>
+<h3 id="testing-and-deploying-the-message-queue-solution">Testing and Deploying the Message Queue Solution</h3>
+<p>Ensuring your message queue solution is ready for production requires thorough testing and a carefully planned deployment process. Testing validates that producers and consumers function as intended, while deployment ensures the system is robust and scalable under real-world conditions. A well-tested and properly deployed message queue solution is crucial as it minimizes the risk of data loss, system crashes, or performance bottlenecks. Not doing so could lead to severe consequences, underlining the urgency and importance of your role.</p>
+<h4 id="unit-testing-the-producer-and-consumer">Unit Testing the Producer and Consumer</h4>
+<p>Unit testing starts by isolating the producer and consumer logic. Mock the message queue connection to verify that your code behaves as expected without relying on an actual queue. For instance, testing the producer’s message-sending logic might look like this:</p>
+<div id="unit-testing-the-producer-and-consumer-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">using Moq;
+using Xunit;
+
+public class MessageProducerTests
+{
+    [Fact]
+    public void SendMessage_ShouldPublishMessageToQueue()
+    {
+        var mockChannel = new Mock&lt;IModel&gt;();
+        var producer = new MessageProducer(&quot;test-queue&quot;, mockChannel.Object);
+
+        producer.SendMessage(&quot;Test Message&quot;);
+
+        mockChannel.Verify(
+            c =&gt; c.BasicPublish(
+                exchange: &quot;&quot;,
+                routingKey: &quot;test-queue&quot;,
+                basicProperties: null,
+                body: It.IsAny&lt;byte[]&gt;()
+            ),
+            Times.Once
+        );
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Similarly, for the consumer, mock the message receipt and validate that the message is processed as expected:</p>
+<div id="unit-testing-the-producer-and-consumer-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[Fact]
+public void Consumer_ShouldProcessReceivedMessage()
+{
+    var mockChannel = new Mock&lt;IModel&gt;();
+    var consumer = new MessageConsumer(&quot;test-queue&quot;, mockChannel.Object);
+
+    var args = new BasicDeliverEventArgs
+    {
+        Body = Encoding.UTF8.GetBytes(&quot;Test Message&quot;)
+    };
+
+    consumer.OnMessageReceived(args);
+
+    Assert.True(consumer.LastProcessedMessage == &quot;Test Message&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="integration-testing-with-a-live-queue">Integration Testing with a Live Queue</h4>
+<p>Integration tests validate that your producer and consumer interact correctly with a real message queue. Use Docker to spin up a RabbitMQ instance for a controlled test environment:</p>
+<div id="integration-testing-with-a-live-queue-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">docker run -d --hostname test-rabbit --name test-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management</code></pre>
+</doc-codeblock></div>
+<p>Create a test scenario where the producer sends messages, and the consumer processes them, ensuring end-to-end functionality:</p>
+<div id="integration-testing-with-a-live-queue-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[Fact]
+public async Task EndToEndTest_ShouldProcessMessage()
+{
+    var producer = new MessageProducer(&quot;integration-queue&quot;);
+    var consumer = new MessageConsumer(&quot;integration-queue&quot;);
+
+    producer.SendMessage(&quot;Integration Test Message&quot;);
+
+    await Task.Delay(1000); // Allow time for the consumer to process
+
+    Assert.True(consumer.LastProcessedMessage == &quot;Integration Test Message&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="performance-and-load-testing">Performance and Load Testing</h4>
+<p>Before deploying, stress-test your solution to verify it can handle the expected message volume. Tools like Apache JMeter or custom scripts can simulate high loads. For example, modify the producer to send a batch of messages and measure throughput:</p>
+<div id="performance-and-load-testing-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">for (int i = 0; i &lt; 1000; i++)
+{
+    producer.SendMessage($&quot;Message {i}&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>Monitor the queue&#x27;s performance and observe metrics like message latency and processing rate to identify bottlenecks.</p>
+<h4 id="deployment-to-production">Deployment to Production</h4>
+<p>For production deployment, ensure that your message queue infrastructure is robust. Use managed services like Azure Service Bus or a container orchestration platform like Kubernetes for RabbitMQ. Configuration settings such as queue durability, prefetch limits, and retry policies should be tailored to your workload. Queue durability ensures that messages are not lost even in the event of a system failure, prefetch limits control the number of messages a consumer can fetch at a time, and retry policies determine how failed messages are handled.</p>
+<h4 id="monitoring-and-logging">Monitoring and Logging</h4>
+<p>Integrate <a href="https://go.particular.net/observability">monitoring</a> tools to keep track of queue health. Tools like Prometheus and Grafana or built-in cloud service dashboards help detect anomalies early. Moreover, structured logging for message processing ensures transparency and confidence in the system&#x27;s operations:</p>
+<div id="monitoring-and-logging-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_logger.LogInformation(&quot;Message processed: {MessageId}&quot;, message.Id);</code></pre>
+</doc-codeblock></div>
+<p>This makes debugging and system audits much more manageable.</p>
+<h4 id="post-deployment-validation">Post-Deployment Validation</h4>
+<p>As a key player in the deployment process, your role is crucial. After deployment, it&#x27;s essential to validate the system under real-world conditions. Ensure that messages flow correctly and no errors occur. Use canary deployments or phased rollouts to minimize risk.</p>
+<p>With rigorous testing and a structured deployment process, your message queue solution will be ready to handle production traffic reliably. These practices ensure your system is scalable, maintainable, and resilient against unexpected failures, giving you the confidence in its performance.</p>
+<h2 id="advanced-topics-in-message-queuing">Advanced Topics in Message Queuing</h2>
+<p>As your applications become complex, your message queuing infrastructure demands will scale alongside them. While foundational concepts like producers, consumers, and simple queue configurations are vital, they’re only the beginning. Advanced techniques in message queuing—such as ensuring reliable delivery, optimizing performance, and managing message flow with dead-letter queues—are not just theoretical concepts. They are essential tools that allow you to easily handle real-world challenges like fault tolerance, message prioritization, and scalability, thereby building robust, high-performing systems.</p>
+<p>In this section, we’ll go beyond the basics, diving into strategies that elevate your message queuing implementation to production-grade excellence. From mastering delivery guarantees and implementing advanced error-handling mechanisms to optimizing throughput and scaling consumers dynamically, you’ll gain the tools to tackle even the most demanding scenarios. Just as WebHooks offer real-time responsiveness, advanced message queuing ensures asynchronous operations remain resilient and efficient—no matter how complex the system becomes. Let’s unlock the full potential of message queues and discover how they cannot only support but transform the backbone of your distributed architecture.</p>
+<h3 id="message-delivery-guarantees">Message Delivery Guarantees</h3>
+<p>Ensuring reliable message delivery is one of the cornerstones of building robust messaging systems. A critical aspect of message queuing involves defining the delivery guarantee model: at-most-once, at-least-once, or exactly-once. Each has its trade-offs, and the right choice depends on the specific requirements of your application. Understanding these guarantees and how to implement them in .NET gives you precise control over the reliability and performance of your system, instilling a sense of security and empowerment.</p>
+<p>An at-most-once model delivers a message to a consumer without retries, even if processing fails. While this approach minimizes resource usage and latency, it risks message loss. Configuring RabbitMQ for this behavior involves setting <code translate="no" v-pre>autoAck</code> (automatic acknowledgment) to <code translate="no" v-pre>true</code>:</p>
+<div id="message-delivery-guarantees-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_channel.BasicConsume(
+    queue: _queueName,
+    autoAck: true,
+    consumer: consumer
+);</code></pre>
+</doc-codeblock></div>
+<p>This setup, which is suitable for scenarios where occasional message loss is acceptable, such as real-time telemetry that doesn’t require historical accuracy, is a confident choice.</p>
+<p>The at-least-once model, a reliable method that ensures messages are delivered at least once, even if retries are necessary, is a dependable approach. However, this reliability may lead to duplicate messages, requiring consumers to handle idempotency. For RabbitMQ, disable automatic acknowledgments and manually acknowledge messages after successful processing:</p>
+<div id="message-delivery-guarantees-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">consumer.Received += (model, eventArgs) =&gt;
+{
+    var body = eventArgs.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+
+    try
+    {
+        ProcessMessage(message);
+        _channel.BasicAck(deliveryTag: eventArgs.DeliveryTag, multiple: false);
+    }
+    catch
+    {
+        _channel.BasicNack(deliveryTag: eventArgs.DeliveryTag, multiple: false, requeue: true);
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>This approach works well for critical tasks like order processing or payment handling, where message loss is unacceptable but managing duplicates is a necessity.</p>
+<p>The ultimate goal in message delivery guarantees, achieving exactly-once processing, is a complex task. It ensures that each message is processed precisely once, a feat that often necessitates a combination of transaction support and idempotent operations. Azure Service Bus plays a pivotal role in simplifying this intricate process with its support for sessions and transactions. Here’s an example of how Azure Service Bus achieves exactly-once processing:</p>
+<div id="message-delivery-guarantees-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var client = new ServiceBusClient(&quot;&lt;connection-string&gt;&quot;);
+var processor = client.CreateProcessor(&quot;queue-name&quot;, new ServiceBusProcessorOptions());
+
+processor.ProcessMessageAsync += async args =&gt;
+{
+    var message = args.Message.Body.ToString();
+    Console.WriteLine($&quot;Processing message: {message}&quot;);
+
+    // Idempotent processing logic here
+
+    await args.CompleteMessageAsync(args.Message);
+};
+
+processor.ProcessErrorAsync += async args =&gt;
+{
+    Console.WriteLine($&quot;Error occurred: {args.Exception.Message}&quot;);
+};
+
+await processor.StartProcessingAsync();</code></pre>
+</doc-codeblock></div>
+<p>With this setup, Azure Service Bus ensures that messages are completed only after successful processing, a crucial step in avoiding duplicates and guaranteeing reliability.</p>
+<p>Delivery guarantees play a pivotal role in meeting specific application needs. The choice often involves balancing performance, reliability, and complexity. While at-most-once works for low-criticality tasks, at-least-once is often the default for its simplicity and flexibility. However, exactly-once ensures every message is handled precisely for applications with strict reliability requirements. By implementing these guarantees effectively, you can build systems that are flexible and adaptable, meeting your application&#x27;s specific needs without compromising performance or data integrity.</p>
+<h3 id="optimizing-performance-and-scalability">Optimizing Performance and Scalability</h3>
+<p>Building a high-performance and scalable message queuing system is not just a technical task, but a crucial one. It&#x27;s essential for handling large volumes of messages while maintaining reliability. This requires optimizing message throughput, reducing latency, and ensuring the system scales seamlessly as demands grow. You can create a system that balances efficiency and robustness by fine-tuning both the queue infrastructure and your .NET implementation.</p>
+<p>One effective way to improve throughput is by batching messages. Group them into batches instead of sending or processing messages individually to reduce overhead. RabbitMQ supports publishing messages in bulk, which can be implemented in your producer:</p>
+<div id="optimizing-performance-and-scalability-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public void SendMessages(IEnumerable&lt;string&gt; messages)
+{
+    var batch = _channel.CreateBasicPublishBatch();
+
+    foreach (var message in messages)
+    {
+        var body = Encoding.UTF8.GetBytes(message);
+        batch.Add(exchange: &quot;&quot;, routingKey: _queueName, mandatory: false, properties: null, body: body);
+    }
+
+    batch.Publish();
+    Console.WriteLine($&quot;[✓] Sent {messages.Count()} messages in batch.&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>This approach minimizes the number of network roundtrips, significantly boosting performance.</p>
+<p>On the consumer side, it&#x27;s essential to enable prefetching to control how many messages are sent to a consumer at a time. By default, RabbitMQ sends as many messages as possible, which can overwhelm the consumer. Adjusting the <code translate="no" v-pre>prefetch</code> value is a key step to ensure the consumer only processes a manageable number of messages concurrently:</p>
+<div id="optimizing-performance-and-scalability-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_channel.BasicQos(prefetchSize: 0, prefetchCount: 10, global: false);</code></pre>
+</doc-codeblock></div>
+<p>This setup is designed to prevent overload and ensure the stability of your system. By allowing the consumer to fetch messages in small, optimized batches, we can improve processing efficiency without compromising on system stability.</p>
+<p>For scalability, you can empower your system by implementing horizontal scaling. This can be achieved by running multiple consumers in parallel, a strategy that effectively distributes the processing load across multiple instances. With the right tools like Kubernetes or cloud-based orchestration platforms, you can manage these instances dynamically based on demand, ensuring your system is always ready to handle increasing message volumes.</p>
+<p>When working with Azure Service Bus, session-based processing can optimize scalability. Session-based processing is a technique where related messages are grouped together and processed in a sequence, ensuring session consistency. Use session-enabled queues and partition consumers to process messages in parallel while maintaining session consistency:</p>
+<div id="optimizing-performance-and-scalability-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var client = new ServiceBusClient(&quot;&lt;connection-string&gt;&quot;);
+var processor = client.CreateSessionProcessor(&quot;queue-name&quot;);
+
+processor.ProcessMessageAsync += async args =&gt;
+{
+    var message = args.Message.Body.ToString();
+    Console.WriteLine($&quot;Processing session message: {message}&quot;);
+    await args.CompleteMessageAsync(args.Message);
+};
+
+await processor.StartProcessingAsync();</code></pre>
+</doc-codeblock></div>
+<p>Session-based processing ensures scalability without sacrificing order guarantees for session-aware messages, which are messages that are part of a specific session and require a certain order of processing.</p>
+<p>Lastly, performance metrics should be monitored to identify bottlenecks. Tools like Prometheus or cloud-native monitoring solutions are invaluable in this regard, allowing you to track metrics such as message latency, queue depth, and processing rate. Alerts on critical thresholds help you address issues proactively, instilling confidence in your ability to manage the system effectively.</p>
+<p>With these optimizations, your message queuing system will handle high loads efficiently while maintaining scalability and reliability. These techniques ensure your system is ready for production-grade demands and poised to adapt to future growth.</p>
+<h3 id="securing-message-queues">Securing Message Queues</h3>
+<p>Security is a critical consideration when designing a message queuing system. Your expertise in implementing authentication, encryption, and access control mechanisms is crucial. Without these safeguards, sensitive messages could be intercepted, tampered with, or misused. Your role in securing your queues ensures that only authorized parties can interact with your messaging infrastructure and that messages remain confidential and intact.</p>
+<p>Start by enabling authentication to ensure only verified clients can connect to the queue. For RabbitMQ, you can configure user accounts with specific permissions. To update your RabbitMQ connection factory in .NET, you need to include the credentials in the connection string or use the appropriate methods to set the credentials programmatically:</p>
+<div id="securing-message-queues-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var factory = new ConnectionFactory
+{
+    HostName = &quot;localhost&quot;,
+    UserName = &quot;secureUser&quot;,
+    Password = &quot;strongPassword&quot;
+};</code></pre>
+</doc-codeblock></div>
+<p>Use Azure Active Directory (AAD) or connection strings with Shared Access Signature (SAS) tokens for cloud-based services like Azure Service Bus. AAD integration allows fine-grained access control tied to Azure roles, while SAS tokens provide scoped and time-limited access:</p>
+<div id="securing-message-queues-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var client = new ServiceBusClient(&quot;&lt;connection-string-or-aad-token&gt;&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Ensure connection strings are securely stored using tools like Azure Key Vault or .NET&#x27;s built-in user secrets management. These tools provide a centralized and secure way to manage application secrets, reducing the risk of accidental exposure and simplifying the process of updating or rotating secrets.</p>
+<p>Encryption is another vital layer of security. Use TLS (Transport Layer Security) to encrypt messages during transit. Most queuing systems, including RabbitMQ, enable TLS by default when configured. For example, you can require TLS in your .NET connection setup:</p>
+<div id="securing-message-queues-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var factory = new ConnectionFactory
+{
+    HostName = &quot;localhost&quot;,
+    Port = 5671, // TLS port
+    Ssl = new SslOption
+    {
+        Enabled = true,
+        ServerName = &quot;your-server&quot;,
+        AcceptablePolicyErrors = SslPolicyErrors.RemoteCertificateNameMismatch
+    }
+};</code></pre>
+</doc-codeblock></div>
+<p>For message encryption at rest, cloud services like Azure Service Bus handle this automatically using managed keys. For self-hosted solutions, consider encrypting message payloads manually before sending them:</p>
+<div id="securing-message-queues-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public string EncryptMessage(string plainText, string key)
+{
+    using var aes = Aes.Create();
+    aes.Key = Encoding.UTF8.GetBytes(key);
+    aes.GenerateIV();
+    var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+    using var ms = new MemoryStream();
+    using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+    using (var writer = new StreamWriter(cs))
+    {
+        writer.Write(plainText);
+    }
+
+    return Convert.ToBase64String(ms.ToArray());
+}</code></pre>
+</doc-codeblock></div>
+<p>Emphasizing its crucial role, role-based access control (RBAC) should be implemented to restrict queue operations. For RabbitMQ, assign specific users permissions such as read, write, and configure. For Azure Service Bus, assign roles like Sender, Receiver, or Owner to user identities or service principals.</p>
+<p>It&#x27;s crucial to maintain a vigilant eye on your message queuing infrastructure for unauthorized access attempts and anomalies. Tools like RabbitMQ Management or Azure Monitor can provide insights into who accessed your queues and when. Enable logging for authentication failures or suspicious activities.</p>
+<p>Securing your message queues requires a robust and comprehensive layered approach combining authentication, encryption, access control, and monitoring. Implementing these practices not only protects your system from threats but also ensures that legitimate communication remains uninterrupted and trustworthy.</p>
+<h2 id="performance-optimization-and-best-practices">Performance Optimization and Best Practices</h2>
+<p>As message queues take center stage in your distributed architecture, efficiency becomes paramount. While a basic setup may suffice for small workloads, scaling to enterprise-level systems or handling high-throughput scenarios (such as real-time analytics or high-frequency trading) demands optimization. Fine-tuning your message queuing solution boosts performance and ensures the system remains reliable, responsive, and cost-effective under increasing loads. It’s the difference between a system that survives and one that thrives in the face of growing demands.</p>
+<p>In this section, we’ll explore techniques to unlock the full potential of your message queuing solution. From optimizing throughput with batching and prefetching to scaling consumers dynamically and implementing robust monitoring, these best practices help you create a system that’s not just fast but also resilient and maintainable. By building on the foundational knowledge of message queuing, you’ll be equipped to design systems that meet today’s challenges and are ready to adapt to tomorrow’s opportunities. Let’s dive in and supercharge your messaging pipeline.</p>
+<h3 id="improving-throughput-and-latency">Improving Throughput and Latency</h3>
+<p>Maximizing throughput and minimizing latency is not just important, it&#x27;s critical for high-performance messaging systems, especially when handling large message volumes or time-sensitive data. The key lies in optimizing how messages are sent, processed, and acknowledged, ensuring the system operates efficiently without sacrificing reliability. You can significantly improve performance while maintaining responsiveness by leveraging batching, asynchronous processing, and connection pooling.</p>
+<p>Batching messages, a powerful technique, is one of the most effective ways to boost throughput. Instead of processing messages individually, you can send or receive them in groups, reducing the overhead associated with network roundtrips. Here’s an example of batching messages in a producer:</p>
+<div id="improving-throughput-and-latency-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public void SendMessagesBatch(IEnumerable&lt;string&gt; messages)
+{
+    var batch = _channel.CreateBasicPublishBatch();
+
+    foreach (var message in messages)
+    {
+        var body = Encoding.UTF8.GetBytes(message);
+        batch.Add(exchange: &quot;&quot;, routingKey: &quot;queue-name&quot;, mandatory: false, properties: null, body: body);
+    }
+
+    batch.Publish();
+    Console.WriteLine($&quot;[✓] Sent batch of {messages.Count()} messages.&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>This approach reduces the number of operations per message, improving overall throughput.</p>
+<p>Asynchronous processing is another essential optimization. By leveraging asynchronous consumers, your application can process multiple messages simultaneously, reducing latency. Here’s how to implement an asynchronous consumer in RabbitMQ:</p>
+<div id="improving-throughput-and-latency-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">consumer.Received += async (model, eventArgs) =&gt;
+{
+    var body = eventArgs.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+
+    await Task.Run(() =&gt;
+    {
+        ProcessMessage(message); // Simulate processing
+        Console.WriteLine($&quot;[✓] Processed: {message}&quot;);
+    });
+
+    _channel.BasicAck(deliveryTag: eventArgs.DeliveryTag, multiple: false);
+};</code></pre>
+</doc-codeblock></div>
+<p>This setup ensures the consumer doesn’t block while waiting for each message to complete processing. The result is a significant improvement in both throughput and responsiveness, enhancing the overall performance of the application.</p>
+<p>Connection pooling is another best practice, particularly in high-throughput scenarios where the inefficiency of creating new connections for every operation is evident. In .NET, you can confidently use a shared connection and channel for multiple operations, ensuring efficiency and optimal performance:</p>
+<div id="improving-throughput-and-latency-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private readonly IConnection _connection;
+private readonly IModel _channel;
+
+public MessagingService(string hostName)
+{
+    var factory = new ConnectionFactory { HostName = hostName };
+    _connection = factory.CreateConnection();
+    _channel = _connection.CreateModel();
+}</code></pre>
+</doc-codeblock></div>
+<p>Reusing connections and channels is a key strategy that minimizes the overhead of establishing new connections, making your cloud-based messaging system more efficient and resourceful.</p>
+<p>Finally, monitor queue depth and message age to ensure your optimizations are effective. If latency remains high, consider adjusting consumer prefetch limits or adding more consumers to distribute the load. For example:</p>
+<div id="improving-throughput-and-latency-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_channel.BasicQos(prefetchSize: 0, prefetchCount: 20, global: false);</code></pre>
+</doc-codeblock></div>
+<p>This configuration allows the consumer to process messages in manageable batches, improving efficiency by preventing the system from being overwhelmed, which can lead to performance degradation or even system crashes.</p>
+<p>By implementing these optimizations, you’ll create a message queuing system that handles large workloads efficiently and responds to real-time demands with minimal delay. These strategies provide the foundation for scaling and maintaining performance as your application grows, ensuring a reliable and responsive system.</p>
+<h3 id="scaling-message-queuing-systems">Scaling Message Queuing Systems</h3>
+<p>Scaling message queuing systems is essential for handling growing workloads and ensuring consistent performance under heavy demand. A scalable system adjusts seamlessly to increased message volumes by distributing the load across multiple consumers or even multiple queues. You can build a robust message queuing infrastructure capable of handling enterprise-level traffic by implementing horizontal scaling, partitioning, and load-balancing strategies.</p>
+<p>Horizontal scaling is the simplest and most common approach to scaling message queues. By increasing the number of consumers, you distribute the processing load across multiple instances, ensuring no single consumer becomes a bottleneck. For example, in RabbitMQ, multiple consumers can listen to the same queue, each processing a subset of messages:</p>
+<div id="scaling-message-queuing-systems-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var consumer = new EventingBasicConsumer(_channel);
+consumer.Received += (model, eventArgs) =&gt;
+{
+    var body = eventArgs.Body.ToArray();
+    var message = Encoding.UTF8.GetString(body);
+
+    ProcessMessage(message);
+    _channel.BasicAck(eventArgs.DeliveryTag, multiple: false);
+};
+
+_channel.BasicConsume(queue: &quot;task-queue&quot;, autoAck: false, consumer: consumer);
+Console.WriteLine(&quot;Consumer instance ready to process messages.&quot;);</code></pre>
+</doc-codeblock></div>
+<p>Deploy multiple instances of this consumer application on separate machines or containers managed by Kubernetes or Docker Swarm. With this setup, RabbitMQ distributes messages across all active consumers.</p>
+<p>Partitioning queues is another effective scaling strategy. Instead of using a single queue, divide the workload across multiple queues based on criteria like message type, priority, or geographic region. Dedicated consumers can then process each queue:</p>
+<div id="scaling-message-queuing-systems-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_channel.QueueDeclare(queue: &quot;priority-queue&quot;, durable: true, exclusive: false, autoDelete: false);
+_channel.QueueDeclare(queue: &quot;standard-queue&quot;, durable: true, exclusive: false, autoDelete: false);</code></pre>
+</doc-codeblock></div>
+<p>Assign consumers to each queue based on their processing requirements, such as handling critical tasks from the <code translate="no" v-pre>priority-queue</code> (e.g., financial transactions) while standard messages (e.g., user notifications) are processed separately.</p>
+<p>For cloud-based systems like Azure Service Bus, scaling is simplified through features like auto-scaling and partitioned queues. Partitioned queues automatically distribute messages across multiple brokers, enhancing scalability and fault tolerance. To use a partitioned queue, configure it during creation:</p>
+<div id="scaling-message-queuing-systems-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var client = new ServiceBusClient(&quot;&lt;connection-string&gt;&quot;);
+await client.CreateQueueAsync(new CreateQueueOptions(&quot;partitioned-queue&quot;) { EnablePartitioning = true });</code></pre>
+</doc-codeblock></div>
+<p>Dynamic scaling, a pivotal aspect, is crucial for managing growing workloads. Use monitoring tools to track metrics like queue depth and message latency and automatically scale consumers or adjust queue configurations as needed. For example, you can define Horizontal Pod Autoscaler (HPA) rules with Kubernetes to scale consumers based on CPU usage or queue length. This feature is not just beneficial, but urgent for your system&#x27;s performance.</p>
+<p>Load balancing, a key feature, ensures that messages are evenly distributed across consumers, thereby optimizing your system&#x27;s performance. RabbitMQ handles this automatically for queues, but you’ll need to manage consumer groups in systems like Kafka. Each consumer in a group processes a distinct partition, ensuring parallelism without duplication.</p>
+<p>Effectively scaling your message queuing system requires a combination of horizontal scaling, queue partitioning, and load balancing strategies tailored to your specific application needs. These needs could include high message throughput, low latency, or specific resource constraints. By implementing these techniques, your system will remain responsive, efficient, and ready to handle even the most demanding workloads.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter15/chapter15.md" target="_blank" rel="noopener">
+                        <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        <span>Edit this page</span>
+                    </a>
+                </div>
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter14/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Chap 14 - Working with Web​Hooks</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter16/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Chap 16 - Using Signal​R</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../copyright/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
+                                    </g>
+                                </svg>
+                                <span>Copyright</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../license/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
+                                    </g>
+                                </svg>
+                                <span>License</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved Chris Woodruff.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 15 - Implementing Message Queuing", level: 1, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/chapter15/chapter15.md" }</script>
+</body>
+</html>

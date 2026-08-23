@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5P830S5Z3"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-D5P830S5Z3');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/book-network-programming-csharp">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.840767676179">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Working with REST APIs</title>
+    <meta name="title" content="Working with REST APIs">
+    <meta name="description" content="Working with REST APIs is not just a trend, but a fundamental aspect of modern network programming in .NET 8 and C# 12. It enables the development of scalable, maintainable, and interoperable web services.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter09/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://cwoodruff.github.io/book-network-programming-csharp/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter09/">
+    <meta property="og:title" content="Working with REST APIs">
+    <meta property="og:description" content="Working with REST APIs is not just a trend, but a fundamental aspect of modern network programming in .NET 8 and C# 12. It enables the development of scalable, maintainable, and interoperable web services.">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter09/images/chap09-http-rest-web-apis.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Working with REST APIs">
+    <meta property="og:site_name" content="Networking Programming with C/# 12 and /.NET 8">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter09/">
+    <meta name="twitter:title" content="Working with REST APIs">
+    <meta name="twitter:description" content="Working with REST APIs is not just a trend, but a fundamental aspect of modern network programming in .NET 8 and C# 12. It enables the development of scalable, maintainable, and interoperable web services.">
+    <meta name="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter09/images/chap09-http-rest-web-apis.png">
+    <meta name="twitter:image:alt" content="Working with REST APIs">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter09/chapter09.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link id="retype-favicon" rel="icon" href="../images/favicon.png" />
+    <link href="../resources/css/retype.css?v=4.6.0.840767676179" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.6.0.840767676179" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://cwoodruff.github.io/book-network-programming-csharp/" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                            <img class="max-h-10 hidden dark:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                </svg>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                </svg>
+                                <span>Issues</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                </svg>
+                                <span>Bluesky</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                </svg>
+                                <span>Mastodon</span>
+                            </a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                        </svg>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                        </svg>
+                                        <span>Issues</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                        </svg>
+                                        <span>Bluesky</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                        </svg>
+                                        <span>Mastodon</span>
+                                    </a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="9">9</h1>
+<figure class="content-center">
+    <img src="images/chap09-http-rest-web-apis.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1792" height="1024" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<h1 id="working-with-rest-apis">Working with REST APIs</h1>
+<p>Working with REST APIs is not just a trend, but a fundamental aspect of modern network programming in .NET 8 and C# 12. It enables the development of scalable, maintainable, and interoperable web services. <strong>REST</strong>, or <strong>Representational State Transfer</strong>, is an architectural style that leverages the HTTP protocol to facilitate communication between client and server. RESTful APIs define a set of constraints that guide the design of web services, ensuring that they are stateless, cacheable, and capable of supporting a uniform interface. By adhering to these principles, RESTful APIs enable developers to create services that are both easy to consume and simple to extend, making them ideal for a wide range of applications, from web and mobile apps to microservices and distributed systems.</p>
+<p>When it comes to RESTful API development in .NET and C#, ASP.NET Core is the star of the show. This powerful and flexible framework provides all the necessary tools to build robust web services. Its seamless integration with modern C# features, such as records, pattern matching, and minimal APIs, allows developers to write concise and readable code without compromising on performance and scalability. The framework&#x27;s built-in support for HTTP methods, routing, and model binding simplifies the process of defining and exposing RESTful endpoints, freeing developers to focus on implementing business logic rather than dealing with low-level network details.</p>
+<p>As .NET and C# continue to evolve, they bring about enhancements that further optimize the development of RESTful APIs. Features like HTTP/3 support, improved serialization options, and enhanced security mechanisms ensure that applications built on .NET 8 are not just fast and efficient, but also secure and future-proof. With REST maintaining its dominance in API design, mastering its implementation in .NET and C# is not just beneficial, but essential for developers aiming to build cutting-edge networked applications.</p>
+<h2 id="introduction-to-http-and-rest">Introduction to HTTP and REST</h2>
+<blockquote>
+<p>Note: We have previously touched on HTTP in the first several chapters of this book, and you can read more details about the subject there.</p>
+</blockquote>
+<p>Understanding the foundational elements of web communication is not just important, it&#x27;s crucial for building modern networked applications. At the heart of this communication is the <strong>Hypertext Transfer Protocol</strong> (<strong>HTTP</strong>), a protocol that governs how data is exchanged across the web. HTTP&#x27;s rules for structuring requests and responses between clients and servers are the backbone of the Internet, enabling the retrieval of resources and the interaction with services. Mastering the mechanics of HTTP is a pivotal step for any developer working with network programming, as it forms the basis for more complex interactions in web applications.</p>
+<p>REST, building on the principles of HTTP, introduces an architectural style that not only harnesses the simplicity and ubiquity of HTTP but also ensures scalability and maintainability. This approach creates web services that can grow with your application, as RESTful services use HTTP methods in a standardized way to perform operations on resources identified by URIs (Uniform Resource Identifiers).</p>
+<p>As we delve deeper into HTTP and REST, we must understand how these technologies work together to enable efficient communication between distributed systems. This section, through a combination of theoretical insights and practical examples, will equip you with the knowledge needed to design and implement RESTful APIs using the tools and frameworks provided by .NET and C#. These examples are not just theoretical exercises, but practical tools that will prepare you for real-world network programming challenges.</p>
+<h3 id="overview-of-the-http-protocol">Overview of the HTTP Protocol</h3>
+<p>The foundation of web communication relies on a protocol that dictates how information is transmitted across the Internet: HTTP or Hypertext Transfer Protocol. Since its inception, HTTP has become the backbone of the web, enabling clients and servers to exchange data seamlessly. Whether you&#x27;re loading a webpage, submitting a form, or accessing an API, HTTP is the underlying mechanism that makes these interactions possible. Its simplicity and flexibility have allowed it to evolve alongside the web, adapting to new demands while maintaining its fundamental principles.</p>
+<p>At its core, HTTP operates as a request-response protocol, where a client sends a request to a server, and the server responds with the requested resource or an appropriate status code. This straightforward model has been vital to HTTP&#x27;s widespread adoption, allowing developers to build a wide array of applications that can communicate over the Internet. Understanding how these requests and responses are structured is crucial for anyone working in network programming, as it forms the basis for designing and interacting with web services.</p>
+<p>Over the years, HTTP has undergone significant enhancements to improve performance, security, and scalability. From HTTP/1.1, which introduced persistent connections and chunked transfers, to the more recent HTTP/2 and HTTP/3, which brought features like multiplexing and improved header compression, each iteration of HTTP has addressed the growing needs of modern web applications. These advancements ensure that HTTP remains relevant in an era where fast, secure, and reliable communication is paramount.</p>
+<p>As we explore the specifics of HTTP, we will examine the structure of HTTP messages, the roles of various HTTP methods, and the importance of headers and status codes. This exploration will provide the foundational knowledge needed to effectively work with HTTP in your applications, setting the stage for more advanced topics such as RESTful API development and secure communication in subsequent sections. Understanding HTTP is not just about learning how data moves across the web; it&#x27;s about mastering the language that enables global connectivity in today&#x27;s digital world.</p>
+<h3 id="http-verbs">HTTP Verbs</h3>
+<p>Mastering HTTP methods, the actions that can be performed on resources in a web application, is a crucial step in building effective networked applications and RESTful APIs. These methods, also known as HTTP verbs, specify the intent of a request and guide how the server should handle it. While the most commonly used methods include GET, POST, PUT, and DELETE, additional methods such as HEAD, PATCH, and OPTIONS exist, each serving distinct purposes. This mastery empowers you to create applications that are efficient, scalable, and easy to maintain, giving you full control over your web development journey.</p>
+<p>The GET method, the most widely used HTTP verb, is designed to retrieve data from the server without modifying it. When a client makes a GET request, the server responds with the requested resource, whether it&#x27;s an HTML page, JSON data, or another format. GET requests are considered safe and idempotent, ensuring that your data retrieval processes are secure and reliable. This safety and idempotence make GET ideal for data retrieval scenarios, such as fetching records from a database or loading static resources, giving you confidence in your data retrieval processes.</p>
+<p>POST, in contrast, is used to send data to the server, typically to create a new resource. This method is not idempotent; each request can result in different outcomes, such as creating multiple entries in a database. POST requests often include a message body that contains the data to be processed, such as form inputs or JSON objects. It is essential to use POST when performing operations that modify server state, such as submitting user data or making changes that will persist.</p>
+<p>PUT and PATCH both serve to update existing resources, but they differ in their scope. PUT replaces an entire resource with new data, making it idempotent since repeated requests will produce the same result. Conversely, PATCH is used for partial updates, where only a subset of the resource is modified. PATCH is particularly useful when working with large datasets, as it allows updates without sending the entire resource back to the server.</p>
+<p>DELETE is a straightforward method for removing resources from the server. Like PUT, DELETE is idempotent, meaning multiple requests will have the same effect as a single one—removing the resource in question. DELETE requests typically do not contain a message body. Still, the server will respond with a confirmation or appropriate status code and an empty response body indicating whether the operation was successful or the resource was already gone.</p>
+<p>The HEAD method is similar to GET but with a key difference: it only retrieves the headers of a resource, not the body. This makes HEAD useful for checking metadata, such as a resource&#x27;s size or last modification date, without downloading the entire content. It is often used for lightweight checks before making full GET requests, helping to optimize performance by reducing unnecessary data transfer.</p>
+<p>Each of these methods plays a vital role in building web services that are efficient, scalable, and easy to maintain. When designing APIs, your choice of the appropriate HTTP method is crucial. It ensures clarity in communication between client and server, adheres to REST principles, and improves the overall structure and reliability of your application. This responsibility in choosing the right method gives you full control over your API design, ensuring that your application is efficient and reliable.</p>
+<figure class="content-center">
+    <img src="images/http-verbs.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1024" height="600" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>HTTP Verbs</b></figcaption>
+<h3 id="http-headers">HTTP Headers</h3>
+<p>HTTP headers are critical components of communication between clients and servers. They provide metadata that helps manage the request and response process. Without headers, the communication process would be significantly limited, as they contain key-value pairs that convey additional information about the request or response, such as content type, encoding, authentication tokens, caching rules, etc. By including headers in HTTP messages, clients and servers can exchange important contextual data without modifying the core body of the message.</p>
+<p>Request headers allow the client to specify preferences and send additional data to the server. For example, the <code translate="no" v-pre>Accept</code> header indicates the type of content the client expects in the response, such as <code translate="no" v-pre>application/json</code> or <code translate="no" v-pre>text/html</code>. The <code translate="no" v-pre>Authorization</code> header sends credentials, such as a bearer token for authentication, ensuring the request is handled securely. Another commonly used header is <code translate="no" v-pre>User-Agent</code>, which identifies the client application or browser making the request. This allows the server to tailor its response based on the client’s capabilities, for instance, by serving a mobile-friendly version of a website to a mobile browser.</p>
+<p>On the server side, response headers provide critical details about the returned content and how the client should handle it. The <code translate="no" v-pre>Content-Type</code> header, for instance, indicates the MIME type of the returned content, such as <code translate="no" v-pre>application/json</code> or <code translate="no" v-pre>image/png</code>, allowing the client to interpret the response correctly. Additionally, headers like <code translate="no" v-pre>Cache-Control</code> dictate how the client should cache the response, either encouraging the reuse of data to reduce load on the server or ensuring that the content is always fresh by setting expiration times.</p>
+<p>Security-related headers are also essential in protecting the client and server during HTTP communication. The <code translate="no" v-pre>Set-Cookie</code> header, for example, stores session information on the client, allowing the server to maintain user state across multiple requests. Headers such as <code translate="no" v-pre>Strict-Transport-Security</code> enforce the use of HTTPS to ensure secure connections. At the same time, <code translate="no" v-pre>Content-Security-Policy</code> helps prevent cross-site scripting (XSS) attacks by restricting the sources from which content can be loaded.</p>
+<p>Effective use of HTTP headers is not just about technical implementation, it&#x27;s about enhancing the robustness and security of web applications. Understanding how to configure and manage headers enables developers to build more efficient and secure systems, ensuring smooth communication between clients and servers. This reassures developers of the reliability of their systems. As we move deeper into RESTful API development, headers will play an increasingly important role in defining how data is transmitted and how APIs respond to client requests.</p>
+<h3 id="http-status-codes">HTTP Status Codes</h3>
+<p>Status codes are a crucial part of HTTP communication, providing feedback to the client about the result of a request. These numeric codes, grouped into five categories, indicate whether the request was successful, encountered errors, or requires additional action from the client. As a developer, your understanding and correct usage of these status codes are key. They ensure that web applications and APIs communicate effectively, providing meaningful responses to clients. Incorrect usage of these codes can lead to confusion and inefficiency in your web services. Being familiar with the common codes and their appropriate usage empowers you to maintain clarity and consistency in your web services.</p>
+<p>The first category, 1xx status codes, represents informational responses. These codes, while rarely encountered directly by developers, play a role in HTTP/2 and HTTP/3 for cases where the server needs to inform the client that the request is being processed. A common example is <code translate="no" v-pre>100 Continue</code>, which indicates that the initial part of a request has been received and that the client should continue sending the rest of the request body. Rest assured, while these codes are rarely used in most applications, understanding them can help with more advanced HTTP scenarios.</p>
+<p>Successful responses fall under the 2xx category, with <code translate="no" v-pre>200 OK</code> being the most commonly encountered status code. This code signifies that the request was successfully processed, and the server returned the requested resource. Other common codes in this category include <code translate="no" v-pre>201 Create</code> is used when a new resource has been successfully created, often in response to a POST request. Additionally, <code translate="no" v-pre>204 No Content</code> is used when the request is successful, but there is no content to return, often following an update or delete operation.</p>
+<p>Redirection codes, represented by the 3xx range, instruct the client to perform further actions, usually to complete the request. The most common code here is <code translate="no" v-pre>301 Moved</code> Permanently, which tells the client that the requested resource has been permanently relocated to a new URI. This is often used in URL restructuring or domain changes. Another important code is <code translate="no" v-pre>302 Found</code>, indicating that the resource is temporarily available at a different URI. Understanding these codes is not just important, it&#x27;s essential for maintaining URL consistency and redirecting traffic appropriately.</p>
+<p>Client error responses are captured by 4xx status codes, which indicate that the request contains bad syntax or cannot be fulfilled. A common example is <code translate="no" v-pre>400 Bad Request</code>, used when the server cannot understand the request due to invalid syntax. Another frequently seen code is <code translate="no" v-pre>401 Unauthorized</code>, which informs the client that authentication is required. Similarly, <code translate="no" v-pre>403 Forbidden</code> is returned when the server understands the request but refuses to authorize it. <code translate="no" v-pre>404 Not Found</code> is one of the most well-known codes, indicating that the requested resource could not be found on the server. Using these codes appropriately helps clarify errors to the client and guides them toward correcting their request.</p>
+<p>Finally, the 5xx series represents server-side errors, which occur when the server fails to fulfill an otherwise valid request. <code translate="no" v-pre>500 Internal Server</code> error is the catch-all for unexpected conditions, often due to server misconfiguration or unhandled exceptions. Other relevant codes include <code translate="no" v-pre>502 Bad Gateway</code>, indicating that the server, acting as a gateway or proxy, received an invalid response from the upstream server, and <code translate="no" v-pre>503 Service Unavailable</code>, which is used when the server is temporarily unable to handle the request, often due to maintenance or overload.</p>
+<p>Using the correct HTTP status codes is not just a best practice, it&#x27;s a responsibility. It helps establish clear communication between clients and servers. Clients rely on these codes to interpret the result of their requests and take the necessary actions. As we delve deeper into RESTful API design, proper use of status codes will play a critical role in defining the behavior and reliability of the APIs we build. It ensures both developers and consumers of the API can interact with the system smoothly and effectively, reinforcing your commitment to your work.</p>
+<figure class="content-center">
+    <img src="images/http-status-codes.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1024" height="600" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>HTTP Status Codes</b></figcaption>
+<h3 id="http-messages-and-data-exchange">HTTP Messages and Data Exchange</h3>
+<p>In HTTP communication, messages are the foundation for exchanging data between clients and servers. Every HTTP interaction consists of a request sent by the client and a response returned by the server. These message types are structured in a specific way, consisting of a start line, headers, and a body. Understanding this structure and how data is exchanged between the two is not just critical, but it also empowers you as a developer, giving you the confidence and capability to build efficient networked applications and APIs.</p>
+<p>An HTTP request message begins with a request line containing the HTTP method (such as GET or POST), the target URI, and the protocol version (e.g., HTTP/1.1). This line specifies the action that the client wishes to perform on the server, such as retrieving data or submitting a form. Following the request line are headers providing additional context about the request. These headers can specify the type of content the client expects, the format of the data being sent, and other metadata relevant to the request. The optional body of the request contains the actual data being transmitted, such as form fields or JSON payloads, particularly in methods like POST or PUT.</p>
+<p>Similarly, an HTTP response message starts with a status line, which includes the protocol version, a status code, and a status message. The status code informs the client of the outcome of the request, such as <code translate="no" v-pre>200 OK</code> for a successful request or <code translate="no" v-pre>404 Not Found</code> if the requested resource cannot be located. Following the status line, response headers provide additional information about the response, including details like the content type, cache control settings, and the size of the data being returned. The response body contains the actual data, such as HTML, JSON, or image files, depending on the nature of the request.</p>
+<p>Data exchange in HTTP is typically done through the message body, where the payload of the request or response is placed. HTTP&#x27;s flexibility in supporting various data formats, such as web pages, images, or structured data like JSON, inspires creativity in building a wide range of applications. For example, when submitting data to an API using a POST request, the client sends a payload in the request body that the server processes and stores. Likewise, when the server responds to a client&#x27;s request for data, the response body contains the resource in the appropriate format.</p>
+<p>JSON (JavaScript Object Notation) is one of the most commonly used formats in modern web applications for structured data exchange. JSON is lightweight, easy to parse and widely supported across different programming languages, including C#. XML (eXtensible Markup Language) is another format, although less common in new APIs today. When working with HTTP in C#, JSON or XML data is handled simply through libraries like <code translate="no" v-pre>System.Text.Json</code> or <code translate="no" v-pre>Newtonsoft.Json</code> for serialization and deserialization. These libraries allow you to easily convert between C# objects and JSON, enabling smooth data exchange in APIs.</p>
+<p>Headers play a significant role in data exchange by specifying how the data should be handled. They give you, as a developer, a sense of control and responsibility to ensure that the data is exchanged in a format that both sides can interpret correctly. For instance, the <code translate="no" v-pre>Content-Type</code> header indicates the format of the data being transmitted, such as <code translate="no" v-pre>application/json</code> or <code translate="no" v-pre>text/html</code>. Meanwhile, the <code translate="no" v-pre>Accept</code> header in a request specifies what formats the client can handle in the response.</p>
+<p>Efficient data exchange in HTTP is about more than just sending and receiving messages. It also involves smartly using headers, understanding message structure, and choosing the appropriate data formats. As we explore more advanced topics in HTTP, a solid grasp of message construction and data exchange will allow developers to design better, more efficient networked applications and RESTful services in .NET and C#.</p>
+<h2 id="understanding-rest-principles-and-concepts">Understanding REST: Principles and Concepts</h2>
+<p>REST is an architectural style designed for distributed systems, particularly web services. It defines a set of constraints and principles guiding how these systems should interact. REST leverages the foundational components of HTTP, such as methods, status codes, and headers, to facilitate communication between clients and servers in a stateless and scalable manner. By adhering to these constraints, RESTful systems enable efficient data exchange while remaining flexible, adaptable, and easy to integrate across various platforms and technologies. This adaptability ensures that RESTful systems can handle diverse requirements and evolve with changing needs, providing a sense of reassurance to developers and architects.</p>
+<p>At the heart of REST is the resource concept, which represents any data or service accessible on a network. Resources can be anything from a user profile to a product catalog or even a blog post. Each resource is uniquely identified by a Uniform Resource Identifier (URI), which serves as its address on the web. For example, a resource representing a user might be accessible at <code translate="no" v-pre>/api/users/{id}</code>, where <code translate="no" v-pre>{id}</code> represents the user&#x27;s unique identifier. This uniformity in addressing resources is one of the core strengths of REST, providing a consistent and predictable structure for accessing and manipulating data.</p>
+<p>A key characteristic of RESTful systems is the stateless communication between clients and servers. Each HTTP request from a client to a server must contain all the necessary information for the server to process it. This means that the server does not retain any session-specific state between requests. While this may seem like a limitation, statelessness is a key feature that enhances scalability and reliability. It allows servers to handle each request independently, without the overhead of managing client-specific data between interactions. This also allows for greater flexibility in load balancing and distributing requests across multiple servers, ensuring that the system can handle high demand and changing conditions effectively.</p>
+<p>Another fundamental principle of REST is the separation of concerns between the client and server. In a RESTful architecture, the client manages the user interface and user experience, while the server manages the resources and data. This clear division allows clients and servers to evolve independently as long as they continue communicating through the standardized HTTP interface. For example, a mobile app and a web application can interact with the same RESTful API, even if their user interfaces differ vastly.</p>
+<p>RESTful APIs extensively use HTTP methods to perform operations on resources. The four primary methods—GET, POST, PUT, and DELETE—are mapped to the standard CRUD (Create, Read, Update, Delete) operations. For instance, a GET request retrieves data from the server without modifying it, while a POST request creates a new resource. This alignment with HTTP methods ensures that RESTful APIs are simple to understand and use, leveraging the existing capabilities of the web to perform actions on resources.</p>
+<p>Another important aspect of REST is its emphasis on a uniform interface. This uniformity simplifies the design of the API by providing consistent patterns for interacting with resources. The use of standard methods, well-defined URIs, and predictable behavior allows clients to interact with the API without needing detailed knowledge of its inner workings. This simplicity and predictability ensure that developers can confidently understand and use RESTful APIs, creating systems that are easier to maintain and extend over time, instilling a sense of confidence in their abilities.</p>
+<p>One optional but valuable constraint in RESTful design is using hypermedia as the engine of application state, often abbreviated as HATEOAS. In this model, responses from the server not only contain the requested data but also links to other related resources or actions. These links guide the client in how to proceed, effectively serving as a &#x27;hypermedia control&#x27; that drives the application&#x27;s state transitions. For example, a response to a request for a user&#x27;s profile might include links to update the profile, view the user&#x27;s posts, or navigate to other relevant resources. This approach simplifies client logic and decouples the client from hard-coded knowledge of the API&#x27;s structure, making it easier to evolve the system without breaking existing clients.</p>
+<p>Caching is another principle that REST leverages to improve performance and scalability. By indicating whether a response is cacheable, servers can reduce the need for repeated requests for the same resource. HTTP headers like <code translate="no" v-pre>Cache-Control</code> and <code translate="no" v-pre>ETag</code> control caching behavior, allowing clients to store and reuse responses until they expire or are invalidated. Proper use of caching can significantly reduce the load on servers and improve the responsiveness of applications, especially when dealing with frequently accessed data.</p>
+<p>Security is a critical consideration in any RESTful API design. While REST does not mandate specific security practices, it works seamlessly with established HTTP security mechanisms. Transport Layer Security (TLS) ensures that communications between clients and servers are encrypted, preventing eavesdropping or tampering. Additionally, RESTful APIs typically use token-based authentication mechanisms such as OAuth2 or JSON Web Tokens (JWT) to authenticate and authorize clients, ensuring that only authorized users can access specific resources.</p>
+<p>By adhering to these principles and constraints, REST enables the development of scalable, reliable, and flexible systems. Its emphasis on statelessness, resource-based design, and uniform interfaces ensures that RESTful services can grow and adapt to changing requirements without becoming overly complex. This scalability and reliability provide a secure foundation for RESTful systems to perform under high demand and changing conditions, instilling a sense of security in the audience.</p>
+<h3 id="restful-resources-and-uris">RESTful Resources and URIs</h3>
+<p>In RESTful systems, the concept of resources is central to how clients and servers interact. A resource represents any entity or data that can be accessed and manipulated via the web. This could range from a single user or a collection of products to an individual document or even a server-side process. In REST, resources are not tied to a specific file or database record but are rather abstract representations that the client interacts with through standard HTTP methods. By organizing data into distinct resources, RESTful APIs create a clear and predictable structure for external systems to navigate.</p>
+<p>A Uniform Resource Identifier (URI) uniquely identifies each resource in a RESTful system. URIs provide a standard, human-readable way to address resources, making it straightforward for clients to interact with the API. A well-designed URI follows predictable patterns, offering clear insight into the structure and hierarchy of the API. For example, the URI <code translate="no" v-pre>/api/products</code> might refer to the collection of all products, while <code translate="no" v-pre>/api/products/123</code> would point to a specific product with the ID 123. This uniformity is essential for designing scalable and maintainable APIs.</p>
+<p>The structure of URIs should be designed with clarity and simplicity in mind, avoiding unnecessary complexity. RESTful URIs are often hierarchical, reflecting the relationship between resources. For example, a user’s collection of orders might be represented as <code translate="no" v-pre>/api/users/1/orders</code>, where <code translate="no" v-pre>1</code> is the user ID, and <code translate="no" v-pre>orders</code> are the collection of that user’s orders. This structure mirrors the logical relationship between the resources, allowing clients to understand the context and navigate between related resources easily.</p>
+<p>While designing URIs, it is important to follow best practices that improve both usability and consistency. Using nouns rather than verbs in URIs is a fundamental practice in RESTful design. The HTTP methods (GET, POST, PUT, DELETE) should indicate the action performed, while the URI should represent the resource. For instance, instead of <code translate="no" v-pre>/api/getProduct</code> or <code translate="no" v-pre>/api/createProduct</code>, use <code translate="no" v-pre>/api/products</code>, with the HTTP method determining whether the request is retrieving or creating a product. This approach aligns with the REST principle of a uniform interface.</p>
+<p>Another important consideration when designing URIs is maintaining consistency across the entire API. Resources that follow a consistent structure and naming convention are easier to understand and navigate. Using plural nouns, such as <code translate="no" v-pre>/api/products</code> for collections and <code translate="no" v-pre>/api/products/{id}</code> for individual resources, helps maintain uniformity. Additionally, versioning the API within the URI (e.g., <code translate="no" v-pre>/api/v1/products</code>) can help manage changes to the API over time without breaking existing clients that rely on older versions.</p>
+<p>Query parameters can also be used to refine how a client interacts with a resource without altering the fundamental structure of the URI. For example, <code translate="no" v-pre>/api/products?category=electronics&amp;sort=price</code> retrieves a subset of products filtered by category and sorted by price. Query parameters should be used for optional criteria such as filtering, searching, or pagination, while the central resource should always be represented in the URI path itself. This keeps the URI clean and focused on identifying the resource.</p>
+<p>Although URIs should be easy for clients to interpret, they are not meant to expose the internal structure or workings of the server. URIs should represent logical resources rather than database tables or file paths. By abstracting the resource representation, the API becomes more flexible and capable of evolving without breaking clients. For instance, the API might store products in a relational database today and switch to a NoSQL database tomorrow without changing the <code translate="no" v-pre>/api/products</code> URI. Decoupling resource representation from the underlying implementation is vital to building resilient APIs.</p>
+<p>Effective URI design forms the backbone of any RESTful API, enabling clients to locate and interact with resources in a predictable, standardized way. As we continue to explore how to build RESTful systems, understanding the role of URIs will help ensure that your APIs are intuitive, scalable, and adaptable, providing a strong foundation for the applications that rely on them.</p>
+<h3 id="rest-and-http-methods">REST and HTTP Methods</h3>
+<p>In RESTful APIs, the interaction between clients and servers is primarily facilitated through standard HTTP methods. Each method is designed to perform specific actions on resources, following the CRUD (Create, Read, Update, Delete) operations. By mapping HTTP methods to these actions, RESTful systems offer a simple and consistent way to interact with resources. Understanding the role of each method and how it is used within the context of REST is essential for designing intuitive and efficient APIs.</p>
+<p>The GET method retrieves information from the server. It is considered a &quot;safe&quot; method because it does not modify the resource and is idempotent, meaning multiple identical requests will return the same result without side effects. GET requests are commonly used to fetch data, such as a list of products or a specific user profile. Using GET to access resources in a RESTful API ensures clarity and consistency, allowing clients to understand that they are simply retrieving data, not altering it.</p>
+<p>POST, in contrast, is used to create a new resource on the server. When a client sends a POST request, it typically includes data in the request&#x27;s body, which the server processes to create the new resource. POST is not idempotent, as repeated requests can result in multiple resource creations. For example, posting to <code translate="no" v-pre>/api/orders</code> might create a new order in the system, with each subsequent POST resulting in a new, unique order being added to the database. POST is crucial when data is being introduced to the system, and each submission represents a distinct transaction.</p>
+<p>PUT and PATCH are used to update existing resources but differ in scope. PUT is generally used to completely replace a resource with a new one, making it idempotent—submitting the same PUT request multiple times will produce the same result. On the other hand, PATCH is designed for partial updates, where only certain fields of the resource are modified. For instance, a PUT request to <code translate="no" v-pre>/api/products/123</code> might replace the entire product with new details, while a PATCH request could update only the product&#x27;s price. Choosing between PUT and PATCH depends on whether a complete replacement or a targeted update is needed.</p>
+<p>DELETE is used to remove resources from the server. Like PUT, DELETE is idempotent, meaning multiple DELETE requests for the same resource will have the same effect: removing the resource. For example, deleting a user with the URI <code translate="no" v-pre>/api/users/123</code> will remove that specific user from the system. If the resource has already been deleted, subsequent DELETE requests will have no further impact. DELETE is essential for maintaining resource lifecycle management in a RESTful API, allowing clients to remove resources when they are no longer needed.</p>
+<p>Using these HTTP methods appropriately ensures that a RESTful API remains predictable and easy to use, instilling confidence in the development process. Each method has a well-defined role, and by adhering to these roles, developers can create intuitive APIs for clients to interact with and efficiently process data. As we explore more advanced topics in RESTful API design, the correct use of HTTP methods will continue to serve as a foundation for building robust, scalable systems.</p>
+<h3 id="restful-api-design-best-practices">RESTful API Design Best Practices</h3>
+<p>Adhering to best practices when designing RESTful APIs ensures that they are intuitive, scalable, and maintainable. A well-designed API enhances the developer experience and ensures that the system can evolve over time without breaking existing integrations. Following these principles helps create APIs that are predictable, consistent, and easy to use, all while leveraging HTTP&#x27;s full capabilities.</p>
+<p>One of the most essential principles in designing a RESTful API is keeping it <strong>resource-oriented</strong>. Resources, such as users, products, or orders, should be the focal point of the API, each identified by a unique Uniform Resource Identifier (URI). For instance, an endpoint like <code translate="no" v-pre>/api/products/123</code> represents a product with the ID <code translate="no" v-pre>123</code>. The API&#x27;s actions on this resource—whether retrieving, updating, or deleting—should be driven by the HTTP methods, rather than embedding actions directly in the URI (e.g., avoiding /api/products/delete/123).</p>
+<p><strong>Consistency in naming</strong> conventions is equally critical. Using plural nouns for collections, such as <code translate="no" v-pre>/api/users</code>, and singular nouns when referring to individual resources, such as <code translate="no" v-pre>/api/users/123</code>, enhances the clarity of the API. Similarly, avoiding verbs in URIs helps keep the focus on resources, as HTTP methods like GET, POST, PUT, and DELETE already indicate the action being performed. This approach creates a more intuitive API, reducing the learning curve for developers using the service.</p>
+<p><strong>Versioning</strong> is another best practice to ensure the API remains flexible over time. Changes to an API are inevitable as business needs evolve, but these changes should maintain clients&#x27; reliance on previous versions. By including the API version in the URI (e.g., <code translate="no" v-pre>/api/v1/products</code>), clients can continue interacting with the current version, even as new features or breaking changes are introduced in future versions. This approach enables smoother transitions and prevents breaking changes from affecting existing clients.</p>
+<p><strong>Error handling</strong> is a crucial aspect of RESTful API design. When something goes wrong, the API should provide clear, informative error messages that help clients understand what happened and how to fix it. Utilizing standard HTTP status codes, such as <code translate="no" v-pre>400 Bad Request</code> for malformed requests or <code translate="no" v-pre>404 Not Found</code> when a resource cannot be located, ensures that clients can easily interpret the API&#x27;s response. In addition to status codes, including a descriptive message in the response body, such as an explanation of the error or validation details, enhances the API&#x27;s usability.</p>
+<p><strong>Pagination and filtering</strong> are essential when dealing with large collections of resources. To improve performance and prevent clients from being overwhelmed with data, APIs should implement pagination for endpoints that return lists of resources. For example, a response to <code translate="no" v-pre>/api/products?page=2&amp;size=10</code> might return the second page of products, with 10 items per page. Additionally, providing filtering options via query parameters allows clients to request specific subsets of data, such as <code translate="no" v-pre>/api/products?category=electronics&amp;sort=price</code>. This keeps the API flexible and responsive, allowing clients to retrieve the needed data.</p>
+<p><strong>Caching</strong> is another technique that significantly improves API performance. By enabling HTTP caching mechanisms, such as setting appropriate <code translate="no" v-pre>Cache-Control</code> headers, the API can reduce the need for repeated requests, especially for static or rarely changing resources. Caching can also reduce server load, improve response times, and provide a better overall experience for clients. Using techniques like ETags and <code translate="no" v-pre>Last-Modified</code> headers allows clients to cache resources while ensuring they receive updates when the data changes.</p>
+<p><strong>Security</strong> is a non-negotiable aspect of API design. APIs should always be served over HTTPS to ensure data encryption during transmission, protecting sensitive information from being intercepted. Additionally, authentication and authorization mechanisms, such as OAuth2 or JSON Web Tokens (JWT), should be implemented to restrict access to sensitive resources. Proper use of security headers, including <code translate="no" v-pre>Content-Security-Policy</code> and <code translate="no" v-pre>Strict-Transport-Security</code>, can further enhance the security posture of the API. We will look at this subject later in this chapter.</p>
+<p><strong>Documentation</strong> is pivotal in making an API easy to use and integrate with. Providing comprehensive, up-to-date documentation, ideally through tools like Swagger or OpenAPI, helps developers understand the API&#x27;s capabilities, endpoints, request formats, and responses. Including examples of typical requests and responses further aids developers in quickly getting started. A well-documented API reduces friction for users and increases its adoption.</p>
+<p><strong>Rate limiting</strong> is another essential consideration, especially for public-facing APIs. Implementing rate limits helps protect the server from being overwhelmed by too many requests in a short period, ensuring the system remains responsive for all users. For instance, an API might allow up to 100 requests per minute per user, after which it returns a <code translate="no" v-pre>429 Too Many Requests</code> status code. Including rate limit information in the response headers allows clients to adjust their behavior accordingly.</p>
+<p>A RESTful API should also be designed with <strong>scalability</strong> in mind. As the user base grows, the API must be able to handle increased traffic and data loads without degrading performance. Techniques like horizontal scaling, where additional servers are added to distribute the load, and implementing microservices to separate different parts of the system are common strategies for achieving scalability. Additionally, using cloud services, such as load balancers, auto-scaling and <strong>content delivery networks</strong> (<strong>CDNs</strong>), can help optimize performance and availability.</p>
+<p>The principle of <strong>HATEOAS</strong> (<strong>Hypermedia as the Engine of Application State</strong>) is another valuable best practice. With HATEOAS, each API response includes links to related resources or possible actions the client can take next. For example, when retrieving a user&#x27;s profile, the response might include links to view the user&#x27;s orders or update their details. This approach simplifies client logic and makes the API more discoverable, allowing clients to navigate through the available actions without needing hard-code knowledge of the API&#x27;s structure.</p>
+<p>Adhering to these best practices allows RESTful APIs to be designed to provide a clear, consistent, and secure interface for clients. These principles help ensure that the API is flexible, easy to maintain, and capable of evolving with the system&#x27;s needs over time. As we continue to build RESTful APIs using .NET and C#, these guidelines will be essential for creating robust, scalable, and user-friendly systems.</p>
+<h2 id="setting-up-aspnet-core-8-web-api">Setting Up ASP.NET Core 8 Web API</h2>
+<p>To begin building a RESTful API with ASP.NET Core 8, the first step is setting up a new Web API project using <strong>Visual Studio 2022 Community edition</strong>. ASP.NET Core provides a powerful framework for creating modern, scalable web APIs that leverage the latest .NET features, including minimal APIs and improved dependency injection. This section will walk through creating a new project, setting up the basic API structure, and preparing it for further development.</p>
+<p>Open Visual Studio 2022 and create a new project by selecting <strong>Create a new project</strong> from the start window. From the project template list, choose <strong>ASP.NET Core Web API</strong> and click <strong>Next</strong>. Provide a name for your project, choose a location to save it, and click <strong>Create</strong>. In the following dialog, ensure that <strong>.NET 8</strong> is selected as the target framework, and check the option to enable <strong>OpenAPI support</strong> for automatic API documentation generation. Click <strong>Create</strong> to initialize the project.</p>
+<figure class="content-center">
+    <img src="images/vs22-webapi-creation.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1522" height="1013" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Visual Studio 2022 Project Creation</b></figcaption>
+<figure class="content-center">
+    <img src="images/vs22-webapi-additional.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1522" height="1013" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Visual Studio 2022 Web API Project Additional</b></figcaption>
+<p>Once the project is generated, Visual Studio creates a default folder structure that includes several key components. The <strong>Controllers</strong> folder contains the default WeatherForecastController file, demonstrating how a basic API controller works. In a RESTful API, controllers handle incoming requests and map them to appropriate actions, such as retrieving, creating, or updating resources. You can expand this folder as needed to include additional controllers for various resources in your API.</p>
+<figure class="content-center">
+    <img src="images/vs22-webapi-structure.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="438" height="665" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Visual Studio 2022 Web API Project Structure</b></figcaption>
+<p>ASP.NET Core uses dependency injection by default, and services are registered in the <strong>Program.cs</strong> file. This file is crucial in configuring middleware, routing, and services like database connections or authentication. By default, the Program.cs file already contains the basic configuration for handling API requests and serving JSON responses. To add more functionality, you will modify this file to include additional services, such as support for Entity Framework Core or third-party libraries for logging or security.</p>
+<p>At this point, your API project is ready to run. Press <strong>F5</strong> or click <strong>Start</strong> to launch the API in the browser. Visual Studio will open the Swagger UI by default, allowing you to interact with the available API endpoints. The Swagger UI is a convenient way to explore and test your API without needing a separate tool like Postman. It automatically generates API documentation based on the OpenAPI specification and allows you to test requests against the available endpoints.</p>
+<figure class="content-center">
+    <img src="images/vs22-webapi-swagger.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1331" height="1010" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>Web API Project Swagger</b></figcaption>
+<p>To add your first custom API controller:</p>
+<ol>
+<li>Right-click on the <strong>Controllers</strong> folder and select <strong>Add &gt; Controller</strong>.</li>
+<li>Choose <strong>API Controller - Empty</strong> and name the new controller ProductController.</li>
+<li>Inside the ProductController, create basic endpoints for retrieving and managing product data, such as a GET method to fetch a list of products and a POST method to add a new product.
+For now, you can return mock data or simple status codes as placeholders for actual database logic, which we will cover later in this chapter.</li>
+</ol>
+<p>With the basic API structure in place, you can now add features to make it more functional and robust. ASP.NET Core 8 allows you to easily integrate middleware for logging, security, and error handling, which can be configured in the Program.cs file. Additionally, routing can be customized to ensure clean and intuitive URIs for your resources, critical for maintaining a RESTful design. We will explore these topics in greater depth as we expand the API’s capabilities throughout this chapter.</p>
+<p>By setting up the initial project structure and familiarizing yourself with the controller-based architecture, you have created a scalable and maintainable web API with ASP.NET Core 8. As we move forward, you will learn how to integrate databases, add security layers, and fine-tune your API to meet the demands of modern web applications. The combination of ASP.NET Core 8 and Visual Studio 2022 provides a powerful environment for building high-performance APIs that can scale with your application needs.</p>
+<h2 id="designing-restful-resources">Designing RESTful Resources</h2>
+<p>Determining resources is a critical step when designing RESTful APIs. Resources represent the key entities the API exposes and operates on, such as users, products, or orders. In a well-structured API, each resource is modeled with clarity and consistency, ensuring developers and clients can easily interact. To begin designing resources, we create corresponding C# classes to represent the underlying data structure, ensuring that these classes align with the API&#x27;s needs while following best practices for RESTful design.</p>
+<p>In ASP.NET Core 8, a resource is typically represented by a model class. For example, consider a simple Product class, which represents a product in an e-commerce system. The class might contain <code translate="no" v-pre>Id</code>, <code translate="no" v-pre>Name</code>, <code translate="no" v-pre>Description</code>, and <code translate="no" v-pre>Price</code> properties. These properties map directly to the data fields that the client interacts with. Creating such model classes allows the API to serve, manipulate, and return structured data in response to client requests. Below is an example of a Product class in C#.</p>
+<div id="designing-restful-resources-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public decimal Price { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>This simple class, designed with the purpose of defining the structure of the Product resource, is straightforward and comfortable to work with. Each property corresponds to a piece of data that the client will expect to retrieve or update. In a RESTful API, resources should be treated as nouns, with the HTTP methods (GET, POST, PUT, DELETE) performing actions on these resources. The URI for interacting with a collection of products might be <code translate="no" v-pre>/api/products</code>, while an individual product would be accessible via <code translate="no" v-pre>/api/products/{id}</code>.</p>
+<p>Once the resource class is defined, the next step is to create a controller to empower you in handling the API endpoints for managing this resource. For example, a <code translate="no" v-pre>ProductController</code> will provide endpoints to retrieve a list of products, fetch a single product by ID, create new products, and update or delete existing ones. Each action corresponds to an HTTP method that interacts with the resource. Below is a sample of the <code translate="no" v-pre>ProductController</code> class that defines these actions.</p>
+<div id="designing-restful-resources-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+public class ProductController : ControllerBase
+{
+    [HttpGet]
+    public IEnumerable&lt;Product&gt; GetAllProducts()
+    {
+        // Returns a list of mock products
+        return new List&lt;Product&gt;
+        {
+            new Product { Id = 1, Name = &quot;Laptop&quot;, Description = &quot;A high-performance laptop&quot;, Price = 999.99m },
+            new Product { Id = 2, Name = &quot;Headphones&quot;, Description = &quot;Noise-cancelling headphones&quot;, Price = 199.99m }
+        };
+    }
+
+    [HttpGet(&quot;{id}&quot;)]
+    public ActionResult&lt;Product&gt; GetProductById(int id)
+    {
+        var product = new Product { Id = id, Name = &quot;Sample Product&quot;, Description = &quot;Sample Description&quot;, Price = 9.99m };
+        return Ok(product);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this controller, we define two endpoints: one for retrieving all products (<code translate="no" v-pre>GET /api/products</code>) and one for fetching a specific product by its ID (<code translate="no" v-pre>GET /api/products/{id}</code>). The methods are mapped to these URIs using the <code translate="no" v-pre>HttpGet</code> attributes, making the interaction between the client and the API precise and predictable. As we build out the API further, we will add POST, PUT, and DELETE methods for managing the lifecycle of these resources.</p>
+<p>Designing resources also involves defining relationships between them. For instance, if products belong to categories, you might have a <code translate="no" v-pre>Category</code> resource related to the <code translate="no" v-pre>Product</code> resource. In this case, a product might include a reference to its category, as shown below.</p>
+<div id="designing-restful-resources-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public decimal Price { get; set; }
+    public Category Category { get; set; }
+}
+
+public class Category
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>With these relationships defined in the model, the API can expose endpoints that allow clients to filter products by category or retrieve categories along with their associated products. For example, you could implement an endpoint such as <code translate="no" v-pre>/api/products?categoryId=3</code> to fetch all products in a particular category.</p>
+<p>By designing resources with clear structure and relationships, we ensure that the API is both logical and scalable. This structured approach to resource modeling simplifies client interaction and supports the creation of clean, maintainable code as the API grows in complexity. As we build out the API, maintaining this resource-driven approach will ensure we adhere to RESTful principles, delivering a reliable and predictably consistent service to clients.</p>
+<h2 id="implementing-crud-operations">Implementing CRUD Operations</h2>
+<p>Creating a robust API involves implementing the full range of CRUD (Create, Read, Update, Delete) operations to allow clients to manage resources effectively. These operations correspond to HTTP methods: POST for creating new resources, GET for reading existing ones, PUT or PATCH for updating them, and DELETE for removal. ASP.NET Core 8, with its efficient tools, simplifies this process by providing the means to easily map these operations to API endpoints with the help of controllers and routing, empowering developers and boosting their confidence in the development process.</p>
+<p>Let’s start by implementing the POST operation, a method of utmost importance as it creates a new resource in our API. This will allow clients to add new products, making the POST method a significant part of our API. The POST method is typically mapped to the <code translate="no" v-pre>/api/products</code> endpoint and expects a product object in the request body. In the controller, the method receives the product data, processes it, and returns a success status with details about the newly created resource. Below is the POST implementation in the <code translate="no" v-pre>ProductController</code>.</p>
+<div id="implementing-crud-operations-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public ActionResult&lt;Product&gt; CreateProduct(Product newProduct)
+{
+    // Add logic to save the product (e.g., database call)
+    newProduct.Id = new Random().Next(1, 1000); // Simulating ID assignment for the new product
+    return CreatedAtAction(nameof(GetProductById), new { id = newProduct.Id }, newProduct);
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the <code translate="no" v-pre>CreateProduct</code> method accepts a <code translate="no" v-pre>Product</code> object from the request body and assigns it an ID, simulating a database insert. The <code translate="no" v-pre>CreatedAtAction</code> method returns an HTTP 201 response along with the URI of the newly created resource, providing a link to the <code translate="no" v-pre>GetProductById</code> method that retrieves the specific product.</p>
+<p>Next, we implement the GET operation, which allows clients to retrieve both individual resources and collections of resources. For retrieving all products, we map the GET method to <code translate="no" v-pre>/api/products</code>, while for retrieving a specific product by ID, we use <code translate="no" v-pre>/api/products/{id}</code>. This operation is idempotent, meaning it can be called repeatedly without altering the resource&#x27;s state. Below are the GET methods for retrieving both all products and a specific product.</p>
+<div id="implementing-crud-operations-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpGet]
+public IEnumerable&lt;Product&gt; GetAllProducts()
+{
+    // Logic to retrieve all products (e.g., from a database)
+    return new List&lt;Product&gt;
+    {
+        new Product { Id = 1, Name = &quot;Laptop&quot;, Description = &quot;A high-performance laptop&quot;, Price = 999.99m },
+        new Product { Id = 2, Name = &quot;Headphones&quot;, Description = &quot;Noise-cancelling headphones&quot;, Price = 199.99m }
+    };
+}
+
+[HttpGet(&quot;{id}&quot;)]
+public ActionResult&lt;Product&gt; GetProductById(int id)
+{
+    var product = new Product { Id = id, Name = &quot;Sample Product&quot;, Description = &quot;Sample Description&quot;, Price = 9.99m };
+    if (product == null)
+    {
+        return NotFound();
+    }
+    return Ok(product);
+}</code></pre>
+</doc-codeblock></div>
+<p>The first method, <code translate="no" v-pre>GetAllProducts</code>, returns a list of products, while <code translate="no" v-pre>GetProductById</code> retrieves a single product based on its ID. If the requested product cannot be found, the method ensures proper error handling by returning an HTTP 404 status code using the <code translate="no" v-pre>NotFound</code> method. This process is designed to keep you secure and confident in your work.</p>
+<p>Feel at ease with the PUT and PATCH methods for updating existing resources. The PUT method is straightforward for full updates, while the PATCH method is simple for partial updates. When the client sends the complete updated resource, PUT is the way to go. If you&#x27;re only modifying specific fields, PATCH is your friend. Here&#x27;s how to update a product using the PUT method, which maps to <code translate="no" v-pre>/api/products/{id}</code>.</p>
+<div id="implementing-crud-operations-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPut(&quot;{id}&quot;)]
+public IActionResult UpdateProduct(int id, Product updatedProduct)
+{
+    if (id != updatedProduct.Id)
+    {
+        return BadRequest(&quot;Product ID mismatch.&quot;);
+    }
+
+    // Logic to update the product (e.g., database call)
+    return NoContent(); // Indicates the update was successful but no content is returned
+}</code></pre>
+</doc-codeblock></div>
+<p>In this method, we check if the product ID in the URL matches the ID in the product data. If not, a <code translate="no" v-pre>BadRequest</code> response is returned. Upon a successful update, the method returns HTTP 204 (<code translate="no" v-pre>No Content</code>), indicating the operation succeeded without returning any resource data. This reassures the user of a successful operation, a common pattern in RESTful APIs for successful updates.</p>
+<p>Finally, the DELETE operation is implemented to allow clients to remove resources. This is mapped to <code translate="no" v-pre>/api/products/{id}</code> and ensures that once a product is deleted, it cannot be retrieved again, emphasizing the finality of this action. Below is the DELETE method in the <code translate="no" v-pre>ProductController</code>.</p>
+<div id="implementing-crud-operations-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpDelete(&quot;{id}&quot;)]
+public IActionResult DeleteProduct(int id)
+{
+    // Logic to delete the product (e.g., database call)
+    return NoContent(); // Indicates the resource was successfully deleted
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>DeleteProduct</code> method accepts the product ID as a parameter, performs the deletion (in this case, simulated), and returns an HTTP 204 response, indicating that the resource has been successfully removed. If the product was not found or couldn’t be deleted, appropriate error handling would return an HTTP 404 or another relevant status code.</p>
+<p>Implementing these CRUD operations enables full lifecycle management for resources in our API. This ensures clients can create, read, update, and delete products as needed, using standard HTTP methods that align with REST principles. Moving forward, we will focus on integrating more advanced features such as authentication, validation, and database persistence to build a robust and secure API.</p>
+<h2 id="working-with-data-and-entity-framework-core">Working with Data and Entity Framework Core</h2>
+<p>Integrating a database is critical to building RESTful APIs, and <strong>Entity Framework Core</strong> (<strong>EF Core</strong>) is the leading data access technology in .NET. It offers an object-relational mapper (<strong>ORM</strong>) that allows developers to interact with databases using C# objects, eliminating the need for raw SQL queries. One of EF Core&#x27;s key strengths is its support for multiple database systems, including SQL Server, SQLite, PostgreSQL, and others, making it a flexible choice for various application needs.</p>
+<p>The first step to working with data in an ASP.NET Core 8 Web API is to set up EF Core in the project. This involves installing the necessary NuGet packages and configuring the database connection. In Visual Studio 2022, right-click on the project and select <strong>Manage NuGet Packages</strong>. Search for and install <code translate="no" v-pre>Microsoft.EntityFrameworkCore</code> and <code translate="no" v-pre>Microsoft.EntityFrameworkCore.SqlServer</code>. Once installed, these packages provide the tools to interact with an SQL Server database through EF Core.</p>
+<p>Next, configure the database connection in the <code translate="no" v-pre>Program.cs</code> file. EF Core uses the <code translate="no" v-pre>DbContext</code> class to represent a session with the database, and the connection string must be specified to connect to the actual database server. Below is the configuration in the <code translate="no" v-pre>Program.cs</code> file.</p>
+<div id="working-with-data-and-entity-framework-core-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddDbContext&lt;AppDbContext&gt;(options =&gt;
+    options.UseSqlServer(builder.Configuration.GetConnectionString(&quot;DefaultConnection&quot;)));
+
+var app = builder.Build();</code></pre>
+</doc-codeblock></div>
+<p>In this example, AddDbContext registers the database context (AppDbContext) with the dependency injection container, enabling EF Core to work throughout the application. The connection string is stored in the appsettings.json file, which points to the SQL Server instance. Below is an example connection string in appsettings.json.</p>
+<div id="working-with-data-and-entity-framework-core-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">{
+  &quot;ConnectionStrings&quot;: {
+    &quot;DefaultConnection&quot;: &quot;Server=localhost;Database=ProductDB;Trusted_Connection=True;&quot;
+  }
+}</code></pre>
+</doc-codeblock></div>
+<p>Once the database connection is set up, the next step is to define the <code translate="no" v-pre>DbContext</code> class. This class manages the entity objects during runtime, which involves tracking changes, maintaining relationships, and performing database operations. The <code translate="no" v-pre>DbContext</code> class is responsible for querying and saving data to the database. The <code translate="no" v-pre>DbContext</code> class contains DbSet properties for each resource (table) in the database. Below is an example of the <code translate="no" v-pre>AppDbContext</code> class for managing products.</p>
+<div id="working-with-data-and-entity-framework-core-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) : base(options)
+    {
+    }
+
+    public DbSet&lt;Product&gt; Products { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the <code translate="no" v-pre>Products</code> property represents a table in the database, where each <code translate="no" v-pre>Product</code> object corresponds to a row. EF Core will automatically map the <code translate="no" v-pre>Product</code> class to the database schema, creating tables and columns that match the class properties.</p>
+<p>EF Core uses migrations to apply changes to the database, such as creating tables or altering columns. Migrations allow the schema to evolve without manually writing SQL. To add an initial migration, open the <strong>Package Manager Console</strong> in Visual Studio and run the following commands:</p>
+<div id="working-with-data-and-entity-framework-core-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">Add-Migration InitialCreate
+Update-Database</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>Add-Migration</code> command plays a crucial role in the database setup process, as it generates a migration file containing schema changes (e.g., creating the <code translate="no" v-pre>Products</code> table). Similarly, the <code translate="no" v-pre>Update-Database</code> command is equally important, as it applies the migration to the database.</p>
+<p>Once the database is set up and the migrations are applied, the next step is implementing data operations in the API controller using EF Core. Instead of working with in-memory data, as shown earlier, we will now perform actual CRUD operations on the database. To illustrate this, below is a practical example of implementing the GET method using EF Core to retrieve products from the database.</p>
+<div id="working-with-data-and-entity-framework-core-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpGet]
+public async Task&lt;IEnumerable&lt;Product&gt;&gt; GetAllProducts()
+{
+    return await _context.Products.ToListAsync();
+}</code></pre>
+</doc-codeblock></div>
+<p>This method uses the EF Core DbSet to query the Products table and retrieve all product records. The ToListAsync method asynchronously retrieves the data, making the API more efficient by preventing blocking operations. Equally important, the POST method for creating a new product plays a key role in saving the data to the database, as shown below.</p>
+<div id="working-with-data-and-entity-framework-core-code-6" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;ActionResult&lt;Product&gt;&gt; CreateProduct(Product newProduct)
+{
+    _context.Products.Add(newProduct);
+    await _context.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(GetProductById), new { id = newProduct.Id }, newProduct);
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the <code translate="no" v-pre>CreateProduct</code> method adds the new product to the <code translate="no" v-pre>Products</code> table and then saves the changes using <code translate="no" v-pre>SaveChangesAsync</code>. Once the product is saved, it returns its details along with its location in the API.</p>
+<p>To update an existing product, we use the PUT method, as demonstrated below. This method updates the product record in the database and ensures that changes are saved.</p>
+<div id="working-with-data-and-entity-framework-core-code-7" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPut(&quot;{id}&quot;)]
+public async Task&lt;IActionResult&gt; UpdateProduct(int id, Product updatedProduct)
+{
+    if (id != updatedProduct.Id)
+    {
+        return BadRequest(&quot;Product ID mismatch.&quot;);
+    }
+
+    _context.Entry(updatedProduct).State = EntityState.Modified;
+    await _context.SaveChangesAsync();
+
+    return NoContent();
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>UpdateProduct</code> method uses EF Core&#x27;s Entry method to mark the product as modified and saves the changes to the database.</p>
+<p>Finally, the DELETE method removes a product from the database using the product ID, as shown below.</p>
+<div id="working-with-data-and-entity-framework-core-code-8" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpDelete(&quot;{id}&quot;)]
+public async Task&lt;IActionResult&gt; DeleteProduct(int id)
+{
+    var product = await _context.Products.FindAsync(id);
+    if (product == null)
+    {
+        return NotFound();
+    }
+
+    _context.Products.Remove(product);
+    await _context.SaveChangesAsync();
+
+    return NoContent();
+}</code></pre>
+</doc-codeblock></div>
+<p>Utilizing EF Core, this method efficiently retrieves the product by its ID using FindAsync and promptly removes it from the database. Following the deletion, the changes are swiftly saved with SaveChangesAsync, and the method promptly returns a NoContent response, showcasing the efficiency of EF Core.</p>
+<p>By integrating EF Core into the API, we have enabled persistent storage for products, allowing the API to handle real-world data scenarios. This approach not only simplifies data management, making it a breeze, but also leverages the power of EF Core’s ORM to abstract the complexities of database access. As we move forward, the potential for enhancing this foundation with additional features like relationships, validation, and security is vast, promising to further enrich the API’s functionality and open up exciting new possibilities.</p>
+<h2 id="testing-and-debugging-rest-apis">Testing and Debugging REST APIs</h2>
+<p>Testing and debugging are not just steps, but a responsibility in building a reliable REST API. They ensure that your endpoints work as expected, handle edge cases gracefully, and perform efficiently. In ASP.NET Core 8, you can use various tools to test and debug your API. This section will focus on automated testing using xUnit and debugging techniques to help identify and resolve issues quickly during development, showing your commitment to delivering a robust API.</p>
+<p>xUnit is a popular testing framework in .NET that offers a simple and flexible way to write unit and integration tests for your API. Unit tests verify the functionality of individual components, while integration tests, with xUnit&#x27;s robust capabilities, thoroughly test the API&#x27;s interaction with external systems like databases. To begin, install the <code translate="no" v-pre>xUnit</code> and <code translate="no" v-pre>Microsoft.AspNetCore.Mvc.Testing</code> NuGet packages in your test project. These packages provide the tools to test your API and simulate HTTP requests, giving you the confidence that your API is secure and reliable.</p>
+<p>Once the testing environment is set up, we can write unit tests for the API&#x27;s controllers. For example, testing the <code translate="no" v-pre>ProductController</code>&#x27;s GET method ensures that it returns the expected list of products. Below is a simple unit test using xUnit that mocks the necessary dependencies and tests the <code translate="no" v-pre>GetAllProducts</code> method.</p>
+<div id="testing-and-debugging-rest-apis-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class ProductControllerTests
+{
+    private readonly ProductController _controller;
+    private readonly Mock&lt;AppDbContext&gt; _contextMock;
+
+    public ProductControllerTests()
+    {
+        _contextMock = new Mock&lt;AppDbContext&gt;();
+        _controller = new ProductController(_contextMock.Object);
+    }
+
+    [Fact]
+    public void GetAllProducts_ReturnsProducts()
+    {
+        // Arrange
+        var products = new List&lt;Product&gt;
+        {
+            new Product { Id = 1, Name = &quot;Laptop&quot;, Description = &quot;A laptop&quot;, Price = 1000m },
+            new Product { Id = 2, Name = &quot;Phone&quot;, Description = &quot;A smartphone&quot;, Price = 500m }
+        };
+        _contextMock.Setup(c =&gt; c.Products.ToList()).Returns(products);
+
+        // Act
+        var result = _controller.GetAllProducts();
+
+        // Assert
+        Assert.Equal(2, result.Count());
+        Assert.Equal(&quot;Laptop&quot;, result.First().Name);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this test, we use the <code translate="no" v-pre>Mock</code> class from <code translate="no" v-pre>Moq</code> to simulate the behavior of the <code translate="no" v-pre>AppDbContext</code>. The test verifies that the <code translate="no" v-pre>GetAllProducts</code> method returns a list of products and checks that the data matches what is expected. Unit tests like this help ensure that the logic inside the controller works correctly under various conditions.</p>
+<p>Integration tests are often more appropriate for more complex scenarios, such as testing the creation of products (POST). Integration tests allow you to test how the API interacts with external systems, like databases, in a real-world scenario. Below is an example of an integration test using the WebApplicationFactory class to simulate an HTTP request and ensure a product is created successfully.</p>
+<div id="testing-and-debugging-rest-apis-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class ProductApiIntegrationTests : IClassFixture&lt;WebApplicationFactory&lt;Program&gt;&gt;
+{
+    private readonly HttpClient _client;
+
+    public ProductApiIntegrationTests(WebApplicationFactory&lt;Program&gt; factory)
+    {
+        _client = factory.CreateClient();
+    }
+
+    [Fact]
+    public async Task CreateProduct_ReturnsCreatedProduct()
+    {
+        // Arrange
+        var newProduct = new Product { Name = &quot;Tablet&quot;, Description = &quot;A tablet device&quot;, Price = 300m };
+        var content = new StringContent(JsonConvert.SerializeObject(newProduct), Encoding.UTF8, &quot;application/json&quot;);
+
+        // Act
+        var response = await _client.PostAsync(&quot;/api/products&quot;, content);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var responseBody = await response.Content.ReadAsStringAsync();
+        var createdProduct = JsonConvert.DeserializeObject&lt;Product&gt;(responseBody);
+        Assert.Equal(&quot;Tablet&quot;, createdProduct.Name);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Integration tests, such as this one that simulates a complete HTTP POST request to the <code translate="no" v-pre>/api/products</code> endpoint and verifies the successful creation of a product, are not just a part of the process-they are essential. They validate that the API behaves correctly when interacting with external systems, such as the database, under real-world conditions, underscoring the importance of your work.</p>
+<p>In addition to writing tests, debugging your API is another critical part of ensuring its reliability. Visual Studio 2022 provides powerful debugging tools that allow you to set breakpoints, inspect variables, and step through code execution line by line. During development, it&#x27;s helpful to run the API locally and use breakpoints to examine the behavior of specific endpoints. For example, you can set breakpoints in the <code translate="no" v-pre>CreateProduct</code> method to inspect the incoming request, view the state of the product being created, and verify the database interaction.</p>
+<p>This chapter explored the fundamental aspects of building and managing a REST API using ASP.NET Core 8. From understanding the HTTP protocol to designing RESTful resources and implementing CRUD operations, these principles lay the groundwork for creating scalable, maintainable, and secure APIs. Each section is built on crucial REST principles, demonstrating how to design intuitive endpoints, manage data, and secure resources with modern authentication methods like JWT.</p>
+<p>The integration of Entity Framework Core is a powerful tool that empowers developers by simplifying the process of connecting to databases and persisting data. This allows you to focus on business logic without the burden of manual data handling. By leveraging EF Core, you can build APIs that interact seamlessly with databases, ensuring that your data operations follow best practices for scalability and reliability.</p>
+<p>Testing and debugging are not just steps in the development lifecycle of any API, they are your safety net. Writing both unit and integration tests with xUnit ensures that your API behaves as expected and can handle real-world scenarios. Debugging tools in Visual Studio and strategic logging make it easier to identify and resolve issues during development and deployment, giving you the reassurance that your API is robust and reliable.</p>
+<p>As we move forward, you’ll apply these concepts to more advanced scenarios, such as handling complex relationships, optimizing performance, and ensuring API security at scale. These are not just advanced scenarios, they are the exciting next steps in your learning journey. These core principles provide the foundation for building robust RESTful services ready for production, offering flexibility and reliability to meet the demands of modern applications.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter09/chapter09.md" target="_blank" rel="noopener">
+                        <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        <span>Edit this page</span>
+                    </a>
+                </div>
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter08/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Chap 8 - Network Performance Optimization</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter10/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Chap 10 - Working with Web​Sockets</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../copyright/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
+                                    </g>
+                                </svg>
+                                <span>Copyright</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../license/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
+                                    </g>
+                                </svg>
+                                <span>License</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved Chris Woodruff.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 9 - Working with REST APIs", level: 1, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/chapter09/chapter09.md" }</script>
+</body>
+</html>

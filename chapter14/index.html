@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D5P830S5Z3"></script>
+    <script data-cfasync="false">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-D5P830S5Z3');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="turbo-root" content="/book-network-programming-csharp">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.840767676179">
+
+    <!-- See retype.com -->
+    <meta name="generator" content="Retype 4.6.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Working with WebHooks</title>
+    <meta name="title" content="Working with WebHooks">
+    <meta name="description" content="WebHooks have transformed applications' communication, offering an elegant, event-driven alternative to traditional polling mechanisms. Instead of">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter14/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://cwoodruff.github.io/book-network-programming-csharp/sitemap.xml">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter14/">
+    <meta property="og:title" content="Working with WebHooks">
+    <meta property="og:description" content="WebHooks have transformed applications' communication, offering an elegant, event-driven alternative to traditional polling mechanisms. Instead of">
+    <meta property="og:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter14/images/chap14-webhooks.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Working with WebHooks">
+    <meta property="og:site_name" content="Networking Programming with C/# 12 and /.NET 8">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter14/">
+    <meta name="twitter:title" content="Working with WebHooks">
+    <meta name="twitter:description" content="WebHooks have transformed applications' communication, offering an elegant, event-driven alternative to traditional polling mechanisms. Instead of">
+    <meta name="twitter:image" content="https://cwoodruff.github.io/book-network-programming-csharp/chapter14/images/chap14-webhooks.png">
+    <meta name="twitter:image:alt" content="Working with WebHooks">
+
+    <!-- Alternate Markdown -->
+    <link rel="alternate" type="text/markdown" href="https://cwoodruff.github.io/book-network-programming-csharp/chapter14/chapter14.md">
+
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
+
+    <link id="retype-favicon" rel="icon" href="../images/favicon.png" />
+    <link href="../resources/css/retype.css?v=4.6.0.840767676179" rel="stylesheet">
+
+    <script data-cfasync="false" src="../resources/js/config.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../resources/js/lunr.js?v=4.6.0.840767676179" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../resources/js/prism.js?v=4.6.0.840767676179" defer></script>
+</head>
+<body>
+    <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
+    <div class="absolute bottom-0 left-0" style="top: 5rem; right: 50%"></div>
+
+    <header id="retype-header" class="sticky top-0 z-30 flex w-full h-16 bg-header-bg border-b border-header-border md:h-20">
+        <div class="container relative flex items-center justify-between pr-6 grow md:justify-start">
+            <!-- Mobile menu button skeleton -->
+            <button v-cloak class="skeleton retype-mobile-menu-button flex items-center justify-center shrink-0 overflow-hidden dark:text-white focus:outline-hidden rounded-full w-10 h-10 ml-3.5 md:hidden"><svg xmlns="http://www.w3.org/2000/svg" class="mb-px shrink-0" width="24" height="24" viewBox="0 0 24 24" role="presentation" style="margin-bottom: 0px;"><g fill="currentColor"><path d="M2 4h20v2H2zM2 11h20v2H2zM2 18h20v2H2z"></path></g></svg></button>
+            <div v-cloak id="retype-sidebar-left-toggle-button"></div>
+    
+            <!-- Logo -->
+            <div class="flex items-center justify-between h-full py-2 md:w-75">
+                <div class="flex items-center px-2 md:px-6">
+                    <a id="retype-branding-logo" href="https://cwoodruff.github.io/book-network-programming-csharp/" class="flex items-center leading-snug text-xl">
+                        <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
+                            <img class="max-h-10 dark:hidden md:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                            <img class="max-h-10 hidden dark:inline-block" src="../images/network200.png" alt="" width="40" height="40">
+                        </span>
+                        <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">Networking Programming with C/# 12 and /.NET 8</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1</span>
+                </div>
+    
+                <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
+            </div>
+    
+            <div class="flex justify-between md:grow">
+                <!-- Top Nav -->
+                <nav id="retype-header-nav" class="hidden md:flex">
+                    <ul class="flex flex-col mb-4 md:pl-16 md:mb-0 md:flex-row md:items-center">
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                </svg>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                </svg>
+                                <span>Issues</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                </svg>
+                                <span>Bluesky</span>
+                            </a>
+                        </li>
+                        <li class="mr-6">
+                            <a class="py-2 md:mb-0 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                    <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                </svg>
+                                <span>Mastodon</span>
+                            </a>
+                        </li>
+    
+                    </ul>
+                </nav>
+    
+                <div v-cloak class="flex justify-end grow">
+                    <div id="retype-mobile-search-button"></div>
+                    <doc-search-desktop></doc-search-desktop>
+    
+                    <doc-theme-switch class="lg:ml-2"></doc-theme-switch>
+                    <doc-history></doc-history>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div id="retype-container" class="container relative flex bg-white">
+        <!-- Sidebar Skeleton -->
+        <div v-cloak class="fixed flex flex-col shrink-0 duration-300 ease-in-out bg-sidebar-left-bg border-sidebar-left-border sidebar top-20 w-75 border-r h-screen md:sticky transition-transform skeleton">
+        
+            <div class="flex items-center h-16 px-6">
+                <input id="retype-filter-input-mock" class="w-full h-10 pl-8 px-3 py-2 transition-colors duration-200 ease-linear bg-filter-bg border border-filter-border rounded-lg shadow-none md:text-sm hover:border-filter-border-hover focus:outline-hidden focus:border-filter-border-focus placeholder-filter-placeholder" type="text">
+            </div>
+        
+            <div class="pl-6 mt-1 mb-4">
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+                <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            </div>
+        
+            <div class="shrink-0 mt-auto bg-transparent dark:border-base-border">
+                <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                    <span class="text-xs whitespace-nowrap">Powered by</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Sidebar component -->
+        <doc-sidebar v-cloak>
+            <template #sidebar-footer>
+                <div class="shrink-0 mt-auto border-t md:bg-transparent md:border-none dark:border-base-border">
+        
+                    <div class="py-3 px-6 md:hidden border-b dark:border-base-border">
+                        <nav>
+                            <ul class="flex flex-wrap justify-center items-center">
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="../">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M11.03 2.59a1.501 1.501 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z"/>
+                                        </svg>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://github.com/cwoodruff/book-network-programming-csharp/issues" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 14.25 14H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 15.543V14H1.75A1.75 1.75 0 0 1 0 12.25v-9.5C0 1.784.784 1 1.75 1ZM1.5 2.75v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Z"/><path d="M22.5 8.75a.25.25 0 0 0-.25-.25h-3.5a.75.75 0 0 1 0-1.5h3.5c.966 0 1.75.784 1.75 1.75v9.5A1.75 1.75 0 0 1 22.25 20H21v1.543a1.457 1.457 0 0 1-2.487 1.03L15.939 20H10.75A1.75 1.75 0 0 1 9 18.25v-1.465a.75.75 0 0 1 1.5 0v1.465c0 .138.112.25.25.25h5.5a.75.75 0 0 1 .53.22l2.72 2.72v-2.19a.75.75 0 0 1 .75-.75h2a.25.25 0 0 0 .25-.25v-9.5Z"/>
+                                        </svg>
+                                        <span>Issues</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://bsky.app/profile/woodruff.dev" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M18.231,3.618c-2.312,1.736-4.785,5.107-5.948,7.244c-0.123,0.226-0.444,0.226-0.567,0	c-1.163-2.137-3.636-5.508-5.948-7.244C3.949,2.252,1,1.195,1,4.559c0,0.672,0.385,5.643,0.611,6.451	c0.606,2.169,2.454,3.089,4.437,3.195c0.19,0.01,0.222,0.261,0.043,0.324c-2.988,1.048-3.518,3.196-1.424,5.344	c3.826,3.894,5.814,0.647,6.733-1.514c0.224-0.525,0.977-0.525,1.2,0c0.92,2.161,2.907,5.408,6.733,1.514	c2.093-2.148,1.564-4.296-1.424-5.344c-0.179-0.063-0.146-0.313,0.043-0.324c1.983-0.106,3.83-1.026,4.437-3.195	C22.615,10.203,23,5.231,23,4.559C23,1.195,20.051,2.252,18.231,3.618z"></path></g>
+                                        </svg>
+                                        <span>Bluesky</span>
+                                    </a>
+                                </li>
+                                <li class="mr-6">
+                                    <a class="block py-1 inline-flex items-center text-sm whitespace-nowrap transition-colors duration-200 ease-linear md:text-header-text font-header-text hover:text-header-text-hover" href="https://mastodon.social/@cwoodruff" target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1.5" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                            <g fill="currentColor"><path d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a4 4 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522q0-1.288.66-2.046c.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764q.662.757.661 2.046z"/></g>
+                                        </svg>
+                                        <span>Mastodon</span>
+                                    </a>
+                                </li>
+        
+                            </ul>
+                        </nav>
+                    </div>
+        
+                    <a class="flex items-center justify-center flex-nowrap h-16 text-gray-350 dark:text-dark-400 hover:text-gray-600 dark:hover:text-dark-300 transition-colors duration-150 ease-in docs-powered-by" target="_blank" href="https://retype.com/" rel="noopener">
+                        <span class="text-xs whitespace-nowrap">Powered by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" fill="currentColor" width="96" height="20" overflow="visible"><path d="M0 0v20h13.59V0H0zm11.15 17.54H2.44V2.46h8.71v15.08zM15.8 20h2.44V4.67L15.8 2.22zM20.45 6.89V20h2.44V9.34z"/><g><path d="M40.16 8.44c0 1.49-.59 2.45-1.75 2.88l2.34 3.32h-2.53l-2.04-2.96h-1.43v2.96h-2.06V5.36h3.5c1.43 0 2.46.24 3.07.73s.9 1.27.9 2.35zm-2.48 1.1c.26-.23.38-.59.38-1.09 0-.5-.13-.84-.4-1.03s-.73-.28-1.39-.28h-1.54v2.75h1.5c.72 0 1.2-.12 1.45-.35zM51.56 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92h4.74v1.83h-6.79V5.36h6.64zM60.09 7.15v7.48h-2.06V7.15h-2.61V5.36h7.28v1.79h-2.61zM70.81 14.64h-2.06v-3.66l-3.19-5.61h2.23l1.99 3.45 1.99-3.45H74l-3.19 5.61v3.66zM83.99 6.19c.65.55.97 1.4.97 2.55s-.33 1.98-1 2.51-1.68.8-3.04.8h-1.23v2.59h-2.06V5.36h3.26c1.42 0 2.45.28 3.1.83zm-1.51 3.65c.25-.28.37-.69.37-1.22s-.16-.92-.48-1.14c-.32-.23-.82-.34-1.5-.34H79.7v3.12h1.38c.68 0 1.15-.14 1.4-.42zM95.85 5.36V7.2h-4.59v1.91h4.13v1.76h-4.13v1.92H96v1.83h-6.79V5.36h6.64z"/></g></svg>
+                    </a>
+                </div>
+            </template>
+        </doc-sidebar>
+
+        <div class="grow min-w-0 bg-body-bg">
+            <!-- Render "toolbar" template here on api pages --><!-- Render page content -->
+<div class="flex">
+    <div id="retype-main" class="min-w-0 p-4 grow md:px-16">
+        <main class="relative pb-12 lg:pt-2">
+            <div class="relative retype-markdown" id="retype-content">
+                <!-- Rendered if sidebar right is enabled -->
+                <div id="retype-sidebar-right-toggle"></div>
+                <doc-page-actions></doc-page-actions>
+
+                <!-- Page content  -->
+<h1 id="14">14</h1>
+<figure class="content-center">
+    <img src="images/chap14-webhooks.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="1792" height="1024" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<h1 id="working-with-webhooks">Working with WebHooks</h1>
+<p>WebHooks have transformed applications&#x27; communication, offering an elegant, event-driven alternative to traditional polling mechanisms. Instead of repeatedly checking for updates, WebHooks enable systems to send real-time notifications whenever significant events occur, significantly reducing latency and conserving resources. This chapter delves into the world of WebHooks, exploring how to implement them effectively using the powerful tools and modern features of .NET 8 and C# 12.</p>
+<p>From setting up a WebHook receiver to securing, scaling, and customizing your implementation, this chapter will equip you with the skills to build robust, production-ready WebHook systems. Whether you&#x27;re integrating with third-party APIs, which are external services that your application can interact with, orchestrating workflows across microservices, or designing scalable architectures, WebHooks provide a foundation for real-time, event-driven communication. Let&#x27;s uncover the possibilities of this essential tool and see how .NET 8 makes working with WebHooks more efficient and enjoyable than ever.</p>
+<h2 id="introduction-to-webhooks">Introduction to WebHooks</h2>
+<p>WebHooks, the unsung heroes of modern network communication, are quietly revolutionizing how applications interact in real-time. Building on the foundation laid in the previous chapter, this section delves deeper into what makes WebHooks a game-changer. At their core, WebHooks offer a straightforward yet powerful mechanism: rather than asking for updates repeatedly (as with polling), they allow systems to send updates proactively when an event occurs. This elegance not only reduces resource usage but also opens doors to more seamless and responsive application designs, providing a practical and efficient solution for modern applications.</p>
+<p>In the .NET ecosystem, WebHooks become even more compelling. With its cutting-edge features and C#&#x27;s syntactic enhancements, implementing WebHooks is now more accessible and efficient than ever. However, understanding WebHooks goes beyond just writing code—it&#x27;s about appreciating their pivotal role in fostering interconnected systems. Whether you&#x27;re orchestrating microservices, handling notifications, or enabling real-time integrations, WebHooks act as the glue that binds disparate components into a cohesive, event-driven architecture, underscoring the significance of your work in the tech industry.</p>
+<p>This section will equip you with a solid conceptual foundation before diving into implementation details. We&#x27;ll explore the essence of WebHooks, how they differ from traditional communication models, and why they&#x27;re indispensable for modern network programming. By grounding these ideas in practical examples and relatable scenarios, such as orchestrating microservices or enabling real-time integrations, you&#x27;ll be prepared to tackle the intricacies of WebHook development with confidence and creativity. Welcome to the future of connectivity—one HTTP callback at a time.</p>
+<h3 id="whats-the-hook-unpacking-webhooks">What’s the Hook? Unpacking WebHooks</h3>
+<p>WebHooks might sound like a buzzword, but they represent a foundational shift in how modern applications communicate. At their simplest, WebHooks are HTTP callbacks: a lightweight, event-driven mechanism where one application sends real-time data to another via a specific URL whenever an event occurs. This seemingly simple concept solves a significant problem—avoiding the inefficiency of constant polling. Instead of an application repeatedly asking, <em>&#x27;Has anything changed yet?&#x27;</em> WebHooks let the system declare, <em>&#x27;Here&#x27;s what just happened.&#x27;</em> This proactive communication puts you in control, reducing latency and resource overhead, making systems leaner and more responsive.</p>
+<p>Under the hood, WebHooks leverage standard HTTP protocols, making them easy to implement and integrate across a wide range of platforms and services. They operate in a publisher-subscriber model: the sender (publisher) generates an event, such as a new message in a chat application, packages the relevant data into a payload, and delivers it to a subscriber&#x27;s WebHook endpoint. The subscriber, in this case, is the application that needs to be notified about the new message. The beauty of WebHooks lies in their simplicity. There&#x27;s no need for a fancy middleware layer or proprietary technology—just HTTP, JSON (or your preferred data format), and some well-thought-out endpoints.</p>
+<p>What makes WebHooks particularly exciting in the context of .NET 8 and C# is how these tools elevate their implementation. With .NET 8&#x27;s robust HTTP client APIs and C#&#x27;s expressive language features, you can craft WebHook solutions that are secure, scalable, and maintainable. Whether you&#x27;re integrating a payment gateway, syncing a database, enabling live notifications in a web app, or even building a real-time chat application, WebHooks provides a flexible and efficient way to get the job done. In the chapters ahead, we&#x27;ll break down how to implement these systems, but for now, let&#x27;s appreciate the elegance of the hook itself—transformative yet straightforward.</p>
+<h3 id="the-webhook-ecosystem-senders-and-receivers">The WebHook Ecosystem: Senders and Receivers</h3>
+<p>The WebHook ecosystem operates on a symbiotic relationship between two primary actors: <strong>senders</strong> and <strong>receivers</strong>. A sender is the initiator—the application that detects an event and takes responsibility for notifying interested parties. Meanwhile, the receiver is the application or service that consumes these notifications, processing and acting upon the incoming data. This dynamic duo transforms individual systems into a seamlessly integrated web of event-driven communication.</p>
+<p>A sender’s job begins with identifying meaningful events. For example, an e-commerce platform might trigger a WebHook when an order status changes. The sender prepares a payload, typically in JSON format, encapsulating relevant details about the event. It then makes an HTTP request to a preconfigured URL provided by the receiver. The simplicity of this process belies its power: whether it’s notifying a warehouse system, updating customer-facing dashboards, or syncing with external APIs, senders drive automation and efficiency across distributed systems.</p>
+<p>On the flip side, receivers are the reactive heroes of the ecosystem. A receiver must be prepared to validate incoming requests, authenticate the sender, and process the payload efficiently. In .NET, tools like ASP.NET Core make it easier than ever to build robust WebHook endpoints, complete with validation, security, and scalability features. Senders and receivers form a streamlined pipeline, enabling real-time communication and reducing manual intervention. As we explore the implementation details in upcoming sections, you’ll learn how to craft both sides of this partnership with precision and creativity.</p>
+<h3 id="a-conversation-starter-how-webhooks-work">A Conversation Starter: How WebHooks Work</h3>
+<p>At its heart, a WebHook is a simple yet powerful conversation between two systems. The sender initiates this conversation when a specific event occurs—think of it as saying, <em>&#x27;Hey, something just happened!&#x27;</em> This is done by sending an HTTP POST request to a designated URL provided by the receiver. The payload of this request contains all the details the receiver needs to understand the event and decide what to do next. This proactive approach eliminates the need for constant polling, making WebHooks a highly efficient mechanism for real-time communication.</p>
+<figure class="content-center">
+    <img src="images/webhook-lifecycle-diagram.png" alt="" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="771" height="191" />
+    <figcaption class="caption"></figcaption>
+</figure>
+<figcaption align = "center"><b>WebHook Lifecycle Diagram</b></figcaption>
+<p>The WebHook lifecycle begins with the sender detecting an event, such as a new user signing up, placing an order, or uploading a file. The sender then compiles the relevant event data into a structured payload, typically formatted in JSON for maximum interoperability. This payload and additional headers for identification and security are sent to the receiver&#x27;s WebHook endpoint. Upon receiving the request, the receiver processes the payload and executes any necessary actions, such as updating a database, sending a notification, or triggering a downstream API call.</p>
+<p>What makes this interaction seamless in .NET is the enhanced support for HTTP communication and payload handling. With the refined capabilities of <code translate="no" v-pre>HttpClient</code> for senders and ASP.NET Core&#x27;s robust middleware for receivers, crafting efficient WebHook interactions becomes straightforward. The beauty of this conversation is its flexibility—whether you&#x27;re sending notifications across microservices, integrating with third-party APIs, or enabling user-defined workflows, WebHooks adapts to your needs. By mastering how they work, you unlock a powerful tool to keep your applications connected and responsive in today&#x27;s fast-paced digital world.</p>
+<h3 id="webhooks-in-the-wild-use-cases-and-examples">WebHooks in the Wild: Use Cases and Examples</h3>
+<p>WebHooks are not just theoretical but the backbone of countless real-world systems. Imagine you’ve pushed a new commit to a repository on GitHub. Instantly, your CI/CD pipeline springs into action, thanks to a WebHook triggering the build and deployment process. This seamless automation, fueled by WebHooks, not only eliminates manual intervention but also empowers you to keep development cycles fast and fluid. Whether integrating with version control, triggering workflows, or updating external tools, WebHooks play a pivotal role in modern DevOps.</p>
+<p>Consider e-commerce platforms like Shopify, which heavily rely on WebHooks to keep merchants informed about critical events, such as new orders or inventory changes. When an order is placed, a WebHook sends data to the merchant’s system, ensuring their order processing workflow kicks off without any delay. Similarly, payment processors like Stripe use WebHooks to alert businesses of successful transactions, failed payments, or subscription updates. These real-time notifications, facilitated by WebHooks, play a crucial role in keeping systems synchronized, thereby enhancing user experience and operational efficiency.</p>
+<p>Even social media platforms have recognized the power of WebHooks. Imagine a messaging app that wants to keep users updated about incoming tweets or Facebook posts. With WebHooks, the platform can instantly notify the app, ensuring users receive updates as they happen. These examples vividly demonstrate the versatility of WebHooks across industries and applications. Whether it&#x27;s about building a notification system, syncing databases, or integrating with third-party APIs, WebHooks are the key to creating connected, responsive applications.</p>
+<h2 id="creating-a-webhook-receiver-in-aspnet-core">Creating a WebHook Receiver in ASP.NET Core</h2>
+<p>ASP.NET Core serves as an excellent foundation for the transformation of theory into functionality, particularly in the creation of a WebHook receiver. This receiver, essentially an endpoint for event notifications from external systems, is more than just a door. It’s a gatekeeper that validates, processes, and responds to incoming requests. This section will explore how to set up a robust and secure WebHook receiver in ASP.NET Core, leveraging the latest features of .NET and C# to build a system that&#x27;s both robust and maintainable.</p>
+<p>While the concept of receiving an HTTP POST request may seem straightforward, the implementation of a reliable WebHook receiver is a complex task that involves addressing key considerations like security, scalability, and error handling. From authenticating senders to parsing payloads and responding appropriately, each step is crucial to ensure your application seamlessly integrates with external systems. By the end of this section, you’ll be well-prepared to confidently handle real-world WebHook scenarios, effectively transforming your ASP.NET Core application into a competent WebHook receiver. Let’s dive in and see how it’s done.</p>
+<h3 id="listening-in-setting-up-your-webhook-receiver">Listening In: Setting Up Your WebHook Receiver</h3>
+<p>When it comes to real-world applications of WebHooks, their utility is most evident in scenarios that demand real-time updates and seamless integrations. Let&#x27;s take a practical example: setting up a WebHook receiver for a payment gateway like Stripe. Imagine your application needs to manage notifications for events such as successful payments or subscription updates. With ASP.NET Core, the process of setting up the receiver is straightforward and efficient, ensuring you stay connected and engaged with your application&#x27;s real-time updates.</p>
+<p>First, define an endpoint in your Controller to handle incoming WebHook requests:</p>
+<div id="listening-in-setting-up-your-webhook-receiver-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+public class WebHookController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult HandleWebHook([FromBody] WebHookPayload payload)
+    {
+        if (payload == null)
+        {
+            return BadRequest(&quot;Invalid payload&quot;);
+        }
+
+        // Process the payload based on the event type
+        switch (payload.EventType)
+        {
+            case &quot;payment_success&quot;:
+                ProcessPaymentSuccess(payload);
+                break;
+            case &quot;subscription_updated&quot;:
+                ProcessSubscriptionUpdate(payload);
+                break;
+            default:
+                return BadRequest(&quot;Unknown event type&quot;);
+        }
+
+        return Ok();
+    }
+
+    private void ProcessPaymentSuccess(WebHookPayload payload)
+    {
+        // Custom logic for handling payment success
+        Console.WriteLine($&quot;Payment received: {payload.Data}&quot;);
+    }
+
+    private void ProcessSubscriptionUpdate(WebHookPayload payload)
+    {
+        // Custom logic for handling subscription updates
+        Console.WriteLine($&quot;Subscription updated: {payload.Data}&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In this setup, WebHookPayload is a model class designed to map incoming JSON data:</p>
+<div id="listening-in-setting-up-your-webhook-receiver-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class WebHookPayload
+{
+    public string EventType { get; set; }
+    public string Data { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>Security is a critical part of real-world WebHooks. To ensure that requests come from trusted sources, implement request validation, such as verifying a signature in the WebHook headers. For example:</p>
+<div id="listening-in-setting-up-your-webhook-receiver-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private bool IsValidRequest(HttpRequest request)
+{
+    if (!request.Headers.TryGetValue(&quot;X-Signature&quot;, out var signature))
+    {
+        return false;
+    }
+
+    // Compute the expected signature using a secret key
+    var secret = &quot;your_secret_key&quot;;
+    var payload = new StreamReader(request.Body).ReadToEnd();
+    var expectedSignature = ComputeHmacSha256(payload, secret);
+
+    return signature == expectedSignature;
+}
+
+private string ComputeHmacSha256(string payload, string secret)
+{
+    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+    return Convert.ToBase64String(hash);
+}</code></pre>
+</doc-codeblock></div>
+<p>Once validated and processed, these WebHook events can trigger workflows in your application, such as updating a database or notifying users. For example, you could save the received data to a database:</p>
+<div id="listening-in-setting-up-your-webhook-receiver-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private async Task SaveEventToDatabase(WebHookPayload payload)
+{
+    using var context = new AppDbContext();
+    context.WebHookEvents.Add(new WebHookEvent
+    {
+        EventType = payload.EventType,
+        Data = payload.Data,
+        ReceivedAt = DateTime.UtcNow
+    });
+    await context.SaveChangesAsync();
+}</code></pre>
+</doc-codeblock></div>
+<p>These code snippets demonstrate building a WebHook receiver ready for real-world scenarios, emphasizing security, flexibility, and scalability. With these concepts in place, the following sections will explore sending WebHooks and advanced patterns, ensuring your applications are responsive and interconnected.</p>
+<h3 id="mapping-the-signals-configuring-routes-and-endpoints">Mapping the Signals: Configuring Routes and Endpoints</h3>
+<p>Routing and endpoint configuration are the foundation of any WebHook receiver, ensuring that incoming requests are directed to the appropriate handlers. In ASP.NET Core, this process is not just flexible, but also intuitive, thanks to its robust routing capabilities. For WebHooks, setting up precise routes and endpoints is essential for managing event processing efficiently and securely.</p>
+<p>Let’s start by creating a dedicated route for handling WebHook requests. In an ASP.NET Core controller, you can use route attributes to define a clear and accessible endpoint. For example:</p>
+<div id="mapping-the-signals-configuring-routes-and-endpoints-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[ApiController]
+[Route(&quot;api/webhooks/[controller]&quot;)]
+public class PaymentWebHookController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Receive([FromBody] WebHookPayload payload)
+    {
+        if (payload == null)
+        {
+            return BadRequest(&quot;Invalid payload&quot;);
+        }
+
+        Console.WriteLine($&quot;Received event: {payload.EventType}&quot;);
+        return Ok();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This setup creates an endpoint at <code translate="no" v-pre>https://yourdomain/api/webhooks/paymentwebhook</code>, making it easy for external systems to deliver event notifications. The <code translate="no" v-pre>[FromBody]</code> attribute, which is used to bind the incoming JSON payload to the WebHookPayload model, ensures that the incoming JSON payload is automatically deserialized into the <code translate="no" v-pre>WebHookPayload</code> model.</p>
+<p>In scenarios with multiple WebHook types or providers, you should differentiate between them. ASP.NET Core allows you to map distinct routes to separate controllers or actions. For example:</p>
+<div id="mapping-the-signals-configuring-routes-and-endpoints-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[ApiController]
+[Route(&quot;api/webhooks/github&quot;)]
+public class GitHubWebHookController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Receive([FromBody] GitHubPayload payload)
+    {
+        Console.WriteLine($&quot;GitHub event: {payload.Action}&quot;);
+        return Ok();
+    }
+}
+
+[ApiController]
+[Route(&quot;api/webhooks/stripe&quot;)]
+public class StripeWebHookController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Receive([FromBody] StripePayload payload)
+    {
+        Console.WriteLine($&quot;Stripe event: {payload.Type}&quot;);
+        return Ok();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Each controller handles a specific WebHook type, clearly separating concerns. Models like <code translate="no" v-pre>GitHubPayload</code> and <code translate="no" v-pre>StripePayload</code> should be tailored to match the structure of the incoming data from each provider.</p>
+<p>Adding dynamic segments to handle more flexible use cases can also enhance your routing. For instance, if you want a single endpoint to serve multiple event types but distinguish them by route, you can use route parameters:</p>
+<div id="mapping-the-signals-configuring-routes-and-endpoints-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[ApiController]
+[Route(&quot;api/webhooks/{provider}&quot;)]
+public class DynamicWebHookController : ControllerBase
+{
+    [HttpPost]
+    public IActionResult Receive(string provider, [FromBody] WebHookPayload payload)
+    {
+        Console.WriteLine($&quot;Provider: {provider}, Event: {payload.EventType}&quot;);
+        return Ok();
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Here, the <code translate="no" v-pre>{provider}</code> route parameter captures the WebHook source dynamically, allowing you to handle different providers in one controller. This approach offers the benefit of [specific benefit], making it useful for generic integrations or frequently adding new WebHook sources.</p>
+<p>Finally, it&#x27;s crucial to secure your endpoints by enforcing HTTPS, validating sender authenticity, and filtering traffic through middleware or attributes. This responsible approach to designing your routes and endpoints creates a scalable framework ready to integrate with the diverse and dynamic world of WebHooks. The following sections will build upon this foundation, guiding you through sending WebHooks and handling advanced patterns.</p>
+<h3 id="talking-the-talk-handling-and-securing-incoming-webhook-requests">Talking the Talk: Handling and Securing Incoming WebHook Requests</h3>
+<p>Effectively handling and securing WebHook receivers requires attention to detail and adherence to best practices. Your first step is ensuring incoming WebHook requests are processed accurately, securely, and efficiently. This involves parsing and validating the payload, authenticating the sender, and triggering the appropriate internal workflows, all while safeguarding your application from potential threats.</p>
+<h4 id="parsing-and-validating-requests">Parsing and Validating Requests</h4>
+<p>Begin by defining action methods in your ASP.NET Core controllers to process incoming requests. For instance, a WebHook receiver for a GitHub event might look like this:</p>
+<div id="parsing-and-validating-requests-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public IActionResult HandleGitHubEvent([FromBody] GitHubPayload payload)
+{
+    if (payload == null || string.IsNullOrEmpty(payload.Action))
+    {
+        return BadRequest(&quot;Invalid payload&quot;);
+    }
+
+    Console.WriteLine($&quot;GitHub Event: {payload.Action}&quot;);
+    return Ok(&quot;Event received successfully&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>Validating payloads is a crucial part of securing your WebHook receiver. Many providers include a signature header to authenticate requests. For example, validating GitHub’s <code translate="no" v-pre>X-Hub-Signature-256</code> header ensures the payload hasn’t been tampered with:</p>
+<div id="parsing-and-validating-requests-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private bool IsValidGitHubSignature(string payload, string signatureHeader)
+{
+    var secret = &quot;your_secret_key&quot;;
+    var hash = ComputeHmacSha256(payload, secret);
+    return signatureHeader == $&quot;sha256={hash}&quot;;
+}
+
+private string ComputeHmacSha256(string payload, string secret)
+{
+    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+    return Convert.ToBase64String(hash);
+}</code></pre>
+</doc-codeblock></div>
+<h4 id="enhancing-security">Enhancing Security</h4>
+<p>Securing your WebHook endpoint starts with enforcing HTTPS to encrypt communication and prevent tampering. Update your configuration to ensure HTTPS is required:</p>
+<div id="enhancing-security-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.WebHost.UseUrls(&quot;https://*:5001&quot;);</code></pre>
+</doc-codeblock></div>
+<p>To prevent replay attacks, validate the timestamp of incoming requests. For instance, check that the timestamp header is within an acceptable range, such as the last five minutes:</p>
+<div id="enhancing-security-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private bool IsRecentRequest(string timestampHeader)
+{
+    if (DateTime.TryParse(timestampHeader, out var timestamp))
+    {
+        return (DateTime.UtcNow - timestamp).TotalMinutes &lt;= 5;
+    }
+
+    return false;
+}</code></pre>
+</doc-codeblock></div>
+<p>You can further limit exposure by restricting access to specific IP addresses. Use middleware to filter requests:</p>
+<div id="enhancing-security-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+{
+    var allowedIPs = new[] { &quot;192.168.1.1&quot;, &quot;203.0.113.10&quot; };
+    var remoteIp = context.Connection.RemoteIpAddress?.ToString();
+
+    if (!allowedIPs.Contains(remoteIp))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return;
+    }
+
+    await next();
+});</code></pre>
+</doc-codeblock></div>
+<h4 id="handling-errors-and-logging">Handling Errors and Logging</h4>
+<p>Finally, implement error handling and logging to capture issues like malformed payloads or processing errors. For example:</p>
+<div id="handling-errors-and-logging-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">try
+{
+    await ProcessPayloadAsync(payload);
+    _logger.LogInformation(&quot;Payload processed successfully.&quot;);
+    return Ok();
+}
+catch (Exception ex)
+{
+    _logger.LogError(ex, &quot;Failed to process payload.&quot;);
+    return StatusCode(500, &quot;Internal Server Error&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>By combining HTTPS enforcement, signature validation, timestamp checks, IP filtering, and detailed logging, your WebHook receiver becomes not only functional but also highly reliable and secure. These measures ensure that only valid, timely, and trusted requests are processed. With this robust foundation, subsequent sections will explore scaling and advanced patterns to further enhance the reliability of your WebHook architecture.</p>
+<h3 id="from-logs-to-actions-testing-and-debugging-your-receiver">From Logs to Actions: Testing and Debugging Your Receiver</h3>
+<p>Testing and debugging a WebHook receiver is critical to ensure it behaves as expected under different conditions. When building in .NET, the combination of robust logging tools and powerful debugging capabilities simplifies the process, allowing you to identify and resolve issues efficiently. Your commitment to this step is crucial before deploying your receiver to handle real-world traffic.</p>
+<p>Start by enabling detailed logging in your ASP.NET Core application. Use the built-in logging framework to capture all incoming WebHook requests, their headers, and payloads. This helps diagnose issues like malformed payloads or unexpected headers:</p>
+<div id="from-logs-to-actions-testing-and-debugging-your-receiver-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public IActionResult HandleWebHook([FromBody] WebHookPayload payload)
+{
+    _logger.LogInformation(&quot;Received WebHook request. Headers: {Headers}, Payload: {Payload}&quot;,
+        Request.Headers, payload);
+
+    if (payload == null)
+    {
+        _logger.LogError(&quot;Payload is null&quot;);
+        return BadRequest(&quot;Invalid payload&quot;);
+    }
+
+    _logger.LogInformation(&quot;Processing event: {EventType}&quot;, payload.EventType);
+    return Ok();
+}</code></pre>
+</doc-codeblock></div>
+<p>Logging critical data points is a vital practice in the WebHook processing pipeline. It ensures traceability and aids in troubleshooting. However, to maintain security compliance, refrain from logging sensitive information such as tokens or signatures.</p>
+<p>Testing WebHook receivers often involves simulating real-world scenarios. Postman, a powerful tool, empowers you to craft HTTP POST requests with custom payloads and headers, mimicking actual WebHook events. Here&#x27;s an example JSON payload you might test with:</p>
+<div id="from-logs-to-actions-testing-and-debugging-your-receiver-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+    &quot;eventType&quot;: &quot;payment_success&quot;,
+    &quot;data&quot;: {
+        &quot;transactionId&quot;: &quot;12345&quot;,
+        &quot;amount&quot;: 99.99
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>In Postman, configure the request URL to your local receiver and add headers (e.g., X-Signature) for additional security or specific requirements, and then send the request. It&#x27;s important to monitor your logs to ensure the payload is processed correctly.</p>
+<p>For more advanced testing, Ngrok, a tunneling tool, plays a crucial role. It exposes your local server to external WebHook providers by generating a temporary public URL that you can configure in a provider’s WebHook settings. This tool is particularly useful when debugging locally and receiving live WebHook events from services like GitHub or Stripe.</p>
+<div id="from-logs-to-actions-testing-and-debugging-your-receiver-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">ngrok http 5000</code></pre>
+</doc-codeblock></div>
+<p>Once Ngrok runs, you&#x27;ll see a public URL (e.g., <code translate="no" v-pre>https://abcd1234.ngrok.io</code>) that forwards requests to your local application. Update your WebHook provider&#x27;s settings with this URL and observe how real WebHooks are received and processed.</p>
+<p>Finally, implement automated tests to validate your WebHook receiver&#x27;s behavior. Using xUnit and a mock HTTP context, you can simulate requests programmatically:</p>
+<div id="from-logs-to-actions-testing-and-debugging-your-receiver-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[Fact]
+public async Task HandleWebHook_ShouldReturnOk_WhenPayloadIsValid()
+{
+    var payload = new WebHookPayload
+    {
+        EventType = &quot;test_event&quot;,
+        Data = &quot;sample_data&quot;
+    };
+
+    var controller = new WebHookController();
+    var result = await controller.HandleWebHook(payload) as OkResult;
+
+    Assert.NotNull(result);
+    Assert.Equal(200, result.StatusCode);
+}</code></pre>
+</doc-codeblock></div>
+<p>Testing and debugging are iterative processes that ensure your WebHook receiver is robust, secure, and fully prepared for production. With logging, real-world simulation tools, and automated tests, you’ll have all the insights and safeguards needed to handle incoming WebHooks effectively. The next sections will focus on scaling your WebHook implementations to handle high traffic and advanced patterns for more complex use cases.</p>
+<h2 id="implementing-a-webhook-sender">Implementing a WebHook Sender</h2>
+<p>Building a WebHook sender transforms your application from a passive observer to an active real-time participant. As a sender, you are responsible for detecting events, packaging the relevant data, and delivering it to registered receivers with precision and reliability. This proactive approach makes WebHooks such a powerful tool for integrating distributed systems. Whether notifying a payment gateway of a status change or triggering workflows in connected applications, the sender initiates the chain of collaboration.</p>
+<p>In this section, we’ll explore how to implement a robust WebHook sender using .NET’s advanced networking APIs and C#’s expressive features. From detecting events in your application to securely delivering payloads over HTTP, you’ll learn how to build a reliable, scalable, and secure sender. With practical examples and proven patterns, this section sets the stage for making your application a key player in the interconnected web of modern software.</p>
+<h3 id="setting-the-stage-understanding-the-senders-role">Setting the Stage: Understanding the Sender’s Role</h3>
+<p>The sender’s role in a WebHook system is pivotal—the initiator, the source of information that drives downstream processes. A WebHook sender is responsible for detecting significant events within the application, such as a new user registration, a product purchase, or a system error, serializing relevant data into a structured payload, and delivering it to a registered receiver using an HTTP request. While conceptually straightforward, this process requires careful attention to detail to ensure reliability, security, and efficiency.</p>
+<p>In .NET, detecting events can be seamlessly integrated into your application using event-driven patterns. These patterns, such as the Observer pattern, allow you to define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. For instance, consider an e-commerce application where you want to notify a fulfillment service when an order is placed:</p>
+<div id="setting-the-stage-understanding-the-senders-role-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class OrderService
+{
+    public event EventHandler&lt;OrderEventArgs&gt; OrderPlaced;
+
+    public void PlaceOrder(Order order)
+    {
+        // Business logic for placing an order
+        OrderPlaced?.Invoke(this, new OrderEventArgs(order));
+    }
+}
+
+public class OrderEventArgs : EventArgs
+{
+    public Order Order { get; }
+
+    public OrderEventArgs(Order order)
+    {
+        Order = order;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Once the event is detected, the next step is constructing the payload. The payload should be clear, concise, and consistent, typically serialized into JSON. Use <code translate="no" v-pre>System.Text.Json</code> for its performance and built-in support in .NET:</p>
+<div id="setting-the-stage-understanding-the-senders-role-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public string CreatePayload(Order order)
+{
+    var payload = new
+    {
+        eventType = &quot;order_placed&quot;,
+        data = new
+        {
+            orderId = order.Id,
+            customer = order.CustomerName,
+            total = order.Total
+        }
+    };
+
+    return JsonSerializer.Serialize(payload);
+}</code></pre>
+</doc-codeblock></div>
+<p>The sender’s core responsibility is to deliver the payload reliably. With .NET’s updated <code translate="no" v-pre>HttpClient</code>, this becomes straightforward. You can use dependency injection to configure <code translate="no" v-pre>HttpClient</code> and ensure efficient reuse:</p>
+<div id="setting-the-stage-understanding-the-senders-role-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class WebHookSender
+{
+    private readonly HttpClient _httpClient;
+
+    public WebHookSender(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
+
+    public async Task SendAsync(string url, string payload)
+    {
+        var content = new StringContent(payload, Encoding.UTF8, &quot;application/json&quot;);
+
+        var response = await _httpClient.PostAsync(url, content);
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine($&quot;Failed to send WebHook: {response.StatusCode}&quot;);
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Combining event detection, payload construction, and reliable delivery makes your WebHook sender a powerful integration tool. However, the sender’s role doesn’t end there—it must also address security and resilience. For example, you might include an HMAC signature to authenticate requests:</p>
+<div id="setting-the-stage-understanding-the-senders-role-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public string GenerateHmacSignature(string payload, string secret)
+{
+    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+    return Convert.ToBase64String(hash);
+}</code></pre>
+</doc-codeblock></div>
+<p>Incorporating these practices ensures your WebHook sender is functional, robust, and secure. With the basics of the sender’s role established, the upcoming sections will delve into advanced topics like retry policies, scalability, and debugging strategies to make your implementation production-ready.</p>
+<h3 id="trigger-happy-detecting-and-raising-events">Trigger Happy: Detecting and Raising Events</h3>
+<p>Event detection, the core functionality of a WebHook sender, is crucial. It all starts with an event, a significant happening in your application that indicates something important to notify external systems about. Integrating and identifying these events into your WebHook system is a process that demands careful planning and seamless integration into your application’s business logic.</p>
+<p>In .NET, the power to manage event detection lies in your hands, as you leverage events and delegates. Imagine you’re building an application that tracks user registrations. You have the ability to define a custom event and trigger it whenever a new user registers, putting you at the center of the process:</p>
+<div id="trigger-happy-detecting-and-raising-events-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class UserService
+{
+    public event EventHandler&lt;UserEventArgs&gt; UserRegistered;
+
+    public void RegisterUser(User user)
+    {
+        // Business logic for registering a user
+        Console.WriteLine($&quot;User {user.Name} registered.&quot;);
+
+        // Raise the event
+        UserRegistered?.Invoke(this, new UserEventArgs(user));
+    }
+}
+
+public class UserEventArgs : EventArgs
+{
+    public User User { get; }
+
+    public UserEventArgs(User user)
+    {
+        User = user;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>UserService</code> class encapsulates the registration logic, while the <code translate="no" v-pre>UserRegistered</code> event triggers downstream actions. This separation of concerns ensures your WebHook system remains decoupled from core business logic.</p>
+<p>Once the event is detected, connect it to your WebHook sending mechanism. This is achieved by subscribing to the event and invoking the sender with the relevant payload:</p>
+<div id="trigger-happy-detecting-and-raising-events-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">var userService = new UserService();
+var webHookSender = new WebHookSender(new HttpClient());
+
+userService.UserRegistered += async (sender, args) =&gt;
+{
+    var payload = new
+    {
+        eventType = &quot;user_registered&quot;,
+        data = new
+        {
+            userId = args.User.Id,
+            userName = args.User.Name,
+            email = args.User.Email
+        }
+    };
+
+    var jsonPayload = JsonSerializer.Serialize(payload);
+    await webHookSender.SendAsync(&quot;https://webhook.receiver.com/endpoint&quot;, jsonPayload);
+};
+
+// Simulate a user registration
+userService.RegisterUser(new User { Id = 1, Name = &quot;Jane Doe&quot;, Email = &quot;jane.doe@example.com&quot; });</code></pre>
+</doc-codeblock></div>
+<p>This example demonstrates listening for the <code translate="no" v-pre>UserRegistered</code> event and using its data to construct a WebHook payload. The event handler ensures the payload is generated and sent immediately after the event, making the process seamless and responsive.</p>
+<p>Consider using a centralized event aggregator for applications with multiple event sources or types. This pattern allows you to collect and process events from various parts of your application in one place, simplifying WebHook management:</p>
+<div id="trigger-happy-detecting-and-raising-events-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class EventAggregator
+{
+    public event EventHandler&lt;AppEventArgs&gt; AppEventOccurred;
+
+    public void RaiseEvent(string eventType, object data)
+    {
+        AppEventOccurred?.Invoke(this, new AppEventArgs(eventType, data));
+    }
+}
+
+public class AppEventArgs : EventArgs
+{
+    public string EventType { get; }
+    public object Data { get; }
+
+    public AppEventArgs(string eventType, object data)
+    {
+        EventType = eventType;
+        Data = data;
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>The <code translate="no" v-pre>EventAggregator</code> lets you decouple event detection from specific actions, making your WebHook system more maintainable and scalable. You can also implement advanced features like prioritization or batching by centralizing event handling, which we’ll explore in subsequent sections. With your events wired into your WebHook sender, you can be confident in crafting and delivering payloads reliably.</p>
+<h3 id="crafting-the-message-structuring-and-customizing-webhook-payloads">Crafting the Message: Structuring and Customizing WebHook Payloads</h3>
+<p>When working with WebHooks, the payload acts as the messenger, carrying essential event details from the sender to the receiver. Crafting well-structured payloads and enabling customization for specific use cases ensures efficient data exchange and improves performance by delivering only what the receiver needs.</p>
+<p>A well-designed payload should be clear, concise, and consistent. Start by defining a model to represent your payload structure. This promotes reusability and clarity:</p>
+<div id="crafting-the-message-structuring-and-customizing-webhook-payloads-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class WebHookPayload
+{
+    public string EventType { get; set; }
+    public object Data { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>Use serialization libraries like <code translate="no" v-pre>System.Text.Json</code> in .NET for efficient JSON serialization. For example, a simple method to create a payload might look like this:</p>
+<div id="crafting-the-message-structuring-and-customizing-webhook-payloads-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public string CreatePayload(string eventType, object data)
+{
+    var payload = new WebHookPayload
+    {
+        EventType = eventType,
+        Data = data
+    };
+
+    return JsonSerializer.Serialize(payload);
+}</code></pre>
+</doc-codeblock></div>
+<p>This structure is flexible enough to handle different event types while ensuring consistency across your system. Avoid sending unnecessary or sensitive information unless absolutely required, and use encryption for any sensitive fields.</p>
+<p>Receivers may not need all the data your system can send. Implement a filtering mechanism to allow receivers to subscribe to specific event types or set criteria for the data they receive.</p>
+<p>Start by maintaining a subscription registry where receivers can specify their preferences:</p>
+<div id="crafting-the-message-structuring-and-customizing-webhook-payloads-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class WebHookSubscription
+{
+    public int Id { get; set; }
+    public string ReceiverUrl { get; set; }
+    public string EventType { get; set; }
+    public string FilterCriteria { get; set; } // Optional, e.g., &quot;orderTotal &gt; 100&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p>When sending a WebHook, filter subscriptions by event type and apply additional criteria dynamically:</p>
+<div id="crafting-the-message-structuring-and-customizing-webhook-payloads-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task SendFilteredWebHooksAsync(string eventType, object data)
+{
+    var subscriptions = await _dbContext.WebHookSubscriptions
+        .Where(s =&gt; s.EventType == eventType)
+        .ToListAsync();
+
+    foreach (var subscription in subscriptions)
+    {
+        if (IsValidForCriteria(subscription.FilterCriteria, data))
+        {
+            var payload = CreatePayload(eventType, data);
+            await _webHookSender.SendAsync(subscription.ReceiverUrl, payload);
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Dynamic filtering allows receivers to define advanced criteria for payloads. For instance, a receiver might want only high-value orders. Evaluate such conditions dynamically at runtime:</p>
+<div id="crafting-the-message-structuring-and-customizing-webhook-payloads-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private bool IsValidForCriteria(string criteria, object data)
+{
+    // Example: Use a library like Dynamic LINQ or a custom parser to evaluate criteria
+    // This is a placeholder implementation
+    return true; // Logic to evaluate criteria goes here
+}</code></pre>
+</doc-codeblock></div>
+<p>Structuring and customizing payloads ensures that WebHooks are efficient and tailored to receivers&#x27; needs. This reduces processing overhead and improves the overall integration experience. By implementing these practices, your WebHook system becomes a flexible and powerful communication tool capable of adapting to diverse application needs.</p>
+<h3 id="delivering-the-goods-sending-webhook-requests">Delivering the Goods: Sending WebHook Requests</h3>
+<p>After crafting the payload, the next step is delivering it to the receiver with precision and reliability. Sending a WebHook request involves making an HTTP POST call to a pre-configured URL, including the payload in the request body. With .NET&#x27;s updated <code translate="no" v-pre>HttpClient</code> and improved networking APIs, this process is efficient and developer-friendly.</p>
+<p>Start by configuring <code translate="no" v-pre>HttpClient</code> using dependency injection for optimal performance. This ensures that your application uses a single <code translate="no" v-pre>HttpClient</code> instance, reducing connection overhead:</p>
+<div id="delivering-the-goods-sending-webhook-requests-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient&lt;WebHookSender&gt;();</code></pre>
+</doc-codeblock></div>
+<p>In your <code translate="no" v-pre>WebHookSender</code> class, create a method to send the WebHook request. This method should include the payload and handle response status codes to ensure the request is successful:</p>
+<div id="delivering-the-goods-sending-webhook-requests-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class WebHookSender
+{
+    private readonly HttpClient _httpClient;
+
+    public WebHookSender(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
+
+    public async Task SendAsync(string url, string payload)
+    {
+        var content = new StringContent(payload, Encoding.UTF8, &quot;application/json&quot;);
+
+        var response = await _httpClient.PostAsync(url, content);
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine(&quot;WebHook delivered successfully.&quot;);
+        }
+        else
+        {
+            Console.WriteLine($&quot;Failed to deliver WebHook: {response.StatusCode}&quot;);
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>To handle real-world scenarios, enhance the delivery mechanism with retry logic. This is useful for cases where transient issues, like network glitches, cause the request to fail. Use <code translate="no" v-pre>Polly</code>, a popular .NET library for resilience, to add retry policies:</p>
+<div id="delivering-the-goods-sending-webhook-requests-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient&lt;WebHookSender&gt;()
+    .AddTransientHttpErrorPolicy(policy =&gt;
+        policy.WaitAndRetryAsync(3, retryAttempt =&gt; TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));</code></pre>
+</doc-codeblock></div>
+<p>Incorporating retries ensures that temporary failures don’t disrupt the delivery process. You can extend this by logging each attempt and sending notifications if all retries fail.</p>
+<p>Another best practice is to include a signature in the request headers for authentication. This helps the receiver validate the integrity and authenticity of the request:</p>
+<div id="delivering-the-goods-sending-webhook-requests-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task SendWithSignatureAsync(string url, string payload, string secret)
+{
+    var signature = GenerateHmacSignature(payload, secret);
+    var request = new HttpRequestMessage(HttpMethod.Post, url)
+    {
+        Content = new StringContent(payload, Encoding.UTF8, &quot;application/json&quot;)
+    };
+    request.Headers.Add(&quot;X-Signature&quot;, signature);
+
+    var response = await _httpClient.SendAsync(request);
+    if (!response.IsSuccessStatusCode)
+    {
+        Console.WriteLine($&quot;Failed to deliver WebHook: {response.StatusCode}&quot;);
+    }
+}
+
+private string GenerateHmacSignature(string payload, string secret)
+{
+    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+    return Convert.ToBase64String(hash);
+}</code></pre>
+</doc-codeblock></div>
+<p>As the payload is sent, log the request details and monitor the response to ensure a smooth integration. By combining robust HTTP handling, retry logic, and security measures, you can build a reliable WebHook sender that meets the demands of modern distributed applications. The following sections will dive into advanced topics like scalability and monitoring, building on the foundation established here.</p>
+<h3 id="building-resilience-handling-failures-and-retries">Building Resilience: Handling Failures and Retries</h3>
+<p>Failures are inevitable in any distributed system. Networks experience latency, servers face downtime, and transient issues disrupt connectivity. The ability of a robust WebHook sender to handle these failures gracefully is of utmost importance, ensuring that events are eventually delivered without overwhelming the system or the receiver. In .NET, tools like <code translate="no" v-pre>HttpClient</code>, Polly, and custom retry logic make implementing resilience straightforward and effective.</p>
+<p>First, ensure your WebHook sender can detect and respond to transient errors. These errors often include HTTP status codes like <code translate="no" v-pre>408 Request Timeout</code>, <code translate="no" v-pre>429 Too Many Requests</code>, and <code translate="no" v-pre>500 Internal Server Error</code>. The <code translate="no" v-pre>Polly</code> library provides an effective solution, allowing you to implement retry policies tailored to these scenarios:</p>
+<div id="building-resilience-handling-failures-and-retries-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient&lt;WebHookSender&gt;()
+    .AddTransientHttpErrorPolicy(policy =&gt;
+        policy.WaitAndRetryAsync(3, retryAttempt =&gt; TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));</code></pre>
+</doc-codeblock></div>
+<p>This configuration adds a retry policy with exponential backoff, ensuring that retries occur after increasing intervals (e.g., 2, 4, and 8 seconds). Exponential backoff helps prevent flooding the receiver during transient outages, which are temporary disruptions in service that can occur due to network issues or server maintenance.</p>
+<p>For more advanced scenarios, you should store failed requests and retry them later. A simple approach involves queuing failed requests in an in-memory store or database. This approach not only ensures that no request is lost but also allows for better management of retries. Here’s an example of a retry queue implementation:</p>
+<div id="building-resilience-handling-failures-and-retries-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class RetryQueue
+{
+    private readonly Queue&lt;WebHookRequest&gt; _queue = new();
+
+    public void Enqueue(WebHookRequest request)
+    {
+        _queue.Enqueue(request);
+    }
+
+    public WebHookRequest? Dequeue()
+    {
+        return _queue.Count &gt; 0 ? _queue.Dequeue() : null;
+    }
+}
+
+public class WebHookRequest
+{
+    public string Url { get; set; }
+    public string Payload { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>When a request fails, add it to the retry queue:</p>
+<div id="building-resilience-handling-failures-and-retries-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task SendWithRetryQueueAsync(string url, string payload)
+{
+    try
+    {
+        var content = new StringContent(payload, Encoding.UTF8, &quot;application/json&quot;);
+        var response = await _httpClient.PostAsync(url, content);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine($&quot;Request failed, queuing for retry: {response.StatusCode}&quot;);
+            _retryQueue.Enqueue(new WebHookRequest { Url = url, Payload = payload });
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($&quot;Error occurred: {ex.Message}&quot;);
+        _retryQueue.Enqueue(new WebHookRequest { Url = url, Payload = payload });
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>You can then process the retry queue in a background service using .NET’s <code translate="no" v-pre>IHostedService</code>:</p>
+<div id="building-resilience-handling-failures-and-retries-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class RetryProcessor : BackgroundService
+{
+    private readonly RetryQueue _retryQueue;
+    private readonly WebHookSender _webHookSender;
+
+    public RetryProcessor(RetryQueue retryQueue, WebHookSender webHookSender)
+    {
+        _retryQueue = retryQueue;
+        _webHookSender = webHookSender;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            var request = _retryQueue.Dequeue();
+            if (request != null)
+            {
+                await _webHookSender.SendAsync(request.Url, request.Payload);
+            }
+
+            await Task.Delay(5000, stoppingToken); // Process queue every 5 seconds
+        }
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>This combination of retry policies, queuing, and background processing ensures that failed requests are retried without blocking or losing events. By implementing these techniques, your WebHook sender becomes highly resilient and capable of handling real-world challenges like network instability and server downtime. This means that your system is equipped to handle the most common issues that can disrupt WebHook operations. In the next section, we’ll explore how to monitor and log WebHook activity, adding another layer of reliability to your system.</p>
+<h2 id="securing-webhooks">Securing WebHooks</h2>
+<p>As powerful as WebHooks are, their open nature prioritizes security. A WebHook endpoint is an open door to your application, receiving incoming HTTP requests from external sources. This door can become a vulnerability without proper safeguards, exposing your system to threats like spoofing, tampering, and replay attacks. However, by securing WebHooks, you ensure that only trusted sources can trigger actions in your application, preserving data integrity and system reliability. This reassures you of the value of this topic and the benefits it can bring to your system.</p>
+<p>This section will delve into the critical measures to secure WebHooks, from validating sender authenticity to encrypting sensitive data and mitigating replay attacks. With the powerful tools provided by .NET and C#, you’ll be equipped to implement robust defenses that protect your endpoints without compromising performance or flexibility. These tools empower you to make security an integral part of your WebHook strategy, turning that open door into a secure, efficient gateway.</p>
+<h3 id="signed-sealed-delivered-verifying-payloads">Signed, Sealed, Delivered: Verifying Payloads</h3>
+<p>Ensuring the integrity and authenticity of a WebHook payload is crucial to prevent malicious requests from compromising your system. One of the most common and effective techniques is using cryptographic signatures. These signatures act as a digital fingerprint, verifying that a trusted source sent the payload and hasn’t been tampered with during transit.</p>
+<p>Many WebHook providers include a signature header in their HTTP requests. For example, GitHub uses the <code translate="no" v-pre>X-Hub-Signature-256</code> header, while Stripe uses <code translate="no" v-pre>Stripe-Signature</code>. The sender generates this signature by hashing the payload using a secret key shared between the sender and receiver. Your task as the receiver is to compute the expected signature and compare it with the one in the header.</p>
+<p>Here’s how you can verify a payload signature in ASP.NET Core. Let’s use a hypothetical WebHook provider with a header named X-Signature:</p>
+<div id="signed-sealed-delivered-verifying-payloads-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public IActionResult HandleWebHook([FromBody] string payload)
+{
+    if (!Request.Headers.TryGetValue(&quot;X-Signature&quot;, out var signatureHeader))
+    {
+        return Unauthorized(&quot;Missing signature&quot;);
+    }
+
+    var secret = &quot;your_secret_key&quot;; // Shared between sender and receiver
+    var expectedSignature = ComputeHmacSha256(payload, secret);
+
+    if (signatureHeader != expectedSignature)
+    {
+        return Unauthorized(&quot;Invalid signature&quot;);
+    }
+
+    Console.WriteLine(&quot;Signature verified successfully.&quot;);
+    return Ok();
+}
+
+private string ComputeHmacSha256(string payload, string secret)
+{
+    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+    return Convert.ToBase64String(hash);
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the payload is hashed with the shared secret key using HMAC-SHA256. The request is considered authentic only if the computed hash, a unique digital fingerprint of the payload, matches the signature provided in the header.</p>
+<p>The payload is often in JSON format in real-world scenarios, and you might receive it as a raw string. To handle this, configure your controller to read the raw request body before deserialization:</p>
+<div id="signed-sealed-delivered-verifying-payloads-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;IActionResult&gt; HandleWebHook()
+{
+    var payload = await new StreamReader(Request.Body).ReadToEndAsync();
+    // Signature verification logic here
+}</code></pre>
+</doc-codeblock></div>
+<p>It’s crucial to validate the payload structure after verifying the signature. This meticulous step ensures that even authenticated requests conform to your expected schema and data types, providing a thorough security check.</p>
+<p>When implementing signature verification, remember that the shared secret key should be stored securely. Use environment variables or a secrets management service like Azure Key Vault to prevent exposure. And remember, all WebHook traffic must use HTTPS. This encryption protocol is a key factor in securing the data in transit, bolstering the resilience of your system.</p>
+<p>By validating payload signatures, you add a robust layer of security to your WebHook receiver. This technique ensures that only trusted sources can trigger actions in your system, making it a cornerstone of a secure WebHook implementation. In the next section, we’ll delve into further measures to enhance security, including timestamp validation and access controls, to ensure that all aspects of security are being considered.</p>
+<h3 id="authorized-connections-managing-access-control">Authorized Connections: Managing Access Control</h3>
+<p>Your role in controlling access to your WebHook receiver is crucial, ensuring that only authorized systems can send requests. While payload signature verification is a strong defense against tampered data, your management of access control adds another layer of security by limiting who can even reach your endpoint. Combining these measures, under your guidance, can significantly reduce the risk of unauthorized or malicious requests.</p>
+<p>One reassuringly simple yet highly effective technique is IP whitelisting. This approach restricts access to a predefined list of trusted IP addresses. In ASP.NET Core, you can implement IP filtering in middleware to block requests from untrusted sources:</p>
+<div id="authorized-connections-managing-access-control-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+{
+    var allowedIPs = new[] { &quot;192.168.1.100&quot;, &quot;203.0.113.10&quot; };
+    var remoteIp = context.Connection.RemoteIpAddress?.ToString();
+
+    if (!allowedIPs.Contains(remoteIp))
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        await context.Response.WriteAsync(&quot;Forbidden: Unauthorized IP&quot;);
+        return;
+    }
+
+    await next();
+});</code></pre>
+</doc-codeblock></div>
+<p>For WebHooks with multiple senders, consider API keys an additional access control mechanism. The sender includes the API key in a custom header, and the receiver validates it against a list of preconfigured keys:</p>
+<div id="authorized-connections-managing-access-control-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public IActionResult HandleWebHook()
+{
+    if (!Request.Headers.TryGetValue(&quot;X-API-Key&quot;, out var apiKey) || !IsValidApiKey(apiKey))
+    {
+        return Unauthorized(&quot;Invalid or missing API key&quot;);
+    }
+
+    Console.WriteLine(&quot;API key validated.&quot;);
+    return Ok();
+}
+
+private bool IsValidApiKey(string apiKey)
+{
+    var validKeys = new[] { &quot;key1&quot;, &quot;key2&quot;, &quot;key3&quot; }; // Ideally fetched from secure storage
+    return validKeys.Contains(apiKey);
+}</code></pre>
+</doc-codeblock></div>
+<p>For added flexibility, you can integrate OAuth 2.0 to manage access tokens for your WebHook sender and receiver. Using OAuth, the sender obtains an access token and includes it in the <code translate="no" v-pre>Authorization</code> header. The receiver validates the token with an authentication server or a shared secret:</p>
+<div id="authorized-connections-managing-access-control-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+[Authorize(AuthenticationSchemes = &quot;Bearer&quot;)]
+public IActionResult HandleWebHook()
+{
+    Console.WriteLine(&quot;Authorized WebHook request received.&quot;);
+    return Ok();
+}</code></pre>
+</doc-codeblock></div>
+<p>In this scenario, you configure authentication in Startup.cs to use a JWT or another token format:</p>
+<div id="authorized-connections-managing-access-control-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddAuthentication(&quot;Bearer&quot;)
+    .AddJwtBearer(options =&gt;
+    {
+        options.Authority = &quot;https://your-auth-server.com&quot;;
+        options.Audience = &quot;your-webhook-receiver&quot;;
+    });</code></pre>
+</doc-codeblock></div>
+<p>While API keys and OAuth provide robust access control, it&#x27;s important to take a proactive approach to security. This includes periodically rotating secrets like API keys or tokens and logging access attempts to detect any unusual activity. These measures, when combined with the use of HTTPS, can significantly enhance the security of your system.</p>
+<p>By implementing access control mechanisms such as IP whitelisting, API keys, and OAuth, you are not just adding layers of protection to your WebHook receiver, but also providing a strong reassurance that only trusted sources can reach your endpoints. This significantly reduces the risk of unauthorized or malicious requests. In the next sections, we’ll look at integrating additional safeguards like replay protection and monitoring to further enhance security.</p>
+<h3 id="safe-hooks-in-practice-building-a-secure-workflow">Safe Hooks in Practice: Building a Secure Workflow</h3>
+<p>Building a secure WebHook workflow is about protecting your application from unauthorized access, tampered payloads, and replay attacks. It&#x27;s not just about implementing security measures, but about creating a cohesive workflow that maximizes their effectiveness. This section walks through the process of achieving this goal by creating a comprehensive and secure WebHook receiver using best practices and tools available in .NET.</p>
+<p>The first layer in your workflow is enforcing HTTPS. This ensures that all WebHook communication is encrypted, protecting the payload and headers from being intercepted during transit. You can take control of this security measure by configuring your ASP.NET Core application to require HTTPS:</p>
+<div id="safe-hooks-in-practice-building-a-secure-workflow-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.UseHttpsRedirection();</code></pre>
+</doc-codeblock></div>
+<p>Next, validate the request&#x27;s source using IP whitelisting or API keys. Combining this with payload signature verification adds a second layer of authentication. Implement signature validation as described earlier, ensuring that your shared secret is securely stored, such as in Azure Key Vault or environment variables:</p>
+<div id="safe-hooks-in-practice-building-a-secure-workflow-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private bool IsValidSignature(string payload, string signature)
+{
+    var secret = Environment.GetEnvironmentVariable(&quot;WEBHOOK_SECRET&quot;);
+    var computedSignature = ComputeHmacSha256(payload, secret);
+    return signature == computedSignature;
+}</code></pre>
+</doc-codeblock></div>
+<p>To prevent replay attacks, verify the timestamp of each request. Many WebHook providers include a timestamp header, such as X-Timestamp. Check that the timestamp is recent to ensure the request hasn’t been reused:</p>
+<div id="safe-hooks-in-practice-building-a-secure-workflow-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">private bool IsTimestampValid(string timestampHeader)
+{
+    if (DateTime.TryParse(timestampHeader, out var timestamp))
+    {
+        return (DateTime.UtcNow - timestamp).TotalMinutes &lt;= 5;
+    }
+
+    return false;
+}</code></pre>
+</doc-codeblock></div>
+<p>If the timestamp is invalid, reject the request with an appropriate HTTP status code:</p>
+<div id="safe-hooks-in-practice-building-a-secure-workflow-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">if (!IsTimestampValid(Request.Headers[&quot;X-Timestamp&quot;]))
+{
+    return BadRequest(&quot;Stale request&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>Finally, log every incoming request for auditing and debugging purposes. Include details like the request URL, headers, and payload (excluding sensitive data) to help trace any suspicious activity:</p>
+<div id="safe-hooks-in-practice-building-a-secure-workflow-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">_logger.LogInformation(&quot;WebHook received from {IP}. Event: {EventType}&quot;,
+    context.Connection.RemoteIpAddress, payload.EventType);</code></pre>
+</doc-codeblock></div>
+<p>Combine these techniques into a middleware pipeline or controller logic, which are structures that manage the flow of data between software components, to create a seamless and secure workflow. Each request should flow through validation, authentication, and processing steps, ensuring that only legitimate WebHooks are acted upon. This layered approach protects your application and builds trust with the systems and organizations that rely on your WebHook receiver. As you progress to the final sections, you’ll learn how to monitor and scale these secure workflows to handle high traffic and complex integrations.</p>
+<h2 id="scaling-the-hook-performance-and-resilience">Scaling the Hook: Performance and Resilience</h2>
+<p>As your application grows, the demands on your WebHook implementation will inevitably increase. Scaling a WebHook system requires optimizing performance for high traffic and ensuring resilience against failures and outages. A missed WebHook can disrupt workflows, while an overwhelmed receiver might cause delays or crashes. Building a scalable and fault-tolerant WebHook infrastructure ensures that your application can handle the load gracefully and maintain reliability under pressure.</p>
+<p>In this section, we’ll explore strategies to enhance the performance and resilience of your WebHook sender and receiver. From load balancing and asynchronous processing to implementing retries and distributed queues, you’ll learn how to design a system that thrives under heavy use. With the power of .NET and modern cloud-native techniques, scaling your WebHook solutions doesn’t have to be daunting—it can become a blueprint for efficiency and reliability.</p>
+<h3 id="hooked-on-speed-optimizing-performance">Hooked on Speed: Optimizing Performance</h3>
+<p>Optimizing the performance of your WebHook system ensures that it can handle a high volume of requests without slowing down or bottlenecking. The key is streamlining the sending and receiving processes, minimizing latency and resource consumption while maintaining a high level of reliability. In .NET, powerful tools and techniques can help you achieve these goals efficiently, providing a secure and reliable system.</p>
+<p>Start by optimizing the sender. Use <code translate="no" v-pre>HttpClient</code> effectively by configuring it for reuse through dependency injection. This avoids the overhead of creating and disposing of <code translate="no" v-pre>HttpClient</code> instances repeatedly:</p>
+<div id="hooked-on-speed-optimizing-performance-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient&lt;WebHookSender&gt;(client =&gt;
+{
+    client.Timeout = TimeSpan.FromSeconds(10);
+});</code></pre>
+</doc-codeblock></div>
+<p>Setting an appropriate timeout prevents requests from hanging indefinitely, ensuring the sender can handle a steady flow of WebHook events.</p>
+<p>On the receiver side, asynchronous processing can drastically improve performance. By decoupling the receipt of a WebHook from the business logic it triggers, you free up resources to handle incoming requests faster. Use message queues, like Azure Service Bus or RabbitMQ, to offload the processing:</p>
+<div id="hooked-on-speed-optimizing-performance-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;IActionResult&gt; ReceiveWebHook([FromBody] WebHookPayload payload)
+{
+    await _messageQueue.EnqueueAsync(payload);
+    return Accepted();
+}</code></pre>
+</doc-codeblock></div>
+<p>In this example, the Accepted response informs the sender that the WebHook was received successfully, even though the processing happens asynchronously in the background.</p>
+<p>Another way to improve performance is by reducing payload size. Consider streamlining the payload structure if your WebHook payloads include redundant or overly detailed data. For instance, include only the event type and an ID that the receiver can use to fetch additional details if necessary:</p>
+<div id="hooked-on-speed-optimizing-performance-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class MinimalPayload
+{
+    public string EventType { get; set; }
+    public Guid ResourceId { get; set; }
+}</code></pre>
+</doc-codeblock></div>
+<p>Compression can further enhance performance by reducing bandwidth usage. Enable Gzip compression on your WebHook sender and receiver:</p>
+<div id="hooked-on-speed-optimizing-performance-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddResponseCompression(options =&gt;
+{
+    options.EnableForHttps = true;
+});
+
+app.UseResponseCompression();</code></pre>
+</doc-codeblock></div>
+<p>Finally, monitor and log your WebHook system&#x27;s performance to identify bottlenecks. Use tools like Application Insights or Prometheus to track request duration, response times, and failure rates. Analyze these metrics to make informed adjustments to your infrastructure or code.</p>
+<p>Optimizing performance isn&#x27;t just about speed—it&#x27;s about building a WebHook system that scales gracefully under increasing demands. By focusing on efficient resource use, asynchronous workflows, and monitoring, you lay the foundation for a fast and resilient system. The following sections will explore advanced techniques like load balancing and fault tolerance to enhance scalability further.</p>
+<h3 id="keeping-the-hook-alive-designing-for-resilience">Keeping the Hook Alive: Designing for Resilience</h3>
+<p>Designing a resilient WebHook system ensures it can recover from failures and continue operating under adverse conditions. Resilience is about anticipating potential points of failure—network outages, service downtimes, or transient errors—and building mechanisms to handle them gracefully. By combining retry strategies, failover systems, and asynchronous processing, your WebHook implementation can remain robust in the face of uncertainty.</p>
+<p>Start by implementing retry logic for transient errors. Use the <code translate="no" v-pre>Polly</code> library to handle retries with exponential backoff, ensuring that retries do not overwhelm the receiver or exhaust resources:</p>
+<div id="keeping-the-hook-alive-designing-for-resilience-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient&lt;WebHookSender&gt;()
+    .AddTransientHttpErrorPolicy(policy =&gt;
+        policy.WaitAndRetryAsync(3, retryAttempt =&gt; TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));</code></pre>
+</doc-codeblock></div>
+<p>This configuration, with its three-time retry mechanism, is a key element in enhancing system resilience. By increasing delays exponentially, it provides the system with crucial recovery time before the next attempt, thereby minimizing the impact of failed requests.</p>
+<p>Another critical aspect of resilience is decoupling WebHook receipt from processing. By offloading the processing to a background service, you ensure that the receiver remains responsive even if downstream systems are slow. Use a message queue like Azure Service Bus to store WebHook events for asynchronous processing:</p>
+<div id="keeping-the-hook-alive-designing-for-resilience-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;IActionResult&gt; ReceiveWebHook([FromBody] WebHookPayload payload)
+{
+    await _messageQueue.EnqueueAsync(payload);
+    return Accepted();
+}</code></pre>
+</doc-codeblock></div>
+<p>In this setup, the Accepted response informs the sender that the WebHook has been received. Importantly, the actual processing occurs independently, ensuring that the system can continue functioning even during the processing of the WebHook.</p>
+<p>Circuit breakers are a key component in protecting your system from cascading failures. When a downstream service becomes unavailable, a circuit breaker steps in, temporarily stopping the system from sending requests. This pause gives the service time to recover, preventing further damage. With Polly, you can easily implement this behavior:</p>
+<div id="keeping-the-hook-alive-designing-for-resilience-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient&lt;WebHookSender&gt;()
+    .AddTransientHttpErrorPolicy(policy =&gt;
+        policy.CircuitBreakerAsync(2, TimeSpan.FromSeconds(30)));</code></pre>
+</doc-codeblock></div>
+<p>This configuration breaks the circuit after two consecutive failures and prevents further requests for 30 seconds, protecting both your system and the receiver from unnecessary load. This &#x27;unnecessary load&#x27; could manifest as a spike in incoming requests, which, if not managed, could lead to system instability and potential downtime.</p>
+<p>Idempotency is a crucial feature to ensure the fault-tolerance of your WebHook system. When receivers process a WebHook, they should handle duplicate events gracefully. Including a unique event ID in each payload and tracking processed events in a database are key steps to avoid repeating actions:</p>
+<div id="keeping-the-hook-alive-designing-for-resilience-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task&lt;bool&gt; IsDuplicateEvent(Guid eventId)
+{
+    return await _dbContext.Events.AnyAsync(e =&gt; e.Id == eventId);
+}</code></pre>
+</doc-codeblock></div>
+<p>Finally, monitor the health of your WebHook system. Use tools like Azure Monitor or Prometheus to track key metrics such as delivery success rates, retry counts, and circuit breaker states. By setting up alerts for anomalies, you can be prepared and respond proactively before issues escalate.</p>
+<p>Building resilience into your WebHook system ensures it can handle the inevitable challenges of distributed environments. By incorporating retries, asynchronous workflows, circuit breakers, and monitoring, you create a solution that survives failures and thrives in their aftermath. The following sections will explore scaling techniques, including load balancing and distributed systems, to ensure your WebHooks are ready for any demand.</p>
+<h3 id="scaling-the-web-handling-high-traffic-with-grace">Scaling the Web: Handling High Traffic with Grace</h3>
+<p>Handling high traffic gracefully is critical for scaling your WebHook system. When a sudden spike in events occurs—such as during a flash sale or viral campaign—your system must process requests efficiently without dropping payloads or overwhelming resources. Achieving this involves balancing the load, distributing requests across systems, and optimizing resource utilization. In .NET, combining cloud-native strategies with efficient coding practices, such as asynchronous programming and memory management, ensures your WebHook implementation is ready to meet the challenge.</p>
+<p>It&#x27;s crucial to start by introducing load balancing to distribute traffic evenly across multiple instances of your WebHook receiver. This strategy is a key component in handling high-traffic scenarios effectively. If you&#x27;re hosting in Azure, tools like Azure Application Gateway or Azure Front Door for intelligent routing and automatic failover are essential for your system&#x27;s resilience:</p>
+<div id="scaling-the-web-handling-high-traffic-with-grace-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">&quot;frontendIPConfigurations&quot;: [
+  {
+    &quot;name&quot;: &quot;publicIPAddress&quot;,
+    &quot;properties&quot;: {
+      &quot;publicIPAddress&quot;: {
+        &quot;id&quot;: &quot;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpName}&quot;
+      }
+    }
+  }
+]</code></pre>
+</doc-codeblock></div>
+<p>Pairing load balancing with containerized deployments further enhances scalability. Use Docker to containerize your WebHook receiver and orchestrate it with Kubernetes or Azure Kubernetes Service (AKS). This enables horizontal scaling, where additional container instances are spun up automatically during high traffic:</p>
+<div id="scaling-the-web-handling-high-traffic-with-grace-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-yaml"><code v-pre class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-receiver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webhook-receiver
+  template:
+    metadata:
+      labels:
+        app: webhook-receiver
+    spec:
+      containers:
+      - name: webhook-receiver
+        image: mywebhookreceiver:latest
+        ports:
+        - containerPort: 80</code></pre>
+</doc-codeblock></div>
+<p>Implementing rate limiting on your WebHook receiver helps protect it from overload. ASP.NET Core provides middleware for this, allowing you to define thresholds for incoming requests:</p>
+<div id="scaling-the-web-handling-high-traffic-with-grace-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddRateLimiter(options =&gt;
+{
+    options.AddFixedWindowLimiter(&quot;WebHookLimiter&quot;, config =&gt;
+    {
+        config.Window = TimeSpan.FromSeconds(1);
+        config.PermitLimit = 100;
+        config.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        config.QueueLimit = 10;
+    });
+});
+
+app.UseRateLimiter();</code></pre>
+</doc-codeblock></div>
+<p>It&#x27;s important to remember that this setup limits the receiver to 100 requests per second, queuing up to 10 additional requests during bursts. Excess requests are rejected if the queue is exceeded, underscoring the need for careful optimization to preserve system stability.</p>
+<p>Offload heavy processing tasks to background workers using a message queue. For instance, incoming WebHook payloads can be stored in Azure Service Bus and processed asynchronously. This approach underscores the crucial role you play in maintaining the system&#x27;s responsiveness, even during high traffic:</p>
+<div id="scaling-the-web-handling-high-traffic-with-grace-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">await _serviceBusClient.EnqueueAsync(payload);</code></pre>
+</doc-codeblock></div>
+<p>Monitor your WebHook infrastructure in real-time to detect bottlenecks and scale dynamically. Use Azure Monitor or Prometheus to track CPU utilization, memory usage, and request latency metrics. Configure auto-scaling rules to respond to traffic spikes automatically:</p>
+<div id="scaling-the-web-handling-high-traffic-with-grace-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-json"><code v-pre class="language-json">{
+  &quot;type&quot;: &quot;Microsoft.Insights/autoscaleSettings&quot;,
+  &quot;properties&quot;: {
+    &quot;profiles&quot;: [
+      {
+        &quot;capacity&quot;: {
+          &quot;minimum&quot;: &quot;1&quot;,
+          &quot;maximum&quot;: &quot;10&quot;,
+          &quot;default&quot;: &quot;1&quot;
+        },
+        &quot;rules&quot;: [
+          {
+            &quot;metricTrigger&quot;: {
+              &quot;metricName&quot;: &quot;CPUPercentage&quot;,
+              &quot;operator&quot;: &quot;GreaterThan&quot;,
+              &quot;threshold&quot;: 70,
+              &quot;timeAggregation&quot;: &quot;Average&quot;,
+              &quot;metricResourceUri&quot;: &quot;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}&quot;
+            },
+            &quot;scaleAction&quot;: {
+              &quot;direction&quot;: &quot;Increase&quot;,
+              &quot;type&quot;: &quot;ChangeCount&quot;,
+              &quot;value&quot;: &quot;1&quot;,
+              &quot;cooldown&quot;: &quot;PT5M&quot;
+            }
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+</doc-codeblock></div>
+<p>By combining load balancing, container orchestration, rate limiting, and asynchronous processing, your WebHook system can proactively handle high traffic without breaking a sweat. Scaling isn’t just about surviving traffic spikes—it’s about thriving under pressure while maintaining reliability and performance. With these strategies, your WebHook implementation will be prepared for even the most demanding scenarios.</p>
+<h3 id="monitoring-the-hook-ensuring-reliability-in-the-wild">Monitoring the Hook: Ensuring Reliability in the Wild</h3>
+<p>Reliability in a WebHook system hinges on proactive monitoring and logging. Without visibility into your system’s behavior, issues like failed deliveries, degraded performance, or unexpected traffic spikes can go unnoticed until they escalate into major problems. By implementing robust monitoring, you can detect, diagnose, and resolve issues quickly, ensuring your WebHook system remains dependable in real-world conditions.</p>
+<p>Start by logging critical events at every stage of your WebHook workflow. Use ASP.NET Core’s built-in logging framework to capture incoming requests, payload processing, and delivery attempts. For example:</p>
+<div id="monitoring-the-hook-ensuring-reliability-in-the-wild-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;IActionResult&gt; ReceiveWebHook([FromBody] WebHookPayload payload)
+{
+    _logger.LogInformation(&quot;Received WebHook event: {EventType}, Payload: {Payload}&quot;, payload.EventType, payload);
+
+    try
+    {
+        await ProcessPayloadAsync(payload);
+        _logger.LogInformation(&quot;Successfully processed event: {EventType}&quot;, payload.EventType);
+        return Ok();
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, &quot;Failed to process event: {EventType}&quot;, payload.EventType);
+        return StatusCode(500, &quot;Internal Server Error&quot;);
+    }
+}</code></pre>
+</doc-codeblock></div>
+<p>Logging alone isn’t enough—integrate metrics tracking to capture system-wide performance indicators. A tool like Prometheus can track metrics such as request rates, response times, and error rates. In ASP.NET Core, expose these metrics through middleware:</p>
+<div id="monitoring-the-hook-ensuring-reliability-in-the-wild-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.UseMiddleware&lt;PrometheusHttpMetricsMiddleware&gt;();
+
+// Example custom metric for WebHook request counts
+_metrics.Counter(&quot;webhook_requests_total&quot;, &quot;Total number of WebHook requests received.&quot;)
+    .WithLabels(&quot;status&quot;, &quot;success&quot;)
+    .Inc();</code></pre>
+</doc-codeblock></div>
+<p>For cloud-based systems, Azure Monitor provides a centralized platform to track performance metrics and logs. Configure Application Insights to monitor your WebHook receiver:</p>
+<div id="monitoring-the-hook-ensuring-reliability-in-the-wild-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddApplicationInsightsTelemetry();</code></pre>
+</doc-codeblock></div>
+<p>With Application Insights, you can visualize real-time metrics like dependency call durations, exceptions, and request volumes. To set up alerts, navigate to the &#x27;Alerts&#x27; section in the Application Insights portal, select the metric you want to monitor, set the conditions for the alert, and provide the notification details. These alerts can notify you of anomalies, such as a sudden spike in failed requests or high latency.</p>
+<p>In addition to real-time monitoring, request tracing can be implemented to debug complex issues. The use of correlation IDs is invaluable in tracking individual requests as they pass through your system. In ASP.NET Core, add a middleware to generate and attach a correlation ID to each request:</p>
+<div id="monitoring-the-hook-ensuring-reliability-in-the-wild-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+{
+    var correlationId = Guid.NewGuid().ToString();
+    context.Response.Headers.Add(&quot;X-Correlation-ID&quot;, correlationId);
+    using (_logger.BeginScope(new Dictionary&lt;string, object&gt; { [&quot;CorrelationID&quot;] = correlationId }))
+    {
+        await next.Invoke();
+    }
+});</code></pre>
+</doc-codeblock></div>
+<p>Correlating logs and metrics by request helps you pinpoint the root cause of issues, such as processing delays or dropped events.</p>
+<p>Finally, test your monitoring setup by simulating failure scenarios. Use tools like Chaos Monkey or fault injection libraries to create controlled disruptions and observe how your system responds. For example, you can test retry logic by introducing transient network failures:</p>
+<div id="monitoring-the-hook-ensuring-reliability-in-the-wild-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">services.AddHttpClient(&quot;WebHookClient&quot;)
+    .AddPolicyHandler(Policy.Handle&lt;HttpRequestException&gt;()
+    .RetryAsync(3));</code></pre>
+</doc-codeblock></div>
+<p>Combining detailed logging, metrics tracking, and proactive alerting, you create a comprehensive monitoring strategy that keeps your WebHook system reliable and resilient. These practices help you maintain performance under normal conditions and prepare you to handle the unexpected confidently. As the final piece of your WebHook implementation, monitoring ensures your system is ready to handle the challenges of the real world.</p>
+<h2 id="beyond-the-basics-advanced-webhook-patterns">Beyond the Basics: Advanced WebHook Patterns</h2>
+<p>As WebHooks evolve into a cornerstone of modern networked applications, their potential extends beyond basic event notifications. Advanced WebHook patterns enable systems to handle complex workflows, customize event delivery, and scale reliably under real-world pressures. These patterns allow developers to orchestrate multi-step processes, tailor payloads to individual receivers, and build fault-tolerant, high-performance systems that thrive even during peak demand, ensuring the reliability of your applications.</p>
+<p>Imagine an e-commerce platform where a customer’s order triggers a cascade of coordinated actions: inventory adjustments, payment confirmations, shipment updates, and personalized notifications. By chaining WebHooks, dynamically filtering event data, and leveraging message queues for resilience, this platform seamlessly integrates diverse services while maintaining reliability at scale. This section explores these advanced patterns, offering practical strategies and real-world insights that are ready to be implemented, elevating your WebHook implementations from functional to exceptional. Let’s dive into the art of crafting WebHooks that do more, faster, and smarter.</p>
+<h3 id="orchestrated-hooks-managing-dependencies-across-services">Orchestrated Hooks: Managing Dependencies Across Services</h3>
+<p>Coordinating workflows across multiple services is a common challenge in distributed systems. WebHooks plays a crucial role in this orchestration, allowing one service’s action to trigger dependent events in others. For instance, in an e-commerce platform, placing an order initiates a series of interdependent steps: adjusting inventory, processing payments, and sending shipment notifications. By chaining WebHooks, you can create a dynamic, event-driven pipeline that ensures each service communicates seamlessly. Importantly, WebHooks also maintain the independence of each service, providing reassurance in the robustness of your system.</p>
+<p>Begin by setting up WebHooks for each step of the workflow. The order service might emit a WebHook to notify the inventory service when a new order is placed:</p>
+<div id="orchestrated-hooks-managing-dependencies-across-services-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public IActionResult PlaceOrder([FromBody] OrderPayload order)
+{
+    // Business logic for placing the order
+    Console.WriteLine($&quot;Order placed: {order.Id}&quot;);
+
+    // Emit WebHook to inventory service
+    var payload = new
+    {
+        EventType = &quot;order_placed&quot;,
+        Data = new { OrderId = order.Id, Items = order.Items }
+    };
+    _webHookSender.SendAsync(&quot;https://inventory.service/webhooks&quot;, JsonSerializer.Serialize(payload));
+
+    return Ok(&quot;Order processed.&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>The inventory service, upon receiving this WebHook, adjusts stock levels and emits its own WebHook to notify the shipping service:</p>
+<div id="orchestrated-hooks-managing-dependencies-across-services-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public IActionResult HandleOrderPlaced([FromBody] OrderPayload payload)
+{
+    // Update inventory
+    foreach (var item in payload.Items)
+    {
+        AdjustInventory(item);
+    }
+    Console.WriteLine($&quot;Inventory updated for Order: {payload.OrderId}&quot;);
+
+    // Emit WebHook to shipping service
+    var shippingPayload = new
+    {
+        EventType = &quot;inventory_updated&quot;,
+        Data = new { OrderId = payload.OrderId }
+    };
+    _webHookSender.SendAsync(&quot;https://shipping.service/webhooks&quot;, JsonSerializer.Serialize(shippingPayload));
+
+    return Ok();
+}</code></pre>
+</doc-codeblock></div>
+<p>To ensure the reliability of these interdependent steps, use a message queue like Azure Service Bus. If a downstream service is unavailable, the message queue can hold events until the service recovers:</p>
+<div id="orchestrated-hooks-managing-dependencies-across-services-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task EnqueueWebHookAsync(string eventType, object data)
+{
+    var message = new ServiceBusMessage(JsonSerializer.Serialize(new { EventType = eventType, Data = data }));
+    await _serviceBusClient.SendMessageAsync(message);
+}</code></pre>
+</doc-codeblock></div>
+<p>The shipping service processes WebHooks from the queue, ensuring no events are lost during outages:</p>
+<div id="orchestrated-hooks-managing-dependencies-across-services-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task ProcessQueueMessageAsync(string queueMessage)
+{
+    var payload = JsonSerializer.Deserialize&lt;WebHookPayload&gt;(queueMessage);
+    Console.WriteLine($&quot;Processing WebHook: {payload.EventType}&quot;);
+    // Trigger shipping workflow
+    StartShippingProcess(payload.Data);
+}</code></pre>
+</doc-codeblock></div>
+<p>Tracking these workflows requires maintaining visibility across services. Use correlation IDs to trace each order through its lifecycle:</p>
+<div id="orchestrated-hooks-managing-dependencies-across-services-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">app.Use(async (context, next) =&gt;
+{
+    var correlationId = context.Request.Headers[&quot;X-Correlation-ID&quot;].FirstOrDefault() ?? Guid.NewGuid().ToString();
+    context.Response.Headers.Add(&quot;X-Correlation-ID&quot;, correlationId);
+    using (_logger.BeginScope(new { CorrelationId = correlationId }))
+    {
+        await next();
+    }
+});</code></pre>
+</doc-codeblock></div>
+<p>This event-driven architecture empowers independent services to collaborate while preserving fault tolerance and scalability. By chaining WebHooks and introducing resilience with queues, your distributed systems can handle complex workflows efficiently and reliably, setting the stage for additional advanced patterns like selective and resilient WebHooks.</p>
+<h3 id="selective-notifications-dynamic-filtering-and-custom-payloads">Selective Notifications: Dynamic Filtering and Custom Payloads</h3>
+<p>Tailoring WebHook notifications to receivers&#x27; specific needs reduces unnecessary data transmission and enhances integration efficiency. Instead of sending all events to all subscribers, dynamic filtering allows receivers to choose only the events they care about. At the same time, custom payloads ensure they receive only the information they need. This selective approach improves performance and creates a more seamless integration experience.</p>
+<p>In an e-commerce platform, consider a scenario where users can subscribe to order updates, but some may only want notifications for high-value transactions. To achieve this, begin by maintaining a subscription registry that includes filtering criteria:</p>
+<div id="selective-notifications-dynamic-filtering-and-custom-payloads-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public class WebHookSubscription
+{
+    public int Id { get; set; }
+    public string ReceiverUrl { get; set; }
+    public string EventType { get; set; }
+    public string FilterCriteria { get; set; } // Example: &quot;orderTotal &gt; 100&quot;
+}</code></pre>
+</doc-codeblock></div>
+<p>When emitting a WebHook, filter the subscriptions dynamically based on the event type and criteria. Use a helper method to evaluate whether a given payload matches the subscription’s filter:</p>
+<div id="selective-notifications-dynamic-filtering-and-custom-payloads-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task SendFilteredNotificationsAsync(string eventType, object data)
+{
+    var subscriptions = await _dbContext.WebHookSubscriptions
+        .Where(s =&gt; s.EventType == eventType)
+        .ToListAsync();
+
+    foreach (var subscription in subscriptions)
+    {
+        if (MatchesCriteria(subscription.FilterCriteria, data))
+        {
+            var payload = JsonSerializer.Serialize(new { EventType = eventType, Data = data });
+            await _webHookSender.SendAsync(subscription.ReceiverUrl, payload);
+        }
+    }
+}
+
+private bool MatchesCriteria(string criteria, object data)
+{
+    // Example: Use a dynamic evaluation library to check criteria
+    // Placeholder logic
+    return true;
+}</code></pre>
+</doc-codeblock></div>
+<p>For greater flexibility, allow receivers to define custom payload structures. For instance, a notification service might include a user preference for detailed or summary notifications. Store these preferences in the subscription model and generate payloads accordingly:</p>
+<div id="selective-notifications-dynamic-filtering-and-custom-payloads-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">public async Task&lt;string&gt; CreateCustomPayload(WebHookSubscription subscription, object data)
+{
+    if (subscription.FilterCriteria == &quot;summary&quot;)
+    {
+        return JsonSerializer.Serialize(new { Summary = &quot;Order placed successfully&quot;, Data = data });
+    }
+    return JsonSerializer.Serialize(new { Details = data });
+}</code></pre>
+</doc-codeblock></div>
+<p>Receivers can also manage their own subscriptions via a REST API, dynamically updating their preferences without developer intervention:</p>
+<div id="selective-notifications-dynamic-filtering-and-custom-payloads-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;IActionResult&gt; UpdateSubscription([FromBody] WebHookSubscription subscription)
+{
+    var existing = await _dbContext.WebHookSubscriptions.FindAsync(subscription.Id);
+    if (existing == null)
+    {
+        return NotFound();
+    }
+
+    existing.FilterCriteria = subscription.FilterCriteria;
+    existing.ReceiverUrl = subscription.ReceiverUrl;
+    existing.EventType = subscription.EventType;
+    await _dbContext.SaveChangesAsync();
+
+    return Ok(&quot;Subscription updated successfully.&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>Dynamic filtering and custom payloads reduce overhead and empower subscribers to tailor their integration with precision. When combined with robust orchestration and resilient delivery, this selective notification approach creates a WebHook system that adapts to diverse use cases, enhancing performance and user satisfaction. This sets the stage for further advancements, such as fault-tolerant scaling techniques, explored in the next section.</p>
+<h3 id="resilient-hooks-queues-failures-and-scaling-strategies">Resilient Hooks: Queues, Failures, and Scaling Strategies</h3>
+<p>Ensuring resilience becomes paramount as your WebHook system grows in complexity and demand. It&#x27;s important to remember that failures, such as network outages or overwhelmed receivers, are inevitable in distributed systems. To handle these gracefully, introduce strategies like message queues, retry mechanisms, and load balancing, ensuring that every WebHook is delivered reliably and at scale.</p>
+<p>Imagine the e-commerce platform from earlier sections experiencing a flash sale. Order-related WebHooks could overwhelm downstream services, leading to dropped or delayed events. To prevent this, use a message queue like Azure Service Bus to decouple WebHook receipts from processing:</p>
+<div id="resilient-hooks-queues-failures-and-scaling-strategies-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">[HttpPost]
+public async Task&lt;IActionResult&gt; ReceiveWebHook([FromBody] WebHookPayload payload)
+{
+    // Queue the payload for asynchronous processing
+    await _queueClient.SendMessageAsync(new ServiceBusMessage(JsonSerializer.Serialize(payload)));
+    return Accepted(&quot;WebHook queued for processing.&quot;);
+}</code></pre>
+</doc-codeblock></div>
+<p>With this approach, the WebHook receiver quickly acknowledges the request, while processing happens in a background worker, preventing bottlenecks:</p>
+<div id="resilient-hooks-queues-failures-and-scaling-strategies-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp"> </code></pre>
+</doc-codeblock></div>
+<p>public class WebHookProcessor : BackgroundService
+{
+private readonly ServiceBusProcessor _processor;</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">public WebHookProcessor(ServiceBusClient client)
+{
+    _processor = client.CreateProcessor(&quot;webhook-queue&quot;);
+}
+
+protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+{
+    _processor.ProcessMessageAsync += async args =&gt;
+    {
+        var payload = JsonSerializer.Deserialize&lt;WebHookPayload&gt;(args.Message.Body.ToString());
+        await ProcessPayloadAsync(payload);
+        await args.CompleteMessageAsync(args.Message);
+    };
+
+    _processor.ProcessErrorAsync += args =&gt;
+    {
+        Console.WriteLine($&quot;Error processing WebHook: {args.Exception.Message}&quot;);
+        return Task.CompletedTask;
+    };
+
+    await _processor.StartProcessingAsync(stoppingToken);
+}
+
+private Task ProcessPayloadAsync(WebHookPayload payload)
+{
+    Console.WriteLine($&quot;Processing WebHook event: {payload.EventType}&quot;);
+    // Business logic here
+    return Task.CompletedTask;
+}</code></pre>
+</doc-codeblock></div>
+<p>}</p>
+<p>Retry mechanisms are critical for handling transient failures. Use a library like <code translate="no" v-pre>Polly</code> to implement retries with exponential backoff, ensuring that the system doesn’t overwhelm failing services:</p>
+<div id="resilient-hooks-queues-failures-and-scaling-strategies-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-csharp"><code v-pre class="language-csharp">builder.Services.AddHttpClient(&quot;WebHookClient&quot;)
+    .AddTransientHttpErrorPolicy(policy =&gt;
+        policy.WaitAndRetryAsync(3, retryAttempt =&gt; TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));</code></pre>
+</doc-codeblock></div>
+<p>For scalability, distribute the load across multiple instances of your WebHook receiver using a load balancer. Deploy your service in a containerized environment like Kubernetes and configure horizontal scaling to spin up additional instances during high traffic automatically:</p>
+<div id="resilient-hooks-queues-failures-and-scaling-strategies-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-yaml"><code v-pre class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-receiver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webhook-receiver
+  template:
+    metadata:
+      labels:
+        app: webhook-receiver
+    spec:
+      containers:
+      - name: webhook-receiver
+        image: mywebhookreceiver:latest
+        ports:
+        - containerPort: 80</code></pre>
+</doc-codeblock></div>
+<p>Combining these strategies ensures your WebHook system is robust and responsive even under extreme conditions. By decoupling processing with queues, retrying intelligently, and leveraging scalable infrastructure, you build a fault-tolerant WebHook architecture. This completes the advanced patterns toolkit, positioning your system to handle real-world demands gracefully and efficiently.</p>
+
+                
+                <!-- Required only on API pages -->
+                <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
+            </div>
+            <footer id="retype-content-footer" class="clear-both">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/cwoodruff/book-network-programming-csharp/blob/main/Chapter14/chapter14.md" target="_blank" rel="noopener">
+                        <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        <span>Edit this page</span>
+                    </a>
+                </div>
+            
+                <nav id="retype-nextprev" class="print:hidden flex mt-14">
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../chapter13/">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                            <span>
+                                <span class="block text-xs font-normal text-base-text-muted">Previous</span>
+                                <span class="block mt-1">Chap 13 - Working with g​RPC</span>
+                            </span>
+                        </a>
+                    </div>
+            
+                    <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../chapter15/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">Chap 15 - Implementing Message Queuing</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
+                    </div>
+                </nav>
+            </footer>
+        </main>
+
+        <div id="retype-page-footer" class="print:border-none border-t border-base-border pt-6 mb-8">
+            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                <div id="retype-footer-links" class="print:hidden">
+                    <ul class="flex flex-wrap items-center text-sm">
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../copyright/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M10.97 8.265a1.45 1.45 0 0 0-.487.57.75.75 0 0 1-1.341-.67c.2-.402.513-.826.997-1.148C10.627 6.69 11.244 6.5 12 6.5c.658 0 1.369.195 1.934.619a2.45 2.45 0 0 1 1.004 2.006c0 1.033-.513 1.72-1.027 2.215-.19.183-.399.358-.579.508l-.147.123a4.329 4.329 0 0 0-.435.409v1.37a.75.75 0 1 1-1.5 0v-1.473c0-.237.067-.504.247-.736.22-.28.486-.517.718-.714l.183-.153.001-.001c.172-.143.324-.27.47-.412.368-.355.569-.676.569-1.136a.953.953 0 0 0-.404-.806C12.766 8.118 12.384 8 12 8c-.494 0-.814.121-1.03.265ZM13 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1ZM2.5 12a9.5 9.5 0 0 0 9.5 9.5 9.5 9.5 0 0 0 9.5-9.5A9.5 9.5 0 0 0 12 2.5 9.5 9.5 0 0 0 2.5 12Z"/>
+                                    </g>
+                                </svg>
+                                <span>Copyright</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="inline-flex items-center mr-4 py-2 text-sm whitespace-nowrap transition-colors duration-200 ease-linear text-footer-link hover:text-footer-link-hover md:mb-0" href="../license/">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="block shrink-0 mr-1" width="18" height="18" viewBox="0 0 24 24" role="presentation">
+                                    <g fill="currentColor">
+                                        <path d="M16.53 9.78a.75.75 0 0 0-1.06-1.06L11 13.19l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5Z"/><path d="m12.54.637 8.25 2.675A1.75 1.75 0 0 1 22 4.976V10c0 6.19-3.771 10.704-9.401 12.83a1.704 1.704 0 0 1-1.198 0C5.77 20.705 2 16.19 2 10V4.976c0-.758.489-1.43 1.21-1.664L11.46.637a1.748 1.748 0 0 1 1.08 0Zm-.617 1.426-8.25 2.676a.249.249 0 0 0-.173.237V10c0 5.46 3.28 9.483 8.43 11.426a.199.199 0 0 0 .14 0C17.22 19.483 20.5 15.461 20.5 10V4.976a.25.25 0 0 0-.173-.237l-8.25-2.676a.253.253 0 0 0-.154 0Z"/>
+                                    </g>
+                                </svg>
+                                <span>License</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="retype-copyright" class="print:justify-center py-2 text-footer-text font-footer-link text-sm leading-relaxed"><p>© Copyright 2026. All rights reserved Chris Woodruff.</p></div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Rendered if sidebar right is enabled -->
+    <!-- Sidebar right skeleton-->
+    <div v-cloak class="fixed top-0 bottom-0 right-0 translate-x-full bg-sidebar-right-bg border-sidebar-right-border lg:sticky lg:border-l lg:shrink-0 lg:pt-6 lg:translate-x-0 sm:w-1/2 lg:w-64 lg:z-0 md:w-104 sidebar-right skeleton">
+        <div class="pl-5">
+            <div class="w-32 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-48 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+            <div class="w-40 h-3 mb-4 bg-skeleton-bg rounded-full loading"></div>
+        </div>
+    </div>
+
+    <!-- User should be able to hide sidebar right -->
+    <doc-sidebar-right v-cloak></doc-sidebar-right>
+</div>
+
+        </div>
+    </div>
+
+    <doc-search-mobile></doc-search-mobile>
+    <doc-back-to-top></doc-back-to-top>
+</div>
+
+
+    <div id="retype-overlay-target"></div>
+
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Chap 14 - Working with WebHooks", level: 1, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/chapter14/chapter14.md" }</script>
+</body>
+</html>
