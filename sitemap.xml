@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://cwoodruff.github.io/book-network-programming-csharp/</loc>
-    <lastmod>2025-08-23T13:15:13Z</lastmod>
+    <lastmod>2026-08-22T22:38:30Z</lastmod>
   </url>
   <url>
     <loc>https://cwoodruff.github.io/book-network-programming-csharp/dedication/</loc>
@@ -106,6 +106,6 @@
   </url>
   <url>
     <loc>https://cwoodruff.github.io/book-network-programming-csharp/src/ch16/signalrserverexample/wwwroot/</loc>
-    <lastmod>2026-08-23T02:34:26Z</lastmod>
+    <lastmod>2026-08-23T02:38:42Z</lastmod>
   </url>
 </urlset>
